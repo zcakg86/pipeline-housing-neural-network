@@ -228,9 +228,9 @@ class price_predictor:
                     predictions, _ = self.model(community, community_features, year,
                                                 week, property, targets)
                     print(f'attention shape{_}')
-                    if torch.isnan(predictions).any():
-                        print("NaN detected in outputs. Skipping this iteration.")
-                        continue
+                    # if torch.isnan(predictions).any():
+                    #     print("NaN detected in outputs. Skipping this iteration.")
+                    #     continue
 
                     # print("shape of attention output",_)
                     # print('predictions shape', predictions.shape)
@@ -289,7 +289,7 @@ class modelmanager:
         self.week_length = self.dataset.week_length
         self.year_length= self.dataset.year_length
 
-    def train_model(self, epochs = 10):
+    def train_model(self, epochs = 10, batch = 128):
         # Split data, and create DataLoader for batces.
         # Sizes from model attributes.
         train_size = int(0.8 * self.dataset.length)
@@ -338,8 +338,8 @@ class modelmanager:
         val_dataset = Subset(new_val_dataset, val_dataset.indices)  # Use the original indices
 
 
-        train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=64)
+        train_loader = DataLoader(train_dataset, batch_size=batch, shuffle=True)
+        val_loader = DataLoader(val_dataset, batch_size=batch)
 
         # Create and train model. price_predictor contains model spec.
         self.predictor = price_predictor(self.embedding_dim, self.hidden_dim, self.property_dim,
@@ -377,7 +377,6 @@ class modelmanager:
         week_tensor = torch.tensor([self.train_year_vocab.get(tensor[week][3].item(),
                                                                     self.train_week_vocab['unknown']) for week in tensor[:][3]], dtype=torch.int)
         # Create a new TensorDataset with the updated tensors
-        print(train_week_vocab)
         new_tensor = list(tensor)  # Convert tuple to list  for indexing
         print(new_tensor[3])
         new_tensor[2] = year_tensor  # Replace the old tensor with the updated one

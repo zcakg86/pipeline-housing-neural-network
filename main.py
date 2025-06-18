@@ -1,5 +1,5 @@
 #%%
-#from src.pricemodel.embedding_model import *
+from src.pricemodel.embedding_model import *
 df = pd.read_csv('data/sales_202025.csv')
 df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
 df = df.sample(n=1000, random_state = 92)
@@ -20,9 +20,9 @@ data.community_vocab
 data.year_vocab
 #%%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
-model.train_model(epochs = 5)
+model.train_model(epochs = 1, )
 
-model.add_predictions_to_data()
+#model.add_predictions_to_data()
 #%%
 data2 = data._processor(mode= 'test')
 # %%
