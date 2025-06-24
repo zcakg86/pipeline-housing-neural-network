@@ -9,6 +9,10 @@ from sklearn.preprocessing import StandardScaler
 from datetime import datetime
 import pickle
 import json
+# def hi():
+#     print("HI")
+def hi2():
+    print("H3")
 
 # Function to prepare data
 class dataset:
@@ -52,12 +56,8 @@ class dataset:
         self.week_vocab = {value: index for index, value in enumerate(range(1,54))}
         self.year_vocab = {value: index for index, value in enumerate(range(2020,2026))}
         self.week_vocab = {community_id: index for index, community_id in enumerate(range(1,54))}
-        def create_vocab(column,min=None,max=None):
-            #if min && max:
-            ids = sorted(df['community'].unique())
-            vocab = {id: index for index, id in enumerate(ids)}
-            return vocab
-        self.community_vocab = create_vocab('community')
+
+        self.community_vocab = create_vocab(df,'community')
         #community_ids = sorted(df['community'].unique()) # Sort for consistent order across runs
         #self.community_vocab = {community_id: index for index, community_id in enumerate(community_ids)}
         self.n_communities = len(self.community_vocab)
@@ -123,12 +123,15 @@ class dataset:
                                      torch.tensor(self.dataframe['log_price_scaled'].values, dtype=torch.float32))
 
 class embeddingmodel(nn.Module):
-    def __init__(self, embedding_dim, hidden_dim, property_dim, 
+    def __init__(self, device, embedding_dim, hidden_dim, property_dim,
                  community_embedding_length, community_feature_dim,
                  year_length, week_length):
+        """Class defined the layers and their parameters, method forward defines the sequence of layers """
 
         # inherit from nn.Module
         super().__init__()
+        #inherit from manager/predictor
+        self.device = device
         # Layer dims
         self.property_dim = property_dim
         self.embedding_dim = embedding_dim
@@ -139,26 +142,26 @@ class embeddingmodel(nn.Module):
         self.week_length = week_length
         self.year_length = year_length
         # Embedding Layers
-        self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
-        self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
-        self.week_embedding = nn.Embedding(int(week_length), embedding_dim)
+        self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim).to(self.device)
+        self.year_embedding = nn.Embedding(int(year_length), embedding_dim).to(self.device)
+        self.week_embedding = nn.Embedding(int(week_length), embedding_dim).to(self.device)
 
         # Feature Processing Layers
-        self.community_feature_layer = nn.Linear(community_feature_dim, hidden_dim)
-        self.property_feature_layer = nn.Linear(property_dim, hidden_dim)
-
+        self.community_feature_layer = nn.Linear(community_feature_dim, hidden_dim).to(self.device)
+        self.property_feature_layer = nn.Linear(property_dim, hidden_dim).to(self.device)
         # Calculate combined embedding dimension dynamically
         self.combined_embedding_dim = 3 * embedding_dim
 
         # Hidden and Output Layers (input_dim calculated dynamically in forward)
-        self.hidden_layer1 = nn.Linear(2 * hidden_dim + self.combined_embedding_dim, hidden_dim)
-        self.hidden_layer2 = nn.Linear(hidden_dim, hidden_dim)
-        self.output_layer = nn.Linear(hidden_dim, 1)
+        self.hidden_layer1 = nn.Linear(2 * hidden_dim + self.combined_embedding_dim, hidden_dim).to(self.device)
+        self.hidden_layer2 = nn.Linear(hidden_dim, hidden_dim).to(self.device)
+        self.output_layer = nn.Linear(hidden_dim, 1).to(self.device)
 
-        self.relu = nn.ReLU()
+        self.relu = nn.ReLU().to(self.device)
 
     def forward(self, community_indices, community_features, year, week, property_features, targets):
         # Embeddings
+
         community_embeddings = self.community_embedding(community_indices)
         year_embeddings = self.year_embedding(year)
         week_embeddings = self.week_embedding(week)
@@ -170,15 +173,14 @@ class embeddingmodel(nn.Module):
 
         # Combine embeddings and features (calculate input_dim dynamically)
         combined_features = torch.cat([combined_embeddings, processed_community_features, processed_property_features], dim=-1)
-        
-        embed_dim_attention = combined_features.shape[-1] 
+        embed_dim_attention = combined_features.shape[-1]
         # Reshape for attention
         combined_features = combined_features.unsqueeze(1)
 
         # Attention Layer
-        attention_layer = nn.MultiheadAttention(embed_dim=embed_dim_attention, num_heads=2, batch_first=True) # Create the layer HERE
+        attention_layer = nn.MultiheadAttention(embed_dim=embed_dim_attention, num_heads=2, batch_first=True, device = self.device) # Create the layer HERE
         attention_output, _ = attention_layer(combined_features, combined_features, combined_features)
-        attention_output = attention_output.squeeze(1)
+        attention_output = attention_output.squeeze(1).to(self.device)
 
         # Hidden Layers
         hidden1 = self.relu(self.hidden_layer1(attention_output))  # Use attention_output here
@@ -188,15 +190,14 @@ class embeddingmodel(nn.Module):
         output = self.output_layer(hidden2)
         #print('output shape', output.shape)
         return output, attention_output.shape
+
 class price_predictor:
-    def __init__(self, embedding_dim, hidden_dim, property_dim, community_embedding_length,
+    def __init__(self, device, embedding_dim, hidden_dim, property_dim, community_embedding_length,
                  community_feature_dim, year_length, week_length):
-        self.device = torch.device('mps' if torch.mps.is_available() 
-                                   else 'cuda' if torch.cuda.is_available() 
-                                   else 'cpu')
-        self.model = embeddingmodel(embedding_dim, hidden_dim, property_dim, 
-                                    community_embedding_length, community_feature_dim, 
-                                    year_length, week_length).to(self.device)
+        self.device = device
+        self.model = embeddingmodel(self.device, embedding_dim, hidden_dim, property_dim,
+                                    community_embedding_length, community_feature_dim,
+                                    year_length, week_length)
         # Specify loss measure
         self.criterion = nn.MSELoss()
         # And Adam optimiser
@@ -211,41 +212,35 @@ class price_predictor:
             # Training
             self.model.train()
             train_loss = 0
-            with torch.autograd.detect_anomaly():
-                for batch in train_loader:
-                    # Move each tensor in the batch to the device
-                    batch = tuple(t.to(self.device) for t in batch)
-                    # Unpack the batch
-                    community, community_features, year, week, property, targets = batch
-                    self.optimizer.zero_grad()
+            # with torch.autograd.detect_anomaly():
+            for batch in train_loader:
+                # Move each tensor in the batch to the device
+                batch = tuple(t.to(self.device) for t in batch)
+                # Unpack the batch
+                community, community_features, year, week, property, targets = batch
+                self.optimizer.zero_grad()
 
-                    # print(self.model.community_embedding_length)
-                    # print("Week Indices Min:", week.min())
-                    # print("Week Indices Max:", week.max())
-                    # print(self.model.week_length)
-                    # print("Size of batch: ", targets.size())
-                    #print(community)
-                    predictions, _ = self.model(community, community_features, year,
-                                                week, property, targets)
-                    print(f'attention shape{_}')
-                    # if torch.isnan(predictions).any():
-                    #     print("NaN detected in outputs. Skipping this iteration.")
-                    #     continue
+                predictions, _ = self.model(community, community_features, year,
+                                            week, property, targets)
+                print(f'attention shape{_}')
+                if torch.isnan(predictions).any():
+                    print(f"{torch.isnan(predictions).sum().item()} NaN values detected in outputs out of {torch.numel(predictions)}. Skipping this iteration.")
+                    continue
 
-                    # print("shape of attention output",_)
-                    # print('predictions shape', predictions.shape)
-                    # print('predictions')
-                    # print(predictions.squeeze())
-                    # print('targets')
-                    # print(targets)
-                    loss = self.criterion(predictions.squeeze(), targets)
-                    print(f'Train Community Indices Min: {community.min().item()} and ',
-                          f'Max: {community.max().item()}')
-                    loss.backward()
-                    self.optimizer.step()
+                # print("shape of attention output",_)
+                # print('predictions shape', predictions.shape)
+                # print('predictions')
+                # print(predictions.squeeze())
+                # print('targets')
+                # print(targets)
+                loss = self.criterion(predictions.squeeze(), targets)
+                print(f'Train Community Indices Min: {community.min().item()} and ',
+                      f'Max: {community.max().item()}')
+                loss.backward()
+                self.optimizer.step()
 
-                    train_loss += loss.item()
-                    print(train_loss)
+                train_loss += loss.item()
+                print(train_loss)
 
             # Validation
             self.model.eval()
@@ -274,6 +269,9 @@ class price_predictor:
 class modelmanager:
     def __init__(self, dataset, embedding_dim, hidden_dim, property_dim, model_name="property_model"):
         self.dataset = dataset
+        self.device = torch.device('mps' if torch.mps.is_available()
+                                   else 'cuda' if torch.cuda.is_available()
+                                   else 'cpu')
         self.model_name = model_name
         self.results = {
             'train_losses': [],
@@ -289,8 +287,11 @@ class modelmanager:
         self.week_length = self.dataset.week_length
         self.year_length= self.dataset.year_length
 
-    def train_model(self, epochs = 10, batch = 128):
-        # Split data, and create DataLoader for batces.
+    def split_data(self, epochs = 10, batch = 128):
+        """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
+            to create index to be used in embedding"""
+
+        # Split data, and create DataLoader for batches.
         # Sizes from model attributes.
         train_size = int(0.8 * self.dataset.length)
         val_size = self.dataset.length - train_size
@@ -301,6 +302,13 @@ class modelmanager:
 
         #self.community_embedding_length = torch.cat((train_dataset[:][0], val_dataset[:][0]), dim=0).unique().numel()
         self.community_embedding_length = self.dataset.tensors[:][0].unique().numel()
+
+        def create_tensor_vocab(tensor):
+            values = sorted(tensor.unique().tolist())
+            vocab = {year: idx for idx, year in enumerate(values)}
+            # add unknown when value for when not in training data
+            vocab["unknown"] = len(vocab)  # Add "unknown" token
+            return vocab
 
         # Create year vocabulary for the TRAINING dataset
         train_years = sorted(train_dataset[:][2].unique().tolist())
@@ -328,21 +336,22 @@ class modelmanager:
         new_train_dataset[3] = week_train_tensor # Same for weeks
 
         new_train_dataset = TensorDataset(*new_train_dataset)  # Create new TensorDatase
-        train_dataset = Subset(new_train_dataset, train_dataset.indices)  # Use the original indices
+        self.train_dataset = Subset(new_train_dataset, train_dataset.indices)  # Use the original indices
 
         new_val_dataset = list(val_dataset.dataset.tensors)
         new_val_dataset[2] = year_val_tensor  # Replace the old tensor with the updated one
         new_val_dataset[3] = week_val_tensor
         
         new_val_dataset = TensorDataset(*new_val_dataset)  # Create new TensorDataset
-        val_dataset = Subset(new_val_dataset, val_dataset.indices)  # Use the original indices
+        self.val_dataset = Subset(new_val_dataset, val_dataset.indices)  # Use the original indices
 
-
-        train_loader = DataLoader(train_dataset, batch_size=batch, shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=batch)
+    def train_model(self, epochs=10, batch=128):
+        """Function to create final DataLoader and run model training"""
+        train_loader = DataLoader(self.train_dataset, batch_size=batch, shuffle=True)
+        val_loader = DataLoader(self.val_dataset, batch_size=batch)
 
         # Create and train model. price_predictor contains model spec.
-        self.predictor = price_predictor(self.embedding_dim, self.hidden_dim, self.property_dim,
+        self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
                                     self.community_embedding_length, 
                                     self.community_feature_dim,
                                     self.train_year_length,
@@ -353,24 +362,13 @@ class modelmanager:
         self.results['train_losses'] = train_losses
         self.results['val_losses'] = val_losses
 
-        # Save everything
-        #self.save_model()
-        # Add predictions to data
-        #df_with_pred = manager.add_predictions_to_data(
-        #)
-
-        # # Save predictions to CSV
-        #df_with_pred.to_csv(f'outputs/results/predictions_{manager.results["timestamp"]}.csv',
-        #                    index=False)
-
     def add_predictions_to_data(self):
         """Add model predictions to dataframe"""
-        self.predictor.model.eval()
-        predictions = []
-        prediction_indices = []
+        self.model.eval()
+        torch.no_grad()
+        community, community_features, year, week, property, targets = batch
+        predictions, _ = self.model(community, community_features, year, week, property, targets)
 
-        tensor = self.dataset.tensors
-        print(self.dataset.tensors[:][2].size())
         # week and year need to be in train dataset
         year_tensor = torch.tensor([self.train_year_vocab.get(tensor[year][2].item(),
                                                              self.train_year_vocab['unknown']) for year in tensor[:][2]], dtype=torch.int)
@@ -499,5 +497,11 @@ class modelmanager:
             json.dump(config, f)
 
         print(f"Model and results saved in {path}")
+
+def create_vocab(df, column, min=None, max=None):
+    # if min && max:
+    ids = sorted(df[column].unique())
+    vocab = {id: index for index, id in enumerate(ids)}
+    return vocab
 
 # %%
