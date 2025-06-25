@@ -100,7 +100,7 @@ class dataset:
                 joblib.dump(self.scalers[feature], f"{feature}_scaler.pkl")
             # else: 
             #     # Load the pre-fitted scaler
-                self.scaler = joblib.load(f"{feature}_scaler.pkl")
+                self.scalers[feature] = joblib.load(f"{feature}_scaler.pkl")
             #     self.dataframe[feature] = scaler.transform(self.dataframe[[feature]])
                 self.dataframe[f"{feature}_scaled"] = self.scalers[feature].transform(self.dataframe[[feature]]) # Fit and transform
 
@@ -268,6 +268,7 @@ class price_predictor:
 
 class modelmanager:
     def __init__(self, dataset, embedding_dim, hidden_dim, property_dim, model_name="property_model"):
+
         self.dataset = dataset
         self.device = torch.device('mps' if torch.mps.is_available()
                                    else 'cuda' if torch.cuda.is_available()
@@ -285,9 +286,11 @@ class modelmanager:
         self.n_communities = self.dataset.n_communities
         self.community_feature_dim = self.dataset.community_feature_dim
         self.week_length = self.dataset.week_length
-        self.year_length= self.dataset.year_length
+        self.year_length = self.dataset.year_length
         self.train_year_length = 0
         self.train_week_length = 0
+        self.week_vocab = None
+        self.year_vocab = None
 
     def split_data(self):
         """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
@@ -305,34 +308,23 @@ class modelmanager:
         #self.community_embedding_length = torch.cat((train_dataset[:][0], val_dataset[:][0]), dim=0).unique().numel()
         self.community_embedding_length = self.dataset.tensors[:][0].unique().numel()
 
-        def create_tensor_vocab(tensor):
-            values = sorted(tensor.unique().tolist())
-            vocab = {year: idx for idx, year in enumerate(values)}
-            # add unknown when value for when not in training data
-            vocab["unknown"] = len(vocab)  # Add "unknown" token
-            return vocab
+        self.year_vocab = create_tensor_vocab(self.train_dataset[:][2])
+        self.week_vocab = create_tensor_vocab(self.train_dataset[:][3])
 
-        year_vocab = create_tensor_vocab(self.train_dataset[:][2])
-        week_vocab = create_tensor_vocab(self.train_dataset[:][3])
+        self.train_year_length = len(self.year_vocab)
+        self.train_week_length = len(self.week_vocab)
 
-        self.train_year_length = len(year_vocab)
-        self.train_week_length = len(week_vocab)
-
-        def vocab_replace_tensor(tensor, vocab):
-            replaced = [vocab.get(value.item(), vocab['unknown']) for value in tensor]
-            return torch.tensor(replaced, dtype = torch.int)
-
-        year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], year_vocab)
-        year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], year_vocab)
-        week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][3], week_vocab)
-        week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][3], week_vocab)
+        year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], self.year_vocab)
+        year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], self.year_vocab)
+        week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][3], self.week_vocab)
+        week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][3], self.week_vocab)
 
         # Create a new TensorDataset with the updated tensors
         new_train_dataset = list(self.train_dataset.dataset.tensors)  # Convert tuple to list
         new_train_dataset[2] = year_train_tensor  # Replace the old tensor with the updated one
         new_train_dataset[3] = week_train_tensor # Same for weeks
         new_train_dataset = TensorDataset(*new_train_dataset)  # Create new TensorDataset
-        self.train_dataset = Subset(new_train_dataset, self.train_dataset.indices)  # Use the original indices
+        self.train_dataset = Subset(new_train_dataset, self.train_dataset.indices)  # Use the original indices from the random_split
 
         new_val_dataset = list(self.val_dataset.dataset.tensors)
         new_val_dataset[2] = year_val_tensor  # Replace the old tensor with the updated one
@@ -358,28 +350,29 @@ class modelmanager:
         self.results['val_losses'] = val_losses
 
     def add_predictions_to_data(self):
-        """Add model predictions to dataframe"""
+        """Predict with model and add to dataframe"""
+        self.model = self.predictor.model
         self.model.eval()
-        torch.no_grad()
-        community, community_features, year, week, property, targets = batch
-        predictions, _ = self.model(community, community_features, year, week, property, targets)
 
-        # week and year need to be in train dataset
-        year_tensor = torch.tensor([self.train_year_vocab.get(tensor[year][2].item(),
-                                                             self.train_year_vocab['unknown']) for year in tensor[:][2]], dtype=torch.int)
-        week_tensor = torch.tensor([self.train_year_vocab.get(tensor[week][3].item(),
-                                                                    self.train_week_vocab['unknown']) for week in tensor[:][3]], dtype=torch.int)
+        year_tensor = vocab_replace_tensor(self.dataset.tensors[:][2], self.year_vocab)
+        week_tensor = vocab_replace_tensor(self.dataset.tensors[:][3], self.week_vocab)
+        print(self.dataset.tensors)
         # Create a new TensorDataset with the updated tensors
-        new_tensor = list(tensor)  # Convert tuple to list  for indexing
-        print(new_tensor[3])
-        new_tensor[2] = year_tensor  # Replace the old tensor with the updated one
-        new_tensor[3] = week_tensor # Same for weeks
-        print(new_tensor[3])
-        new_tensor = TensorDataset(*tensor)  # Create new TensorDataset from list
-        tensor = Subset(new_tensor, tensor.indices)  # Use the original indices
+        new_dataset = list(self.dataset.tensors)  # Convert tuple to list
+        print(new_dataset)
+        new_dataset[2] = year_tensor  # Replace the old tensor with the updated one
+        new_dataset[3] = week_tensor # Same for weeks
+        # print(new_dataset[:][0],
+        #       new_dataset[:][1],
+        #       new_dataset[:][2],
+        #       new_dataset[:][3],
+        #       new_dataset[:][4],
+        print(new_dataset[:][5])
+
+        new_dataset = TensorDataset(*new_dataset)  # Create new TensorDataset
 
         # Create DataLoader for prediction
-        loader = DataLoader(tensor, batch_size=256)
+        loader = DataLoader(new_dataset, batch_size=256)
 
         current_idx = 0
         with torch.no_grad():
@@ -389,35 +382,35 @@ class modelmanager:
                 batch = tuple(t.to(self.predictor.device) for t in batch)
                 # Unpack the batch
                 community, community_features, year, week, property, targets = batch
-                print(self.week_length)
-                print("Week Indices Min:", week.min())
-                print("Week Indices Max:", week.max())
-                print(self.n_communities)
-                print("Comm Indices Min:", community.min())
-                print("Comm Indices Max:", community.max())
-                print(self.year_length)
-                print("Year Indices Min:", year.min())
-                print("Year Indices Max:", year.max())
-                self.predictor.optimizer.zero_grad()
-                pred, _ = self.predictor.model(community, community_features, year,
+
+                pred, _ = self.model(community, community_features, year,
                                             week, property, targets)
                 batch_predictions = pred.cpu().numpy()
+
+                predictions = []
+                prediction_indices = []
                 for i, p in enumerate(batch_predictions):
                     if not np.isnan(p).any():  # Check if prediction was actually made
                         predictions.append(p)
                         prediction_indices.append(current_idx + i)
+                # add len of current batch for next one
                 current_idx += len(community)
 
         # Reshape predictions
-        # predictions = np.array(predictions).reshape(-1, 1)
+        predictions = np.array(predictions).reshape(-1, 1)
         print(predictions)
-        # dummy_sequence = np.zeros((predictions.shape[0], sequence_shape[2]))
-        # dummy_sequence[:, 0] = predictions.ravel()  # Put predictions in first column
-        # predictions = self.processor.scalers['sequences'].inverse_transform(dummy_sequence)[:, 0]
+        dummy_sequence = np.zeros((predictions.shape[0], 0))
+        dummy_sequence[:, 0] = predictions.ravel()  # Put predictions in first column
+        scaler = joblib.load("log_price_scaler.pkl")
+        #
+        #scaler = self.dataset.scalers['log_price']
+        predicted_price = scaler.inverse_transform(dummy_sequence)[:, 0]
+        self.dataset.dataframe['predicted_price'] = predicted_price
+        return predicted_price
         # # Add predictions to dataframe
         # # Get existing dataframe
-        # df_with_pred = df.copy()
-
+        # df_with_pred = self.dataset.dataframe.copy
+        #
         # # Initialize predicted_price column with NaN
         # df_with_pred['predicted_value'] = pd.NA
         # df_with_pred['predicted_price'] = pd.NA
@@ -505,3 +498,7 @@ def create_tensor_vocab(tensor):
     # add unknown when value for when not in training data
     vocab["unknown"] = len(vocab)  # Add "unknown" token
     return vocab
+
+def vocab_replace_tensor(tensor, vocab):
+    replaced = [vocab.get(value.item(), vocab['unknown']) for value in tensor]
+    return torch.tensor(replaced, dtype=torch.int)
