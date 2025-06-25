@@ -24,7 +24,9 @@ property_dim=2
 
 #%%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
-model.train_model(epochs = 1)
+model.split_data()
+model.train_model(epochs = 10, batch = 256)
+
 
 #model.add_predictions_to_data()
 #%%

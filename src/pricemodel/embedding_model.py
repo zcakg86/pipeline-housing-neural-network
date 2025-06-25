@@ -286,8 +286,10 @@ class modelmanager:
         self.community_feature_dim = self.dataset.community_feature_dim
         self.week_length = self.dataset.week_length
         self.year_length= self.dataset.year_length
+        self.train_year_length = 0
+        self.train_week_length = 0
 
-    def split_data(self, epochs = 10, batch = 128):
+    def split_data(self):
         """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
             to create index to be used in embedding"""
 
@@ -296,7 +298,7 @@ class modelmanager:
         train_size = int(0.8 * self.dataset.length)
         val_size = self.dataset.length - train_size
 
-        train_dataset, val_dataset = torch.utils.data.random_split(
+        self.train_dataset, self.val_dataset = torch.utils.data.random_split(
             self.dataset.tensors, [train_size, val_size]
         )
 
@@ -310,40 +312,33 @@ class modelmanager:
             vocab["unknown"] = len(vocab)  # Add "unknown" token
             return vocab
 
-        # Create year vocabulary for the TRAINING dataset
-        train_years = sorted(train_dataset[:][2].unique().tolist())
+        year_vocab = create_tensor_vocab(self.train_dataset[:][2])
+        week_vocab = create_tensor_vocab(self.train_dataset[:][3])
 
-        self.train_year_vocab = {year: idx for idx, year in enumerate(train_years)}
-        self.train_year_vocab["unknown"] = len(self.train_year_vocab)  # Add "unknown" token
-        self.train_year_length = len(self.train_year_vocab)
+        self.train_year_length = len(year_vocab)
+        self.train_week_length = len(week_vocab)
 
-        year_train_tensor = torch.tensor([self.train_year_vocab.get(year.item(),self.train_year_vocab['unknown']) for year in train_dataset.dataset.tensors[2]], dtype=torch.int)
-        year_val_tensor = torch.tensor([self.train_year_vocab.get(year.item(),self.train_year_vocab['unknown']) for year in train_dataset.dataset.tensors[2]], dtype=torch.int)
+        def vocab_replace_tensor(tensor, vocab):
+            replaced = [vocab.get(value.item(), vocab['unknown']) for value in tensor]
+            return torch.tensor(replaced, dtype = torch.int)
 
-        # Create year vocabulary for the TRAINING dataset
-        train_weeks = sorted(train_dataset[:][3].unique().tolist())
-        
-        self.train_week_vocab = {year: idx for idx, year in enumerate(train_weeks)}
-        self.train_week_vocab["unknown"] = len(self.train_week_vocab)  # Add "unknown" token
-        self.train_week_length = len(self.train_week_vocab)
-
-        week_train_tensor = torch.tensor([self.train_week_vocab.get(week.item(),self.train_week_vocab['unknown']) for week in train_dataset.dataset.tensors[3]], dtype=torch.int)
-        week_val_tensor = torch.tensor([self.train_week_vocab.get(week.item(),self.train_week_vocab['unknown']) for week in train_dataset.dataset.tensors[3]], dtype=torch.int)
+        year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], year_vocab)
+        year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], year_vocab)
+        week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][3], week_vocab)
+        week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][3], week_vocab)
 
         # Create a new TensorDataset with the updated tensors
-        new_train_dataset = list(train_dataset.dataset.tensors)  # Convert tuple to list
+        new_train_dataset = list(self.train_dataset.dataset.tensors)  # Convert tuple to list
         new_train_dataset[2] = year_train_tensor  # Replace the old tensor with the updated one
         new_train_dataset[3] = week_train_tensor # Same for weeks
+        new_train_dataset = TensorDataset(*new_train_dataset)  # Create new TensorDataset
+        self.train_dataset = Subset(new_train_dataset, self.train_dataset.indices)  # Use the original indices
 
-        new_train_dataset = TensorDataset(*new_train_dataset)  # Create new TensorDatase
-        self.train_dataset = Subset(new_train_dataset, train_dataset.indices)  # Use the original indices
-
-        new_val_dataset = list(val_dataset.dataset.tensors)
+        new_val_dataset = list(self.val_dataset.dataset.tensors)
         new_val_dataset[2] = year_val_tensor  # Replace the old tensor with the updated one
         new_val_dataset[3] = week_val_tensor
-        
         new_val_dataset = TensorDataset(*new_val_dataset)  # Create new TensorDataset
-        self.val_dataset = Subset(new_val_dataset, val_dataset.indices)  # Use the original indices
+        self.val_dataset = Subset(new_val_dataset, self.val_dataset.indices)  # Use the original indices
 
     def train_model(self, epochs=10, batch=128):
         """Function to create final DataLoader and run model training"""
@@ -504,4 +499,9 @@ def create_vocab(df, column, min=None, max=None):
     vocab = {id: index for index, id in enumerate(ids)}
     return vocab
 
-# %%
+def create_tensor_vocab(tensor):
+    values = sorted(tensor.unique().tolist())
+    vocab = {year: idx for idx, year in enumerate(values)}
+    # add unknown when value for when not in training data
+    vocab["unknown"] = len(vocab)  # Add "unknown" token
+    return vocab
