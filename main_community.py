@@ -5,7 +5,8 @@ pd.set_option('mode.chained_assignment', None)
 from src.spatial.geotools import *
 from src.spatial.community_detection import *
 df = pd.read_csv('data/sales_2020_25.csv')
-df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
+# remove filter for second run
+# df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
 df['price_per_sqft']=df['sale_price']/df['sqft']
 df['sale_date']=pd.to_datetime(df['sale_date'])
 df = df.dropna(subset=['sale_price', 'lat', 'lng', 'sqft', 'sale_nbr', 'sale_date','sqft_lot'])
@@ -39,11 +40,15 @@ def run_community_analysis(df, location_var, method, resolution=1):
 # df['community'] = df['h3_08'].map(communities)
 # df.to_csv(f'data/results/sales_202025.csv',
 #                         index=False)
-#%%
-locations_l, communities_l, summary_l = run_community_analysis(df, location_var = 'h3_08', method = 'l', resolution = 1.5)
-#%%
-df['community'] = df['h3_08'].map(communities_l)
-df.to_csv(f'data/sales_202025.csv',
+#%% run 6/26 . to_dict() used as fix since used function above not in src function
+locations_l , communities_l, summary_l = run_community_analysis(df, location_var = 'h3_08', method = 'l', resolution = 1.5)
+community_map = summary_l['locations'].to_dict()
+# this gives you e.g. {'CommunityA': ['loc1', 'loc2'], ...}
+# but we need the inverse mapping: loc -> community
+location_to_community = {loc: comm for comm, locs in community_map.items() for loc in locs}
+
+df['community'] = df['h3_08'].map(location_to_community)
+df.to_csv(f'data/sales_202025_kingco.csv',
                         index=False)
 #%%
 stats = analyze_communities(df, summary_l, location_var = 'h3_08')

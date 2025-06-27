@@ -1,6 +1,6 @@
 #%%
 import pandas as pd
-import h3pandas
+
 df = pd.read_csv('data/kingco_sales.csv')
 df = df[['sale_date','sale_price','sale_nbr','latitude','longitude','sqft','sqft_lot',
          'year_built','year_reno','sqft_fbsmt','sqft_1','grade','fbsmt_grade','condition',

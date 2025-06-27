@@ -44,5 +44,6 @@ def h3_map(df, color, group_by=None):
     )
     
     plt.show()
+    plt.savefig('map_test.png')
     return ax
 # %%
