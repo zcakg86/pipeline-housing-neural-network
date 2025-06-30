@@ -4,6 +4,7 @@ import torch.nn as nn
 import pandas as pd
 import numpy as np
 import joblib
+import os
 from torch.utils.data import Dataset, DataLoader, TensorDataset, Subset
 from sklearn.preprocessing import StandardScaler
 from datetime import datetime
@@ -23,6 +24,8 @@ class dataset:
         self.week_length = None
         self.scalers = {}
         self.indices = []
+        self.directory = 'outputs/models'
+        self.timestamp = None
         self.community_df = pd.DataFrame()
         self.community_array = np.empty(0)
         self.community_feature_dim = None
@@ -39,7 +42,7 @@ class dataset:
         df['sale_date'] = pd.to_datetime(df['sale_date'])
         # Sort by date
         df = df.sort_values('sale_date')
-        # Need to filter out non-null valus
+        # Need to filter out non-null values
         df = df.dropna(subset=['sale_price', 'lat', 'lng', 'sqft', 'sale_nbr', 'sale_date','sqft_lot'])
         # And Zero values
         df = df[df['sale_price'] > 0]
@@ -55,7 +58,6 @@ class dataset:
 
         self.week_vocab = {value: index for index, value in enumerate(range(1,54))}
         self.year_vocab = {value: index for index, value in enumerate(range(2020,2026))}
-        self.week_vocab = {community_id: index for index, community_id in enumerate(range(1,54))}
 
         self.community_vocab = create_vocab(df,'community')
         #community_ids = sorted(df['community'].unique()) # Sort for consistent order across runs
@@ -90,6 +92,9 @@ class dataset:
             Parameters:
                 scale_mode (str): If scalers need to be fit ("fit") on data or read from file for transformation only.
         """
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.directory = os.path.join(self.directory, self.timestamp)
+        os.makedirs(self.directory,exist_ok = True)
         for feature in ['sqft','sqft_lot','log_price']: # List the features to scale
             if scale_mode == "fit":
                 self.scalers[feature] = StandardScaler() # Create a new scaler for each feature
@@ -97,10 +102,10 @@ class dataset:
                 # Save the scaler
                 print(f"{feature}_scaled")
                 print(f"{feature}_scaled" in self.dataframe.columns)
-                joblib.dump(self.scalers[feature], f"{feature}_scaler.pkl")
+                joblib.dump(self.scalers[feature], os.path.join(self.directory, f"{feature}_scaler.pkl"))
             # else: 
             #     # Load the pre-fitted scaler
-                self.scalers[feature] = joblib.load(f"{feature}_scaler.pkl")
+                self.scalers[feature] = joblib.load(os.path.join(self.directory, f"{feature}_scaler.pkl"))
             #     self.dataframe[feature] = scaler.transform(self.dataframe[[feature]])
                 self.dataframe[f"{feature}_scaled"] = self.scalers[feature].transform(self.dataframe[[feature]]) # Fit and transform
 
@@ -108,10 +113,10 @@ class dataset:
         if scale_mode == "fit":
             self.scalers['community'] = StandardScaler()
             self.community_array = self.scalers[feature].fit_transform(self.community_array)
-            joblib.dump(self.scalers['community'], "communities_scaler.pkl")
+            joblib.dump(self.scalers['community'], os.path.join(self.directory, "communities_scaler.pkl"))
 
         else: 
-            self.scalers['community'] = joblib.load("communities_scaler.pkl")
+            self.scalers['community'] = joblib.load(os.path.join(self.directory, "communities_scaler.pkl"))
             self.community_array = self.scalers.transform(self.community_array)
 
         # Create tensor with each observation being contiguous, and scale fields.
@@ -387,7 +392,8 @@ class modelmanager:
 
         # Reshape predictions
         predictions = np.array(predictions).reshape(-1, 1)
-        scaler = joblib.load("log_price_scaler.pkl")
+        scaler_path = os.path.join(self.dataset.directory, "log_price_scaler.pkl")
+        scaler = joblib.load(scaler_path)
 
         predicted_log_price = scaler.inverse_transform(predictions).ravel()
         # initialise dataframe columns
@@ -400,12 +406,13 @@ class modelmanager:
         self.dataset.dataframe['price_error']= self.dataset.dataframe['sale_price']-self.dataset.dataframe['predicted_price']
         self.dataset.dataframe['pct_error']=self.dataset.dataframe['price_error']/self.dataset.dataframe['sale_price']
 
-    def save_model(self, path="outputs/models/"):
+    def save_model(self):
         """Save model, config, processor, and results"""
         import os
+        path = self.dataset.directory
         os.makedirs(path, exist_ok=True)
         config = {}
-        for name, module in self.model.model.named_modules():
+        for name, module in self.predictor.model.named_modules():
             print(f"Module name: {name}")
             params = {}
             for param_name, param in module.named_parameters(recurse=False):
@@ -414,30 +421,37 @@ class modelmanager:
             config[name] = params
         # Save model state
         torch.save({
-            'model_state_dict': self.model.model.state_dict(),
-            'optimizer_state_dict': self.model.optimizer.state_dict(),
+            'model_state_dict': self.predictor.model.state_dict(),
+            'optimizer_state_dict': self.predictor.optimizer.state_dict(),
             'model_config': config,
             'results': self.results
-        }, f'{path}{self.model_name}_{self.results["timestamp"]}.pth')
+        }, f'{self.dataset.directory}/model.pth')
 
-        # Save processor (scalers and parameters)
-        with open(f'{path}{self.model_name}_{self.results["timestamp"]}_processor.pkl', 'wb') as f:
-            pickle.dump(self.processor, f)
+        with open(f'{self.dataset.directory}/community_vocab.json', 'w') as f:
+            json.dump(self.dataset.community_vocab, f)
 
         # Save results separately as JSON
-        with open(f'{path}{self.model_name}_{self.results["timestamp"]}_results.json', 'w') as f:
+        with open(f'{self.dataset.directory}/results.json', 'w') as f:
             json.dump(self.results, f)
 
           # Save config as JSON
-        with open(f'{path}{self.model_name}_{self.results["timestamp"]}_config.json', 'w') as f:
+        with open(f'{self.dataset.directory}/config.json', 'w') as f:
             json.dump(config, f)
+
+        # Save processor (scalers and parameters)
+        with open(f'{self.dataset.directory}/week_vocab.json', 'w') as f:
+            json.dump(self.week_vocab, f)
+        # Save processor (scalers and parameters)
+        with open(f'{self.dataset.directory}/year_vocab.json', 'w') as f:
+            json.dump(self.year_vocab, f)
+
 
         print(f"Model and results saved in {path}")
 
 def create_vocab(df, column, min=None, max=None):
     # if min && max:
     ids = sorted(df[column].unique())
-    vocab = {id: index for index, id in enumerate(ids)}
+    vocab = {int(id): index for index, id in enumerate(ids)}
     return vocab
 
 def create_tensor_vocab(tensor):

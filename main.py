@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 from importlib import reload
 from embedding_model import *
-reload(embedding_model)
+
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
 df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
@@ -25,11 +25,12 @@ property_dim=2
 #%%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
 model.split_data()
-model.train_model(epochs = 500, batch = 256, learning_rate = 0.01)
+model.train_model(epochs = 10, batch = 256, learning_rate = 0.01)
 model.add_predictions_to_data()
 data.dataframe.groupby(['year'])['pct_error'].mean()
 data.dataframe.groupby(['year'])['sale_price'].median()
 #model.add_predictions_to_data()
+model.save_model()
 
 # checking dataframe index matches tensor
 scaler_sqft = data.scalers['sqft']
