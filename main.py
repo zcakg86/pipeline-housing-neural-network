@@ -3,6 +3,9 @@
 #from src.pricemodel.embedding_model import *
 # need to run
 import sys
+
+from src.pricemodel.modelanalyzer import ModelAnalyzer
+
 sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 from importlib import reload
 from embedding_model import *
@@ -25,13 +28,29 @@ property_dim=2
 #%%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
 model.split_data()
-model.train_model(epochs = 10, batch = 256, learning_rate = 0.01)
+model.train_model(epochs = 100, batch = 256, learning_rate = 0.01, analyze_every=10)
+model.results['feature_importance'][1]['community_features']
+model.results['attention_evolution']
+model.predictor
+
+
+for name, param in (model.predictor.model.named_parameters()):
+    if param.requires_grad:
+        print(f"Layer: {name} | Mean: {param.data.mean()} | Std: {param.data.std()}")
+for name, param in (model.predictor.model.named_parameters()):
+    if param.requires_grad and param.grad is not None:
+        print(f"Layer: {name} | Grad Mean: {param.grad.mean()} | Grad Std: {param.grad.std()}")
+for name, param in (model.predictor.model.named_parameters()):
+    print(name, param.requires_grad)
+
 model.add_predictions_to_data()
 data.dataframe.groupby(['year'])['pct_error'].mean()
 data.dataframe.groupby(['year'])['sale_price'].median()
 #model.add_predictions_to_data()
 model.save_model()
 
+analysis = ModelAnalyzer(model.model,device = model.device)
+analysis.visualize_attention_analysis()
 # checking dataframe index matches tensor
 scaler_sqft = data.scalers['sqft']
 scaler_sqft.inverse_transform(data.tensors.tensors[4][:3,0].reshape(1,-1))

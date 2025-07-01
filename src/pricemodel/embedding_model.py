@@ -14,6 +14,9 @@ import json
 #     print("HI")
 def hi2():
     print("H3")
+from embedding_new import *
+from modelanalyzer import *
+#from layerablation import *
 
 # Function to prepare data
 class dataset:
@@ -164,7 +167,7 @@ class embeddingmodel(nn.Module):
 
         self.relu = nn.ReLU().to(self.device)
 
-    def forward(self, community_indices, community_features, year, week, property_features, targets):
+    def forward(self, community_indices, community_features, year, week, property_features):
         # Embeddings
 
         community_embeddings = self.community_embedding(community_indices)
@@ -194,13 +197,16 @@ class embeddingmodel(nn.Module):
         # Output Layer
         output = self.output_layer(hidden2)
         #print('output shape', output.shape)
-        return output, attention_output.shape
+        return output
 
 class price_predictor:
     def __init__(self, device, embedding_dim, hidden_dim, property_dim, community_embedding_length,
                  community_feature_dim, year_length, week_length, learning_rate):
         self.device = device
-        self.model = embeddingmodel(self.device, embedding_dim, hidden_dim, property_dim,
+        # self.model = embeddingmodel(self.device, embedding_dim, hidden_dim, property_dim,
+        #                             community_embedding_length, community_feature_dim,
+        #                             year_length, week_length)
+        self.model = EmbeddingModelEnhanced(self.device, embedding_dim, hidden_dim, property_dim,
                                     community_embedding_length, community_feature_dim,
                                     year_length, week_length)
         # Specify loss measure
@@ -210,9 +216,14 @@ class price_predictor:
     def eval(self):
         self.model.eval()
 
-    def train(self, train_loader, val_loader, epochs):
+    def train(self, train_loader, val_loader, epochs, analyze_every=10):
         train_losses = []
         val_losses = []
+        attention_evolution = []
+        feature_importance = []
+        analyzer = ModelAnalyzer(self.model, self.device)
+        analyzer.hook_attention_weights()
+
         for epoch in range(epochs):
             # Training
             self.model.train()
@@ -225,9 +236,9 @@ class price_predictor:
                 community, community_features, year, week, property, targets = batch
                 self.optimizer.zero_grad()
 
-                predictions, _ = self.model(community, community_features, year,
-                                            week, property, targets)
-                # print(f'attention shape {_}')
+                predictions = self.model(community, community_features, year,
+                                            week, property)
+
                 if torch.isnan(predictions).any():
                     print(f"{torch.isnan(predictions).sum().item()} NaN values detected in outputs out of {torch.numel(predictions)}. Skipping this iteration.")
                     continue
@@ -251,7 +262,9 @@ class price_predictor:
                     community, community_features, year, week, property, targets = batch
                     # print(f'Val Community Indices Min: {community.min().item()} and ',
                     #       f'Max: {community.max().item()}')
-                    predictions, _ = self.model(community, community_features, year, week, property, targets)
+                    predictions = self.model(community, community_features, year, week, property)
+                    loss = self.criterion(predictions.squeeze(), targets)  # Fixed: calculate loss here
+
                     val_loss += loss.item()
 
             train_losses.append(train_loss / len(train_loader))
@@ -261,7 +274,18 @@ class price_predictor:
                   f'Train Loss: {train_losses[-1]:.4f}, '
                   f'Val Loss: {val_losses[-1]:.4f}')
 
-        return train_losses, val_losses
+            if epoch % analyze_every == 0:
+                print(f'epoch % analyze_every {epoch % analyze_every}')
+                print(f'Epoch: {epoch}, Analyze every: {analyze_every}')
+                attention_stats = analyzer.analyze_attention_patterns(val_loader, num_batches=1)
+                attention_evolution.append({
+                    'epoch': epoch,
+                    'stats': attention_stats
+                })
+                print(f"Epoch {epoch}: Mean attention weight: {np.mean(attention_stats['mean_weights']):.4f}")
+                feature_importance.append(analyzer.compute_feature_importance_gradients(val_loader, num_batches=5))
+
+        return train_losses, val_losses, feature_importance, attention_evolution
     
 
 class modelmanager:
@@ -330,10 +354,10 @@ class modelmanager:
         new_val_dataset = TensorDataset(*new_val_dataset)  # Create new TensorDataset
         self.val_dataset = Subset(new_val_dataset, self.val_dataset.indices)  # Use the original indices
 
-    def train_model(self, epochs=10, batch=128, learning_rate = 0.01):
+    def train_model(self, epochs=10, batch=128, learning_rate = 0.01, analyze_every=10):
         """Function to create final DataLoader and run model training"""
         train_loader = DataLoader(self.train_dataset, batch_size=batch, shuffle=True)
-        val_loader = DataLoader(self.val_dataset, batch_size=batch)
+        val_loader = DataLoader(self.val_dataset, batch_size=batch, drop_last = True)
 
         # Create and train model. price_predictor contains model spec.
         self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
@@ -343,10 +367,13 @@ class modelmanager:
                                     self.train_week_length,
                                     learning_rate)
         
-        train_losses, val_losses = self.predictor.train(train_loader, val_loader, epochs = epochs)
+        train_losses, val_losses, feature_importance, attention_evolution = self.predictor.train(train_loader, val_loader, epochs = epochs,
+                                                                            analyze_every=analyze_every)
 
         self.results['train_losses'] = train_losses
         self.results['val_losses'] = val_losses
+        self.results['feature_importance'] = feature_importance
+        self.results['attention_evolution'] = attention_evolution
 
     def add_predictions_to_data(self):
         """Predict with model and add to dataframe"""
@@ -379,7 +406,7 @@ class modelmanager:
                 # Unpack the batch
                 community, community_features, year, week, property, targets = batch
 
-                pred, _ = self.model(community, community_features, year,
+                pred = self.model(community, community_features, year,
                                             week, property, targets)
                 batch_predictions = pred.cpu().numpy()
 
