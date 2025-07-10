@@ -28,10 +28,9 @@ property_dim=2
 #%%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
 model.split_data()
-model.train_model(epochs = 100, batch = 256, learning_rate = 0.01, analyze_every=10)
-model.results['feature_importance'][1]['community_features']
-model.results['attention_evolution']
-model.predictor
+model.train_model(epochs = 1000, batch = 256, learning_rate = 0.01, analyze_every=100)
+model.results['feature_importance']['embeddings']
+model.results
 
 
 for name, param in (model.predictor.model.named_parameters()):

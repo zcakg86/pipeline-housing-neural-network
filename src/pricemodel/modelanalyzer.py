@@ -101,6 +101,7 @@ class ModelAnalyzer:
             targets = targets.to(self.device)
 
             # Forward pass
+            self.model.zero_grad()
             outputs = self.model(community_indices, community_features, year, week, property_features)
 
             # Compute gradients
@@ -116,6 +117,19 @@ class ModelAnalyzer:
                 feature_importance['property_features'].append(
                     property_features.grad.abs().mean(dim=0).cpu().numpy()
                 )
+            # Collect gradient magnitudes for embeddings
+            if self.model.community_embedding.weight.grad is not None:
+                feature_importance['embeddings']['community'].append(
+                    self.model.community_embedding.weight.grad.abs().mean().item()
+                )
+            if self.model.year_embedding.weight.grad is not None:
+                feature_importance['embeddings']['year'].append(
+                    self.model.year_embedding.weight.grad.abs().mean().item()
+                )
+            if self.model.week_embedding.weight.grad is not None:
+                feature_importance['embeddings']['week'].append(
+                    self.model.week_embedding.weight.grad.abs().mean().item()
+                )
 
             # Clean up
             self.model.zero_grad()
@@ -124,6 +138,10 @@ class ModelAnalyzer:
         for key in ['community_features', 'property_features']:
             if feature_importance[key]:
                 feature_importance[key] = np.mean(feature_importance[key], axis=0)
+
+        for key in ['community', 'year', 'week']:
+            if feature_importance['embeddings'][key]:
+                feature_importance['embeddings'][key] = np.mean(feature_importance['embeddings'][key])
 
         return feature_importance
 

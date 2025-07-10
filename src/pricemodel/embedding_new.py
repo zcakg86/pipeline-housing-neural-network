@@ -33,7 +33,7 @@ class EmbeddingModelEnhanced(nn.Module):
 
         # Calculate combined embedding dimension
         self.combined_embedding_dim = 3 * embedding_dim
-        self.embed_dim_attention = 2 * hidden_dim + self.combined_embedding_dim
+        self.embed_dim_attention = 1 * hidden_dim + self.combined_embedding_dim
 
         # IMPORTANT: Initialize attention layer here, not in forward()
         self.attention_layer = nn.MultiheadAttention(
@@ -71,17 +71,17 @@ class EmbeddingModelEnhanced(nn.Module):
             self.intermediate_outputs['week_embeddings'] = week_embeddings.detach()
 
         # Feature Processing
-        processed_community_features = self.relu(self.community_feature_layer(community_features))
+        #processed_community_features = self.relu(self.community_feature_layer(community_features))
         processed_property_features = self.relu(self.property_feature_layer(property_features))
 
         if self.save_intermediates:
-            self.intermediate_outputs['processed_community_features'] = processed_community_features.detach()
+        #    self.intermediate_outputs['processed_community_features'] = processed_community_features.detach()
             self.intermediate_outputs['processed_property_features'] = processed_property_features.detach()
 
         # Combine embeddings and features
-        combined_features = torch.cat([combined_embeddings, processed_community_features, processed_property_features],
-                                      dim=-1)
-
+        combined_features = torch.cat([combined_embeddings, #processed_community_features,
+                                       processed_property_features],
+                                       dim=-1)
         # Reshape for attention
         combined_features = combined_features.unsqueeze(1)
         # print(f'Combined features shape: {combined_features.shape}')
