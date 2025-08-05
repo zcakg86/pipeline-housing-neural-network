@@ -144,6 +144,8 @@ class ModelAnalyzer:
             if feature_importance['embeddings'][key]:
                 feature_importance['embeddings'][key] = np.mean(feature_importance['embeddings'][key])
 
+        # convert property_feature array to list
+        feature_importance['property_features']=list(feature_importance['property_features'])
         return feature_importance
 
     def visualize_attention_analysis(self, attention_stats):
