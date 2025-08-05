@@ -1,15 +1,16 @@
 #%%
-
-#from src.pricemodel.embedding_model import *
-# need to run
 import sys
+sys.path.insert(0,'src/pricemodel')
+#sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 
-from src.pricemodel.modelanalyzer import ModelAnalyzer
-
-sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 from importlib import reload
-from embedding_model import *
 
+#%%
+from embedding_model import *
+from embedding_new import *
+from modelanalyzer import ModelAnalyzer
+
+#%%
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
 df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
@@ -29,8 +30,7 @@ property_dim=2
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
 model.split_data()
 model.train_model(epochs = 1000, batch = 256, learning_rate = 0.01, analyze_every=100)
-model.results['feature_importance']['embeddings']
-model.results
+model.results['feature_importance']
 
 
 for name, param in (model.predictor.model.named_parameters()):
@@ -61,3 +61,4 @@ scaler_price = data.scalers['log_price']
 scaler_price.inverse_transform(data.tensors.tensors[5].detach().cpu().numpy().reshape(-1,1))
 
 scaler_price.inverse_transform([4,3])
+# %%

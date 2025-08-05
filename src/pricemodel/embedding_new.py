@@ -1,9 +1,5 @@
 import torch
 import torch.nn as nn
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 
 class EmbeddingModelEnhanced(nn.Module):
     def __init__(self, device, embedding_dim, hidden_dim, property_dim,
