@@ -57,9 +57,9 @@ class ModelAnalyzer:
                 # Collect attention weights
                 if self.model.last_attention_weights is not None:
                     weights = self.model.last_attention_weights.cpu().numpy()
-                    attention_stats['mean_weights'].append(np.mean(weights))
-                    attention_stats['std_weights'].append(np.std(weights))
-                    attention_stats['max_weights'].append(np.max(weights))
+                    attention_stats['mean_weights'].append(float(np.mean(weights)))
+                    attention_stats['std_weights'].append(float(np.std(weights)))
+                    attention_stats['max_weights'].append(float(np.max(weights)))
 
                     if attention_stats['feature_attention_map'] is None:
                         attention_stats['feature_attention_map'] = weights
@@ -68,6 +68,8 @@ class ModelAnalyzer:
 
         # Average the feature attention map
         if attention_stats['feature_attention_map'] is not None:
+            # x /= y : x = x / y: 
+            # min as weights will only be for first num_batches 
             attention_stats['feature_attention_map'] /= min(num_batches, len(dataloader))
 
         self.model.save_intermediates = False
@@ -142,10 +144,10 @@ class ModelAnalyzer:
 
         for key in ['community', 'year', 'week']:
             if feature_importance['embeddings'][key]:
-                feature_importance['embeddings'][key] = np.mean(feature_importance['embeddings'][key])
+                feature_importance['embeddings'][key] = float(np.mean(feature_importance['embeddings'][key]))
 
         # convert property_feature array to list
-        feature_importance['property_features']=list(feature_importance['property_features'])
+        feature_importance['property_features']=list(map(float,feature_importance['property_features']))
         return feature_importance
 
     def visualize_attention_analysis(self, attention_stats):

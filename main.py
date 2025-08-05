@@ -6,10 +6,15 @@ sys.path.insert(0,'src/pricemodel')
 from importlib import reload
 
 #%%
+import embedding_model
+import embedding_new
+import modelanalyzer
+reload(embedding_model)
+reload(embedding_new)
+reload(modelanalyzer)
 from embedding_model import *
 from embedding_new import *
 from modelanalyzer import ModelAnalyzer
-
 #%%
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
@@ -21,7 +26,6 @@ data._prepare_data(df)
 data._get_community_features()
 # Scale and Create tensors
 data._processor(scale_mode = 'fit')
-
 embedding_dim=8
 hidden_dim=8
 property_dim=2
@@ -31,8 +35,12 @@ model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
 model.split_data()
 model.train_model(epochs = 1000, batch = 256, learning_rate = 0.01, analyze_every=100)
 model.results['feature_importance']
-
-
+#%%
+model.save_model()
+model.add_predictions_to_data()
+#%%
+model.results['feature_importance'][0]['property_features']
+#%%
 for name, param in (model.predictor.model.named_parameters()):
     if param.requires_grad:
         print(f"Layer: {name} | Mean: {param.data.mean()} | Std: {param.data.std()}")
