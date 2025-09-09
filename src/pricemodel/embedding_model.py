@@ -270,21 +270,21 @@ class price_predictor:
             train_losses.append(train_loss / len(train_loader))
             val_losses.append(val_loss / len(val_loader))
 
-            print(f'Epoch [{epoch+1}/{epochs}], '
+            if (epoch+1)%analyze_every == 0:
+                attention_stats = analyzer.analyze_attention_patterns(val_loader, num_batches=5)
+                attention_evolution.append({
+                    'epoch': epoch+1}|attention_stats)
+                print(f'Epoch [{epoch+1}/{epochs}], '
+                  f'Train Loss: {train_losses[-1]:.4f}, '
+                  f'Val Loss: {val_losses[-1]:.4f}, '
+                  f'Mean attention weight: {np.mean(attention_stats["mean_weights"]):.4f}')
+                feature_importance.append(analyzer.compute_feature_importance_gradients(val_loader, num_batches=5))
+                print(self.model.intermediate_outputs.get('attention_output'))
+
+            else:
+                print(f'Epoch [{epoch+1}/{epochs}], '
                   f'Train Loss: {train_losses[-1]:.4f}, '
                   f'Val Loss: {val_losses[-1]:.4f}')
-
-            if epoch % analyze_every == 0:
-                print(f'epoch % analyze_every {epoch % analyze_every}')
-                print(f'Epoch: {epoch}, Analyze every: {analyze_every}')
-                attention_stats = analyzer.analyze_attention_patterns(val_loader, num_batches=1)
-                attention_evolution.append({
-                    'epoch': epoch,
-                    'stats': attention_stats
-                })
-                print(f"Epoch {epoch}: Mean attention weight: {np.mean(attention_stats['mean_weights']):.4f}")
-                feature_importance.append(analyzer.compute_feature_importance_gradients(val_loader, num_batches=5))
-
         return train_losses, val_losses, feature_importance, attention_evolution
     
 
@@ -300,6 +300,7 @@ class modelmanager:
             'train_losses': [],
             'val_losses': [],
             'metrics': {},
+            'attention_evolution':{},
             'timestamp': datetime.now().strftime("%Y%m%d_%H%M%S")
         }
         self.embedding_dim = embedding_dim
@@ -369,7 +370,6 @@ class modelmanager:
         
         train_losses, val_losses, feature_importance, attention_evolution = self.predictor.train(train_loader, val_loader, epochs = epochs,
                                                                             analyze_every=analyze_every)
-
         self.results['train_losses'] = train_losses
         self.results['val_losses'] = val_losses
         self.results['feature_importance'] = feature_importance
@@ -440,10 +440,8 @@ class modelmanager:
         os.makedirs(path, exist_ok=True)
         config = {}
         for name, module in self.predictor.model.named_modules():
-            print(f"Module name: {name}")
             params = {}
             for param_name, param in module.named_parameters(recurse=False):
-                print(f"\tParameter name: {param_name}, shape: {param.shape}")
                 params[param_name] = [param.shape]
             config[name] = params
         # Save model state
@@ -491,3 +489,5 @@ def create_tensor_vocab(tensor):
 def vocab_replace_tensor(tensor, vocab):
     replaced = [vocab.get(value.item(), vocab['unknown']) for value in tensor]
     return torch.tensor(replaced, dtype=torch.int)
+
+# %%

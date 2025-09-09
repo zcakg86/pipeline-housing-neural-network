@@ -1,7 +1,27 @@
-from src.pricemodel.analysis import *
-model = '20250211_144531'
-model_p = f'outputs/models/property_model_{model}.pth'
-proc_p = f'outputs/models/property_model_{model}_processor.pkl'
+#%%
+import sys
+sys.path.insert(0,'src/pricemodel')
+#sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 
-analyze_saved_model_features(model_p,proc_p)
+from importlib import reload
 
+#%%
+import embedding_model
+import embedding_new
+import modelanalyzer
+reload(embedding_model)
+reload(embedding_new)
+reload(modelanalyzer)
+from embedding_model import *
+from embedding_new import *
+from modelanalyzer import ModelAnalyzer
+#%%
+model = '20250805_160603'
+model_p = f'outputs/models/{model}/model.pth'
+device = torch.device('mps' if torch.mps.is_available()
+                                   else 'cuda' if torch.cuda.is_available()
+                                   else 'cpu')
+
+#%%
+model = modelmanager.load_saved_model()
+# %%
