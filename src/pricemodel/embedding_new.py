@@ -25,15 +25,16 @@ class EmbeddingModelEnhanced(nn.Module):
 
         # Feature Processing Layers
         self.community_feature_layer = nn.Linear(community_feature_dim, hidden_dim).to(self.device)
-        self.property_feature_layer = nn.Linear(property_dim, hidden_dim).to(self.device)
+        self.property_feature_layer = nn.Linear(property_dim, embedding_dim).to(self.device)
 
         # Calculate combined embedding dimension
         self.combined_embedding_dim = 3 * embedding_dim
         self.embed_dim_attention = 1 * hidden_dim + self.combined_embedding_dim
 
-        # IMPORTANT: Initialize attention layer here, not in forward()
+        # Initialize attention layer
+        # Need all stacked layers in attention layer to have equal dims, including feature layer...
         self.attention_layer = nn.MultiheadAttention(
-            embed_dim=self.embed_dim_attention,
+            embed_dim=embedding_dim,
             num_heads=2,
             batch_first=True,
             device = self.device)
@@ -60,7 +61,7 @@ class EmbeddingModelEnhanced(nn.Module):
         year_embeddings = self.year_embedding(year)
         week_embeddings = self.week_embedding(week)
         combined_embeddings = torch.cat([community_embeddings, year_embeddings, week_embeddings], dim=-1)
-
+                                  
         if self.save_intermediates:
             self.intermediate_outputs['community_embeddings'] = community_embeddings.detach()
             self.intermediate_outputs['year_embeddings'] = year_embeddings.detach()
@@ -73,30 +74,47 @@ class EmbeddingModelEnhanced(nn.Module):
         if self.save_intermediates:
         #    self.intermediate_outputs['processed_community_features'] = processed_community_features.detach()
             self.intermediate_outputs['processed_property_features'] = processed_property_features.detach()
+        # Cm out to try stacking for attention weights
+        # # Reshape for attention
+        # combined_features = combined_features.unsqueeze(1)
+        # # print(f'Combined features shape: {combined_features.shape}')
+        # # Combine embeddings and features
+        # combined_features = torch.cat([combined_embeddings, #processed_community_features,
+        #                                processed_property_features],
+        #                                dim=-1)
+        # attention_output = attention_output.squeeze(1)
+        # # Attention Layer with weight extraction
+        # attention_output, attention_weights = self.attention_layer(
+        #     comings_features, comings_features, comings_features,
+        #     need_weights=True, average_attn_weights=False
+        # )
+        # hidden1 = self.relu(self.hidden_layer1(attention_output))
 
-        # Combine embeddings and features
-        combined_features = torch.cat([combined_embeddings, #processed_community_features,
-                                       processed_property_features],
-                                       dim=-1)
-        # Reshape for attention
-        combined_features = combined_features.unsqueeze(1)
-        # print(f'Combined features shape: {combined_features.shape}')
+
+
+        # Stack embedding and property layers
+        tokens = torch.stack([community_embeddings, year_embeddings, week_embeddings, processed_property_features],
+                             dim = 1)
+
         # Attention Layer with weight extraction
         attention_output, attention_weights = self.attention_layer(
-            combined_features, combined_features, combined_features,
-            need_weights=True, average_attn_weights=True
+            tokens, tokens, tokens,
+            need_weights=True, average_attn_weights=False
         )
-        attention_output = attention_output.squeeze(1)
 
         # Store attention weights
-        self.last_attention_weights = attention_weights
+        self.last_attention_weights = attn_w.detach()
+
         # print(f'self.save_intermediates = {self.save_intermediates}')
         if self.save_intermediates:
             self.intermediate_outputs['attention_output'] = attention_output.detach()
             self.intermediate_outputs['attention_weights'] = attention_weights.detach()
+            
+        pooled = attn_out.mean(dim=1) 
 
         # Hidden Layers
-        hidden1 = self.relu(self.hidden_layer1(attention_output))
+    
+        hidden1 = self.relu(self.hidden_layer1(pooled))
         hidden2 = self.relu(self.hidden_layer2(hidden1))
 
         if self.save_intermediates:
@@ -107,24 +125,5 @@ class EmbeddingModelEnhanced(nn.Module):
         output = self.output_layer(hidden2)
 
         return output
-
-
-def convert_existing_model(old_model_state_dict, device, model_params):
-    """Convert existing model checkpoint to enhanced version"""
-    # Create new model
-    new_model = EmbeddingModelEnhanced(device, **model_params)
-
-    # Copy weights from old model
-    new_state_dict = new_model.state_dict()
-
-    for key, value in old_model_state_dict.items():
-        if key in new_state_dict and new_state_dict[key].shape == value.shape:
-            new_state_dict[key] = value
-
-    new_model.load_state_dict(new_state_dict, strict=False)
-
-    # Note: Attention layer weights will be randomly initialized
-    print("Model converted. Note: Attention layer has been randomly initialized.")
-    print("Consider fine-tuning the model for a few epochs to adapt the attention weights.")
 
     return new_model
