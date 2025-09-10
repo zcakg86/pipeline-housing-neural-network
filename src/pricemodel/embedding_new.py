@@ -19,17 +19,16 @@ class EmbeddingModelEnhanced(nn.Module):
         self.year_length = year_length
 
         # Embedding Layers
-        self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim).to(self.device)
-        self.year_embedding = nn.Embedding(int(year_length), embedding_dim).to(self.device)
-        self.week_embedding = nn.Embedding(int(week_length), embedding_dim).to(self.device)
-
+        self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
+        self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
+        self.week_embedding = nn.Embedding(int(week_length), embedding_dim)
         # Feature Processing Layers
-        self.community_feature_layer = nn.Linear(community_feature_dim, hidden_dim).to(self.device)
-        self.property_feature_layer = nn.Linear(property_dim, embedding_dim).to(self.device)
+        self.community_feature_layer = nn.Linear(community_feature_dim, hidden_dim)
+        self.property_feature_layer = nn.Linear(property_dim, embedding_dim)
 
-        # Calculate combined embedding dimension
-        self.combined_embedding_dim = 3 * embedding_dim
-        self.embed_dim_attention = 1 * hidden_dim + self.combined_embedding_dim
+        # # Calculate combined embedding dimension
+        # self.combined_embedding_dim = 3 * embedding_dim
+        # self.embed_dim_attention = 1 * hidden_dim + self.combined_embedding_dim
 
         # Initialize attention layer
         # Need all stacked layers in attention layer to have equal dims, including feature layer...
@@ -40,7 +39,7 @@ class EmbeddingModelEnhanced(nn.Module):
             device = self.device)
 
         # Hidden and Output Layers
-        self.hidden_layer1 = nn.Linear(self.embed_dim_attention, hidden_dim).to(self.device)
+        self.hidden_layer1 = nn.Linear(embedding_dim, hidden_dim).to(self.device)
         self.hidden_layer2 = nn.Linear(hidden_dim, hidden_dim).to(self.device)
         self.output_layer = nn.Linear(hidden_dim, 1).to(self.device)
 
@@ -103,7 +102,7 @@ class EmbeddingModelEnhanced(nn.Module):
         )
 
         # Store attention weights
-        self.last_attention_weights = attn_w.detach()
+        self.last_attention_weights = attention_weights.detach()
 
         # print(f'self.save_intermediates = {self.save_intermediates}')
         if self.save_intermediates:
@@ -125,5 +124,3 @@ class EmbeddingModelEnhanced(nn.Module):
         output = self.output_layer(hidden2)
 
         return output
-
-    return new_model
