@@ -206,9 +206,9 @@ class price_predictor:
         # self.model = embeddingmodel(self.device, embedding_dim, hidden_dim, property_dim,
         #                             community_embedding_length, community_feature_dim,
         #                             year_length, week_length)
-        self.model = EmbeddingModelEnhanced(self.device, embedding_dim, hidden_dim, property_dim,
+        self.model = EmbeddingModelEnhanced(embedding_dim, hidden_dim, property_dim,
                                     community_embedding_length, community_feature_dim,
-                                    year_length, week_length)
+                                    year_length, week_length).to(device)
         # Specify loss measure
         self.criterion = nn.MSELoss()
         # And Adam optimiser

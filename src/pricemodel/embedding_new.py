@@ -2,12 +2,12 @@ import torch
 import torch.nn as nn
 
 class EmbeddingModelEnhanced(nn.Module):
-    def __init__(self, device, embedding_dim, hidden_dim, property_dim,
+    def __init__(self, embedding_dim, hidden_dim, property_dim,
                  community_embedding_length, community_feature_dim,
                  year_length, week_length):
         """Enhanced model with proper attention layer initialization and weight tracking"""
         super().__init__()
-        self.device = device
+
         # Layer dims
         self.property_dim = property_dim
         self.embedding_dim = embedding_dim
