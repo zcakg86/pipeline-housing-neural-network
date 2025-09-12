@@ -35,15 +35,14 @@ class EmbeddingModelEnhanced(nn.Module):
         self.attention_layer = nn.MultiheadAttention(
             embed_dim=embedding_dim,
             num_heads=2,
-            batch_first=True,
-            device = self.device)
+            batch_first=True)
 
         # Hidden and Output Layers
-        self.hidden_layer1 = nn.Linear(embedding_dim, hidden_dim).to(self.device)
-        self.hidden_layer2 = nn.Linear(hidden_dim, hidden_dim).to(self.device)
-        self.output_layer = nn.Linear(hidden_dim, 1).to(self.device)
+        self.hidden_layer1 = nn.Linear(embedding_dim, hidden_dim)
+        self.hidden_layer2 = nn.Linear(hidden_dim, hidden_dim)
+        self.output_layer = nn.Linear(hidden_dim, 1)
 
-        self.relu = nn.ReLU().to(self.device)
+        self.relu = nn.ReLU()
 
         # Storage for attention weights and intermediate outputs
         self.last_attention_weights = None
@@ -109,7 +108,7 @@ class EmbeddingModelEnhanced(nn.Module):
             self.intermediate_outputs['attention_output'] = attention_output.detach()
             self.intermediate_outputs['attention_weights'] = attention_weights.detach()
             
-        pooled = attn_out.mean(dim=1) 
+        pooled = attention_output.mean(dim=1) 
 
         # Hidden Layers
     

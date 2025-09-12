@@ -19,7 +19,6 @@ from modelanalyzer import *
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
 df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
-df = df.sample(n=1000, random_state = 92)
 
 data = dataset()
 data._prepare_data(df)
@@ -38,7 +37,7 @@ property_dim=2
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
 model.split_data()
 
-model.train_model(epochs = 10, batch = 128, learning_rate = 0.01, analyze_every=5)
+model.train_model(epochs = 100, batch = 128, learning_rate = 0.001, analyze_every=5)
 #%%
 model.save_model()
 
