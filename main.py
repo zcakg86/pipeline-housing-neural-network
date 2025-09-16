@@ -19,6 +19,7 @@ from modelanalyzer import *
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
 df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
+df = df.sample(n=1000)
 
 data = dataset()
 data._prepare_data(df)

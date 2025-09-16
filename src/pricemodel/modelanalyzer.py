@@ -68,7 +68,7 @@ class ModelAnalyzer:
 
         # Average the feature attention map
         if attention_stats['feature_attention_map'] is not None:
-            # x /= y : x = x / y: 
+            # x /= y is x = x / y: 
             # min as weights will only be for first num_batches 
             attention_stats['feature_attention_map'] /= min(num_batches, len(dataloader))
 
