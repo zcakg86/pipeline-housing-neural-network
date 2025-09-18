@@ -10,15 +10,13 @@ from sklearn.preprocessing import StandardScaler
 from datetime import datetime
 import pickle
 import json
-# def hi():
-#     print("HI")
-def hi2():
-    print("H3")
+
 from embedding_new import *
 from modelanalyzer import *
 #from layerablation import *
 
 # Function to prepare data
+#region dataset class
 class dataset:
     def __init__(self):
         self.length = None
@@ -129,12 +127,13 @@ class dataset:
                                      torch.tensor(self.dataframe['week'].values, dtype=torch.int),
                                      torch.tensor(self.dataframe[['sqft_scaled','sqft_lot_scaled']].values, dtype=torch.float32),
                                      torch.tensor(self.dataframe['log_price_scaled'].values, dtype=torch.float32))
+#endregion
+#region Model init
 import torch
 import torch.nn as nn
-
 class EmbeddingModelEnhanced(nn.Module):
     def __init__(self, embedding_dim, hidden_dim, property_dim,
-                 community_embedding_length, community_feature_dim,
+                 community_embedding_length, 
                  year_length, week_length):
         """Enhanced model with proper attention layer initialization and weight tracking"""
         super().__init__()
@@ -146,7 +145,6 @@ class EmbeddingModelEnhanced(nn.Module):
         self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
         self.week_embedding = nn.Embedding(int(week_length), embedding_dim)
         # Feature Processing Layers
-        self.community_feature_layer = nn.Linear(community_feature_dim, hidden_dim)
         self.property_feature_layer = nn.Linear(property_dim, embedding_dim)
         
         # Learnable CLS token (shape: (1, 1, E))
@@ -169,6 +167,7 @@ class EmbeddingModelEnhanced(nn.Module):
         self.intermediate_outputs = {}
         self.save_intermediates = False
 
+#region Model forward
     def forward(self, community_indices, year, week, property_features):
         # Clear previous intermediate outputs
         if self.save_intermediates:
@@ -236,19 +235,16 @@ class EmbeddingModelEnhanced(nn.Module):
             self.intermediate_outputs['attn_out'] = attention_output.detach()
             if need_w:
                 self.intermediate_outputs['attn_w'] = attention_weights.detach()
-
-
+        
         return output
-
+        
+#region predictor
 class price_predictor:
     def __init__(self, device, embedding_dim, hidden_dim, property_dim, community_embedding_length,
-                 community_feature_dim, year_length, week_length, learning_rate):
+                 year_length, week_length, learning_rate):
         self.device = device
-        # self.model = embeddingmodel(self.device, embedding_dim, hidden_dim, property_dim,
-        #                             community_embedding_length, community_feature_dim,
-        #                             year_length, week_length)
         self.model = EmbeddingModelEnhanced(embedding_dim, hidden_dim, property_dim,
-                                    community_embedding_length, community_feature_dim,
+                                    community_embedding_length, 
                                     year_length, week_length).to(device)
         # Specify loss measure
         self.criterion = nn.MSELoss()
@@ -256,7 +252,7 @@ class price_predictor:
         self.optimizer = torch.optim.Adam(self.model.parameters(),lr=learning_rate)
     def eval(self):
         self.model.eval()
-
+#region training loop
     def train(self, train_loader, val_loader, epochs, analyze_every=10):
         train_losses = []
         val_losses = []
@@ -274,10 +270,10 @@ class price_predictor:
                 # Move each tensor in the batch to the device
                 batch = tuple(t.to(self.device) for t in batch)
                 # Unpack the batch
-                community, community_features, year, week, property, targets = batch
+                community,  year, week, property, targets = batch
                 self.optimizer.zero_grad()
 
-                predictions = self.model(community, community_features, year,
+                predictions = self.model(community, year,
                                             week, property)
 
                 if torch.isnan(predictions).any():
@@ -300,10 +296,10 @@ class price_predictor:
                     # Move each tensor in the batch to the device
                     batch = tuple(t.to(self.device) for t in batch)
                     # Unpack the batch
-                    community, community_features, year, week, property, targets = batch
+                    community, year, week, property, targets = batch
                     # print(f'Val Community Indices Min: {community.min().item()} and ',
                     #       f'Max: {community.max().item()}')
-                    predictions = self.model(community, community_features, year, week, property)
+                    predictions = self.model(community, year, week, property)
                     loss = self.criterion(predictions.squeeze(), targets)  # Fixed: calculate loss here
 
                     val_loss += loss.item()
@@ -328,7 +324,7 @@ class price_predictor:
                   f'Val Loss: {val_losses[-1]:.4f}')
         return train_losses, val_losses, feature_importance, attention_evolution
     
-
+#region Manager
 class modelmanager:
     def __init__(self, dataset, embedding_dim, hidden_dim, property_dim, model_name="property_model"):
 
@@ -356,7 +352,7 @@ class modelmanager:
         self.week_vocab = None
         self.year_vocab = None
 
-    def split_data(self):
+    def split_data_and_index(self):
         """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
             to create index to be used in embedding"""
 
@@ -404,7 +400,6 @@ class modelmanager:
         # Create and train model. price_predictor contains model spec.
         self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
                                     self.community_embedding_length, 
-                                    self.community_feature_dim,
                                     self.train_year_length,
                                     self.train_week_length,
                                     learning_rate)

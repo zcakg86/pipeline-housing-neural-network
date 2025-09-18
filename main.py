@@ -2,18 +2,15 @@
 import sys
 sys.path.insert(0,'src/pricemodel')
 #sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
-
+print(2)
 from importlib import reload
 
 #%%
 import embedding_model
-import embedding_new
 import modelanalyzer
 reload(embedding_model)
-reload(embedding_new)
 reload(modelanalyzer)
 from embedding_model import *
-from embedding_new import *
 from modelanalyzer import *
 #%%
 import pandas as pd
@@ -36,8 +33,8 @@ property_dim=2
 #%%
 #%%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
-model.split_data()
-
+model.split_data_and_index()
+#%%
 model.train_model(epochs = 100, batch = 128, learning_rate = 0.001, analyze_every=5)
 #%%
 model.save_model()
