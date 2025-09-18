@@ -20,9 +20,8 @@ df = df.sample(n=1000)
 
 data = dataset()
 data._prepare_data(df)
-data._get_community_features()
+#data._get_community_features()
 #%%
-
 # Scale and Create tensors
 data._processor(scale_mode = 'fit')
 #%%
@@ -30,9 +29,10 @@ embedding_dim=8
 hidden_dim=8
 property_dim=2
 
-#%%
-#%%
+
+# %%
 model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
+#%%
 model.split_data_and_index()
 #%%
 model.train_model(epochs = 100, batch = 128, learning_rate = 0.001, analyze_every=5)

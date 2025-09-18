@@ -110,19 +110,19 @@ class dataset:
             #     self.dataframe[feature] = scaler.transform(self.dataframe[[feature]])
                 self.dataframe[f"{feature}_scaled"] = self.scalers[feature].transform(self.dataframe[[feature]]) # Fit and transform
 
-        # Community df
-        if scale_mode == "fit":
-            self.scalers['community'] = StandardScaler()
-            self.community_array = self.scalers[feature].fit_transform(self.community_array)
-            joblib.dump(self.scalers['community'], os.path.join(self.directory, "communities_scaler.pkl"))
+        # # Community df
+        # if scale_mode == "fit":
+        #     self.scalers['community'] = StandardScaler()
+        #     self.community_array = self.scalers[feature].fit_transform(self.community_array)
+        #     joblib.dump(self.scalers['community'], os.path.join(self.directory, "communities_scaler.pkl"))
 
-        else: 
-            self.scalers['community'] = joblib.load(os.path.join(self.directory, "communities_scaler.pkl"))
-            self.community_array = self.scalers.transform(self.community_array)
+        # else: 
+        #     self.scalers['community'] = joblib.load(os.path.join(self.directory, "communities_scaler.pkl"))
+        #     self.community_array = self.scalers.transform(self.community_array)
 
         # Create tensor with each observation being contiguous, and scale fields.
         self.tensors = TensorDataset(torch.tensor(self.dataframe['community_index'].values, dtype=torch.int),
-                                     torch.tensor(self.community_array,dtype = torch.float32),
+                                     #torch.tensor(self.community_array,dtype = torch.float32),
                                      torch.tensor(self.dataframe['year'].values, dtype=torch.int),
                                      torch.tensor(self.dataframe['week'].values, dtype=torch.int),
                                      torch.tensor(self.dataframe[['sqft_scaled','sqft_lot_scaled']].values, dtype=torch.float32),
@@ -134,12 +134,12 @@ import torch.nn as nn
 class EmbeddingModelEnhanced(nn.Module):
     def __init__(self, embedding_dim, hidden_dim, property_dim,
                  community_embedding_length, 
-                 year_length, week_length):
+                 year_length, week_length, monitor_attention=True):
         """Enhanced model with proper attention layer initialization and weight tracking"""
         super().__init__()
 
         # Whether to calculate and store attention
-        self.monitor_attention = False
+        self.monitor_attention = monitor_attention
         # Embedding Layers
         self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
         self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
@@ -245,7 +245,7 @@ class price_predictor:
         self.device = device
         self.model = EmbeddingModelEnhanced(embedding_dim, hidden_dim, property_dim,
                                     community_embedding_length, 
-                                    year_length, week_length).to(device)
+                                    year_length, week_length, monitor_attention=True).to(device)
         # Specify loss measure
         self.criterion = nn.MSELoss()
         # And Adam optimiser
@@ -258,8 +258,8 @@ class price_predictor:
         val_losses = []
         attention_evolution = []
         feature_importance = []
-        analyzer = ModelAnalyzer(self.model, self.device)
-        analyzer.hook_attention_weights()
+        # analyzer = ModelAnalyzer(self.model, self.device)
+        # analyzer.hook_attention_weights()
 
         for epoch in range(epochs):
             # Training
@@ -355,7 +355,6 @@ class modelmanager:
     def split_data_and_index(self):
         """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
             to create index to be used in embedding"""
-
         # Split data, and create DataLoader for batches.
         # Sizes from model attributes.
         train_size = int(0.8 * self.dataset.length)
@@ -364,20 +363,20 @@ class modelmanager:
         self.train_dataset, self.val_dataset = torch.utils.data.random_split(
             self.dataset.tensors, [train_size, val_size]
         )
-
-        #self.community_embedding_length = torch.cat((train_dataset[:][0], val_dataset[:][0]), dim=0).unique().numel()
+        # remember tensor order :
+        # community, year, week, property, targets
         self.community_embedding_length = self.dataset.tensors[:][0].unique().numel()
 
-        self.year_vocab = create_tensor_vocab(self.train_dataset[:][2])
-        self.week_vocab = create_tensor_vocab(self.train_dataset[:][3])
+        self.year_vocab = create_tensor_vocab(self.train_dataset[:][1])
+        self.week_vocab = create_tensor_vocab(self.train_dataset[:][2])
 
         self.train_year_length = len(self.year_vocab)
         self.train_week_length = len(self.week_vocab)
 
-        year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], self.year_vocab)
-        year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], self.year_vocab)
-        week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][3], self.week_vocab)
-        week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][3], self.week_vocab)
+        year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][1], self.year_vocab)
+        year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][1], self.year_vocab)
+        week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], self.week_vocab)
+        week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], self.week_vocab)
 
         # Create a new TensorDataset with the updated tensors
         new_train_dataset = list(self.train_dataset.dataset.tensors)  # Convert tuple to list
@@ -415,14 +414,14 @@ class modelmanager:
         """Predict with model and add to dataframe"""
         self.model = self.predictor.model
 
-        year_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[2], self.year_vocab)
-        week_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[3], self.week_vocab)
+        year_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[1], self.year_vocab)
+        week_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[2], self.week_vocab)
 
         # Create a new TensorDataset with the updated tensors
         new_dataset = list(self.dataset.tensors.tensors)  # Convert tuple to list
 
-        new_dataset[2] = year_tensor  # Replace the old tensor with the updated one
-        new_dataset[3] = week_tensor # Same for weeks
+        new_dataset[1] = year_tensor  # Replace the old tensor with the updated one
+        new_dataset[2] = week_tensor # Same for weeks
 
         new_dataset = TensorDataset(*new_dataset)  # Create new TensorDataset
 
