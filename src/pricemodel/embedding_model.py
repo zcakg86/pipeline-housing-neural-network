@@ -408,8 +408,6 @@ class modelmanager:
                                                                             analyze_every=analyze_every)
         self.results['train_losses'] = train_losses
         self.results['val_losses'] = val_losses
-        self.results['feature_importance'] = feature_importance
-        self.attention_evolution = attention_evolution
 
     def add_predictions_to_data(self):
         """Predict with model and add to dataframe"""
