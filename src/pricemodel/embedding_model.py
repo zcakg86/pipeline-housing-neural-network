@@ -307,22 +307,22 @@ class price_predictor:
             train_losses.append(train_loss / len(train_loader))
             val_losses.append(val_loss / len(val_loader))
 
-            if (epoch+1)%analyze_every == 0:
-                attention_stats = analyzer.analyze_attention_patterns(val_loader, num_batches=5)
-                attention_evolution.append({
-                    'epoch': epoch+1}|attention_stats)
-                print(f'Epoch [{epoch+1}/{epochs}], '
-                  f'Train Loss: {train_losses[-1]:.4f}, '
-                  f'Val Loss: {val_losses[-1]:.4f}, '
-                  f'Mean attention weight: {np.mean(attention_stats["mean_weights"]):.4f}')
-                feature_importance.append(analyzer.compute_feature_importance_gradients(val_loader, num_batches=5))
-                print(self.model.intermediate_outputs.get('attention_output'))
+            # if (epoch+1)%analyze_every == 0:
+            #     attention_stats = analyzer.analyze_attention_patterns(val_loader, num_batches=5)
+            #     attention_evolution.append({
+            #         'epoch': epoch+1}|attention_stats)
+            #     print(f'Epoch [{epoch+1}/{epochs}], '
+            #       f'Train Loss: {train_losses[-1]:.4f}, '
+            #       f'Val Loss: {val_losses[-1]:.4f}, '
+            #       f'Mean attention weight: {np.mean(attention_stats["mean_weights"]):.4f}')
+            #     feature_importance.append(analyzer.compute_feature_importance_gradients(val_loader, num_batches=5))
+            #     print(self.model.intermediate_outputs.get('attention_output'))
 
-            else:
-                print(f'Epoch [{epoch+1}/{epochs}], '
-                  f'Train Loss: {train_losses[-1]:.4f}, '
-                  f'Val Loss: {val_losses[-1]:.4f}')
-        return train_losses, val_losses, feature_importance, attention_evolution
+            # else:
+            print(f'Epoch [{epoch+1}/{epochs}], '
+                f'Train Loss: {train_losses[-1]:.4f}, '
+                f'Val Loss: {val_losses[-1]:.4f}')
+        return train_losses, val_losses #, feature_importance, attention_evolution
     
 #region Manager
 class modelmanager:
@@ -375,19 +375,20 @@ class modelmanager:
 
         year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][1], self.year_vocab)
         year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][1], self.year_vocab)
+
         week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], self.week_vocab)
         week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], self.week_vocab)
 
         # Create a new TensorDataset with the updated tensors
         new_train_dataset = list(self.train_dataset.dataset.tensors)  # Convert tuple to list
-        new_train_dataset[2] = year_train_tensor  # Replace the old tensor with the updated one
-        new_train_dataset[3] = week_train_tensor # Same for weeks
+        new_train_dataset[1] = year_train_tensor  # Replace the old tensor with the updated one
+        new_train_dataset[2] = week_train_tensor # Same for weeks
         new_train_dataset = TensorDataset(*new_train_dataset)  # Create new TensorDataset
         self.train_dataset = Subset(new_train_dataset, self.train_dataset.indices)  # Use the original indices from the random_split
 
         new_val_dataset = list(self.val_dataset.dataset.tensors)
-        new_val_dataset[2] = year_val_tensor  # Replace the old tensor with the updated one
-        new_val_dataset[3] = week_val_tensor
+        new_val_dataset[1] = year_val_tensor  # Replace the old tensor with the updated one
+        new_val_dataset[2] = week_val_tensor
         new_val_dataset = TensorDataset(*new_val_dataset)  # Create new TensorDataset
         self.val_dataset = Subset(new_val_dataset, self.val_dataset.indices)  # Use the original indices
 
@@ -403,7 +404,7 @@ class modelmanager:
                                     self.train_week_length,
                                     learning_rate)
         
-        train_losses, val_losses, feature_importance, attention_evolution = self.predictor.train(train_loader, val_loader, epochs = epochs,
+        train_losses, val_losses = self.predictor.train(train_loader, val_loader, epochs = epochs,
                                                                             analyze_every=analyze_every)
         self.results['train_losses'] = train_losses
         self.results['val_losses'] = val_losses
