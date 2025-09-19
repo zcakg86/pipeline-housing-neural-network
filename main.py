@@ -1,6 +1,8 @@
 #%%
 import sys
-sys.path.insert(0,'src/pricemodel')
+import os
+#%%
+sys.path.insert(0,os.getcwd()+'/src/pricemodel')
 #sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 from importlib import reload
 

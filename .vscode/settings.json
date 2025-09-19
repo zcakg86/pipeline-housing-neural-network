@@ -1,3 +1,6 @@
 {
-    "remote.autoForwardPortsFallback": 0
+    "remote.autoForwardPortsFallback": 0,
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "local"
+    ]
 }
