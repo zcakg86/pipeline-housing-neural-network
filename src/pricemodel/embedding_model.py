@@ -403,7 +403,7 @@ class modelmanager:
                                     self.train_year_length,
                                     self.train_week_length,
                                     learning_rate)
-        
+
         train_losses, val_losses = self.predictor.train(train_loader, val_loader, epochs = epochs,
                                                                             analyze_every=analyze_every)
         self.results['train_losses'] = train_losses
@@ -411,7 +411,6 @@ class modelmanager:
 
     def add_predictions_to_data(self):
         """Predict with model and add to dataframe"""
-        self.model = self.predictor.model
 
         year_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[1], self.year_vocab)
         week_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[2], self.week_vocab)
@@ -426,42 +425,61 @@ class modelmanager:
 
         # Create DataLoader for prediction
         loader = DataLoader(new_dataset, batch_size=256)
-        self.model.eval()
+
+        self.predictor.eval()
         current_idx = 0
 
         predictions = []
         prediction_indices = []
-
+        target = []
+        target_indices = []
         with torch.no_grad():
             for batch in loader:
                 # Move each tensor in the batch to the device
                 # print(f'Batch size {batch[0].size().numel()}')
                 batch = tuple(t.to(self.predictor.device) for t in batch)
                 # Unpack the batch
-                community, community_features, year, week, property, targets = batch
+                community, year, week, property, targets = batch
 
-                pred = self.model(community, community_features, year,
-                                            week, property, targets)
-                batch_predictions = pred.cpu().numpy()
+                pred = self.predictor.model(community, year, week, property)
+                batch_predictions = pred.cpu().numpy() 
+                batch_targets = targets.cpu().numpy()
 
                 for i, p in enumerate(batch_predictions):
 #                    if not np.isnan(p).any():  # Check if prediction was actually made
                         predictions.append(p)
                         prediction_indices.append(current_idx + i)
+
+                for i, p in enumerate(batch_targets):
+#                    if not np.isnan(p).any():  # Check if prediction was actually made
+                    target.append(p)
+                    target_indices.append(current_idx + i)
                 # add len of current batch for next one
                 current_idx += len(community)
 
         # Reshape predictions
         predictions = np.array(predictions).reshape(-1, 1)
-        scaler_path = os.path.join(self.dataset.directory, "log_price_scaler.pkl")
-        scaler = joblib.load(scaler_path)
+        # and targets (for QA)
+        target = np.array(target).reshape(-1, 1)
+
+        #scaler_path = os.path.join(self.dataset.directory, "log_price_scaler.pkl")
+        scaler = self.dataset.scalers['log_price']
 
         predicted_log_price = scaler.inverse_transform(predictions).ravel()
+        target_log_price = scaler.inverse_transform(target).ravel()
+
         # initialise dataframe columns
         self.dataset.dataframe['predicted_value'] = pd.Series(dtype=float)
         self.dataset.dataframe['predicted_price'] = pd.Series(dtype=float)
         self.dataset.dataframe['pct_error'] = pd.Series(dtype=float)
-        self.dataset.dataframe.iloc[prediction_indices, self.dataset.dataframe.columns.get_loc('predicted_value')] = predicted_log_price
+        self.dataset.dataframe['target_log'] = pd.Series(dtype=float)
+        self.dataset.dataframe['target'] = pd.Series(dtype=float)
+
+        self.dataset.dataframe.iloc[target_indices, self.dataset.dataframe.columns.get_loc('predicted_value')] = predicted_log_price
+
+        self.dataset.dataframe.iloc[target_indices, self.dataset.dataframe.columns.get_loc('target_log')] = target_log_price        
+        self.dataset.dataframe.iloc[target_indices, self.dataset.dataframe.columns.get_loc('target')] = np.exp(target_log_price)
+
         self.dataset.dataframe.iloc[prediction_indices, self.dataset.dataframe.columns.get_loc('predicted_price')] = np.exp(predicted_log_price)
 
         self.dataset.dataframe['price_error']= self.dataset.dataframe['sale_price']-self.dataset.dataframe['predicted_price']
