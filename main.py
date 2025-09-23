@@ -3,6 +3,7 @@ import sys
 import os
 #%%
 sys.path.insert(0,os.getcwd()+'/src/pricemodel')
+sys.path.insert(0,os.getcwd()+'/src/spatial')
 #sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 from importlib import reload
 
@@ -13,18 +14,12 @@ from embedding_model import *
 #%%
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
-#df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
-data = dataset()
-data._prepare_data(df)
-# Scale and Create tensors
-data._processor(scale_mode = 'fit')
-
 # %% Model Parameters
 embedding_dim=8
 hidden_dim=8
 property_dim=2
 # %%
-model = modelmanager(data, embedding_dim, hidden_dim, property_dim)
+model = modelmanager(dataset(df)._prepare_data()._processor(scale_mode = 'fit'), embedding_dim, hidden_dim, property_dim)
 
 model.split_data_and_index()
 model.train_model(epochs = 20, batch = 256, learning_rate = 0.001)
@@ -87,3 +82,6 @@ plt.scatter(model.dataset.dataframe['sale_price'],model.dataset.dataframe['pct_e
 # # %%
 
 # %%
+
+# filter pd.dataframe where pct_error > 1
+df[df['pct_error']>1]

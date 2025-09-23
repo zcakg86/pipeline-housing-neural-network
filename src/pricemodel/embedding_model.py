@@ -11,14 +11,11 @@ from datetime import datetime
 import pickle
 import json
 
-from embedding_new import *
-from modelanalyzer import *
-#from layerablation import *
 
 # Function to prepare data
 #region dataset class
 class dataset:
-    def __init__(self):
+    def __init__(self, df):
         self.length = None
         self.n_communities = None
         self.year_length = None
@@ -35,9 +32,11 @@ class dataset:
         self.week_indices = torch.empty(0)
         self.property_features = torch.empty(0)
         self.target = torch.empty(0)
-        self.dataframe = pd.DataFrame()
+        self.dataframe = df
 
-    def _prepare_data(self, df):
+    def _prepare_data(self):
+        # replace references to df with self.dataframe
+        df = self.dataframe
         """Expected columns: ['sale_date', 'sale_price', 'lat', 'lng', 'sqft', 'sale_nbr','sqft_lot']"""
         # Convert date to datetime
         df['sale_date'] = pd.to_datetime(df['sale_date'])
@@ -72,7 +71,9 @@ class dataset:
         self.year_length = len(np.unique(df['year']))
         self.week_length = len(np.unique(df['week']))
 
-        self.dataframe = df
+        self.dataframe = df.reset_index(drop=True)
+
+        return self
     
     def _get_community_features(self):
         self.community_df = self.dataframe.groupby(['community_index', 'year']).agg({
@@ -87,6 +88,8 @@ class dataset:
             community_dict[key] = [v for sublist in value.values() for v in (sublist if isinstance(sublist, list) else [sublist])]
         self.community_array = np.array([community_dict[(c, y)] for c, y in zip(self.dataframe['community_index'], self.dataframe['year'])])
         self.community_feature_dim = self.community_array.shape[1]
+
+        return self
 
     def _processor(self, scale_mode = "fit"):
         """ Function transform and construct TensorDataset from dataframe features
@@ -127,6 +130,8 @@ class dataset:
                                      torch.tensor(self.dataframe['week'].values, dtype=torch.int),
                                      torch.tensor(self.dataframe[['sqft_scaled','sqft_lot_scaled']].values, dtype=torch.float32),
                                      torch.tensor(self.dataframe['log_price_scaled'].values, dtype=torch.float32))
+        
+        return self
 #endregion
 #region Model init
 import torch
@@ -547,5 +552,3 @@ def create_tensor_vocab(tensor):
 def vocab_replace_tensor(tensor, vocab):
     replaced = [vocab.get(value.item(), vocab['unknown']) for value in tensor]
     return torch.tensor(replaced, dtype=torch.int)
-
-# %%
