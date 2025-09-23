@@ -6,3 +6,4 @@ RUN apt-get update && apt-get install -y \
     gdal-bin \
     libgdal-dev \
     libproj-dev \
+    python3-gdal
