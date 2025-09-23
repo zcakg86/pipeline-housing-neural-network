@@ -433,6 +433,7 @@ class modelmanager:
         prediction_indices = []
         target = []
         target_indices = []
+        cls_output = []
         with torch.no_grad():
             for batch in loader:
                 # Move each tensor in the batch to the device
@@ -444,16 +445,19 @@ class modelmanager:
                 pred = self.predictor.model(community, year, week, property)
                 batch_predictions = pred.cpu().numpy() 
                 batch_targets = targets.cpu().numpy()
+                batch_cls = self.predictor.model.last_cls_attention.mean(dim=1).cpu().numpy()
+
 
                 for i, p in enumerate(batch_predictions):
-#                    if not np.isnan(p).any():  # Check if prediction was actually made
                         predictions.append(p)
                         prediction_indices.append(current_idx + i)
 
                 for i, p in enumerate(batch_targets):
-#                    if not np.isnan(p).any():  # Check if prediction was actually made
                     target.append(p)
                     target_indices.append(current_idx + i)
+
+                for i, p in enumerate(batch_cls):
+                    cls_output.append(p)
                 # add len of current batch for next one
                 current_idx += len(community)
 
@@ -467,6 +471,8 @@ class modelmanager:
 
         predicted_log_price = scaler.inverse_transform(predictions).ravel()
         target_log_price = scaler.inverse_transform(target).ravel()
+        cls_labels = ["cls_community", "cls_year", "cls_week", "cls_property"]
+        self.dataset.dataframe.loc[target_indices,cls_labels] = cls_output
 
         # initialise dataframe columns
         self.dataset.dataframe['predicted_value'] = pd.Series(dtype=float)

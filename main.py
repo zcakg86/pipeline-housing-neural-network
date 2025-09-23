@@ -8,17 +8,12 @@ from importlib import reload
 
 #%%
 import embedding_model
-import modelanalyzer
 reload(embedding_model)
-reload(modelanalyzer)
 from embedding_model import *
-from modelanalyzer import *
 #%%
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
-df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
-
-
+#df = df[df['lat'].between(47.55,47.65) & df['lng'].between(-122.35,-122.25)]
 data = dataset()
 data._prepare_data(df)
 # Scale and Create tensors
@@ -29,14 +24,34 @@ embedding_dim=8
 hidden_dim=8
 property_dim=2
 # %%
-model = modelmanager(data,embedding_dim, hidden_dim, property_dim)
+model = modelmanager(data, embedding_dim, hidden_dim, property_dim)
+
 model.split_data_and_index()
-model.train_model(epochs = 100, batch = 128, learning_rate = 0.001, analyze_every=5)
+model.train_model(epochs = 20, batch = 256, learning_rate = 0.001)
+
+#%%
+model.add_predictions_to_data()
+#%%
+import matplotlib.pyplot as plt
+train_loss = model.results['train_losses']
+val_loss = model.results['val_losses']
+x_values = list(range(len(train_loss)))
+start_at = 0
+plt.plot(x_values[start_at:], train_loss[start_at:], color='b', label='Train Loss')
+plt.plot(x_values[start_at:], val_loss[start_at:], color='r', label='Val Loss')
+plt.legend()
 #%%
 # model.save_model()
 #
-# #%%
-# model.add_predictions_to_data()
+#%%
+model.add_predictions_to_data()
+
+
+#%%
+plt.scatter(model.dataset.dataframe['target'],model.dataset.dataframe['predicted_price'])
+#%%
+plt.scatter(model.dataset.dataframe['sale_price'],model.dataset.dataframe['pct_error'])
+
 # #%%
 #
 # model.results['feature_importance'][0]['property_features']
@@ -70,3 +85,5 @@ model.train_model(epochs = 100, batch = 128, learning_rate = 0.001, analyze_ever
 #
 # scaler_price.inverse_transform([4,3])
 # # %%
+
+# %%
