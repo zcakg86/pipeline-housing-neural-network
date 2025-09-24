@@ -19,13 +19,29 @@ embedding_dim=8
 hidden_dim=8
 property_dim=2
 # %%
-model = modelmanager(dataset(df)._prepare_data()._processor(scale_mode = 'fit'), embedding_dim, hidden_dim, property_dim)
 
-model.split_data_and_index()
-model.train_model(epochs = 20, batch = 256, learning_rate = 0.001)
+
+#%%
+model = modelmanager()
+model.processor(dataset()._prepare_data(df))
+model.split_data()
+
+model.train_model(embedding_dim=8, hidden_dim=8, property_dim=2, 
+                  epochs = 2, batch = 256, learning_rate = 0.001)
 
 #%%
 model.add_predictions_to_data()
+model.save_model()
+#%%
+
+model_load = modelmanager().load_model_and_artifacts('outputs/models/20250923_164311')
+#%%
+model_load.processor(dataset()._prepare_data(df), scale_mode = 'load')
+
+#%%
+model_load.add_predictions_to_data()
+#%%
+model_load.dataframe.columns
 #%%
 import matplotlib.pyplot as plt
 train_loss = model.results['train_losses']
@@ -83,5 +99,3 @@ plt.scatter(model.dataset.dataframe['sale_price'],model.dataset.dataframe['pct_e
 
 # %%
 
-# filter pd.dataframe where pct_error > 1
-df[df['pct_error']>1]

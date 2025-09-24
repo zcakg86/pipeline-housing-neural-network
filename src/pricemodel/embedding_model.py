@@ -15,14 +15,13 @@ import json
 # Function to prepare data
 #region dataset class
 class dataset:
-    def __init__(self, df):
+    def __init__(self):
         self.length = None
         self.n_communities = None
         self.year_length = None
         self.week_length = None
         self.scalers = {}
         self.indices = []
-        self.directory = 'outputs/models'
         self.timestamp = None
         self.community_df = pd.DataFrame()
         self.community_array = np.empty(0)
@@ -32,11 +31,10 @@ class dataset:
         self.week_indices = torch.empty(0)
         self.property_features = torch.empty(0)
         self.target = torch.empty(0)
-        self.dataframe = df
 
-    def _prepare_data(self):
+    def _prepare_data(self, dataframe):
         # replace references to df with self.dataframe
-        df = self.dataframe
+        df = dataframe
         """Expected columns: ['sale_date', 'sale_price', 'lat', 'lng', 'sqft', 'sale_nbr','sqft_lot']"""
         # Convert date to datetime
         df['sale_date'] = pd.to_datetime(df['sale_date'])
@@ -91,47 +89,6 @@ class dataset:
 
         return self
 
-    def _processor(self, scale_mode = "fit"):
-        """ Function transform and construct TensorDataset from dataframe features
-            Parameters:
-                scale_mode (str): If scalers need to be fit ("fit") on data or read from file for transformation only.
-        """
-        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        self.directory = os.path.join(self.directory, self.timestamp)
-        os.makedirs(self.directory,exist_ok = True)
-        for feature in ['sqft','sqft_lot','log_price']: # List the features to scale
-            if scale_mode == "fit":
-                self.scalers[feature] = StandardScaler() # Create a new scaler for each feature
-                self.dataframe[f"{feature}_scaled"] = self.scalers[feature].fit_transform(self.dataframe[[feature]]) # Fit and transform
-                # Save the scaler
-                print(f"{feature}_scaled")
-                print(f"{feature}_scaled" in self.dataframe.columns)
-                joblib.dump(self.scalers[feature], os.path.join(self.directory, f"{feature}_scaler.pkl"))
-            # else: 
-            #     # Load the pre-fitted scaler
-                self.scalers[feature] = joblib.load(os.path.join(self.directory, f"{feature}_scaler.pkl"))
-            #     self.dataframe[feature] = scaler.transform(self.dataframe[[feature]])
-                self.dataframe[f"{feature}_scaled"] = self.scalers[feature].transform(self.dataframe[[feature]]) # Fit and transform
-
-        # # Community df
-        # if scale_mode == "fit":
-        #     self.scalers['community'] = StandardScaler()
-        #     self.community_array = self.scalers[feature].fit_transform(self.community_array)
-        #     joblib.dump(self.scalers['community'], os.path.join(self.directory, "communities_scaler.pkl"))
-
-        # else: 
-        #     self.scalers['community'] = joblib.load(os.path.join(self.directory, "communities_scaler.pkl"))
-        #     self.community_array = self.scalers.transform(self.community_array)
-
-        # Create tensor with each observation being contiguous, and scale fields.
-        self.tensors = TensorDataset(torch.tensor(self.dataframe['community_index'].values, dtype=torch.int),
-                                     #torch.tensor(self.community_array,dtype = torch.float32),
-                                     torch.tensor(self.dataframe['year'].values, dtype=torch.int),
-                                     torch.tensor(self.dataframe['week'].values, dtype=torch.int),
-                                     torch.tensor(self.dataframe[['sqft_scaled','sqft_lot_scaled']].values, dtype=torch.float32),
-                                     torch.tensor(self.dataframe['log_price_scaled'].values, dtype=torch.float32))
-        
-        return self
 #endregion
 #region Model init
 import torch
@@ -261,10 +218,6 @@ class price_predictor:
     def train(self, train_loader, val_loader, epochs, analyze_every=10):
         train_losses = []
         val_losses = []
-        attention_evolution = []
-        feature_importance = []
-        # analyzer = ModelAnalyzer(self.model, self.device)
-        # analyzer.hook_attention_weights()
 
         for epoch in range(epochs):
             # Training
@@ -331,46 +284,96 @@ class price_predictor:
     
 #region Manager
 class modelmanager:
-    def __init__(self, dataset, embedding_dim, hidden_dim, property_dim, model_name="property_model"):
+    def __init__(self, model_name="property_model"):
 
-        self.dataset = dataset
         self.device = torch.device('mps' if torch.mps.is_available()
                                    else 'cuda' if torch.cuda.is_available()
                                    else 'cpu')
         self.model_name = model_name
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.directory_prefix = 'outputs/models/'
+        self.directory = os.path.join(self.directory_prefix, self.timestamp)
         self.results = {
             'train_losses': [],
             'val_losses': [],
             'metrics': {},
             'attention_evolution':{},
-            'timestamp': datetime.now().strftime("%Y%m%d_%H%M%S")
+            'timestamp': self.timestamp
         }
-        self.embedding_dim = embedding_dim
-        self.hidden_dim = hidden_dim
-        self.property_dim = property_dim
-        self.n_communities = self.dataset.n_communities
-        self.community_feature_dim = self.dataset.community_feature_dim
-        self.week_length = self.dataset.week_length
-        self.year_length = self.dataset.year_length
         self.train_year_length = 0
         self.train_week_length = 0
         self.week_vocab = None
         self.year_vocab = None
+        self.community_vocab = None
+        self.scalers = {}
+        self.predictor = None
+        os.makedirs(self.directory,exist_ok = True)
 
-    def split_data_and_index(self):
+
+    def processor(self, data, scale_mode = "fit"):
+        """ Function transform and construct TensorDataset from dataframe features
+            Parameters:
+                scale_mode (str): If scalers need to be fit ("fit") on data or read from file for transformation only.
+        """
+
+        for feature in ['sqft','sqft_lot','log_price']: # List the features to scale
+            if scale_mode == "fit":
+                self.scalers[feature] = StandardScaler() # Create a new scaler for each feature
+                data.dataframe[f"{feature}_scaled"] = self.scalers[feature].fit_transform(data.dataframe[[feature]]) # Fit and transform
+                # Save the scaler
+                print(f"{feature}_scaled")
+                print(f"{feature}_scaled" in data.dataframe.columns)
+                joblib.dump(self.scalers[feature], os.path.join(self.directory, f"{feature}_scaler.pkl"))
+            else: 
+            #     # Load the pre-fitted scaler
+                self.scalers[feature] = joblib.load(os.path.join(self.directory, f"{feature}_scaler.pkl"))
+            #     self.dataframe[feature] = scaler.transform(self.dataframe[[feature]])
+                data.dataframe[f"{feature}_scaled"] = self.scalers[feature].transform(data.dataframe[[feature]]) # Fit and transform
+
+        # # Community df
+        # if scale_mode == "fit":
+        #     self.scalers['community'] = StandardScaler()
+        #     self.community_array = self.scalers[feature].fit_transform(self.community_array)
+        #     joblib.dump(self.scalers['community'], os.path.join(self.directory, "communities_scaler.pkl"))
+
+        # else: 
+        #     self.scalers['community'] = joblib.load(os.path.join(self.directory, "communities_scaler.pkl"))
+        #     self.community_array = self.scalers.transform(self.community_array)
+
+        # Create tensor with each observation being contiguous, and scale fields.
+        self.tensors = TensorDataset(torch.tensor(data.dataframe['community_index'].values, dtype=torch.int),
+                                     #torch.tensor(self.community_array,dtype = torch.float32),
+                                     torch.tensor(data.dataframe['year'].values, dtype=torch.int),
+                                     torch.tensor(data.dataframe['week'].values, dtype=torch.int),
+                                     torch.tensor(data.dataframe[['sqft_scaled','sqft_lot_scaled']].values, dtype=torch.float32),
+                                     torch.tensor(data.dataframe['log_price_scaled'].values, dtype=torch.float32))
+        self.dataframe = data.dataframe
+        self.year_length = data.year_length
+        self.week_length = data.week_length
+        self.n_communities = data.n_communities
+        self.data_length = data.length
+        self.community_vocab = data.community_vocab
+
+        return self
+    
+    
+    def split_data(self):
         """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
             to create index to be used in embedding"""
         # Split data, and create DataLoader for batches.
         # Sizes from model attributes.
-        train_size = int(0.8 * self.dataset.length)
-        val_size = self.dataset.length - train_size
+
+
+         # 80/20 split
+        train_size = int(0.8 * self.data_length)
+        val_size = self.data_length - train_size
 
         self.train_dataset, self.val_dataset = torch.utils.data.random_split(
-            self.dataset.tensors, [train_size, val_size]
+            self.tensors, [train_size, val_size]
         )
         # remember tensor order :
         # community, year, week, property, targets
-        self.community_embedding_length = self.dataset.tensors[:][0].unique().numel()
+        self.community_embedding_length = self.tensors[:][0].unique().numel()
 
         self.year_vocab = create_tensor_vocab(self.train_dataset[:][1])
         self.week_vocab = create_tensor_vocab(self.train_dataset[:][2])
@@ -397,17 +400,23 @@ class modelmanager:
         new_val_dataset = TensorDataset(*new_val_dataset)  # Create new TensorDataset
         self.val_dataset = Subset(new_val_dataset, self.val_dataset.indices)  # Use the original indices
 
-    def train_model(self, epochs=10, batch=128, learning_rate = 0.01, analyze_every=10):
+    def train_model(self, embedding_dim, hidden_dim, property_dim,
+                    epochs=10, batch=128, learning_rate = 0.01, analyze_every=10):
         """Function to create final DataLoader and run model training"""
         train_loader = DataLoader(self.train_dataset, batch_size=batch, shuffle=True)
         val_loader = DataLoader(self.val_dataset, batch_size=batch, drop_last = True)
 
+        self.embedding_dim = embedding_dim
+        self.hidden_dim = hidden_dim
+        self.property_dim = property_dim
+
+        self.learning_rate = learning_rate
         # Create and train model. price_predictor contains model spec.
         self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
                                     self.community_embedding_length, 
                                     self.train_year_length,
                                     self.train_week_length,
-                                    learning_rate)
+                                    self.learning_rate)
 
         train_losses, val_losses = self.predictor.train(train_loader, val_loader, epochs = epochs,
                                                                             analyze_every=analyze_every)
@@ -417,11 +426,11 @@ class modelmanager:
     def add_predictions_to_data(self):
         """Predict with model and add to dataframe"""
 
-        year_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[1], self.year_vocab)
-        week_tensor = vocab_replace_tensor(self.dataset.tensors.tensors[2], self.week_vocab)
+        year_tensor = vocab_replace_tensor(self.tensors.tensors[1], self.year_vocab)
+        week_tensor = vocab_replace_tensor(self.tensors.tensors[2], self.week_vocab)
 
         # Create a new TensorDataset with the updated tensors
-        new_dataset = list(self.dataset.tensors.tensors)  # Convert tuple to list
+        new_dataset = list(self.tensors.tensors)  # Convert tuple to list
 
         new_dataset[1] = year_tensor  # Replace the old tensor with the updated one
         new_dataset[2] = week_tensor # Same for weeks
@@ -472,35 +481,36 @@ class modelmanager:
         target = np.array(target).reshape(-1, 1)
 
         #scaler_path = os.path.join(self.dataset.directory, "log_price_scaler.pkl")
-        scaler = self.dataset.scalers['log_price']
+        scaler = self.scalers['log_price']
 
         predicted_log_price = scaler.inverse_transform(predictions).ravel()
         target_log_price = scaler.inverse_transform(target).ravel()
         cls_labels = ["cls_community", "cls_year", "cls_week", "cls_property"]
-        self.dataset.dataframe.loc[target_indices,cls_labels] = cls_output
+        self.dataframe.loc[target_indices,cls_labels] = cls_output
 
         # initialise dataframe columns
-        self.dataset.dataframe['predicted_value'] = pd.Series(dtype=float)
-        self.dataset.dataframe['predicted_price'] = pd.Series(dtype=float)
-        self.dataset.dataframe['pct_error'] = pd.Series(dtype=float)
-        self.dataset.dataframe['target_log'] = pd.Series(dtype=float)
-        self.dataset.dataframe['target'] = pd.Series(dtype=float)
+        self.dataframe['predicted_value'] = pd.Series(dtype=float)
+        self.dataframe['predicted_price'] = pd.Series(dtype=float)
+        self.dataframe['pct_error'] = pd.Series(dtype=float)
+        self.dataframe['target_log'] = pd.Series(dtype=float)
+        self.dataframe['target'] = pd.Series(dtype=float)
 
-        self.dataset.dataframe.iloc[target_indices, self.dataset.dataframe.columns.get_loc('predicted_value')] = predicted_log_price
+        self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('predicted_value')] = predicted_log_price
 
-        self.dataset.dataframe.iloc[target_indices, self.dataset.dataframe.columns.get_loc('target_log')] = target_log_price        
-        self.dataset.dataframe.iloc[target_indices, self.dataset.dataframe.columns.get_loc('target')] = np.exp(target_log_price)
+        self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('target_log')] = target_log_price        
+        self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('target')] = np.exp(target_log_price)
 
-        self.dataset.dataframe.iloc[prediction_indices, self.dataset.dataframe.columns.get_loc('predicted_price')] = np.exp(predicted_log_price)
+        self.dataframe.iloc[prediction_indices, self.dataframe.columns.get_loc('predicted_price')] = np.exp(predicted_log_price)
 
-        self.dataset.dataframe['price_error']= self.dataset.dataframe['sale_price']-self.dataset.dataframe['predicted_price']
-        self.dataset.dataframe['pct_error']=self.dataset.dataframe['price_error']/self.dataset.dataframe['sale_price']
+        self.dataframe['price_error']= self.dataframe['sale_price']-self.dataframe['predicted_price']
+        self.dataframe['pct_error']=self.dataframe['price_error']/self.dataframe['sale_price']
 
     def save_model(self):
         """Save model, config, processor, and results"""
         import os
-        path = self.dataset.directory
-        os.makedirs(path, exist_ok=True)
+        
+        os.makedirs(self.directory, exist_ok=True)
+
         config = {}
         for name, module in self.predictor.model.named_modules():
             params = {}
@@ -512,30 +522,89 @@ class modelmanager:
             'model_state_dict': self.predictor.model.state_dict(),
             'optimizer_state_dict': self.predictor.optimizer.state_dict(),
             'model_config': config,
-            'results': self.results
-        }, f'{self.dataset.directory}/model.pth')
+            'results': self.results,
+            'embedding_dim': self.embedding_dim,
+            'hidden_dim': self.hidden_dim,
+            'property_dim': self.property_dim,
+            'community_embedding_length': self.community_embedding_length,
+            'year_length': self.train_year_length,
+            'week_length': self.train_week_length,
+            "learning_rate": self.learning_rate
+        }, f'{self.directory}/model.pth')
 
-        with open(f'{self.dataset.directory}/community_vocab.json', 'w') as f:
-            json.dump(self.dataset.community_vocab, f)
+        with open(f'{self.directory}/community_vocab.json', 'w') as f:
+            json.dump(self.community_vocab, f)
 
         # Save results separately as JSON
-        with open(f'{self.dataset.directory}/results.json', 'w') as f:
+        with open(f'{self.directory}/results.json', 'w') as f:
             json.dump(self.results, f)
 
           # Save config as JSON
-        with open(f'{self.dataset.directory}/config.json', 'w') as f:
+        with open(f'{self.directory}/config.json', 'w') as f:
             json.dump(config, f)
 
         # Save processor (scalers and parameters)
-        with open(f'{self.dataset.directory}/week_vocab.json', 'w') as f:
+        with open(f'{self.directory}/week_vocab.json', 'w') as f:
             json.dump(self.week_vocab, f)
         # Save processor (scalers and parameters)
-        with open(f'{self.dataset.directory}/year_vocab.json', 'w') as f:
+        with open(f'{self.directory}/year_vocab.json', 'w') as f:
             json.dump(self.year_vocab, f)
 
+        print(f"Model and results saved in {self.directory}")
 
-        print(f"Model and results saved in {path}")
+    def load_model_and_artifacts(self, directory):
+        from pathlib import Path
+        """
+        Loads saved model, optimizer, results, and vocabularies.
 
+        Args:
+            model_class: the nn.Module class (e.g. EmbeddingModelEnhanced).
+            directory (str or Path): path where model.pth and artifacts were saved.
+            optimizer_class: default torch.optim.Adam (must match training time).
+            device (str): 'cpu' or 'cuda'.
+        
+        Returns:
+            model, optimizer, results, vocabs
+        """
+        directory = Path(directory)
+
+        #replace directory
+        self.directory = directory
+        ckpt = torch.load(directory / "model.pth", map_location=self.device)
+
+        # --- Reconstruct model with saved args ---
+
+        self.embedding_dim=ckpt['embedding_dim']
+        self.hidden_dim=ckpt['hidden_dim']
+        self.property_dim=ckpt['property_dim']
+        self.community_embedding_length=ckpt['community_embedding_length']
+        self.year_length=ckpt['year_length']
+        self.week_length=ckpt['week_length']
+        self.learning_rate=ckpt['learning_rate']
+
+        self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
+                                         self.community_embedding_length, self.year_length, self.week_length, 
+                                         self.learning_rate)
+
+        # Load weights
+        self.predictor.model.load_state_dict(ckpt['model_state_dict'])
+        self.predictor.eval()
+        # Load Optimizer
+        self.predictor.optimizer.load_state_dict(ckpt['optimizer_state_dict'])
+
+        # --- Load vocabs ---
+        with open(directory / "community_vocab.json", "r") as f:
+            self.community_vocab = json.load(f)
+        with open(directory / "year_vocab.json", "r") as f:
+            self.year_vocab = json.load(f)
+        with open(directory / "week_vocab.json", "r") as f:
+            self.week_vocab = json.load(f)
+
+        # --- Load results (train/val loss curves etc) ---
+        self.results = ckpt.get("results", {})
+
+        return self
+    
 def create_vocab(df, column, min=None, max=None):
     # if min && max:
     ids = sorted(df[column].unique())
