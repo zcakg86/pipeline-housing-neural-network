@@ -362,24 +362,26 @@ class modelmanager:
             to create index to be used in embedding"""
         # Split data, and create DataLoader for batches.
         # Sizes from model attributes.
-
+        self.tensor_length = self.tensors.tensors[0].shape[0]
 
          # 80/20 split
-        train_size = int(0.8 * self.data_length)
-        val_size = self.data_length - train_size
+        train_size = int(0.8 * self.tensor_length)
+        val_size = self.tensor_length - train_size
 
         self.train_dataset, self.val_dataset = torch.utils.data.random_split(
             self.tensors, [train_size, val_size]
         )
         # remember tensor order :
         # community, year, week, property, targets
-        self.community_embedding_length = self.tensors[:][0].unique().numel()
 
-        self.year_vocab = create_tensor_vocab(self.train_dataset[:][1])
-        self.week_vocab = create_tensor_vocab(self.train_dataset[:][2])
+        # Edit out all vocab use to stick to initial dataset creation. Want to be able work on training subsets of data! and use same vocab
+        # self.community_embedding_length = self.tensors[:][0].unique().numel()
 
-        self.train_year_length = len(self.year_vocab)
-        self.train_week_length = len(self.week_vocab)
+        # self.year_vocab = create_tensor_vocab(self.train_dataset[:][1])
+        # self.week_vocab = create_tensor_vocab(self.train_dataset[:][2])
+
+        # self.train_year_length = len(self.year_vocab)
+        # self.train_week_length = len(self.week_vocab)
 
         year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][1], self.year_vocab)
         year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][1], self.year_vocab)
@@ -413,9 +415,9 @@ class modelmanager:
         self.learning_rate = learning_rate
         # Create and train model. price_predictor contains model spec.
         self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
-                                    self.community_embedding_length, 
-                                    self.train_year_length,
-                                    self.train_week_length,
+                                    self.n_communities, 
+                                    self.year_length,
+                                    self.week_length,
                                     self.learning_rate)
 
         train_losses, val_losses = self.predictor.train(train_loader, val_loader, epochs = epochs,
