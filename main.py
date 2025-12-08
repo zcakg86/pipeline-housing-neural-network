@@ -14,80 +14,68 @@ from embedding_model import *
 #%%
 import pandas as pd
 df = pd.read_csv('data/sales_202025.csv')
-# %% Model Parameters
+#%% Model Parameters
 embedding_dim=8
 hidden_dim=8
 property_dim=2
-# %%
-
 #%%
 model = modelmanager()
-dataset = dataset()._prepare_data(df)
-full_dataframe = dataset.dataframe
+data = dataset()._prepare_data(df)
+full_dataframe = data.dataframe
 
 #%% Train on single community
-dataset.dataframe = full_dataframe[full_dataframe['community']==82].reset_index(drop=True)
-model.processor(dataset)
+model.processor(data)
 model.split_data()
 model.train_model(embedding_dim=8, hidden_dim=8, property_dim=2, 
                   epochs = 20, batch = 256, learning_rate = 0.001)
 model.add_predictions_to_data()
 print(model.dataframe['pct_error'].mean())
-#error_by_community = model.dataframe.groupby("community")["pct_error"].mean()
-#%%
-model.results
-#%% Add another community
-dataset.dataframe = full_dataframe[(full_dataframe['community']==109)|(full_dataframe['community']==82)].reset_index(drop=True)
-model.processor(dataset)
+#%% save
+error_by_community = model.dataframe.groupby("community").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
+model.save_model()
+model.dataframe.to_csv(model.directory+"/dataframe.csv")
+
+
+
+#%% Fine tune on more communities
+data.dataframe = full_dataframe[(full_dataframe['community']==109)|(full_dataframe['community']==82)].reset_index(drop=True)
+model.processor(data)
 
 model.split_data()
 model.train_model(embedding_dim=8, hidden_dim=8, property_dim=2, 
                   epochs = 20, batch = 256, learning_rate = 0.001)
 model.add_predictions_to_data()
 print(model.dataframe['pct_error'].mean())
+model.dataframe
+
+#%% Create synthesised data
+synth= df.groupby('h3_08').apply(lambda x: x.sample(frac=0.01, random_state=42))
+synth['sale_date'] = '2025-01-01'
+synth['sqft'] = 1000
+synth['sqft_lot'] = 1000
+
 
 #%%
-dataset.dataframe = full_dataframe.reset_index(drop=True)
-model.processor(dataset)
+synth_data = dataset()._prepare_data(synth)
+model.processor(synth_data)
+model.add_predictions_to_data()
+#%%
+model.dataframe.columns
+#%%
+model.dataframe[['sale_date','lat','lng','community','sqft','sqft_scaled','sqft_lot','sqft_lot_scaled',
+                'h3_07', 'h3_08', 'h3_10', 'month', 'year', 'week', 'community_index', 'log_price_scaled',
+                'cls_community', 'cls_year','cls_week', 'cls_property', 'predicted_value', 'predicted_price']].to_csv(model.directory+'/synth_data.csv')
+
+#%%
+data.dataframe = full_dataframe.reset_index(drop=True)
+model.processor(data)
 model.add_predictions_to_data()
 #%%
 error_by_community = model.dataframe.groupby("community")["pct_error"].mean()
 #%%
 print(model.dataframe['pct_error'].mean())
 #%%
-model = modelmanager()
-df82 = df[df['community'] == 82]
-model.processor(dataset()._prepare_data(df82))
-model.split_data()
-model.train_model(embedding_dim=8, hidden_dim=8, property_dim=2, 
-                  epochs = 2, batch = 256, learning_rate = 0.001)
-#%%
-model.add_predictions_to_data()
-model.save_model()
-#%%
-df278= df[df['community'] == 278]
-model.processor(dataset()._prepare_data(df278))
-model.split_data()
-model.train_model(embedding_dim=8, hidden_dim=8, property_dim=2, 
-                  epochs = 2, batch = 256, learning_rate = 0.001)
-#%%
-df146= df[df['community'] == 146]
-model.processor(dataset()._prepare_data(df146))
-model.split_data()
-model.train_model(embedding_dim=8, hidden_dim=8, property_dim=2, 
-                  epochs = 2, batch = 256, learning_rate = 0.001)
-#%%
-model.processor(dataset()._prepare_data(df146))
-model.add_predictions_to_data()
 
-#%%
-model.processor(dataset()._prepare_data(df278))
-model.add_predictions_to_data()
-#%%
-df109 =  df[df['community'] == 109]
-model.processor(dataset()._prepare_data(df109))
-model.add_predictions_to_data()
-#%%
 
 model_load = modelmanager().load_model_and_artifacts('outputs/models/20250923_164311')
 #%%
