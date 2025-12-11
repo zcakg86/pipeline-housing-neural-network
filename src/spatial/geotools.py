@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import h3
 import h3pandas
-import contextily as ctx
+#import contextily as ctx
 
 def vectorized_get_parent_h3(series, target_res):
     return series.map(lambda x: h3.cell_to_parent(x, target_res))
