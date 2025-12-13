@@ -7,7 +7,8 @@ import h3
 import geopandas as gpd
 from shapely.geometry import Polygon
 from holoviews.streams import RangeXY
-from bokeh.models import NumeralTickFormatter, HoverTool
+from bokeh.models import NumeralTickFormatter, HoverTool, LinearColorMapper, ColorBar
+from bokeh.transform import factor_cmap
 import cartopy.crs as ccrs # Required for the CRS fix
 
 pn.extension()
@@ -17,17 +18,23 @@ hv.extension('bokeh')
 # 1. CONFIGURATION
 # =========================================================
 ZOOM_LEVELS = {
-    'coarse': {'width': 2.0,  'col': 'h3_07'}, 
-    'medium': {'width': 0.5, 'col': 'h3_08'}, 
-    'fine':   {'width': 0.2, 'col': 'h3_10'}                 
+    'Low (7)': {'alpha': 0.6,  'col': 'h3_07'}, 
+    'Medium (8)': {'alpha': 0.8, 'col': 'h3_08'}, 
+    'Fine (10)':   {'alpha': 0.9, 'col': 'h3_10'}
 }
 
 COLUMN_CONFIGS = {
     'pct_error': {'cmap': 'Viridis', 'format': '0.0%', 'label': 'Error', 'center_zero': True},
-    'predicted_price': {'cmap': 'Viridis', 'format': '$0.0a', 'label': 'Pred. Price', 'center_zero': False},
-    'sale_price': {'cmap': 'Inferno', 'format': '$0.0a', 'label': 'Sale Price', 'center_zero': False},
+    'predicted_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Pred. Price', 'center_zero': False},
+    'sale_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Sale Price', 'center_zero': False},
     'sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Size (SqFt)', 'center_zero': False},
-    'community': {'cmap': 'Turbo', 'format': '0', 'label': 'Comm ID', 'center_zero': False}
+    'community': {'cmap': 'glasbey', 'format': '0', 'continuous':False,'label': 'Comm ID', 'center_zero': False},
+    'cls_property': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Property', 'center_zero': False},
+    'cls_community': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Community', 'center_zero': False},
+    'cls_week': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Week', 'center_zero': False},
+    'cls_year': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Year', 'center_zero': False}
+
+
 }
 
 # =========================================================
@@ -41,15 +48,15 @@ def add_hex_geometry(aggregated_df, h3_col):
 def get_most_frequent(x):
     """Helper to get mode of categorical data safely."""
     try:
-        return x.mode().iloc[0]
+        mode = x.mode().iloc[0]
+        print(f'Mode = {mode}')
+        return mode
     except:
         return np.nan
-
-def get_dynamic_map(x_range, y_range, date_range, variable, data):
+def get_dynamic_map(x_range, y_range, date_range, variable, zoom_level, data):
     """
     Main Map Logic: Filters, Aggregates, and Styles based on config.
     """
-
     # --- A. Setup & Config ---
     config = COLUMN_CONFIGS.get(variable, {'cmap': 'Viridis', 'format': '0,0', 'label': variable})
 
@@ -57,124 +64,116 @@ def get_dynamic_map(x_range, y_range, date_range, variable, data):
     if x_range is None or y_range is None:
         x_range = (data['lng'].min(), data['lng'].max())
         y_range = (data['lat'].min(), data['lat'].max())
-    view_width = x_range[1] - x_range[0]
     
-    # --- B. Filtering (FIXED DATE LOGIC) ---
-    # Fix: Convert slider 'date' objects to Pandas 'Timestamp' objects
+    # --- B. Filtering ---
     start_ts = pd.Timestamp(date_range[0])
     end_ts = pd.Timestamp(date_range[1])
 
-    # mask = (
-    #     (data['lng'] >= x_range[0]) & (data['lng'] <= x_range[1]) &
-    #     (data['lat'] >= y_range[0]) & (data['lat'] <= y_range[1]) 
-    #     & (data['sale_date'] >= start_ts) & (data['sale_date'] <= end_ts)
-    # )
-    # df_filtered = data.loc[mask].copy()
-    df_filtered = data
+    mask = ((data['lng'] >= x_range[0]) & (data['lng'] <= x_range[1])
+            & (data['lat'] >= y_range[0]) & (data['lat'] <= y_range[1])
+            & (data['sale_date'] >= start_ts) & (data['sale_date'] <= end_ts))
+    df_filtered = data.loc[mask].copy()
 
-    # if df_filtered.empty:
-    #     # Fix: Must provide a valid CRS when returning empty polygons
-    #     # We use PlateCarree (Lat/Lon)
-    #     return gv.Polygons([], crs=ccrs.PlateCarree()).opts(
-    #         title="No Data in Range", width=1000, height=500, xaxis=None, yaxis=None
-    #     )
+    if df_filtered.empty:
+        return gv.Polygons([], crs=ccrs.PlateCarree()).opts(
+            title="No Data in Range", width=1000, height=500, xaxis=None, yaxis=None
+        )
 
     # --- C. Determine Granularity ---
-    # view_width.. 
-    # if 1.36>2...
-    if view_width > ZOOM_LEVELS['coarse']['width']:
-        target_col = ZOOM_LEVELS['coarse']['col']
-        mode = "Coarse Hex"
-    #if > 0.05
-    elif view_width > ZOOM_LEVELS['medium']['width']:
-        target_col = ZOOM_LEVELS['medium']['col']
-        mode = "Medium Hex"
-    elif view_width > ZOOM_LEVELS['fine']['width']:
-        target_col = ZOOM_LEVELS['fine']['col']
-        mode = "Fine Hex"
-    else:
-        mode = "Points"
+    zoom = ZOOM_LEVELS.get(zoom_level, {'alpha': 0.5,  'col': 'h3_07'})
+    target_col = zoom['col']
 
-    # --- D. Color Limits (10th - 90th Percentile) ---
+    # --- D. Color Limits & Aggregation ---
     vmin, vmax = None, None
-    
-    # Only calculate percentiles for non-categorical data
-    if variable != 'community':
+    is_continuous = config.get('continuous', True)
+
+    # 1. Calculate Limits (Only for continuous)
+    if is_continuous:
+        # Force numeric to ensure formatting works
+        df_filtered[variable] = pd.to_numeric(df_filtered[variable], errors='coerce')
         vals = df_filtered[variable].dropna()
         if len(vals) > 0:
             vmin, vmax = np.percentile(vals, 10), np.percentile(vals, 90)
-            
-            # Logic for symmetric error scales
             if config.get('center_zero', False):
                 limit = max(abs(vmin), abs(vmax))
                 vmin, vmax = -limit, limit
-    
-    # --- E. Rendering ---
-    
-    # Common Style Options
-    formatter = NumeralTickFormatter(format=config['format'])
+
+    # 2. Aggregation Logic (Moved OUTSIDE the vmin check so it runs for categorical too)
+    if not is_continuous: # Categorical (e.g., Community)
+        agg_df = df_filtered.groupby(target_col).agg(
+            val=(variable, get_most_frequent),
+            count=('community', 'count')
+        )
+    else: # Continuous
+        agg_df = df_filtered.groupby(target_col).agg(
+            val=(variable, 'mean'),
+            count=('community', 'count')
+        )
+
+    # --- E. THE HOOK (Fixes the ColorBar) ---
+    def colorbar_hook(plot, element):
+        """
+        Forces the Bokeh ColorBar to update its title and formatter.
+        """
+        # Access the underlying Bokeh plot
+        fig = plot.state
+        # Check if there are side panels (where the ColorBar lives)
+        if fig.right:
+            for item in fig.right:
+                if type(item).__name__ == 'ColorBar':
+                    from bokeh.models import NumeralTickFormatter
+                    
+                    # Force Title Update
+                    item.title = config['label']
+                    
+                    # Force Formatter Update
+                    # Instead of creating a new object, we update the existing one 
+                    # if possible, or create new if needed.
+                    if hasattr(item.formatter, 'format'):
+                        item.formatter.format = config['format']
+                    else:
+                        item.formatter = NumeralTickFormatter(format=config['format'])
+
+    # --- F. Styling ---
     style_opts = dict(
-        cmap=config['cmap'],
-        colorbar=True,
-        colorbar_opts={'formatter': formatter, 'title': config['label']},
-        width=1000,
+        cmap = config['cmap'],
+        colorbar = is_continuous,
+        show_legend = not is_continuous,
+        # We still pass these, but the Hook ensures they actually apply
+        colorbar_opts={'formatter': NumeralTickFormatter(format=config.get('format','0,0')),
+                       'title': config['label']},
+        width=700,
+        alpha = zoom['alpha'],
         height=500,
-        xaxis=None, # Remove Axis
-        yaxis=None, # Remove Axis
-        tools=['hover'],
-        title=f"({len(df_filtered)} points) x_range: {x_range} {mode}: {config['label']}, View width: {view_width:.2f}°"
+        xaxis=None,
+        yaxis=None,
+        # Add the hook here
+        hooks=[colorbar_hook], 
+        title=f"({len(df_filtered)} points) x_range: {x_range} {config['label']}"
     )
-    
+
+    # Only apply color limits if we calculated them
     if vmin is not None:
         style_opts['clim'] = (vmin, vmax)
 
-    # --- MODE 1: POINTS ---
-    if mode == "Points":
-        return gv.Points(
-            df_filtered, 
-            kdims=['lng', 'lat'], 
-            vdims=[variable, 'sale_date', 'community']
-        ).opts(
-            color=variable,
-            size=6,
-            **style_opts
-        )
+    # --- G. Construction ---
+    gdf = add_hex_geometry(agg_df, target_col)
 
-    # --- MODE 2: HEXAGONS ---
-    else:
-        # Aggregation Strategy
-        if variable == 'community':
-            # For categorical, we find the "Mode"
-            agg_df = df_filtered.groupby(target_col).agg(
-                val=(variable, get_most_frequent),
-                count=('community', 'count')
-            )
-        else:
-            # For continuous, we calculate Mean
-            agg_df = df_filtered.groupby(target_col).agg(
-                val=(variable, 'mean'),
-                count=('community', 'count')
-            )
-        
-        gdf = add_hex_geometry(agg_df, target_col)
-        print(f'Length of geodataframe, {len(gdf)}')
-        # Override tooltips for Hexagons
-        hex_tooltips = [
-            (config['label'], '@val{' + config['format'] + '}'),
-            ('Count', '@count'),
-        ]
-        return gv.Polygons(
-            gdf, 
-            vdims=['val', 'count'],
-            crs = ccrs.PlateCarree()  # Specify the source CRS,
-        ).opts(
-            color='val',
-            line_color='white', 
-            line_width=0.5,
-            alpha=0.7,
-            **style_opts
-        ).opts(tools=[HoverTool(tooltips=hex_tooltips)])
+    # Tooltips
+    hex_tooltips = [
+        (config['label'], '@val{' + config['format'] + '}'),
+        ('Count', '@count'),
+    ]
 
-# =========================================================
-# 3. INITIALIZATION
-# =========================================================
+    # Create Dimension with Label
+    value_dim = hv.Dimension('val', label=config['label'])
+
+    return gv.Polygons(
+        gdf, 
+        vdims = [value_dim, 'count'],
+        crs = ccrs.PlateCarree() 
+    ).opts(
+        line_color='white', 
+        line_width=0.5,
+        **style_opts
+    ).opts(tools=[HoverTool(tooltips=hex_tooltips)])
