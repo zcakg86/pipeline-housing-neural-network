@@ -3,21 +3,21 @@
 ### **Executive Summary**
 This project implements an end-to-end deep learning pipeline designed to forecast real estate prices. It utilizes a custom **Attention-Based Neural Network** that treats tabular property data as a sequence of tokens, allowing the model to learn complex, non-linear relationships between location, time, and physical property characteristics.
 
-# Aims
+### Aims
 * Implement location-specific embedding through spatial features and community detection, that can estimate prices without bias across King County.
 * Provide accurate estimates throughout time.
 * Produce dashboard map to present model predictions and performance.
 
-# Methods
-* H3 Index for spatial representation
-* Louvain graph based community detection
-* Temporal embedding layer
 
 # Data
 Residential Sales data:\
 Andy Krause https://www.kaggle.com/datasets/andykrause/kingcountysales/data Version 8: kingco_sales.csv\
 Data produced from property assessment data made available by the King County Department of Assessments.\
 See https://github.com/andykrause/kingCoData
+
+### **Feature processing**
+* H3 Index for spatial representation
+* Louvain graph based community detection used for identification of location submarkets. 
 
 ### **Neural Network Architecture**
 The core model utilizes a Transformer-inspired architecture adapted for structured tabular data:
