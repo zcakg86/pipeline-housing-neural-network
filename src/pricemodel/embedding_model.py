@@ -1,22 +1,22 @@
-#%%
 import torch
 import torch.nn as nn
 import pandas as pd
 import numpy as np
 import joblib
 import os
-from torch.utils.data import Dataset, DataLoader, TensorDataset, Subset
+from torch.utils.data import DataLoader, TensorDataset, Subset
 from sklearn.preprocessing import StandardScaler
 from datetime import datetime
-import pickle
 import json
-import time
 
-
-# Function to prepare data
 #region dataset class
 class dataset:
+    """
+    Handles data ingestion, cleaning, feature engineering, and vocabulary creation
+    for categorical variables.
+    """
     def __init__(self):
+        """Initializes the dataset object with empty placeholders for data and attributes."""
         self.length = None
         self.n_communities = None
         self.year_length = None
@@ -34,41 +34,63 @@ class dataset:
         self.target = torch.empty(0)
 
     def _prepare_data(self, dataframe):
+        """
+        Cleans the raw dataframe, creates derived time/price features, and generates 
+        vocabularies for categorical mapping (Community, Year, Week).
+
+        Parameters:
+            dataframe (pd.DataFrame): Raw input data containing sales info.
+
+        Returns:
+            self: Returns the instance with the processed dataframe (`self.dataframe`) 
+                  and vocabulary attributes populated.
+        """
         # replace references to df with self.dataframe
         df = dataframe
         """Expected columns: ['sale_date', 'sale_price', 'lat', 'lng', 'sqft', 'sale_nbr','sqft_lot']"""
-        # Convert date to datetime
+        
+        # --- Data Cleaning & Filtering ---
+        # Convert date column to datetime objects
         df['sale_date'] = pd.to_datetime(df['sale_date'])
-        # Sort by date
+        # Sort chronologically
         df = df.sort_values('sale_date')
-        # Need to filter out non-null values
+        # Remove rows with missing essential values
         df = df.dropna(subset=['sale_price', 'lat', 'lng', 'sqft', 'sale_nbr', 'sale_date','sqft_lot'])
-        # And Zero values
+        # Remove invalid zero-value entries
         df = df[df['sale_price'] > 0]
         df = df[df['sqft'] > 0]
         df = df[df['sale_nbr'] > 0]
         df = df[df['sqft_lot'] > 0]
-        # Create derived features
+
+        # --- Feature Engineering ---
+        # Calculate price per square foot
         df['price_per_sqft'] = df['sale_price'] / df['sqft']
+        # Extract temporal features from the date
         df['month'] = df['sale_date'].dt.month
         df['year'] = df['sale_date'].dt.isocalendar().year
         df['week'] = df['sale_date'].dt.isocalendar().week
+        # Log-transform the target variable (price) to normalize distribution
         df['log_price']= np.log(df['sale_price'])
 
+        # --- Vocabulary Creation ---
+        # specific hardcoded ranges for weeks (1-53) and years (2020-2025)
         self.week_vocab = {value: index for index, value in enumerate(range(1,54))}
         self.year_vocab = {value: index for index, value in enumerate(range(2020,2026))}
-        # add option for when dict missing value
+        
+        # Add 'unknown' token for handling out-of-distribution data later
         self.week_vocab["unknown"] = len(self.week_vocab)
         self.year_vocab["unknown"] = len(self.year_vocab)
 
+        # Create vocabulary for communities dynamically from data
         self.community_vocab = create_vocab(df,'community')
         self.community_vocab["unknown"] = len(self.community_vocab )
-        #self.community_vocab = {community_id: index for index, community_id in enumerate(community_ids)}
+        
         self.n_communities = len(self.community_vocab)
-        # Convert community IDs to indices using the vocabulary
-        df['community_index'] = df['community'].map(self.community_vocab) # New column with indices
-        #df['year_index']
-        #df['week_index']
+        
+        # Map categorical IDs to integer indices
+        df['community_index'] = df['community'].map(self.community_vocab) 
+
+        # Store dataset dimensions
         self.length = df.shape[0]
         self.year_length = len(np.unique(df['year']))
         self.week_length = len(np.unique(df['week']))
@@ -78,6 +100,13 @@ class dataset:
         return self
     
     def _get_community_features(self):
+        """
+        Aggregates statistics (mean, median, std) for sales within specific 
+        communities and years to create dense feature vectors for communities.
+        
+        Returns:
+            self: Updates self.community_array with the aggregated features.
+        """
         self.community_df = self.dataframe.groupby(['community_index', 'year']).agg({
             'sale_price': ['mean', 'median', 'std'],
             'sqft' : ['mean'],
@@ -85,9 +114,11 @@ class dataset:
             })
 
         community_dict = self.community_df.to_dict('index')
-        # Flatten the dictionary values
+        # Flatten the dictionary values into a list for array conversion
         for key, value in community_dict.items():
             community_dict[key] = [v for sublist in value.values() for v in (sublist if isinstance(sublist, list) else [sublist])]
+        
+        # Map aggregated features back to the main dataframe order
         self.community_array = np.array([community_dict[(c, y)] for c, y in zip(self.dataframe['community_index'], self.dataframe['year'])])
         self.community_feature_dim = self.community_array.shape[1]
 
@@ -95,53 +126,93 @@ class dataset:
 
 #endregion
 #region Model init
-import torch
-import torch.nn as nn
-class EmbeddingModelEnhanced(nn.Module):
+
+class EmbeddingModel(nn.Module):
+    """
+    Transformer-based neural network for tabular data. 
+    Uses embeddings for categorical features, projects numerical features,
+    and applies Self-Attention via a CLS token to predict prices.
+    """
     def __init__(self, embedding_dim, hidden_dim, property_dim,
                  community_embedding_length, 
                  year_length, week_length, monitor_attention=True):
-        """Enhanced model with proper attention layer initialization and weight tracking"""
+        """
+        Initialize the model layers.
+
+        Parameters:
+            embedding_dim (int): Size of the latent space for all tokens.
+            hidden_dim (int): Size of the hidden layer in the final MLP.
+            property_dim (int): Number of numerical property features (e.g., sqft).
+            community_embedding_length (int): Size of community vocabulary.
+            year_length (int): Size of year vocabulary.
+            week_length (int): Size of week vocabulary.
+            monitor_attention (bool): Whether to store attention weights for analysis.
+        """
         super().__init__()
 
         # Whether to calculate and store attention
         self.monitor_attention = monitor_attention
-        # Embedding Layers
+        
+        # --- Embedding Layers (Categorical) ---
         self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
         self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
         self.week_embedding = nn.Embedding(int(week_length), embedding_dim)
-        # Feature Processing Layers
+        
+        # --- Feature Projection (Numerical) ---
+        # Projects numerical features to match the embedding dimension
         self.property_feature_layer = nn.Linear(property_dim, embedding_dim)
         
-        # Learnable CLS token (shape: (1, 1, E))
+        # --- Learnable CLS Token ---
+        # A generic token prepended to the sequence to aggregate global context
         self.cls_token = nn.Parameter(torch.randn(1, 1, embedding_dim))
-        # Initialize attention layer
+        
+        # --- Attention Mechanism ---
         self.attention_layer = nn.MultiheadAttention(
             embed_dim=embedding_dim,
             num_heads=2,
             batch_first=True)
 
-        # Hidden and Output Layers
+        # --- Regressor Head (MLP) ---
         self.hidden_layer1 = nn.Linear(embedding_dim, hidden_dim)
         self.hidden_layer2 = nn.Linear(hidden_dim, hidden_dim)
         self.output_layer = nn.Linear(hidden_dim, 1)
 
         self.relu = nn.ReLU()
 
-        # Storage for attention weights and intermediate outputs
+        # Storage for attention weights and intermediate outputs (debugging/analysis)
         self.last_attention_weights = None
         self.intermediate_outputs = {}
         self.save_intermediates = False
 
 #region Model forward
     def forward(self, community_indices, year, week, property_features):
+        """
+        Forward pass of the network.
+
+        Steps:
+        1. Embed categorical indices.
+        2. Project numerical features.
+        3. Stack all embeddings to form a sequence.
+        4. Prepend CLS token.
+        5. Apply Self-Attention.
+        6. Extract CLS token output and pass through MLP for prediction.
+
+        Parameters:
+            community_indices (Tensor): Batch of community IDs.
+            year (Tensor): Batch of year IDs.
+            week (Tensor): Batch of week IDs.
+            property_features (Tensor): Batch of numerical features.
+
+        Returns:
+            Tensor: Predicted values (batch_size, 1).
+        """
         # Clear previous intermediate outputs
         if self.save_intermediates:
             self.intermediate_outputs = {}
 
         need_w = self.monitor_attention  # only compute when needed
 
-        # Embeddings
+        # --- 1. Embed Inputs ---
         community_embeddings = self.community_embedding(community_indices)
         year_embeddings = self.year_embedding(year)
         week_embeddings = self.week_embedding(week)
@@ -151,7 +222,7 @@ class EmbeddingModelEnhanced(nn.Module):
             self.intermediate_outputs['year_embeddings'] = year_embeddings.detach()
             self.intermediate_outputs['week_embeddings'] = week_embeddings.detach()
 
-        # Feature Processing
+        # --- 2. Process Numerical Features ---
         #processed_community_features = self.relu(self.community_feature_layer(community_features))
         processed_property_features = self.relu(self.property_feature_layer(property_features))
 
@@ -160,37 +231,39 @@ class EmbeddingModelEnhanced(nn.Module):
             self.intermediate_outputs['processed_property_features'] = processed_property_features.detach()
 
 
-        # Stack embedding and property layers
+        # --- 3. Stack Sequence ---
         tokens = torch.stack([community_embeddings, year_embeddings, week_embeddings, processed_property_features],
                              dim = 1)
-        # Prepend CLS (B, 1, E) -> (B, 5, E)
+        
+        # --- 4. Prepend CLS Token ---
+        # Prepend CLS (B, 1, E) -> Result (B, 5, E)
         B = tokens.size(0)
         cls = self.cls_token.expand(B, -1, -1)  # expand along batch
         seq = torch.cat([cls, tokens], dim=1)   # [CLS, community, year, week, property]
 
-        # Attention Layer with weight extraction
+
+        # --- 5. Self-Attention ---
         attention_output, attention_weights = self.attention_layer(
             seq, seq, seq,
             need_weights=True, average_attn_weights=False
         )
 
-        # Use only CLS output to make prediction
+        # Use only CLS output to make prediction.
+        # We discard the feature tokens here; CLS has aggregated their info.
         cls_out = attention_output[:, 0, :]  # (B, E)
 
-        # Store attention weights (optional)
+        # Store attention weights (optional for analysis)
         if need_w:
             # Full attention (including CLS)
             self.last_attention_weights = attention_weights.detach()
-            # CLS row attending to all tokens (including itself)
+            # Extract specifically how CLS attended to other tokens
             # attn_w: (B, H, T+1, T+1). We want row 0 (CLS as query).
-            # Usually you’ll interpret the CLS attention to the non-CLS tokens:
             self.last_cls_attention = attention_weights[:, :, 0, 1:].detach()  # (B, H, 4)
         else:
             self.last_attention_weights = None
             self.last_cls_attention = None
 
-        # Hidden Layers
-        # MLP head
+        # --- 6. MLP Head ---
         h1 = self.relu(self.hidden_layer1(cls_out))
         h2 = self.relu(self.hidden_layer2(h1))
         output  = self.output_layer(h2)  # (B, 1)
@@ -206,25 +279,52 @@ class EmbeddingModelEnhanced(nn.Module):
         
 #region Predictor class
 class price_predictor:
+    """
+    Wrapper class that handles the model instantiation, optimizer setup, 
+    and the training loop logic.
+    """
     def __init__(self, device, embedding_dim, hidden_dim, property_dim, community_embedding_length,
                  year_length, week_length, learning_rate):
+        """
+        Initializes the model, loss function, and optimizer.
+
+        Parameters:
+            device (torch.device): CPU or GPU.
+            embedding_dim, hidden_dim, property_dim, etc: Model architecture parameters.
+            learning_rate (float): Step size for the optimizer.
+        """
         self.device = device
-        self.model = EmbeddingModelEnhanced(embedding_dim, hidden_dim, property_dim,
+        self.model = EmbeddingModel(embedding_dim, hidden_dim, property_dim,
                                     community_embedding_length, 
                                     year_length, week_length, monitor_attention=True).to(device)
-        # Specify loss measure
+        # Specify loss measure (Mean Squared Error for regression)
         self.criterion = nn.MSELoss()
         # And Adam optimiser
         self.optimizer = torch.optim.Adam(self.model.parameters(),lr=learning_rate)
+    
     def eval(self):
+        """Sets the model to evaluation mode (disables dropout/batchnorm updates)."""
         self.model.eval()
+
 #region Training loop
     def train(self, train_loader, val_loader, epochs, analyze_every=10):
+        """
+        Executes the training loop over specified epochs.
+
+        Parameters:
+            train_loader (DataLoader): Batched training data.
+            val_loader (DataLoader): Batched validation data.
+            epochs (int): Number of passes through the dataset.
+            analyze_every (int): Frequency of analysis (unused in current logic but reserved).
+
+        Returns:
+            tuple: (train_losses, val_losses) - Lists of average loss per epoch.
+        """
         train_losses = []
         val_losses = []
 
         for epoch in range(epochs):
-            # Training
+            # --- Training Phase ---
             self.model.train()
             train_loss = 0
             # with torch.autograd.detect_anomaly():
@@ -250,9 +350,10 @@ class price_predictor:
 
                 train_loss += loss.item()
 
-            # Validation
+            # --- Validation Phase ---
             self.model.eval()
             val_loss = 0
+
             with torch.no_grad():
                 for batch in val_loader:
                     # Move each tensor in the batch to the device
@@ -265,7 +366,7 @@ class price_predictor:
                     loss = self.criterion(predictions.squeeze(), targets)  # Fixed: calculate loss here
 
                     val_loss += loss.item()
-
+            
             train_losses.append(train_loss / len(train_loader))
             val_losses.append(val_loss / len(val_loader))
 
@@ -276,8 +377,13 @@ class price_predictor:
     
 #region Model Manager class
 class modelmanager:
+    """
+    Orchestrator class for the entire pipeline.
+    Handles data processing, splitting, training execution, results logging, 
+    and artifact saving/loading.
+    """
     def __init__(self, model_name="property_model"):
-
+        """Initializes directories and sets up the computing device."""
         self.device = torch.device('mps' if torch.mps.is_available()
                                    else 'cuda' if torch.cuda.is_available()
                                    else 'cpu')
@@ -303,34 +409,50 @@ class modelmanager:
 
 # region data processor
     def processor(self, data, scale_mode = "fit"):
-        """ Function transform and construct TensorDataset from dataframe features
-            Parameters:
-                scale_mode (str): If scalers need to be fit ("fit") on data or read from file for transformation only.
+        """ 
+        Transforms dataframe features into PyTorch tensors and scales numerical data.
+        Priority: Use self.scalers -> Load from Disk -> Fit New
+
+        Parameters:
+            data (dataset): The dataset object containing the raw dataframe.
+            scale_mode (str): "fit" to calculate new scaling statistics, 
+                              or "transform" to use loaded scalers.
+
+        Returns:
+            self: Updated with processed TensorDataset and scalers.
         """
 
-        for feature in ['sqft','sqft_lot','log_price','beds']: # List the features to scale
-            if scale_mode == "fit":
-                self.scalers[feature] = StandardScaler() # Create a new scaler for each feature
-                data.dataframe[f"{feature}_scaled"] = self.scalers[feature].fit_transform(data.dataframe[[feature]]) # Fit and transform
-                # Save the scaler
-                print(f"{feature}_scaled")
-                print(f"{feature}_scaled" in data.dataframe.columns)
-                joblib.dump(self.scalers[feature], os.path.join(self.directory, f"{feature}_scaler.pkl"))
-            else: 
-            #     # Load the pre-fitted scaler
-                self.scalers[feature] = joblib.load(os.path.join(self.directory, f"{feature}_scaler.pkl"))
-            #     self.dataframe[feature] = scaler.transform(self.dataframe[[feature]])
-                data.dataframe[f"{feature}_scaled"] = self.scalers[feature].transform(data.dataframe[[feature]]) # Fit and transform
+        
+        features_to_scale = ['sqft', 'sqft_lot', 'log_price','beds']
 
-        # # Community df
-        # if scale_mode == "fit":
-        #     self.scalers['community'] = StandardScaler()
-        #     self.community_array = self.scalers[feature].fit_transform(self.community_array)
-        #     joblib.dump(self.scalers['community'], os.path.join(self.directory, "communities_scaler.pkl"))
+        for feature in features_to_scale:
+            scaler_path = os.path.join(self.directory, f"{feature}_scaler.pkl")
+            scaler = None
 
-        # else: 
-        #     self.scalers['community'] = joblib.load(os.path.join(self.directory, "communities_scaler.pkl"))
-        #     self.community_array = self.scalers.transform(self.community_array)
+            # 1. Priority: Check if we already have this scaler in memory
+            if feature in self.scalers:
+                # print(f"Using in-memory scaler for {feature}")
+                scaler = self.scalers[feature]
+
+            # 2. Priority: Check if it exists on disk (unless we explicitly want to force a re-fit)
+            elif os.path.exists(scaler_path) and scale_mode != "force_new":
+                # print(f"Loading scaler for {feature} from disk")
+                scaler = joblib.load(scaler_path)
+                self.scalers[feature] = scaler # Save to memory for next time
+
+            # Apply Logic
+            if scaler is not None:
+                # TRANSFORM ONLY (Use existing math)
+                data.dataframe[f"{feature}_scaled"] = scaler.transform(data.dataframe[[feature]])
+            else:
+                # FIT & TRANSFORM (Learn math from this data)
+                # print(f"Fitting new scaler for {feature}")
+                scaler = StandardScaler()
+                data.dataframe[f"{feature}_scaled"] = scaler.fit_transform(data.dataframe[[feature]])
+                
+                # Save for future use
+                self.scalers[feature] = scaler
+                joblib.dump(scaler, scaler_path)
 
         # Create tensor with each observation being contiguous, and scale fields.
         self.tensors = TensorDataset(torch.tensor(data.dataframe['community_index'].values, dtype=torch.int),
@@ -352,8 +474,10 @@ class modelmanager:
     
 # region data splitting
     def split_data(self):
-        """Function splits dataset for training and validation, applies vocab with data present in the training dataset,
-            to create index to be used in embedding"""
+        """
+        Splits the TensorDataset into training (80%) and validation (20%) sets.
+        Also updates the tensor data to ensure vocab consistency (handling unknowns).
+        """
         # Split data, and create DataLoader for batches.
         # Sizes from model attributes.
         self.tensor_length = self.tensors.tensors[0].shape[0]
@@ -367,19 +491,22 @@ class modelmanager:
         )
         # keep tensor order:
         # community, year, week, property, targets
+        
+        # Ensure vocab consistency on the split tensors
         year_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][1], self.year_vocab)
         year_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][1], self.year_vocab)
 
         week_train_tensor = vocab_replace_tensor(self.train_dataset.dataset.tensors[:][2], self.week_vocab)
         week_val_tensor = vocab_replace_tensor(self.val_dataset.dataset.tensors[:][2], self.week_vocab)
 
-        # Create a new TensorDataset with the updated tensors
+        # Create a new TensorDataset with the updated tensors for Training
         new_train_dataset = list(self.train_dataset.dataset.tensors)  # Convert tuple to list
         new_train_dataset[1] = year_train_tensor  # Replace the old tensor with the updated one
         new_train_dataset[2] = week_train_tensor # Same for weeks
         new_train_dataset = TensorDataset(*new_train_dataset)  # Create new TensorDataset
         self.train_dataset = Subset(new_train_dataset, self.train_dataset.indices)  # Use the original indices from the random_split
 
+        # Create a new TensorDataset with the updated tensors for Validation
         new_val_dataset = list(self.val_dataset.dataset.tensors)
         new_val_dataset[1] = year_val_tensor  # Replace the old tensor with the updated one
         new_val_dataset[2] = week_val_tensor
@@ -388,9 +515,20 @@ class modelmanager:
 # region train method
     def train_model(self, embedding_dim, hidden_dim, property_dim,
                     epochs=10, batch=128, learning_rate = 0.01, analyze_every=10):
-        """Function to create final DataLoader and run model training"""
+        """
+        Configures DataLoaders and initiates the training process via the predictor.
+
+        Parameters:
+            embedding_dim (int): Latent dimension size.
+            hidden_dim (int): Hidden layer size.
+            property_dim (int): Number of numerical features.
+            epochs (int): Number of training epochs.
+            batch (int): Batch size.
+            learning_rate (float): Optimizer learning rate.
+            analyze_every (int): Metric logging frequency.
+        """
         train_loader = DataLoader(self.train_dataset, batch_size=batch, shuffle=True)
-        val_loader = DataLoader(self.val_dataset, batch_size=batch, drop_last = True)
+        val_loader = DataLoader(self.val_dataset, batch_size=batch, drop_last = False)
 
         self.embedding_dim = embedding_dim
         self.hidden_dim = hidden_dim
@@ -398,11 +536,25 @@ class modelmanager:
 
         self.learning_rate = learning_rate
         # Create and train model. price_predictor contains model spec.
-        self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
-                                    self.n_communities, 
-                                    self.year_length,
-                                    self.week_length,
-                                    self.learning_rate)
+            # 2. Check if the predictor already exists
+        if self.predictor is None:
+            # FIRST TIME TRAINING: Initialize the model and optimizer
+            self.embedding_dim = embedding_dim
+            self.hidden_dim = hidden_dim
+            self.property_dim = property_dim
+            self.learning_rate = learning_rate
+            
+            self.predictor = price_predictor(self.device, self.embedding_dim, self.hidden_dim, self.property_dim,
+                                        self.n_communities, 
+                                        self.year_length,
+                                        self.week_length,
+                                        self.learning_rate)
+        else:
+            # CONTINUED TRAINING: Update learning rate if it changed
+            # (The model weights and optimizer state are preserved in self.predictor)
+            for param_group in self.predictor.optimizer.param_groups:
+                param_group['lr'] = learning_rate
+
         start_time = datetime.now()
         train_losses, val_losses = self.predictor.train(train_loader, val_loader, epochs = epochs,
                                                                             analyze_every=analyze_every)
@@ -414,7 +566,10 @@ class modelmanager:
 # region get predictions
 # Add model prediction tensors and add to dataframe
     def add_predictions_to_data(self):
-        """Predict with model and add to dataframe"""
+        """
+        Runs inference on the dataset, reverses transformations (log-price -> price),
+        calculates errors, and appends predictions to the internal dataframe.
+        """
         year_tensor = vocab_replace_tensor(self.tensors.tensors[1], self.year_vocab)
         week_tensor = vocab_replace_tensor(self.tensors.tensors[2], self.week_vocab)
         # Create a new TensorDataset with the updated tensors
@@ -471,8 +626,11 @@ class modelmanager:
         #scaler_path = os.path.join(self.dataset.directory, "log_price_scaler.pkl")
         scaler = self.scalers['log_price']
 
+        # Reverse scaling to get actual log values
         predicted_log_price = scaler.inverse_transform(predictions).ravel()
         target_log_price = scaler.inverse_transform(target).ravel()
+        
+        # Store CLS attention values
         cls_labels = ["cls_community", "cls_year", "cls_week", "cls_property"]
         self.dataframe.loc[target_indices,cls_labels] = cls_output
 
@@ -488,15 +646,20 @@ class modelmanager:
         self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('target_log')] = target_log_price        
         self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('target')] = np.exp(target_log_price)
 
+        # Convert log price back to actual price
         self.dataframe.iloc[prediction_indices, self.dataframe.columns.get_loc('predicted_price')] = np.exp(predicted_log_price)
 
-        self.dataframe['price_error']= self.dataframe['sale_price']-self.dataframe['predicted_price']
-        self.dataframe['pct_error']=self.dataframe['price_error']/self.dataframe['sale_price']
-        print(f'Mean percentage error: {self.dataframe["pct_error"].mean():.2f}')
+        # Calculate error metrics
+        self.dataframe['price_error']= self.dataframe['predicted_price']-self.dataframe['sale_price']
+        self.dataframe['pct_error']=100*(self.dataframe['price_error']/self.dataframe['sale_price'])
+        print(f'Mean absolute percentage error: {self.dataframe["pct_error"].abs().mean():.2f}')
 
 # region save model
     def save_model(self):
-        """Save model, config, processor, and results"""
+        """
+        Saves the model state, optimizer state, configuration, scalers, 
+        and vocabulary files to the output directory.
+        """
         import os
         
         os.makedirs(self.directory, exist_ok=True)
@@ -545,16 +708,13 @@ class modelmanager:
     def load_model_and_artifacts(self, directory):
         from pathlib import Path
         """
-        Loads saved model, optimizer, results, and vocabularies.
+        Loads a saved model, optimizer, results, and vocabularies from disk.
 
-        Args:
-            model_class: the nn.Module class (e.g. EmbeddingModelEnhanced).
-            directory (str or Path): path where model.pth and artifacts were saved.
-            optimizer_class: default torch.optim.Adam (must match training time).
-            device (str): 'cpu' or 'cuda'.
+        Parameters:
+            directory (str or Path): Path to the saved model directory.
         
         Returns:
-            model, optimizer, results, vocabs
+            self: The object populated with loaded state.
         """
         directory = Path(directory)
 
@@ -599,12 +759,14 @@ class modelmanager:
         return self
     
 def create_vocab(df, column, min=None, max=None):
+    """Creates a dictionary mapping unique values in a DF column to integers."""
     # if min && max:
     ids = sorted(df[column].unique())
     vocab = {int(id): index for index, id in enumerate(ids)}
     return vocab
 
 def create_tensor_vocab(tensor):
+    """Creates a vocab dictionary from a unique values in a tensor."""
     values = sorted(tensor.unique().tolist())
     vocab = {year: idx for idx, year in enumerate(values)}
     # add unknown when value for when not in training data
@@ -612,5 +774,9 @@ def create_tensor_vocab(tensor):
     return vocab
 
 def vocab_replace_tensor(tensor, vocab):
+    """
+    Replaces values in a tensor with their indices from a vocabulary dictionary.
+    Handles missing values by mapping them to the 'unknown' token.
+    """
     replaced = [vocab.get(value.item(), vocab['unknown']) for value in tensor]
     return torch.tensor(replaced, dtype=torch.int)
