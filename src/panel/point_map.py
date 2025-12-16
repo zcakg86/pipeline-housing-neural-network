@@ -16,7 +16,7 @@ hv.extension('bokeh')
 
 
 COLUMN_CONFIGS = {
-    'pct_error': {'cmap': 'Viridis', 'format': '0.0%', 'label': 'Error', 'center_zero': True},
+    'pct_error': {'cmap': 'Viridis', 'format': '0.0', 'label': 'Error', 'center_zero': True},
     'predicted_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Pred. Price', 'center_zero': False},
     'sale_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Sale Price', 'center_zero': False},
     'sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Size (SqFt)', 'center_zero': False},
@@ -34,7 +34,7 @@ COLUMN_CONFIGS = {
 # =========================================================
     
 
-def point_map(x_range, y_range, date_range, variable, data):
+def point_map(x_range, y_range, date_range, variable, communities, data):
     # --- A. Setup & Config ---
     config = COLUMN_CONFIGS.get(variable, {'cmap': 'Viridis', 'format': '0,0', 'label': variable})
 
@@ -71,6 +71,9 @@ def point_map(x_range, y_range, date_range, variable, data):
     mask = ((data['lng'] >= x_range[0]) & (data['lng'] <= x_range[1])
             & (data['lat'] >= y_range[0]) & (data['lat'] <= y_range[1])
             & (data['sale_date'] >= start_ts) & (data['sale_date'] <= end_ts))
+    
+    if communities:
+        mask &= (data['community'].astype(str).isin(communities))
     df_filtered = data.loc[mask].copy()
 
     # --- D. Limits ---

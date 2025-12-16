@@ -24,7 +24,7 @@ ZOOM_LEVELS = {
 }
 
 COLUMN_CONFIGS = {
-    'pct_error': {'cmap': 'Viridis', 'format': '0.0%', 'label': 'Error', 'center_zero': True},
+    'pct_error': {'cmap': 'Viridis', 'format': '0.0', 'label': 'Error', 'center_zero': True},
     'predicted_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Pred. Price', 'center_zero': False},
     'sale_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Sale Price', 'center_zero': False},
     'sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Size (SqFt)', 'center_zero': False},
@@ -53,7 +53,7 @@ def get_most_frequent(x):
         return mode
     except:
         return np.nan
-def get_dynamic_map(x_range, y_range, date_range, variable, zoom_level, data):
+def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_level, data):
     """
     Main Map Logic: Filters, Aggregates, and Styles based on config.
     """
@@ -72,6 +72,10 @@ def get_dynamic_map(x_range, y_range, date_range, variable, zoom_level, data):
     mask = ((data['lng'] >= x_range[0]) & (data['lng'] <= x_range[1])
             & (data['lat'] >= y_range[0]) & (data['lat'] <= y_range[1])
             & (data['sale_date'] >= start_ts) & (data['sale_date'] <= end_ts))
+    
+    if communities:
+        mask &= (data['community'].astype(str).isin(communities))
+
     df_filtered = data.loc[mask].copy()
 
     if df_filtered.empty:
@@ -149,7 +153,7 @@ def get_dynamic_map(x_range, y_range, date_range, variable, zoom_level, data):
         yaxis=None,
         # Add the hook here
         hooks=[colorbar_hook], 
-        title=f"({len(df_filtered)} points) x_range: {x_range} {config['label']}"
+        title=f"({len(df_filtered)} points) {config['label']}"
     )
 
     # Only apply color limits if we calculated them

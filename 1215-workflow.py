@@ -1,3 +1,5 @@
+# to do 12/16
+# Update titles
 
 
 #%%
@@ -15,7 +17,7 @@ import geoviews as gv
 sys.path.insert(0,os.getcwd()+'/src/pricemodel')
 sys.path.insert(0,os.getcwd()+'/src/spatial')
 sys.path.insert(0,os.getcwd()+'/src/panel')
-
+#%%
 #sys.path.insert(0,'/Users/marie/PycharmProjects/neural-networks-house-prices/src/pricemodel')
 import embedding_model
 reload(embedding_model)
@@ -28,8 +30,7 @@ from h3_map import *
 import  point_map
 reload(point_map)
 from point_map import *
-
-
+#%%
 #%%  Set up date
 df = pd.read_csv('data/sales_202025.csv')
 # process features
@@ -67,6 +68,7 @@ for comm in to_train:
 # Add predictions to all
 data.dataframe = full_dataframe.reset_index(drop=True)
 model.processor(data)
+#%%
 model.add_predictions_to_data()
 
 #%%
@@ -74,24 +76,37 @@ error_by_community = model.dataframe.groupby("community").agg(mean_pct_error=('p
 
 #%%
 
+# to_viz1 = [82,278,146,109,199]
+# to_viz1 = [82,278,146,109,199,827,832,16,235,162]
+# viz_df = model.dataframe[model.dataframe['community'].isin(to_viz1)]
+# #show head of last 5 columns in dataframe
+# print(viz_df.iloc[:,-5:].head())
+# #%%
+# import visualizer
+# reload(visualizer)
+# from visualizer import *
+# viz = RealEstateVisualizer(model.dataframe)
+# dashboard = viz.view()
+# dashboard.show()
+#%%
+import h3_map
+reload(h3_map)
+from h3_map import *
+
+import  point_map
+reload(point_map)
+from point_map import *
+
 to_viz1 = [82,278,146,109,199]
-to_viz1 = [82,278,146,109,199,827,832,16,235,162]
-viz_df = model.dataframe[model.dataframe['community'].isin(to_viz1)]
-#show head of last 5 columns in dataframe
-print(viz_df.iloc[:,-5:].head())
-#%%
-import visualizer
-reload(visualizer)
-from visualizer import *
-viz = RealEstateVisualizer(model.dataframe)
-dashboard = viz.view()
-dashboard.show()
-#%%
+viz_df = model.dataframe[model.dataframe['community'].isin(to_viz1) & model.dataframe['year'].isin([2024])]
+viz_df = viz_df.reset_index(drop=True)
 source_crs = ccrs.PlateCarree()
 display_crs = ccrs.Mercator()
+# below replace model.dataframe with viz_df
 
-min_date = model.dataframe['sale_date'].min().date()
-max_date = model.dataframe['sale_date'].max().date()
+min_date = viz_df['sale_date'].min().date()
+
+max_date = viz_df['sale_date'].max().date()
 
 date_slider = pn.widgets.DateRangeSlider(
     name='Date Range',
@@ -99,7 +114,6 @@ date_slider = pn.widgets.DateRangeSlider(
     end=max_date,
     value=(min_date, max_date)
 )
-
 var_selector = pn.widgets.Select(
     name='Variable', 
     options=list(h3_map.COLUMN_CONFIGS.keys()), 
@@ -110,43 +124,44 @@ hex_size_selector = pn.widgets.Select(
     options=list(h3_map.ZOOM_LEVELS.keys()), 
     value='Low (7)'
 )
-# Dummy Box
 
-# Define the initial bounds (e.g., the whole US or your city)
-# You can grab these from your dataframe
-initial_x = (model.dataframe['lng'].min(), model.dataframe['lng'].max())
-initial_y = (model.dataframe['lat'].min(), model.dataframe['lat'].max())
+unique_communities = sorted(list(viz_df['community'].astype(str).unique()))
+w_comm = pn.widgets.MultiChoice(
+    name='Filter Communities (Leave empty for All)',
+    options=unique_communities,
+    value=[], 
+    solid=False
+)
+# Define the initial bounds 
+initial_x = (viz_df['lng'].min(), viz_df['lng'].max())
+initial_y = (viz_df['lat'].min(), viz_df['lat'].max())
 
 # Create the shared stream object
 common_range_stream = RangeXY(x_range=initial_x, y_range=initial_y)
 
-
 dmap = gv.DynamicMap(pn.bind(
-    h3_map.get_dynamic_map,
+    get_dynamic_map,
     date_range=date_slider, 
     variable=var_selector,
     zoom_level=hex_size_selector,
-    data=model.dataframe)
+    communities = w_comm,
+    data=viz_df)
     ,streams=[common_range_stream])
     
 pmap = gv.DynamicMap(pn.bind(
     point_map,
     date_range=date_slider, 
     variable=var_selector,
-    data=model.dataframe),
+    communities = w_comm,
+    data=viz_df),
     streams=[common_range_stream])
-#dmap = hv.DynamicMap(interactive_map, streams = [range_stream])
 
-#range_stream.source = dmap
-# Composite Map
-#dmap_composite = gv.tile_sources.CartoLight() * dummy_box * hv.DynamicMap(interactive_map)
 dmap_composite =  gv.tile_sources.CartoLight() * dmap
 pmap_composite =  gv.tile_sources.CartoLight() * pmap
-#%%
 # Create a dashboard layout
 map_layout = pn.Row(
     pn.Column(pn.Row(hex_size_selector, var_selector), dmap_composite),
-    pn.Column(date_slider, pmap_composite))
+    pn.Column(pn.Row(date_slider,w_comm), pmap_composite))
 
 layout = pn.template.FastListTemplate(
     title="H3 Multi-Scale Analysis",
@@ -154,6 +169,5 @@ layout = pn.template.FastListTemplate(
     accent_base_color="#2F4F4F",
     header_background="#2F4F4F"
 )
-
-layout.show()
+server = layout.show(threaded=True)
 # %%
