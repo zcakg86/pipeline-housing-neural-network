@@ -51,7 +51,6 @@ model.train_model(embedding_dim=8, hidden_dim=8, property_dim=3,
 error_by_community = model.dataframe.groupby("community").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
 #%%
 to_train = [82,278,146,109,199,827,832,16,235,162]
-to_train = [16]
 
 for comm in to_train:
     print(f'Training on community {comm}')
@@ -71,6 +70,8 @@ model.processor(data)
 #%%
 model.add_predictions_to_data()
 
+#%%
+model.dataframe.to_csv('data/sales_2020_25_with_predictions.csv',index=False)
 #%%
 error_by_community = model.dataframe.groupby("community").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
 

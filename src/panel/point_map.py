@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 from bokeh.models import NumeralTickFormatter, HoverTool
 import cartopy.crs as ccrs # Required for the CRS fix
+import colorcet as cc 
+
 
 pn.extension()
 hv.extension('bokeh')
@@ -43,18 +45,19 @@ def point_map(x_range, y_range, date_range, variable, communities, data):
         fig = plot.state
         if fig.right:
             for item in fig.right:
+                print(item)
                 if type(item).__name__ == 'ColorBar':                
                     # 1. Update Title
                     item.title = config['label']
-                    
                     # 2. Update Formatter
                     # We modify the property of the EXISTING formatter.
                     # This is much more reliable than replacing the object.
-                    from bokeh.models import NumeralTickFormatter
+                    from bokeh.models import NumeralTickFormatter,FixedTicker
                     if hasattr(item.formatter, 'format'):
                         item.formatter.format = config['format']
                     else:
                         item.formatter = NumeralTickFormatter(format=config['format'])
+
 
     is_continuous = config.get('continuous', True)
     # Force Numeric conversion
@@ -74,6 +77,7 @@ def point_map(x_range, y_range, date_range, variable, communities, data):
     
     if communities:
         mask &= (data['community'].astype(str).isin(communities))
+
     df_filtered = data.loc[mask].copy()
 
     # --- D. Limits ---
@@ -85,6 +89,24 @@ def point_map(x_range, y_range, date_range, variable, communities, data):
             if config.get('center_zero', False):
                 limit = max(abs(vmin), abs(vmax))
                 vmin, vmax = -limit, limit
+
+    if not is_continuous and not df_filtered.empty:
+        #df_filtered[variable] = df_filtered[variable].astype(str)
+        unique_vals = sorted(df_filtered[variable].unique())
+        n_factors = len(unique_vals)
+        
+        # 3. Generate Palette
+        import colorcet as cc
+        if config['cmap'] == 'glasbey':
+            # Ensure we have enough colors, cycle if needed
+            if n_factors > len(cc.glasbey):
+                current_cmap = cc.glasbey * (n_factors // len(cc.glasbey) + 1)
+            current_cmap = cc.glasbey[:n_factors]
+        else:
+            # Fallback for other cmaps
+            from bokeh.palettes import turbo
+            current_cmap = turbo(n_factors)
+        config['cmap'] = current_cmap
 
     # We use a simple Dimension with the label for the ColorBar mapping
     value_dim = hv.Dimension(variable, label=config['label'])

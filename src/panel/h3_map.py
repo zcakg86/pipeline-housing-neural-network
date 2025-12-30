@@ -10,6 +10,8 @@ from holoviews.streams import RangeXY
 from bokeh.models import NumeralTickFormatter, HoverTool, LinearColorMapper, ColorBar
 from bokeh.transform import factor_cmap
 import cartopy.crs as ccrs # Required for the CRS fix
+import colorcet as cc 
+
 
 pn.extension()
 hv.extension('bokeh')
@@ -49,7 +51,6 @@ def get_most_frequent(x):
     """Helper to get mode of categorical data safely."""
     try:
         mode = x.mode().iloc[0]
-        print(f'Mode = {mode}')
         return mode
     except:
         return np.nan
@@ -59,6 +60,28 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
     """
     # --- A. Setup & Config ---
     config = COLUMN_CONFIGS.get(variable, {'cmap': 'Viridis', 'format': '0,0', 'label': variable})
+    # Hook at the top (Fixes the ColorBar) ---
+    def colorbar_hook(plot, element):
+        """
+        Forces the Bokeh ColorBar to update its title and formatter.
+        """
+        # Access the underlying Bokeh plot
+        fig = plot.state
+        # Check if there are side panels (where the ColorBar lives)
+        if fig.right:
+            for item in fig.right:
+                if type(item).__name__ == 'ColorBar':
+                    from bokeh.models import NumeralTickFormatter, FixedTicker
+                    
+                    # Force Title Update
+                    item.title = config['label']
+                    # Force Formatter Update
+                    # Instead of creating a new object, we update the existing one 
+                    # if possible, or create new if needed.
+                    if hasattr(item.formatter, 'format'):
+                        item.formatter.format = config['format']
+                    else:
+                        item.formatter = NumeralTickFormatter(format=config['format'])
 
     # Handle initial load
     if x_range is None or y_range is None:
@@ -75,7 +98,6 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
     
     if communities:
         mask &= (data['community'].astype(str).isin(communities))
-
     df_filtered = data.loc[mask].copy()
 
     if df_filtered.empty:
@@ -85,6 +107,7 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
 
     # --- C. Determine Granularity ---
     zoom = ZOOM_LEVELS.get(zoom_level, {'alpha': 0.5,  'col': 'h3_07'})
+    # target_col is the H3 index column to use
     target_col = zoom['col']
 
     # --- D. Color Limits & Aggregation ---
@@ -102,45 +125,40 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
                 limit = max(abs(vmin), abs(vmax))
                 vmin, vmax = -limit, limit
 
-    # 2. Aggregation Logic (Moved OUTSIDE the vmin check so it runs for categorical too)
-    if not is_continuous: # Categorical (e.g., Community)
-        agg_df = df_filtered.groupby(target_col).agg(
-            val=(variable, get_most_frequent),
-            count=('community', 'count')
-        )
-    else: # Continuous
         agg_df = df_filtered.groupby(target_col).agg(
             val=(variable, 'mean'),
             count=('community', 'count')
         )
 
-    # --- E. THE HOOK (Fixes the ColorBar) ---
-    def colorbar_hook(plot, element):
-        """
-        Forces the Bokeh ColorBar to update its title and formatter.
-        """
-        # Access the underlying Bokeh plot
-        fig = plot.state
-        # Check if there are side panels (where the ColorBar lives)
-        if fig.right:
-            for item in fig.right:
-                if type(item).__name__ == 'ColorBar':
-                    from bokeh.models import NumeralTickFormatter
-                    
-                    # Force Title Update
-                    item.title = config['label']
-                    
-                    # Force Formatter Update
-                    # Instead of creating a new object, we update the existing one 
-                    # if possible, or create new if needed.
-                    if hasattr(item.formatter, 'format'):
-                        item.formatter.format = config['format']
-                    else:
-                        item.formatter = NumeralTickFormatter(format=config['format'])
+    # 2. Aggregation Logic (Moved OUTSIDE the vmin check so it runs for categorical too)
+    if not is_continuous: # Categorical (e.g., Community)
+        #df_filtered[variable] = df_filtered[variable].astype(str)
+        agg_df = df_filtered.groupby(target_col).agg(
+            val=(variable, get_most_frequent),
+            count=('community', 'count')
+        )
+        unique_vals = sorted(agg_df['val'].unique())
+        n_factors = len(unique_vals)
+        
+        if config['cmap'] == 'glasbey':
+            # Ensure we have enough colors, cycle if needed
+            if n_factors > len(cc.glasbey):
+                current_cmap = cc.glasbey * (n_factors // len(cc.glasbey) + 1)
+            current_cmap = cc.glasbey[:n_factors]
+        else:
+            # Fallback for other cmaps
+            from bokeh.palettes import turbo
+            current_cmap = turbo(n_factors)
+
+        config['cmap'] = current_cmap
+
+
+
 
     # --- F. Styling ---
     style_opts = dict(
         cmap = config['cmap'],
+        clim = (vmin, vmax),
         colorbar = is_continuous,
         show_legend = not is_continuous,
         # We still pass these, but the Hook ensures they actually apply
@@ -156,10 +174,6 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
         title=f"({len(df_filtered)} points) {config['label']}"
     )
 
-    # Only apply color limits if we calculated them
-    if vmin is not None:
-        style_opts['clim'] = (vmin, vmax)
-
     # --- G. Construction ---
     gdf = add_hex_geometry(agg_df, target_col)
 
@@ -171,6 +185,7 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
 
     # Create Dimension with Label
     value_dim = hv.Dimension('val', label=config['label'])
+    
 
     return gv.Polygons(
         gdf, 
