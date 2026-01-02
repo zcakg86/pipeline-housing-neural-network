@@ -641,6 +641,7 @@ class modelmanager:
         self.dataframe['target_log'] = pd.Series(dtype=float)
         self.dataframe['target'] = pd.Series(dtype=float)
 
+
         self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('predicted_value')] = predicted_log_price
 
         self.dataframe.iloc[target_indices, self.dataframe.columns.get_loc('target_log')] = target_log_price        
@@ -652,6 +653,9 @@ class modelmanager:
         # Calculate error metrics
         self.dataframe['price_error']= self.dataframe['predicted_price']-self.dataframe['sale_price']
         self.dataframe['pct_error']=100*(self.dataframe['price_error']/self.dataframe['sale_price'])
+        self.dataframe['sale_price_per_sqft'] = self.dataframe['sale_price']/self.dataframe['sqft']
+        self.dataframe['predicted_price_per_sqft'] = self.dataframe['predicted_price']/self.dataframe['sqft']
+        
         print(f'Mean absolute percentage error: {self.dataframe["pct_error"].abs().mean():.2f}')
 
 # region save model
