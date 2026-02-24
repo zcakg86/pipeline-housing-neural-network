@@ -19,10 +19,13 @@ def create_location_network(df, location_var=None):
     for location in df[location_var].unique():
         loc_data = df[df[location_var] == location]
         metrics = {
-            'price_per_sqft': loc_data.groupby(pd.Grouper(key='sale_date', freq='QE'))['price_per_sqft'].median(),
-            'sqft': loc_data.groupby(pd.Grouper(key='sale_date', freq='QE'))['sqft'].median(),
-            'sqft_std': loc_data.groupby(pd.Grouper(key='sale_date', freq='QE'))['sqft'].std(ddof=0),
-            'beds': loc_data.groupby(pd.Grouper(key='sale_date', freq='QE'))['sale_nbr'].median(),
+            'price_per_sqft': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['price_per_sqft'].median(),
+            'price_sqft_std': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['price_per_sqft'].std(),
+            'sqft': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['sqft'].median(),
+            'lot': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['sqft_lot'].median(),
+            'sqft_std': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['sqft'].std(ddof=0),
+            'lot_std': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['sqft_lot'].std(ddof=0),
+            'beds': loc_data.groupby(pd.Grouper(key='sale_date', freq='YE'))['sale_nbr'].median(),
             'lng': loc_data['lng'].mean(),
             'lat': loc_data['lat'].mean()
         }
@@ -44,6 +47,8 @@ def create_location_network(df, location_var=None):
             location_features[loc]['price_per_sqft'].mean(),
             location_features[loc]['sqft'].mean(),
             location_features[loc]['sqft_std'].mean(),
+            location_features[loc]['lot'].mean(),
+            location_features[loc]['lot_std'].mean(), 
             location_features[loc]['beds'].mean(),
             location_features[loc]['lat'],
             location_features[loc]['lng']
@@ -58,8 +63,8 @@ def create_location_network(df, location_var=None):
     features_df = pd.DataFrame(
         features_standardized, 
         index=locations,  # This keeps location codes as index
-        columns=['price_per_sqft' ,'sqft' 
-                 ,'sqft_std', 'beds', 'lat', 'lng'
+        columns=['price_per_sqft' ,'sqft'
+                 ,'sqft_std','lot','lot_std', 'beds', 'lat', 'lng'
         ]
     )
     # Create edges using standardized features

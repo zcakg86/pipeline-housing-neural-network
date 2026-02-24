@@ -73,8 +73,8 @@ model.add_predictions_to_data()
 #%%
 model.dataframe.to_csv('data/sales_2020_25_with_predictions.csv',index=False)
 #%%
-error_by_community = model.dataframe.groupby("community").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
 
+error_by_community = model.dataframe.groupby("community").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
 #%%
 error_by_year = model.dataframe.groupby("year").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
 
@@ -101,8 +101,25 @@ import  point_map
 reload(point_map)
 from point_map import *
 
+data = pd.read_csv('data/sales_2020_25_with_predictions.csv')
+error_by_community = data.groupby("community").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
+error_by_year = data.groupby("year").agg(mean_pct_error=('pct_error', 'mean'),count=('pct_error', 'count'))
+data['sale_price_per_sqft'] = data['sale_price']/data['sqft']
+data['predicted_price_per_sqft'] = data['predicted_price']/data['sqft']
+data['sale_date']=pd.to_datetime(data['sale_date'])
+
+#%%
+# plot charts which show the distribution of errors for each year
+import matplotlib.pyplot as plt
+import seaborn as sns
+plt.figure(figsize=(10,6))
+sns.histplot(data=data[data['pct_error']<100],x="pct_error", hue="year", element="step")
+plt.title('Distribution of Percentage Errors by Year')
+plt.show()
+#%%
+
 to_viz1 = [82,278,146,109,199]
-viz_df = model.dataframe[model.dataframe['community'].isin(to_viz1) & model.dataframe['year'].isin([2024])]
+viz_df = data[data['community'].isin(to_viz1) & data['year'].isin([2024])]
 viz_df = viz_df.reset_index(drop=True)
 source_crs = ccrs.PlateCarree()
 display_crs = ccrs.Mercator()
@@ -173,5 +190,6 @@ layout = pn.template.FastListTemplate(
     accent_base_color="#2F4F4F",
     header_background="#2F4F4F"
 )
+#%%
 server = layout.show(threaded=True)
 # %%

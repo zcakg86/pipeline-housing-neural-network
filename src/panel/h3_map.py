@@ -26,14 +26,14 @@ ZOOM_LEVELS = {
 }
 
 COLUMN_CONFIGS = {
+    'community': {'cmap': 'glasbey', 'format': '0', 'continuous':False,'label': 'Community', 'center_zero': False},
     'pct_error': {'cmap': 'Viridis', 'format': '0.0', 'label': 'Pct Error', 'center_zero': True},
     'predicted_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Pred. Price', 'center_zero': False},
     'sale_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Sale Price', 'center_zero': False},
     'sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Property Size (SqFt)', 'center_zero': False},
-    'lot_size': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Lot Size (SqFt)', 'center_zero': False},
+    'sqft_lot': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Lot Size (SqFt)', 'center_zero': False},
     'predicted_price_per_sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Predicted Price per SqFt', 'center_zero': False},
     'sale_price_per_sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Sale Price per SqFt', 'center_zero': False},
-    'community': {'cmap': 'glasbey', 'format': '0', 'continuous':False,'label': 'Community', 'center_zero': False},
     'cls_property': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Property', 'center_zero': False},
     'cls_community': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Community', 'center_zero': False},
     'cls_week': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Week', 'center_zero': False},
@@ -140,7 +140,7 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
         )
         unique_vals = sorted(agg_df['val'].unique())
         n_factors = len(unique_vals)
-        
+        print(n_factors)
         if config['cmap'] == 'glasbey':
             # Ensure we have enough colors, cycle if needed
             if n_factors > len(cc.glasbey):
@@ -189,7 +189,7 @@ def get_dynamic_map(x_range, y_range, date_range, variable, communities,zoom_lev
     
 
     return gv.Polygons(
-        gdf, 
+        gdf,
         vdims = [value_dim, 'count'],
         crs = ccrs.PlateCarree() 
     ).opts(

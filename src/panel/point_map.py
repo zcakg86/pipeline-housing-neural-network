@@ -17,14 +17,14 @@ hv.extension('bokeh')
 # =========================================================
 
 COLUMN_CONFIGS = {
+    'community': {'cmap': 'glasbey', 'format': '0', 'continuous':False,'label': 'Community', 'center_zero': False},
     'pct_error': {'cmap': 'Viridis', 'format': '0.0', 'label': 'Pct Error', 'center_zero': True},
     'predicted_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Pred. Price', 'center_zero': False},
     'sale_price': {'cmap': 'Viridis', 'format': '$0a', 'label': 'Sale Price', 'center_zero': False},
     'sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Property Size (SqFt)', 'center_zero': False},
-    'lot_size': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Lot Size (SqFt)', 'center_zero': False},
+    'sqft_lot': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Lot Size (SqFt)', 'center_zero': False},
     'predicted_price_per_sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Predicted Price per SqFt', 'center_zero': False},
     'sale_price_per_sqft': {'cmap': 'Viridis', 'format': '0,0', 'label': 'Sale Price per SqFt', 'center_zero': False},
-    'community': {'cmap': 'glasbey', 'format': '0', 'continuous':False,'label': 'Community', 'center_zero': False},
     'cls_property': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Property', 'center_zero': False},
     'cls_community': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Community', 'center_zero': False},
     'cls_week': {'cmap': 'Turbo', 'format': '0.00', 'label': 'CLS Week', 'center_zero': False},
@@ -127,7 +127,7 @@ def point_map(x_range, y_range, date_range, variable, communities, data):
     hover = HoverTool(tooltips=point_tooltips,
                       formatters={'@sale_date': 'datetime'},
                       mode='mouse',
-                      limit = 3)
+                      limit = 1)
 
     active_layer = gv.Points(
         df_filtered, 
