@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  # Training service - for model training
+  train:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: real-estate-model:latest
+    container_name: re-model-train
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+      - model-cache:/home/modeluser/.cache
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=America/Los_Angeles
+    command: python main_train_v2.py
+    networks:
+      - model-network
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+        reservations:
+          cpus: '2'
+          memory: 4G
+
+  # Prediction API service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: real-estate-api:latest
+    container_name: re-model-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - ./outputs:/app/outputs:ro
+      - model-cache:/home/modeluser/.cache:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=America/Los_Angeles
+      - MODEL_PATH=/app/outputs/models
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    command: python api_server.py
+    networks:
+      - model-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+
+  # Retraining scheduler service
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: real-estate-model:latest
+    container_name: re-model-scheduler
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+      - model-cache:/home/modeluser/.cache
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=America/Los_Angeles
+      - RETRAIN_SCHEDULE=0 2 * * *  # Daily at 2 AM
+    command: python scheduler.py
+    networks:
+      - model-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+volumes:
+  model-cache:
+    driver: local
+
+networks:
+  model-network:
+    driver: bridge
