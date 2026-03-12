@@ -1,0 +1,105 @@
+ZILLOW PRICE PREDICTIONS - SUMMARY REPORT
+================================================================================
+
+Model: V4 (outputs/models/20260311_165159)
+Properties Analyzed: 474
+Date: 2026-03-11 17:05:11
+
+OVERALL STATISTICS
+--------------------------------------------------------------------------------
+Mean Absolute Error: $338,147
+Mean Absolute % Error: 20.30%
+Median Absolute % Error: 16.72%
+RMSE: $690,295
+
+MARKET ASSESSMENT (±5% threshold)
+--------------------------------------------------------------------------------
+Potentially Overpriced: 278 (58.6%)
+Fairly Priced: 62 (13.1%)
+Potentially Underpriced: 134 (28.3%)
+
+TOP 10 MOST OVERPRICED
+--------------------------------------------------------------------------------
+2017 Fairview Avenue E #I, Seattle, WA 98102
+  Listing: $4,750,000 | Predicted: $687,771 | Difference: -85.5%
+  1000 sqft, 3 bed, 2.0 bath
+
+1027 McGilvra Boulevard E, Seattle, WA 98112
+  Listing: $7,498,000 | Predicted: $2,366,428 | Difference: -68.4%
+  4940 sqft, 5 bed, 5.0 bath
+
+4615 52nd Avenue S, Seattle, WA 98118
+  Listing: $2,900,000 | Predicted: $976,897 | Difference: -66.3%
+  3770 sqft, 4 bed, 4.0 bath
+
+1626 Federal Avenue E, Seattle, WA 98102
+  Listing: $6,500,000 | Predicted: $2,370,989 | Difference: -63.5%
+  5117 sqft, 5 bed, 6.0 bath
+
+362 Ward Street, Seattle, WA 98109
+  Listing: $5,588,000 | Predicted: $2,046,347 | Difference: -63.4%
+  4420 sqft, 5 bed, 5.0 bath
+
+2020 Parkside Drive E, Seattle, WA 98112
+  Listing: $8,295,000 | Predicted: $3,323,662 | Difference: -59.9%
+  7096 sqft, 4 bed, 6.0 bath
+
+4231 53rd Ave NE, Seattle, WA 98105
+  Listing: $3,700,000 | Predicted: $1,500,182 | Difference: -59.5%
+  3566 sqft, 6 bed, 6.0 bath
+
+1640 Magnolia Boulevard W, Seattle, WA 98199
+  Listing: $4,488,000 | Predicted: $1,945,611 | Difference: -56.6%
+  3450 sqft, 3 bed, 5.0 bath
+
+3110 Portage Bay Place E #C, Seattle, WA 98102
+  Listing: $1,900,000 | Predicted: $831,715 | Difference: -56.2%
+  1557 sqft, 2 bed, 2.0 bath
+
+7734 Seward Park Avenue S, Seattle, WA 98118
+  Listing: $4,750,000 | Predicted: $2,105,387 | Difference: -55.7%
+  4530 sqft, 5 bed, 4.0 bath
+
+
+TOP 10 MOST UNDERPRICED
+--------------------------------------------------------------------------------
+3601 NE 123rd Street, Seattle, WA 98125
+  Listing: $1,425,000 | Predicted: $2,698,083 | Difference: 89.3%
+  6416 sqft, 6 bed, 4.0 bath
+
+10717 Burke Ave N APT D, Seattle, WA 98133
+  Listing: $468,500 | Predicted: $866,531 | Difference: 85.0%
+  1100 sqft, 2 bed, 1.0 bath
+
+5907 40th Avenue SW #B, Seattle, WA 98136
+  Listing: $399,950 | Predicted: $688,484 | Difference: 72.1%
+  778 sqft, 2 bed, 1.0 bath
+
+323 SW 112th Street #102, Seattle, WA 98146
+  Listing: $319,995 | Predicted: $521,764 | Difference: 63.1%
+  1063 sqft, 2 bed, 2.0 bath
+
+8535 18th Avenue NW, Seattle, WA 98117
+  Listing: $649,950 | Predicted: $1,032,072 | Difference: 58.8%
+  1950 sqft, 2 bed, 2.0 bath
+
+2529 29th Avenue S #B, Seattle, WA 98144
+  Listing: $509,000 | Predicted: $795,769 | Difference: 56.3%
+  1115 sqft, 3 bed, 2.0 bath
+
+14044 Lenora Place N, Seattle, WA 98133
+  Listing: $549,950 | Predicted: $823,667 | Difference: 49.8%
+  810 sqft, 2 bed, 1.0 bath
+
+2608 S Grand Street, Seattle, WA 98144
+  Listing: $825,000 | Predicted: $1,212,504 | Difference: 47.0%
+  2440 sqft, 3 bed, 2.0 bath
+
+341 NE 51st Street, Seattle, WA 98105
+  Listing: $829,950 | Predicted: $1,211,848 | Difference: 46.0%
+  2840 sqft, 7 bed, 2.0 bath
+
+2503 NE 125th Street, Lake City, WA 98125
+  Listing: $530,000 | Predicted: $772,580 | Difference: 45.8%
+  1336 sqft, 3 bed, 3.0 bath
+

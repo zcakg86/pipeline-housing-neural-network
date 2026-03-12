@@ -14,7 +14,11 @@ from datetime import datetime
 import json
 from typing import Optional, Tuple, Dict, List
 
-from embedding_model_v2 import dataset, price_predictor, vocab_replace_tensor
+# Handle both relative and absolute imports
+try:
+    from .embedding_model_v2 import dataset, price_predictor, vocab_replace_tensor
+except ImportError:
+    from embedding_model_v2 import dataset, price_predictor, vocab_replace_tensor
 
 
 class modelmanager:
@@ -49,6 +53,8 @@ class modelmanager:
         self.year_length = None
         self.week_length = None
         self.learning_rate = None
+        self.pooling_strategy = 'mean'
+        self.use_neighborhood_pooling = False
         
         # Vocabularies
         self.community_vocab = None
@@ -60,6 +66,7 @@ class modelmanager:
     def processor(self, data, scale_mode="fit"):
         """
         Enhanced processor with continuous time and market features
+        Now handles H3 L9 neighborhood community tensors (batch, 7)
         """
         # Features to scale
         property_features = ['sqft', 'sqft_lot', 'beds']
@@ -95,11 +102,33 @@ class modelmanager:
                 self.scalers[feature] = scaler
                 joblib.dump(scaler, scaler_path)
         
+        # Create community tensor - check if neighborhood pooling is available
+        if 'community_neighbors' in data.dataframe.columns and data.dataframe['community_neighbors'].notna().any():
+            # Use H3 L9 neighborhood pooling (batch, 7)
+            # Fill missing with UNKNOWN index (last index in vocab)
+            unknown_idx = data.community_vocab.get("unknown", data.n_communities)
+            community_neighbors_list = []
+            for neighbors in data.dataframe['community_neighbors']:
+                if isinstance(neighbors, list) and len(neighbors) == 7:
+                    community_neighbors_list.append(neighbors)
+                else:
+                    # Missing or invalid - use UNKNOWN for all 7 positions
+                    community_neighbors_list.append([unknown_idx] * 7)
+            
+            community_tensor = torch.tensor(community_neighbors_list, dtype=torch.long)
+            self.use_neighborhood_pooling = True
+            print(f"Using H3 L9 neighborhood pooling: community tensor shape {community_tensor.shape}")
+        else:
+            # Fallback to single community index (batch,)
+            community_tensor = torch.tensor(data.dataframe['community_index'].values, dtype=torch.long)
+            self.use_neighborhood_pooling = False
+            print(f"Using single community index: community tensor shape {community_tensor.shape}")
+        
         # Create tensors
         self.tensors = TensorDataset(
-            torch.tensor(data.dataframe['community_index'].values, dtype=torch.int),
-            torch.tensor(data.dataframe['year'].values, dtype=torch.int),
-            torch.tensor(data.dataframe['week'].values, dtype=torch.int),
+            community_tensor,
+            torch.tensor(data.dataframe['year'].values, dtype=torch.long),
+            torch.tensor(data.dataframe['week'].values, dtype=torch.long),
             torch.tensor(data.dataframe[[f'{f}_scaled' for f in property_features]].values, dtype=torch.float32),
             torch.tensor(data.dataframe[[f'{f}_scaled' for f in time_features]].values, dtype=torch.float32),
             torch.tensor(data.dataframe[[f'{f}_scaled' for f in market_features]].values, dtype=torch.float32),
@@ -178,9 +207,12 @@ class modelmanager:
                    property_dim=3, continuous_time_dim=5, market_dim=2,
                    epochs=50, batch=256, learning_rate=0.001,
                    dropout_rate=0.1, estimate_uncertainty=True,
-                   patience=10):
+                   pooling_strategy='mean', patience=10):
         """
-        Train the enhanced model
+        Train the enhanced model with H3 L9 neighborhood pooling
+        
+        Args:
+            pooling_strategy: 'mean', 'center_weighted', or 'learnable'
         """
         train_loader = DataLoader(self.train_dataset, batch_size=batch, shuffle=True)
         val_loader = DataLoader(self.val_dataset, batch_size=batch, drop_last=False)
@@ -192,6 +224,7 @@ class modelmanager:
         self.continuous_time_dim = continuous_time_dim
         self.market_dim = market_dim
         self.learning_rate = learning_rate
+        self.pooling_strategy = pooling_strategy
         
         # Initialize or update predictor
         if self.predictor is None:
@@ -199,7 +232,9 @@ class modelmanager:
                 self.device, embedding_dim, hidden_dim, 
                 property_dim, continuous_time_dim, market_dim,
                 self.n_communities, self.year_length, self.week_length,
-                learning_rate, dropout_rate, estimate_uncertainty
+                learning_rate, dropout_rate, estimate_uncertainty,
+                use_neighborhood_pooling=self.use_neighborhood_pooling,
+                pooling_strategy=pooling_strategy
             )
         else:
             # Update learning rate for continued training
@@ -342,6 +377,8 @@ class modelmanager:
             'year_length': self.year_length,
             'week_length': self.week_length,
             'learning_rate': self.learning_rate,
+            'pooling_strategy': self.pooling_strategy,
+            'use_neighborhood_pooling': self.use_neighborhood_pooling,
             'reference_date': self.reference_date.isoformat() if self.reference_date else None
         }, f'{self.directory}/model.pth')
         
@@ -358,6 +395,9 @@ class modelmanager:
             json.dump(self.results, f, indent=2)
         
         print(f"Model saved to {self.directory}")
+        print(f"  Using neighborhood pooling: {self.use_neighborhood_pooling}")
+        if self.use_neighborhood_pooling:
+            print(f"  Pooling strategy: {self.pooling_strategy}")
         
         return self
     
@@ -380,6 +420,8 @@ class modelmanager:
         self.year_length = ckpt['year_length']
         self.week_length = ckpt['week_length']
         self.learning_rate = ckpt['learning_rate']
+        self.pooling_strategy = ckpt.get('pooling_strategy', 'mean')
+        self.use_neighborhood_pooling = ckpt.get('use_neighborhood_pooling', False)
         
         if ckpt.get('reference_date'):
             self.reference_date = pd.to_datetime(ckpt['reference_date'])
@@ -389,7 +431,9 @@ class modelmanager:
             self.device, self.embedding_dim, self.hidden_dim,
             self.property_dim, self.continuous_time_dim, self.market_dim,
             self.n_communities, self.year_length, self.week_length,
-            self.learning_rate
+            self.learning_rate,
+            use_neighborhood_pooling=self.use_neighborhood_pooling,
+            pooling_strategy=self.pooling_strategy
         )
         
         # Load weights
@@ -416,5 +460,8 @@ class modelmanager:
         self.results = ckpt.get("results", {})
         
         print(f"Model loaded from {directory}")
+        print(f"  Using neighborhood pooling: {self.use_neighborhood_pooling}")
+        if self.use_neighborhood_pooling:
+            print(f"  Pooling strategy: {self.pooling_strategy}")
         
         return self

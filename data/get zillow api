@@ -1,0 +1,17 @@
+import http.client
+
+conn = http.client.HTTPSConnection("api.hasdata.com")
+
+headers = {
+    'x-api-key': "a33bc008-3e10-4785-a44f-3924e2391e0d",
+    'Content-Type': "application/json"
+}
+
+conn.request("GET", "/scrape/zillow/listing?keyword=Seattle%2C+WA&type=forSale&sort=newest", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+
+data

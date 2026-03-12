@@ -5,6 +5,7 @@ Improvements:
 - Market indicator integration
 - Uncertainty estimation
 - Better temporal extrapolation
+- H3 L9 neighborhood-aware community embeddings
 """
 import torch
 import torch.nn as nn
@@ -17,6 +18,14 @@ from sklearn.preprocessing import StandardScaler
 from datetime import datetime
 import json
 from typing import Optional, Tuple, Dict
+
+# Handle both relative and absolute imports
+try:
+    from .h3_community_embedding import H3CommunityEmbedding
+    from .h3_neighbor_mapper import ensure_h3_l9_mappings
+except ImportError:
+    from h3_community_embedding import H3CommunityEmbedding
+    from h3_neighbor_mapper import ensure_h3_l9_mappings
 
 
 class dataset:
@@ -46,6 +55,7 @@ class dataset:
     def _prepare_data(self, dataframe, include_market_indicators=True, future_year_buffer=5):
         """
         Enhanced data preparation with continuous time and market features
+        Now includes H3 L9 neighborhood-aware community embeddings
         
         Parameters:
             dataframe: Input sales data
@@ -58,6 +68,10 @@ class dataset:
         # --- Data Cleaning & Filtering ---
         df['sale_date'] = pd.to_datetime(df['sale_date'])
         df = df.sort_values('sale_date')
+        
+        # Convert sale_nbr to numeric (handle string values from RentCast data)
+        df['sale_nbr'] = pd.to_numeric(df['sale_nbr'], errors='coerce')
+        
         df = df.dropna(subset=['sale_price', 'lat', 'lng', 'sqft', 'sale_nbr', 'sale_date', 'sqft_lot'])
         df = df[df['sale_price'] > 0]
         df = df[df['sqft'] > 0]
@@ -94,10 +108,68 @@ class dataset:
                 print("Warning: unemployment_rate not found. Add market indicators using MarketIndicatorFetcher")
                 df['unemployment_rate'] = 4.0  # Default fallback
         
+        # --- H3 L9 Index Generation (if needed) ---
+        # Ensure h3_09 column exists before attempting neighborhood mapping
+        if 'h3_09' not in df.columns:
+            if 'lat' in df.columns and 'lng' in df.columns:
+                print("  Generating H3 L9 indices from lat/lng...")
+                import h3
+                df['h3_09'] = df.apply(
+                    lambda row: h3.latlng_to_cell(row['lat'], row['lng'], 9) 
+                    if pd.notna(row['lat']) and pd.notna(row['lng']) 
+                    else None,
+                    axis=1
+                )
+                print(f"  ✓ Generated H3 L9 indices for {df['h3_09'].notna().sum()} properties")
+            else:
+                print("  Warning: No h3_09 column and no lat/lng columns found")
+                df['h3_09'] = None
+        
+        # --- H3 L9 Neighborhood Community Mapping ---
+        # Automatically compute neighbor mappings if they don't exist
+        neighbor_map_path = 'data/h3_l9_neighbor_communities.json'
+        
+        # Only attempt neighborhood mapping if h3_09 column exists and has values
+        if 'h3_09' in df.columns and df['h3_09'].notna().any():
+            if not os.path.exists(neighbor_map_path):
+                print("\n  H3 L9 neighbor mappings not found, computing automatically...")
+                try:
+                    l9_to_community, h3_neighbor_map, vocab_data = ensure_h3_l9_mappings(
+                        df,
+                        community_map_path='data/community_map.json',
+                        output_dir='data'
+                    )
+                    print("  ✓ H3 L9 neighbor mappings computed and cached")
+                except Exception as e:
+                    print(f"  Warning: Could not compute H3 L9 mappings: {e}")
+                    print("  Falling back to single community index (no neighborhood pooling)")
+                    df['community_neighbors'] = None
+                    h3_neighbor_map = None
+            else:
+                print("  Loading H3 L9 neighbor community mappings...")
+                with open(neighbor_map_path, 'r') as f:
+                    h3_neighbor_map = json.load(f)
+            
+            if h3_neighbor_map is not None:
+                # Map each h3_09 to its 7 community indices (center + 6 neighbors)
+                df['community_neighbors'] = df['h3_09'].map(h3_neighbor_map)
+                
+                # Handle missing mappings (use UNKNOWN community for all 7 positions)
+                missing_mask = df['community_neighbors'].isna()
+                if missing_mask.any():
+                    print(f"  Warning: {missing_mask.sum()} rows have no H3 L9 neighbor mapping")
+                    # Will be filled with UNKNOWN index later
+                
+                print(f"  ✓ Mapped {(~missing_mask).sum()} properties to H3 L9 neighborhoods")
+            else:
+                print("  ✗ No neighborhood mapping available (will use single community index)")
+                df['community_neighbors'] = None
+        else:
+            print("  ✗ No H3 L9 indices available (will use single community index)")
+            df['community_neighbors'] = None
+        
         # --- Vocabulary Creation ---
         # Year vocab with future years pre-allocated
-        # This allows the model to learn separate embeddings for future years
-        # rather than grouping them all as "unknown"
         min_year = int(df['year'].min())
         max_year = int(df['year'].max())
         
@@ -115,12 +187,24 @@ class dataset:
         self.week_vocab = {value: index for index, value in enumerate(range(1, 54))}
         self.week_vocab["unknown"] = len(self.week_vocab)
         
-        # Community vocab
-        self.community_vocab = create_vocab(df, 'community')
-        self.community_vocab["unknown"] = len(self.community_vocab)
-        self.n_communities = len(self.community_vocab)
+        # Community vocab - load from precomputed L9 vocab
+        community_vocab_path = 'data/community_vocab_l9.json'
+        if os.path.exists(community_vocab_path):
+            with open(community_vocab_path, 'r') as f:
+                vocab_data = json.load(f)
+            # Convert string keys to integers
+            self.community_vocab = {int(k): v for k, v in vocab_data['community_to_idx'].items()}
+            self.community_vocab["unknown"] = vocab_data['unknown_idx']
+            self.n_communities = vocab_data['num_communities']
+            print(f"Loaded H3 L9 community vocabulary: {self.n_communities} communities")
+        else:
+            # Fallback to old method
+            print("Warning: community_vocab_l9.json not found, using legacy community mapping")
+            self.community_vocab = create_vocab(df, 'community')
+            self.community_vocab["unknown"] = len(self.community_vocab)
+            self.n_communities = len(self.community_vocab)
         
-        # Map communities, filling unknown with the "unknown" index
+        # Map communities for backward compatibility (single index)
         df['community_index'] = df['community'].map(self.community_vocab).fillna(self.community_vocab["unknown"]).astype(int)
         
         # Store dataset dimensions
@@ -136,19 +220,34 @@ class dataset:
 class EnhancedEmbeddingModel(nn.Module):
     """
     Enhanced model with continuous time features and uncertainty estimation
+    Now uses H3 L9 neighborhood-aware community embeddings
     """
     def __init__(self, embedding_dim, hidden_dim, property_dim,
                  continuous_time_dim, market_dim,
                  community_embedding_length, 
                  year_length, week_length, 
                  dropout_rate=0.1,
-                 estimate_uncertainty=True):
+                 estimate_uncertainty=True,
+                 use_neighborhood_pooling=True,
+                 pooling_strategy='mean'):
         super().__init__()
         
         self.estimate_uncertainty = estimate_uncertainty
+        self.use_neighborhood_pooling = use_neighborhood_pooling
         
         # --- Embedding Layers (Categorical) ---
-        self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
+        if use_neighborhood_pooling:
+            # Use H3CommunityEmbedding with neighborhood pooling
+            # community_embedding_length is num_communities (not including unknown)
+            self.community_embedding = H3CommunityEmbedding(
+                num_communities=int(community_embedding_length),
+                embedding_dim=embedding_dim,
+                pooling_strategy=pooling_strategy
+            )
+        else:
+            # Legacy single community embedding
+            self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
+        
         self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
         self.week_embedding = nn.Embedding(int(week_length), embedding_dim)
         
@@ -189,14 +288,34 @@ class EnhancedEmbeddingModel(nn.Module):
                 time_features, market_features, return_uncertainty=False):
         """
         Forward pass with continuous time and market features
+        
+        Args:
+            community_indices: If use_neighborhood_pooling=True, shape (batch, 7)
+                             Otherwise, shape (batch,)
+            year, week: Shape (batch,)
+            property_features, time_features, market_features: Shape (batch, feature_dim)
         """
         # --- Safety: Clamp indices to valid range ---
-        community_indices = torch.clamp(community_indices, 0, self.community_embedding.num_embeddings - 1)
+        if self.use_neighborhood_pooling:
+            # Clamp each of the 7 neighbor indices
+            community_indices = torch.clamp(
+                community_indices, 0, 
+                self.community_embedding.vocab_size - 1
+            )
+            # community_embedding expects (batch, 7) and returns (batch, embedding_dim)
+            community_embeddings = self.community_embedding(community_indices)
+        else:
+            # Legacy single index
+            community_indices = torch.clamp(
+                community_indices, 0, 
+                self.community_embedding.num_embeddings - 1
+            )
+            community_embeddings = self.community_embedding(community_indices)
+        
         year = torch.clamp(year, 0, self.year_embedding.num_embeddings - 1)
         week = torch.clamp(week, 0, self.week_embedding.num_embeddings - 1)
         
         # --- Embed Categorical Inputs ---
-        community_embeddings = self.community_embedding(community_indices)
         year_embeddings = self.year_embedding(year)
         week_embeddings = self.week_embedding(week)
         
@@ -250,15 +369,17 @@ class EnhancedEmbeddingModel(nn.Module):
 
 
 class price_predictor:
-    """Enhanced predictor with uncertainty estimation"""
+    """Enhanced predictor with uncertainty estimation and neighborhood pooling"""
     
     def __init__(self, device, embedding_dim, hidden_dim, property_dim,
                  continuous_time_dim, market_dim,
                  community_embedding_length,
                  year_length, week_length, learning_rate,
-                 dropout_rate=0.1, estimate_uncertainty=True):
+                 dropout_rate=0.1, estimate_uncertainty=True,
+                 use_neighborhood_pooling=True, pooling_strategy='mean'):
         self.device = device
         self.estimate_uncertainty = estimate_uncertainty
+        self.use_neighborhood_pooling = use_neighborhood_pooling
         
         self.model = EnhancedEmbeddingModel(
             embedding_dim, hidden_dim, property_dim,
@@ -266,7 +387,9 @@ class price_predictor:
             community_embedding_length, 
             year_length, week_length,
             dropout_rate=dropout_rate,
-            estimate_uncertainty=estimate_uncertainty
+            estimate_uncertainty=estimate_uncertainty,
+            use_neighborhood_pooling=use_neighborhood_pooling,
+            pooling_strategy=pooling_strategy
         ).to(device)
         
         self.criterion = nn.MSELoss()
