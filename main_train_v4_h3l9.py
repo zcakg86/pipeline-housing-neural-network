@@ -1,11 +1,11 @@
 """
-Train V4 Model with H3 L9 Neighborhood-Aware Community Embeddings
+Train Model with H3 L9 Neighborhood-Aware Community Embeddings
 
-This version uses:
+Uses:
 - Combined dataset: sales_2020_25.csv + rentcast_recent_house_sales.csv
-- H3 Level 9 hexagons (higher resolution than L7)
+- H3 Level 9 hexagons
 - Neighborhood pooling: each location represented by center + 6 neighbors
-- Three pooling strategies available: mean, center_weighted, learnable
+- Three pooling strategies: mean, center_weighted, learnable
 """
 import sys
 sys.path.append('src')
@@ -14,8 +14,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import h3
-from pricemodel.embedding_model_v2 import dataset
-from pricemodel.model_manager_v2 import modelmanager
+from pricemodel.embedding_model import dataset
+from pricemodel.model_manager import modelmanager
 
 def load_and_prepare_data():
     """Load and combine sales data with RentCast data, apply H3 L9 indexing"""
@@ -68,7 +68,7 @@ def load_and_prepare_data():
 
 def main():
     print("=" * 70)
-    print("Training V4 Model with H3 L9 Neighborhood-Aware Embeddings")
+    print("Training Model with H3 L9 Neighborhood-Aware Embeddings")
     print("=" * 70)
     
     # Load and prepare data
@@ -116,7 +116,7 @@ def main():
     print(f"   Val:   {len(manager.val_dataset)} samples")
     
     # Train model
-    print("\n5. Training V4 model...")
+    print("\n5. Training model...")
     print("   Architecture:")
     print("   - Embedding dim: 128")
     print("   - Hidden dim: 256")
@@ -151,8 +151,8 @@ def main():
     ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.savefig('outputs/v4_training_curves.png', dpi=150)
-    print("   Saved: outputs/v4_training_curves.png")
+    plt.savefig('outputs/training_curves.png', dpi=150)
+    print("   Saved: outputs/training_curves.png")
     
     # Generate predictions
     print("\n7. Generating predictions...")
@@ -184,7 +184,7 @@ def main():
     print(f"   Model directory: {manager.directory}")
     
     # Save predictions
-    output_path = 'data/sales_2020_25_with_predictions_v4.csv'
+    output_path = 'data/sales_2020_25_with_predictions.csv'
     manager.dataframe.to_csv(output_path, index=False)
     print(f"   Predictions saved: {output_path}")
     print(f"   Total records: {len(manager.dataframe)}")
@@ -201,7 +201,7 @@ def main():
     # Create summary report
     print("\n9. Creating summary report...")
     summary = {
-        'model_version': 'V4',
+        'model_version': 'current',
         'h3_level': 9,
         'neighborhood_pooling': True,
         'pooling_strategy': manager.pooling_strategy,
@@ -218,22 +218,17 @@ def main():
         'model_directory': str(manager.directory)
     }
     
-    with open('outputs/v4_model_summary.txt', 'w') as f:
-        f.write("V4 Model Training Summary\n")
+    with open('outputs/model_summary.txt', 'w') as f:
+        f.write("Model Training Summary\n")
         f.write("=" * 50 + "\n\n")
         for key, value in summary.items():
             f.write(f"{key}: {value}\n")
     
-    print("   Summary saved: outputs/v4_model_summary.txt")
+    print("   Summary saved: outputs/model_summary.txt")
     
     print("\n" + "=" * 70)
-    print("✓ V4 Model Training Complete!")
+    print("✓ Model Training Complete!")
     print("=" * 70)
-    print(f"\nKey improvements over V3:")
-    print(f"  - Higher resolution: H3 L9 (vs L7)")
-    print(f"  - Neighborhood context: 7 communities per location")
-    print(f"  - Smoother spatial predictions")
-    print(f"  - Better boundary handling")
     
     return manager
 

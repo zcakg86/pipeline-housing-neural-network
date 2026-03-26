@@ -30,7 +30,7 @@ print(f"Exporting model from: {model_dir}")
 
 
 # ── 2. Load model via model manager ──────────────────────────────────────────
-from pricemodel.model_manager_v2 import modelmanager
+from pricemodel.model_manager import modelmanager
 
 manager = modelmanager()
 manager.load_model(model_dir)
@@ -162,7 +162,7 @@ ckpt = torch.load(model_dir / 'model.pth', map_location='cpu')
 reference_date = ckpt.get('reference_date', None)
 
 metadata = {
-    'model_version': 'v4',
+    'model_version': 'current',
     'embedding_dim': manager.embedding_dim,
     'hidden_dim': manager.hidden_dim,
     'property_dim': manager.property_dim,
