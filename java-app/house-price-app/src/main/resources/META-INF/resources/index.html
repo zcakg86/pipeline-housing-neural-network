@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seattle Real Estate Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet.heat must load after Leaflet -->
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+           display: flex; height: 100vh; overflow: hidden; background: #1a1a2e; color: #eee; }
+    #sidebar {
+      width: 300px; min-width: 300px; background: #16213e;
+      padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+      border-right: 1px solid #0f3460; font-size: 13px;
+    }
+    h2 { font-size: 14px; color: #e94560; letter-spacing: 0.5px; margin: 0; }
+    label { font-size: 11px; color: #aaa; display: block; margin-bottom: 3px; }
+    select, input[type=date] {
+      width: 100%; background: #0f3460; color: #eee;
+      border: 1px solid #444; border-radius: 4px; padding: 4px 6px; font-size: 12px;
+    }
+    input[type=range] { width: 100%; accent-color: #e94560; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .row input[type=checkbox] { width: auto; accent-color: #e94560; }
+    .divider { border-top: 1px solid #0f3460; }
+    .val { color: #e94560; font-weight: 600; }
+    #stats { font-size: 11px; line-height: 1.9; color: #ccc; }
+    #stats b { color: #e94560; }
+    #fetchStatus { font-size: 11px; color: #aaa; min-height: 28px; line-height: 1.5; }
+    button {
+      width: 100%; padding: 6px; background: #0f3460; color: #eee;
+      border: 1px solid #e94560; border-radius: 4px; cursor: pointer; font-size: 12px;
+    }
+    button:hover { background: #1a3a6e; }
+    #map { flex: 1; }
+    .leaflet-popup-content { font-size: 13px; line-height: 1.7; min-width: 220px; }
+    .leaflet-popup-content a { color: #4a9eff; }
+  </style>
+</head>
+<body>
+<div id="sidebar">
+  <h2>🏠 Seattle Real Estate</h2>
+
+  <!-- Layer toggles -->
+  <div class="divider"></div>
+  <div class="row"><input type="checkbox" id="showZillow" checked/><label style="margin:0" for="showZillow">Zillow Listings <span style="color:#3399ff">●</span></label></div>
+  <div class="row"><input type="checkbox" id="showRentcast" checked/><label style="margin:0" for="showRentcast">RentCast Sales <span style="color:#00cc66">●</span></label></div>
+  <div class="row"><input type="checkbox" id="showSales"  checked/><label style="margin:0" for="showSales">H3 Sales Layer</label></div>
+  <div class="row"><input type="checkbox" id="showHeat"/><label style="margin:0" for="showHeat">Error Heatmap (replaces H3 layer)</label></div>
+
+  <!-- Sales variable -->
+  <div class="divider"></div>
+  <label>Sales Layer Variable</label>
+  <select id="variable">
+    <option value="pct_error">Avg Error (%)</option>
+    <option value="sale_price">Avg Sale Price</option>
+    <option value="sqft">Avg Sqft</option>
+    <option value="num_sales">Number of Sales</option>
+  </select>
+
+  <!-- Property type filters -->
+  <div class="divider"></div>
+  <label>Zillow Property Type</label>
+  <select id="zillowType"><option value="all">All Types</option></select>
+
+  <label>Sales Property Type</label>
+  <select id="salesType"><option value="all">All Types</option></select>
+
+  <!-- Date range for sales -->
+  <label>Sales Date Range</label>
+  <div style="display:flex;gap:6px">
+    <input type="date" id="dateFrom" style="flex:1"/>
+    <input type="date" id="dateTo"   style="flex:1"/>
+  </div>
+
+  <!-- Error filter -->
+  <div class="divider"></div>
+  <label>Max Error Filter (%): <span class="val" id="errorVal">50</span></label>
+  <input type="range" id="maxError" min="5" max="100" value="50" step="5"/>
+
+  <!-- Sqft filter -->
+  <label>Sqft: <span class="val" id="sqftVal">0 – 10000</span></label>
+  <input type="range" id="minSqft" min="0" max="10000" value="0"     step="100"/>
+  <input type="range" id="maxSqft" min="0" max="10000" value="10000" step="100"/>
+
+  <!-- Fetch -->
+  <div class="divider"></div>
+  <h2>Fetch Live Data</h2>
+  <button onclick="fetchApi('rentcast')">↓ Fetch RentCast API</button>
+  <button onclick="fetchApi('zillow')">↓ Fetch Zillow API</button>
+  <div id="fetchStatus"></div>
+
+  <!-- Stats -->
+  <div class="divider"></div>
+  <h2>Statistics</h2>
+  <div id="stats">Loading...</div>
+</div>
+
+<div id="map"></div>
+
+<script>
+// ── Map ───────────────────────────────────────────────────────────────────────
+const map = L.map('map').setView([47.61, -122.33], 11);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '© OpenStreetMap © CARTO', maxZoom: 19
+}).addTo(map);
+
+let salesLayer    = L.layerGroup().addTo(map);
+let zillowLayer   = L.layerGroup().addTo(map);
+let rentcastLayer = L.layerGroup().addTo(map);
+let heatLayer     = null;
+
+// ── Colormaps ─────────────────────────────────────────────────────────────────
+const COLORMAPS = {
+  YlOrRd: [[255,255,204],[255,237,160],[254,217,118],[254,178,76],[253,141,60],[252,78,42],[227,26,28],[177,0,38]],
+  Blues:  [[239,243,255],[198,219,239],[158,202,225],[107,174,214],[66,146,198],[33,113,181],[8,81,156],[8,48,107]]
+};
+
+function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
+
+function interpolate(t, palette) {
+  const n = palette.length - 1;
+  const i = Math.min(Math.floor(t * n), n - 1);
+  const f = t * n - i;
+  const [r0,g0,b0] = palette[i], [r1,g1,b1] = palette[i+1];
+  return `rgb(${lerp(r0,r1,f)},${lerp(g0,g1,f)},${lerp(b0,b1,f)})`;
+}
+
+function pct(arr, p) {
+  const s = [...arr].sort((a,b)=>a-b);
+  return s[Math.floor(p/100*(s.length-1))];
+}
+
+function errorColor(v, maxErr) {
+  const t = Math.min(Math.abs(v) / maxErr, 1);
+  return t < 0.5
+    ? `rgb(${lerp(0,255,t*2)},255,${lerp(80,0,t*2)})`
+    : `rgb(255,${lerp(255,0,(t-0.5)*2)},0)`;
+}
+
+function getColorFn(variable, values, maxErr) {
+  if (variable === 'pct_error') return v => errorColor(v, maxErr);
+  const lo = pct(values, 5), hi = pct(values, 95), range = hi - lo || 1;
+  const palette = variable === 'sqft' ? COLORMAPS.Blues : COLORMAPS.YlOrRd;
+  return v => interpolate(Math.max(0, Math.min(1, (v - lo) / range)), palette);
+}
+
+// ── Legend ────────────────────────────────────────────────────────────────────
+let legendControl = null;
+
+function buildLegend(variable, values, maxErr) {
+  if (legendControl) map.removeControl(legendControl);
+  legendControl = L.control({ position: 'bottomright' });
+  legendControl.onAdd = () => {
+    const div = L.DomUtil.create('div');
+    div.style.cssText = 'background:rgba(22,33,62,0.93);padding:10px 14px;border-radius:6px;' +
+      'border:1px solid #0f3460;color:#eee;font-size:12px;min-width:155px;line-height:1.6';
+    const titles = { pct_error:'Avg Error (%)', sale_price:'Avg Sale Price', sqft:'Avg Sqft', num_sales:'# Sales' };
+    div.innerHTML = `<b style="color:#e94560">${titles[variable]||variable}</b><br>`;
+
+    const swatch = (color, label) =>
+      `<div style="display:flex;align-items:center;gap:6px;margin:1px 0">
+        <span style="display:inline-block;width:16px;height:11px;background:${color};border-radius:2px;flex-shrink:0"></span>
+        <span>${label}</span></div>`;
+
+    if (variable === 'pct_error') {
+      [-maxErr, -maxErr/2, 0, maxErr/2, maxErr].forEach(v => {
+        div.innerHTML += swatch(errorColor(v, maxErr),
+          v === 0 ? '0%' : (v > 0 ? `+${v.toFixed(0)}%` : `${v.toFixed(0)}%`));
+      });
+    } else {
+      const lo = pct(values,5), hi = pct(values,95);
+      const palette = variable === 'sqft' ? COLORMAPS.Blues : COLORMAPS.YlOrRd;
+      const fmt = variable === 'sale_price' ? v => '$'+Math.round(v).toLocaleString() : v => Math.round(v).toLocaleString();
+      for (let i = 0; i <= 5; i++) {
+        const t = i/5;
+        div.innerHTML += swatch(interpolate(t, palette), fmt(lo + t*(hi-lo)));
+      }
+      div.innerHTML += `<div style="font-size:10px;color:#888;margin-top:3px">5th–95th pctile</div>`;
+    }
+    return div;
+  };
+  legendControl.addTo(map);
+}
+
+// ── Sales H3 layer ────────────────────────────────────────────────────────────
+async function loadSales() {
+  // Always clear both layers first
+  salesLayer.clearLayers();
+  if (heatLayer) { map.removeLayer(heatLayer); heatLayer = null; }
+  if (legendControl) { map.removeControl(legendControl); legendControl = null; }
+
+  const variable  = document.getElementById('variable').value;
+  const maxErr    = parseInt(document.getElementById('maxError').value);
+  const homeType  = document.getElementById('salesType').value;
+  const dateFrom  = document.getElementById('dateFrom').value;
+  const dateTo    = document.getElementById('dateTo').value;
+  const showHeat  = document.getElementById('showHeat').checked;
+  const showSales = document.getElementById('showSales').checked;
+
+  // Nothing to show
+  if (!showHeat && !showSales) return;
+
+  if (showHeat) {
+    // Heatmap mode — fetch raw points
+    const res = await fetch(`/api/sales/points?homeType=${homeType}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
+    const gj  = await res.json();
+    const pts  = (gj.features || []).map(f => {
+      const e = Math.abs(f.properties.pctError);
+      return [f.geometry.coordinates[1], f.geometry.coordinates[0], Math.min(e / 100, 1)];
+    });
+    console.log(`Heatmap: ${pts.length} points from /api/sales/points`);
+    if (!L.heatLayer) {
+      console.error('leaflet.heat not loaded');
+      document.getElementById('fetchStatus').textContent = '✗ Heatmap library failed to load, check console';
+      return;
+    }
+    if (pts.length) {
+      heatLayer = L.heatLayer(pts, {
+        radius: 20, blur: 15, maxZoom: 14, minOpacity: 0.2,
+        gradient: { 0.0: 'rgba(0,255,80,0.4)', 0.4: 'rgba(255,255,0,0.4)', 0.7: 'rgba(255,136,0,0.4)', 1.0: 'rgba(255,0,0,0.4)' }
+      }).addTo(map);
+    } else {
+      console.warn('No points returned for heatmap');
+    }
+    buildHeatLegend();
+    return;  // heatmap is mutually exclusive with H3 layer
+  }
+
+  if (!showSales) return;
+
+  const res = await fetch(`/api/sales/h3?variable=${variable}&homeType=${homeType}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
+  const gj  = await res.json();
+  const features = gj.features || [];
+  if (!features.length) { if (legendControl) map.removeControl(legendControl); return; }
+
+  const values = features.map(f => f.properties.displayValue);
+  const colorFn = getColorFn(variable, values, maxErr);
+
+  L.geoJSON(gj, {
+    style: f => ({ fillColor: colorFn(f.properties.displayValue), fillOpacity: 0.55, color: '#444', weight: 0.5 }),
+    onEachFeature: (f, layer) => {
+      const p = f.properties;
+      layer.bindPopup(
+        `<b>H3 Hex</b>: ${p.h3Index}<br>` +
+        `Sales: ${p.numSales}<br>` +
+        `Avg Price: $${Math.round(p.avgSalePrice).toLocaleString()}<br>` +
+        `Avg Predicted: $${Math.round(p.avgPredictedPrice).toLocaleString()}<br>` +
+        `Avg Error: ${p.avgPctError.toFixed(1)}%<br>` +
+        `Avg Sqft: ${Math.round(p.avgSqft).toLocaleString()}`
+      );
+    }
+  }).addTo(salesLayer);
+
+  buildLegend(variable, values, maxErr);
+}
+
+function buildHeatLegend() {
+  if (legendControl) map.removeControl(legendControl);
+  legendControl = L.control({ position: 'bottomright' });
+  legendControl.onAdd = () => {
+    const div = L.DomUtil.create('div');
+    div.style.cssText = 'background:rgba(22,33,62,0.93);padding:10px 14px;border-radius:6px;' +
+      'border:1px solid #0f3460;color:#eee;font-size:12px;min-width:155px';
+    div.innerHTML =
+      `<b style="color:#e94560">Error Heatmap</b><br>` +
+      `<div style="background:linear-gradient(to right,rgba(0,255,80,0.6),rgba(255,255,0,0.6),rgba(255,136,0,0.6),rgba(255,0,0,0.6));` +
+      `height:12px;border-radius:3px;margin:6px 0"></div>` +
+      `<div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa">` +
+      `<span>0%</span><span>50%</span><span>100%+</span></div>` +
+      `<div style="font-size:10px;color:#888;margin-top:3px">abs(pct error)</div>`;
+    return div;
+  };
+  legendControl.addTo(map);
+}
+
+// ── Rentcast layer ────────────────────────────────────────────────────────────
+async function loadRentcast() {
+  rentcastLayer.clearLayers();
+  if (!document.getElementById('showRentcast').checked) return;
+
+  const maxErr   = parseInt(document.getElementById('maxError').value);
+  const minSqft  = document.getElementById('minSqft').value;
+  const maxSqft  = document.getElementById('maxSqft').value;
+  const homeType = document.getElementById('salesType').value;
+
+  const res = await fetch(`/api/rentcast?maxError=${maxErr}&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}`);
+  const gj  = await res.json();
+
+  if (!gj.features || gj.features.length === 0) return;
+
+  L.geoJSON(gj, {
+    pointToLayer: (f, latlng) => L.circleMarker(latlng, {
+      radius:      6,
+      fillColor:   errorColor(f.properties.pctError, maxErr),
+      fillOpacity: 0.85,
+      color:       '#00cc66',   // green border — distinct from Zillow blue
+      weight:      1.5
+    }),
+    onEachFeature: (f, layer) => {
+      const p = f.properties;
+      layer.bindPopup(
+        `<b>${p.address || 'RentCast Sale'}</b><br>` +
+        `<i style="color:#00cc66">Recent Sale</i><br>` +
+        `Sale Price: $${Math.round(p.salePrice).toLocaleString()}<br>` +
+        `Predicted: $${Math.round(p.predictedPrice).toLocaleString()}<br>` +
+        `Error: ${p.pctError.toFixed(1)}%<br>` +
+        `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
+        (p.saleDate ? `Sold: ${p.saleDate}` : '')
+      );
+    }
+  }).addTo(rentcastLayer);
+}
+
+// ── Zillow layer ──────────────────────────────────────────────────────────────
+async function loadZillow() {
+  zillowLayer.clearLayers();
+  if (!document.getElementById('showZillow').checked) return;
+
+  const maxErr   = parseInt(document.getElementById('maxError').value);
+  const minSqft  = document.getElementById('minSqft').value;
+  const maxSqft  = document.getElementById('maxSqft').value;
+  const homeType = document.getElementById('zillowType').value;
+
+  const res = await fetch(`/api/zillow?maxError=${maxErr}&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}`);
+  const gj  = await res.json();
+
+  L.geoJSON(gj, {
+    pointToLayer: (f, latlng) => L.circleMarker(latlng, {
+      radius: 7, fillColor: errorColor(f.properties.pctError, maxErr),
+      fillOpacity: 0.85, color: '#3399ff', weight: 1.5
+    }),
+    onEachFeature: (f, layer) => {
+      const p = f.properties;
+      layer.bindPopup(
+        `<b>${p.address}</b><br>` +
+        `List: $${Math.round(p.listPrice||0).toLocaleString()}<br>` +
+        `Predicted: $${Math.round(p.predictedPrice).toLocaleString()}<br>` +
+        `Error: ${p.pctError.toFixed(1)}%<br>` +
+        `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
+        `Type: ${p.homeType}<br>` +
+        (p.url ? `<a href="${p.url}" target="_blank">View Listing</a>` : '')
+      );
+    }
+  }).addTo(zillowLayer);
+}
+
+// ── Stats ─────────────────────────────────────────────────────────────────────
+async function loadStats() {
+  const res = await fetch('/api/stats');
+  const s = await res.json();
+  let html = '';
+  if (s.zillow) html +=
+    `<b>Zillow Listings</b><br>Total: ${s.zillow.total}<br>` +
+    `Avg List: $${Math.round(s.zillow.avgListPrice).toLocaleString()}<br>` +
+    `Avg Predicted: $${Math.round(s.zillow.avgPredicted).toLocaleString()}<br><br>`;
+  if (s.sales) html +=
+    `<b>Historical Sales</b><br>Total: ${s.sales.total}<br>` +
+    `Unique Hexes: ${s.sales.uniqueHexes}<br>` +
+    `Avg Abs Error: ${s.sales.avgAbsError.toFixed(1)}%`;
+  document.getElementById('stats').innerHTML = html || 'No data loaded yet.';
+}
+
+// ── Populate home type dropdowns ──────────────────────────────────────────────
+async function loadHomeTypes() {
+  const res = await fetch('/api/home-types');
+  const d = await res.json();
+  const fill = (id, types) => {
+    const sel = document.getElementById(id);
+    types.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t; opt.textContent = t.replace(/_/g,' ');
+      sel.appendChild(opt);
+    });
+  };
+  fill('zillowType', d.zillow || []);
+  fill('salesType',  d.sales  || []);
+}
+
+// ── API fetch ─────────────────────────────────────────────────────────────────
+async function fetchApi(source) {
+  const el = document.getElementById('fetchStatus');
+  const statusRes = await fetch('/api/fetch/status');
+  const status = await statusRes.json();
+  const info = status[source];
+  if (info.cooldownActive) {
+    el.textContent = `⏳ ${source}: cooldown active, ${info.minutesRemaining} min remaining`;
+    return;
+  }
+  el.textContent = `Fetching ${source}... (billed call)`;
+  try {
+    const res = await fetch(`/api/fetch/${source}?confirm=true`, { method: 'POST' });
+    const data = await res.json();
+    if (data.status === 'ok') {
+      el.textContent = `✓ ${source}: ${data.fetched} records. Next in ${data.nextAllowedIn}`;
+      loadHomeTypes(); loadSales(); loadZillow(); loadRentcast(); loadStats();
+    } else {
+      el.textContent = `✗ ${data.message}`;
+    }
+  } catch (e) { el.textContent = `✗ ${e.message}`; }
+}
+
+// ── Wire controls ─────────────────────────────────────────────────────────────
+function updateSqftLabel() {
+  document.getElementById('sqftVal').textContent =
+    `${document.getElementById('minSqft').value} – ${document.getElementById('maxSqft').value}`;
+}
+document.getElementById('showZillow').addEventListener('change', loadZillow);
+document.getElementById('showRentcast').addEventListener('change', loadRentcast);
+document.getElementById('showSales').addEventListener('change', loadSales);
+document.getElementById('showHeat').addEventListener('change', loadSales);
+document.getElementById('zillowType').addEventListener('change', loadZillow);
+document.getElementById('salesType').addEventListener('change', () => { loadSales(); loadRentcast(); });
+document.getElementById('dateFrom').addEventListener('change', loadSales);
+document.getElementById('dateTo').addEventListener('change', loadSales);
+document.getElementById('maxError').addEventListener('input', e => {
+  document.getElementById('errorVal').textContent = e.target.value;
+  loadSales(); loadZillow(); loadRentcast();
+});
+document.getElementById('minSqft').addEventListener('input', () => { updateSqftLabel(); loadZillow(); loadRentcast(); });
+document.getElementById('maxSqft').addEventListener('input', () => { updateSqftLabel(); loadZillow(); loadRentcast(); });
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+loadHomeTypes();
+loadSales();
+loadZillow();
+loadRentcast();
+loadStats();
+</script>
+</body>
+</html>

@@ -25,6 +25,7 @@ def load_and_prepare_data():
     # Load main sales data
     print("   Loading data/sales_2020_25.csv...")
     df_main = pd.read_csv('data/sales_2020_25.csv')
+    df_main['data_source'] = 'main_sales'
     print(f"   - Main dataset: {len(df_main)} records")
     
     # Load RentCast data
@@ -32,11 +33,14 @@ def load_and_prepare_data():
     try:
         print(f"   Loading {rentcast_path}...")
         df_rentcast = pd.read_csv(rentcast_path)
+        df_rentcast['data_source'] = 'rentcast'
         print(f"   - RentCast dataset: {len(df_rentcast)} records")
         
         # Combine datasets
         df = pd.concat([df_main, df_rentcast], ignore_index=True)
         print(f"   ✓ Combined dataset: {len(df)} records")
+        print(f"     - Main sales: {len(df_main)} ({len(df_main)/len(df)*100:.1f}%)")
+        print(f"     - RentCast: {len(df_rentcast)} ({len(df_rentcast)/len(df)*100:.1f}%)")
     except FileNotFoundError:
         print(f"   Warning: {rentcast_path} not found, using main dataset only")
         df = df_main
@@ -183,6 +187,16 @@ def main():
     output_path = 'data/sales_2020_25_with_predictions_v4.csv'
     manager.dataframe.to_csv(output_path, index=False)
     print(f"   Predictions saved: {output_path}")
+    print(f"   Total records: {len(manager.dataframe)}")
+    
+    # Report data sources
+    if 'data_source' in manager.dataframe.columns:
+        source_counts = manager.dataframe['data_source'].value_counts()
+        print(f"   Data sources:")
+        for source, count in source_counts.items():
+            print(f"     - {source}: {count} records")
+    else:
+        print(f"   Note: Includes main sales data + RentCast data (if available)")
     
     # Create summary report
     print("\n9. Creating summary report...")

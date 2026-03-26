@@ -1,4 +1,4 @@
-#%%
+#%% process data from Kaggle (just to reduce file size)
 import pandas as pd
 
 df = pd.read_csv('data/kingco_sales.csv')

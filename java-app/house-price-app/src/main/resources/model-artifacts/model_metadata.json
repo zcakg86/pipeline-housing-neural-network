@@ -1,0 +1,39 @@
+{
+  "model_version": "v4",
+  "embedding_dim": 128,
+  "hidden_dim": 256,
+  "property_dim": 3,
+  "continuous_time_dim": 5,
+  "market_dim": 2,
+  "n_communities": 231,
+  "year_length": 12,
+  "week_length": 53,
+  "use_neighborhood_pooling": true,
+  "pooling_strategy": "mean",
+  "reference_date": "2020-01-02T00:00:00",
+  "property_features": [
+    "sqft",
+    "sqft_lot",
+    "beds"
+  ],
+  "time_features": [
+    "time_trend",
+    "sin_day",
+    "cos_day",
+    "sin_month",
+    "cos_month"
+  ],
+  "market_features": [
+    "mortgage_rate",
+    "unemployment_rate"
+  ],
+  "input_order": [
+    "community_indices (long[batch,7])",
+    "year (long[batch])",
+    "week (long[batch])",
+    "property_features (float[batch,3])",
+    "time_features (float[batch,5])",
+    "market_features (float[batch,2])"
+  ],
+  "output": "log_price_scaled (float[batch,1]) - apply log_price scaler inverse then exp()"
+}
