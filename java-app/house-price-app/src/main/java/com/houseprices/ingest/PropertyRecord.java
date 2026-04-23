@@ -15,6 +15,7 @@ public record PropertyRecord(
     double  lat,
     double  lng,
     String  h3Index,         // H3 level-9 index
+    String  community,       // Community ID (from H3 L7 → community map)
 
     // Property attributes
     double  sqft,

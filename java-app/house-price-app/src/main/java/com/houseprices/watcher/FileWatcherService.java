@@ -96,6 +96,9 @@ public class FileWatcherService {
 
         LOG.infof("New file detected [%s]: %s", source, file.getName());
         try {
+            // Wait for file to finish writing (size stabilises)
+            waitForFile(file);
+
             List<PropertyRecord> records;
             if (source.equals("rentcast") && name.endsWith(".csv")) {
                 records = ingestion.ingestRentcastCsv(file);
@@ -113,6 +116,16 @@ public class FileWatcherService {
             LOG.errorf("Failed to process file %s: %s", file.getName(), e.getMessage());
         } finally {
             inProgress.remove(key);
+        }
+    }
+
+    private void waitForFile(File file) throws InterruptedException {
+        long previousSize = -1;
+        for (int i = 0; i < 10; i++) {
+            long currentSize = file.length();
+            if (currentSize > 0 && currentSize == previousSize) return;
+            previousSize = currentSize;
+            Thread.sleep(200);
         }
     }
 

@@ -6,8 +6,8 @@
   <title>Seattle Real Estate Map</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <!-- Leaflet.heat must load after Leaflet -->
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -39,6 +39,26 @@
     #map { flex: 1; }
     .leaflet-popup-content { font-size: 13px; line-height: 1.7; min-width: 220px; }
     .leaflet-popup-content a { color: #4a9eff; }
+
+    /* ── Performance popup ── */
+    #perfPopup {
+      display: block; visibility: hidden; position: fixed; z-index: 9999;
+      background: #16213e; border: 1px solid #0f3460; border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      width: 720px; min-height: 420px; padding: 16px;
+      top: 80px; left: 50%; transform: translateX(-50%);
+    }
+    #perfPopup .popup-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px; cursor: move; user-select: none;
+    }
+    #perfPopup .popup-header h3 { color: #e94560; font-size: 14px; margin: 0; }
+    #perfPopup .close-btn {
+      background: none; border: none; color: #aaa; font-size: 18px;
+      cursor: pointer; padding: 0 4px; width: auto;
+    }
+    #perfPopup .close-btn:hover { color: #fff; background: none; }
+    #chartContainer { position: relative; height: 340px; }
   </style>
 </head>
 <body>
@@ -51,6 +71,7 @@
   <div class="row"><input type="checkbox" id="showRentcast" checked/><label style="margin:0" for="showRentcast">RentCast Sales <span style="color:#00cc66">●</span></label></div>
   <div class="row"><input type="checkbox" id="showSales"  checked/><label style="margin:0" for="showSales">H3 Sales Layer</label></div>
   <div class="row"><input type="checkbox" id="showHeat"/><label style="margin:0" for="showHeat">Error Heatmap (replaces H3 layer)</label></div>
+  <div class="row"><input type="checkbox" id="showCommunity"/><label style="margin:0" for="showCommunity">Community Layer</label></div>
 
   <!-- Sales variable -->
   <div class="divider"></div>
@@ -98,9 +119,19 @@
   <div class="divider"></div>
   <h2>Statistics</h2>
   <div id="stats">Loading...</div>
+  <button onclick="openPerfPopup()" style="margin-top:6px">📈 Show Prediction Performance</button>
 </div>
 
 <div id="map"></div>
+
+<!-- Performance popup -->
+<div id="perfPopup">
+  <div class="popup-header" id="perfDragHandle">
+    <h3>📈 Prediction Performance by Community</h3>
+    <button class="close-btn" onclick="closePerfPopup()">✕</button>
+  </div>
+  <div id="chartContainer" style="position:relative;height:340px;width:100%"><canvas id="perfChart"></canvas></div>
+</div>
 
 <script>
 // ── Map ───────────────────────────────────────────────────────────────────────
@@ -112,6 +143,7 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 let salesLayer    = L.layerGroup().addTo(map);
 let zillowLayer   = L.layerGroup().addTo(map);
 let rentcastLayer = L.layerGroup().addTo(map);
+let communityLayer = L.layerGroup().addTo(map);
 let heatLayer     = null;
 
 // ── Colormaps ─────────────────────────────────────────────────────────────────
@@ -404,11 +436,211 @@ async function fetchApi(source) {
   } catch (e) { el.textContent = `✗ ${e.message}`; }
 }
 
+// ── Community colormap (10 distinct colours shared by map + chart) ────────────
+const COMMUNITY_COLORS = [
+  '#e94560','#4a9eff','#00cc66','#ffcc00','#ff6b35',
+  '#a855f7','#06b6d4','#f97316','#84cc16','#ec4899'
+];
+let selectedCommunities = new Set(); // empty = all selected
+
+function communityColor(id, allIds) {
+  const i = allIds.indexOf(id);
+  return COMMUNITY_COLORS[i % COMMUNITY_COLORS.length];
+}
+
+// ── Community map layer ───────────────────────────────────────────────────────
+let perfData = null; // cached performance response
+
+async function loadCommunityLayer() {
+  communityLayer.clearLayers();
+  if (!document.getElementById('showCommunity').checked) return;
+
+  // Ensure perf data loaded so we know the top communities + colors
+  if (!perfData) perfData = await (await fetch('/api/performance')).json();
+  const topIds = perfData.communities || [];
+  if (!topIds.length) return;
+
+  const res = await fetch('/api/sales/community');
+  const gj  = await res.json();
+
+  L.geoJSON(gj, {
+    style: f => {
+      const c = f.properties.community;
+      const active = selectedCommunities.size === 0 || selectedCommunities.has(c);
+      const color = communityColor(c, topIds);
+      return {
+        fillColor:   topIds.includes(c) ? color : '#555',
+        fillOpacity: active ? 0.45 : 0.1,
+        color:       topIds.includes(c) ? color : '#333',
+        weight:      0.8
+      };
+    },
+    onEachFeature: (f, layer) => {
+      const c = f.properties.community;
+      layer.on('click', () => toggleCommunity(c));
+      layer.bindTooltip(`Community ${c}`, { sticky: true });
+    }
+  }).addTo(communityLayer);
+}
+
+function toggleCommunity(id) {
+  if (selectedCommunities.has(id)) selectedCommunities.delete(id);
+  else selectedCommunities.add(id);
+  loadCommunityLayer();
+  if (perfChart) updateChartSelection();
+}
+
+// ── Performance chart popup ───────────────────────────────────────────────────
+let perfChart = null;
+
+async function openPerfPopup() {
+  const popup = document.getElementById('perfPopup');
+  popup.style.visibility = 'visible';
+  popup.style.zIndex = '9999';
+  if (!perfData) perfData = await (await fetch('/api/performance')).json();
+  if (!perfChart) {
+    const existing = Chart.getChart('perfChart');
+    if (existing) existing.destroy();
+    buildChart(perfData);
+  }
+}
+
+function closePerfPopup() {
+  document.getElementById('perfPopup').style.visibility = 'hidden';
+}
+
+function buildChart(data) {
+  const topIds = data.communities || [];
+  const allQuarters = [...new Set(
+    data.series.flatMap(s => s.points.map(p => p.quarter))
+  )].sort();
+
+  const datasets = [];
+  data.series.forEach((s, i) => {
+    const color = COMMUNITY_COLORS[i % COMMUNITY_COLORS.length];
+    const qMap  = Object.fromEntries(s.points.map(p => [p.quarter, p]));
+
+    // Mean line
+    datasets.push({
+      label:           `C${s.community}`,
+      communityId:     s.community,
+      data:            allQuarters.map(q => qMap[q]?.mean ?? null),
+      borderColor:     color,
+      backgroundColor: color + '33',
+      borderWidth:     2,
+      pointRadius:     3,
+      tension:         0.3,
+      spanGaps:        true,
+      fill:            false
+    });
+    // +std dotted
+    datasets.push({
+      label:       `C${s.community} +σ`,
+      communityId: s.community,
+      data:        allQuarters.map(q => qMap[q] ? qMap[q].mean + qMap[q].std : null),
+      borderColor: color,
+      borderWidth: 1,
+      borderDash:  [4, 3],
+      pointRadius: 0,
+      tension:     0.3,
+      spanGaps:    true,
+      fill:        false
+    });
+    // -std dotted
+    datasets.push({
+      label:       `C${s.community} -σ`,
+      communityId: s.community,
+      data:        allQuarters.map(q => qMap[q] ? qMap[q].mean - qMap[q].std : null),
+      borderColor: color,
+      borderWidth: 1,
+      borderDash:  [4, 3],
+      pointRadius: 0,
+      tension:     0.3,
+      spanGaps:    true,
+      fill:        false
+    });
+  });
+
+  const ctx = document.getElementById('perfChart').getContext('2d');
+  perfChart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: allQuarters, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: {
+            color: '#eee', font: { size: 11 },
+            filter: (item, chartData) => {
+              const ds = chartData.datasets[item.datasetIndex];
+              return ds && !ds.label.includes('σ');
+            }
+          },
+          onClick: (e, item, legend) => {
+            const ds = legend.chart.data.datasets[item.datasetIndex];
+            if (ds && ds.communityId) { toggleCommunity(ds.communityId); updateChartSelection(); }
+          }
+        },
+        tooltip: {
+          backgroundColor: '#16213e',
+          titleColor: '#e94560',
+          bodyColor: '#eee',
+          callbacks: {
+            label: ctx => {
+              if (ctx.dataset.label.includes('σ')) return null;
+              return `${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(1)}%`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#aaa', font: { size: 10 } }, grid: { color: '#1a3a6e' } },
+        y: {
+          ticks: { color: '#aaa', callback: v => v + '%' },
+          grid:  { color: '#1a3a6e' },
+          title: { display: true, text: 'Avg % Error', color: '#aaa' }
+        }
+      }
+    }
+  });
+}
+
+function updateChartSelection() {
+  if (!perfChart) return;
+  perfChart.data.datasets.forEach(ds => {
+    const active = selectedCommunities.size === 0 || selectedCommunities.has(ds.communityId);
+    ds.hidden = !active;
+  });
+  perfChart.update();
+}
+
+// ── Draggable popup ───────────────────────────────────────────────────────────
+(function() {
+  const popup = document.getElementById('perfPopup');
+  const handle = document.getElementById('perfDragHandle');
+  let dragging = false, ox = 0, oy = 0;
+  handle.addEventListener('mousedown', e => {
+    dragging = true;
+    const r = popup.getBoundingClientRect();
+    ox = e.clientX - r.left; oy = e.clientY - r.top;
+    popup.style.transform = 'none';
+  });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    popup.style.left = (e.clientX - ox) + 'px';
+    popup.style.top  = (e.clientY - oy) + 'px';
+  });
+  document.addEventListener('mouseup', () => dragging = false);
+})();
+
 // ── Wire controls ─────────────────────────────────────────────────────────────
 function updateSqftLabel() {
   document.getElementById('sqftVal').textContent =
     `${document.getElementById('minSqft').value} – ${document.getElementById('maxSqft').value}`;
 }
+document.getElementById('showCommunity').addEventListener('change', loadCommunityLayer);
 document.getElementById('showZillow').addEventListener('change', loadZillow);
 document.getElementById('showRentcast').addEventListener('change', loadRentcast);
 document.getElementById('showSales').addEventListener('change', loadSales);
@@ -430,6 +662,7 @@ loadSales();
 loadZillow();
 loadRentcast();
 loadStats();
+// Community layer loads on demand (checkbox off by default)
 </script>
 </body>
 </html>

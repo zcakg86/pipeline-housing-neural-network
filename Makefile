@@ -1,6 +1,6 @@
 # Makefile for House Price Model + Java App
 
-.PHONY: help train export java-setup java-dev java-build java-run \
+.PHONY: help train export java-setup java-dev java-build java-run java-kill \
         docker-build docker-train clean
 
 JAVA_APP_DIR = java-app/house-price-app
@@ -22,6 +22,7 @@ help:
 	@echo "    make java-dev       Run Java app in dev mode (hot reload)"
 	@echo "    make java-build     Build Java app JAR"
 	@echo "    make java-run       Run built JAR"
+	@echo "    make java-kill      Kill process on port 8080"
 	@echo ""
 	@echo "  Utilities:"
 	@echo "    make clean          Remove build artifacts"
@@ -64,22 +65,29 @@ java-setup:
 	fi
 	@echo "Setup complete. Run 'make java-dev' to start."
 
+java-kill:
+	@lsof -ti :8080 | xargs kill -9 2>/dev/null && echo "Killed process on port 8080" || echo "Nothing running on port 8080"
+
 java-dev:
 	@echo "Starting Java app in dev mode at http://localhost:8080"
-	mvn quarkus:dev -f $(JAVA_APP_DIR)/pom.xml
+	JAVA_HOME=/opt/homebrew/opt/openjdk mvn quarkus:dev -f $(JAVA_APP_DIR)/pom.xml
 
 java-build:
 	@echo "Building Java app..."
-	mvn package -DskipTests -f $(JAVA_APP_DIR)/pom.xml
+	JAVA_HOME=/opt/homebrew/opt/openjdk mvn package -DskipTests -f $(JAVA_APP_DIR)/pom.xml
 
 java-run:
 	@echo "Running Java app..."
-	java -jar $(JAVA_APP_DIR)/target/quarkus-app/quarkus-run.jar
+	@set -a && [ -f $(JAVA_APP_DIR)/.env ] && . $(JAVA_APP_DIR)/.env; set +a; \
+	/opt/homebrew/opt/openjdk/bin/java \
+		-DRENTCAST_API_KEY=$${RENTCAST_API_KEY:-} \
+		-DZILLOW_API_KEY=$${ZILLOW_API_KEY:-} \
+		-jar $(JAVA_APP_DIR)/target/quarkus-app/quarkus-run.jar
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
 clean:
 	@echo "Cleaning build artifacts..."
-	cd $(JAVA_APP_DIR) && mvn clean -q
+	JAVA_HOME=/opt/homebrew/opt/openjdk mvn clean -q -f $(JAVA_APP_DIR)/pom.xml
 	find . -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 	find . -name "*.pyc" -delete 2>/dev/null || true
 	@echo "Done."

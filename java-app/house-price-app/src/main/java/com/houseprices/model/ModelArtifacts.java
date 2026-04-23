@@ -31,6 +31,9 @@ public class ModelArtifacts {
     // H3 L9 -> [7 community indices]
     private HashMap<String, int[]> h3NeighborMap = new HashMap<>();
 
+    // H3 L7 -> community ID
+    private HashMap<String, String> communityMap = new HashMap<>();
+
     // Metadata
     private LocalDate referenceDate;
     private int unknownCommunityIdx;
@@ -76,6 +79,19 @@ public class ModelArtifacts {
                 h3NeighborMap.put(hex, arr);
             });
             LOG.infof("Loaded H3 neighbor map: %d hexes", h3NeighborMap.size());
+
+            // ── Community map (H3 L9 → community ID) ─────────────────────────
+            // Bundled in model-artifacts as h3_l9_to_community.json
+            InputStream commIs = getClass().getClassLoader()
+                .getResourceAsStream("model-artifacts/h3_l9_to_community.json");
+            if (commIs != null) {
+                Map<String, Integer> rawCommunity = mapper.readValue(commIs,
+                    mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Integer.class));
+                rawCommunity.forEach((k, v) -> communityMap.put(k, String.valueOf(v)));
+                LOG.infof("Loaded H3 L9 community map: %d entries", communityMap.size());
+            } else {
+                LOG.warn("h3_l9_to_community.json not found in model-artifacts");
+            }
 
             // ── Metadata ──────────────────────────────────────────────────────
             Map<String, Object> meta = mapper.readValue(resource("model_metadata.json"),
@@ -125,6 +141,12 @@ public class ModelArtifacts {
 
     public LocalDate getReferenceDate() { return referenceDate; }
     public int getUnknownCommunityIdx() { return unknownCommunityIdx; }
+
+    /** Resolve H3 L9 index to community ID string, empty string if unknown */
+    public String lookupCommunity(String h3L9) {
+        if (h3L9 == null || h3L9.isBlank()) return "";
+        return communityMap.getOrDefault(h3L9, "");
+    }
 
     private InputStream resource(String name) {
         InputStream is = getClass().getClassLoader().getResourceAsStream("model-artifacts/" + name);

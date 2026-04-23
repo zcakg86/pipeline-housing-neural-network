@@ -31,6 +31,7 @@ public class DataIngestionService {
     @Inject EmbeddingModel    model;
     @Inject RentcastApiClient rentcastApi;
     @Inject ZillowApiClient   zillowApi;
+    @Inject com.houseprices.model.ModelArtifacts artifacts;
 
     private final H3Core h3;
 
@@ -86,6 +87,9 @@ public class DataIngestionService {
                     String id = col(cols, idx, "sale_nbr");
                     if (id.isBlank()) id = lat + "_" + lng + "_" + lineNum;
 
+                    // Resolve community from H3 L9 index
+                    String community = artifacts.lookupCommunity(h3Index);
+
                     double predicted = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
                     double pctError  = salePrice > 0
                         ? 100.0 * (predicted - salePrice) / salePrice : 0;
@@ -94,7 +98,7 @@ public class DataIngestionService {
                         id,
                         col(cols, idx, "address"),
                         "sales",
-                        lat, lng, h3Index,
+                        lat, lng, h3Index, community,
                         sqft, sqftLot, (int) beds, baths,
                         col(cols, idx, "home_type"),
                         saleDate, salePrice, null,
@@ -140,7 +144,7 @@ public class DataIngestionService {
                         col(cols, idx, "id"),
                         col(cols, idx, "formattedAddress"),
                         "rentcast",
-                        lat, lng, h3Index,
+                        lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
                         sqft, sqftLot, (int) beds,
                         parseDoubleOrDefault(cols, idx, "bathrooms", 2),
                         col(cols, idx, "propertyType"),
@@ -291,7 +295,7 @@ public class DataIngestionService {
                     String.valueOf(p.getOrDefault("id", "")),
                     String.valueOf(p.getOrDefault("formattedAddress", "")),
                     "rentcast",
-                    lat, lng, h3Index,
+                    lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
                     sqft, sqftLot, (int) beds, baths,
                     String.valueOf(p.getOrDefault("propertyType", "")),
                     saleDate, salePrice, null,
@@ -364,7 +368,7 @@ public class DataIngestionService {
 
         return new PropertyRecord(
             id, address, "zillow",
-            lat, lng, h3Index,
+            lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
             sqft, sqftLot, (int) beds, baths,
             String.valueOf(p.getOrDefault("homeType", "")),
             LocalDate.now(), price, url,
