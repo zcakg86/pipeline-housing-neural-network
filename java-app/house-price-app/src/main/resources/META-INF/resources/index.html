@@ -90,7 +90,7 @@
     <option value="sqft">Avg Sqft</option>
     <option value="num_sales">Number of Sales</option>
     <option value="pred_std">Prediction Uncertainty ($)</option>
-    <option value="pred_cv_pct">Prediction Uncertainty (% of price)</option>
+    <option value="pred_cv_pct">Prediction Uncertainty (95% CI width)</option>
     <option value="attn_community">Attention — Community</option>
     <option value="attn_year">Attention — Year</option>
     <option value="attn_week">Attention — Week</option>
@@ -417,7 +417,7 @@ async function loadSales() {
         `Avg Predicted: $${Math.round(p.avgPredictedPrice).toLocaleString()}<br>` +
         `Avg Error: ${p.avgPctError.toFixed(1)}%<br>` +
         `Avg Sqft: ${Math.round(p.avgSqft).toLocaleString()}<br>` +
-        `Pred Uncertainty: $${Math.round(p.avgPredStd ?? 0).toLocaleString()} (${(p.avgPredCvPct ?? 0).toFixed(1)}% of price)<br>` +
+        `95% CI: ±$${Math.round((p.avgPredStd ?? 0) * 1.96).toLocaleString()} (±${((p.avgPredCvPct ?? 0) / 2).toFixed(1)}% of price)<br>` +
         `<b>CLS Attention:</b><br>` +
         attnRow('&nbsp; Community', p.attnCommunity) +
         attnRow('&nbsp; Year',      p.attnYear) +
@@ -517,7 +517,7 @@ async function loadRentcast() {
         `Sale Price: $${Math.round(p.salePrice).toLocaleString()}<br>` +
         `Predicted: $${Math.round(p.predictedPrice).toLocaleString()}<br>` +
         `Error: ${p.pctError.toFixed(1)}%<br>` +
-        `Uncertainty: $${Math.round(p.predictionStdPrice ?? 0).toLocaleString()} (${(p.predictionCvPct ?? 0).toFixed(1)}% of price)<br>` +
+        `95% CI: ±$${Math.round((p.predictionStdPrice ?? 0) * 1.96).toLocaleString()} (±${((p.predictionCvPct ?? 0) / 2).toFixed(1)}% of price)<br>` +
         `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
         (p.saleDate ? `Sold: ${p.saleDate}<br>` : '') +
         `<b>CLS Attention:</b><br>` +
@@ -572,7 +572,7 @@ async function loadZillow() {
         `List: $${Math.round(p.listPrice || 0).toLocaleString()}<br>` +
         `Predicted: $${Math.round(p.predictedPrice).toLocaleString()}<br>` +
         `Error: ${p.pctError.toFixed(1)}%<br>` +
-        `Uncertainty: $${Math.round(p.predictionStdPrice ?? 0).toLocaleString()} (${(p.predictionCvPct ?? 0).toFixed(1)}% of price)<br>` +
+        `95% CI: ±$${Math.round((p.predictionStdPrice ?? 0) * 1.96).toLocaleString()} (±${((p.predictionCvPct ?? 0) / 2).toFixed(1)}% of price)<br>` +
         `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
         `Type: ${p.homeType}<br>` +
         `<b>CLS Attention:</b><br>` +
