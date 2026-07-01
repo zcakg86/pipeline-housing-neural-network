@@ -16,7 +16,10 @@ import java.util.Map;
 
 /**
  * ONNX-backed embedding model for house price prediction.
- * Handles all feature engineering and inference.
+ * The ONNX model exposes three outputs:
+ *   0: log_price_scaled  [batch, 1]
+ *   1: log_var_scaled    [batch, 1]   — uncertainty head (log variance in scaled log-price space)
+ *   2: cls_attention     [batch, 6]   — CLS token attention over [community, year, week, property, time, market]
  */
 @ApplicationScoped
 public class EmbeddingModel {
@@ -24,13 +27,43 @@ public class EmbeddingModel {
     private static final Logger LOG = Logger.getLogger(EmbeddingModel.class);
 
     // Default market indicators (can be updated via API)
-    private static final double DEFAULT_MORTGAGE_RATE    = 6.5;
+    private static final double DEFAULT_MORTGAGE_RATE     = 6.5;
     private static final double DEFAULT_UNEMPLOYMENT_RATE = 4.0;
+
+    /** Token names matching the 6 CLS attention output positions */
+    public static final String[] ATTENTION_TOKENS =
+        {"community", "year", "week", "property", "time", "market"};
+
+    /**
+     * Full prediction result carrying price, uncertainty, and attention weights.
+     *
+     * @param predictedPrice     Price in dollars
+     * @param predictionStdPrice Standard deviation in dollars
+     *                           (delta method: std_price ≈ price × std_log_price)
+     * @param predictionCvPct    95% CI width as % of predicted price
+     *                           (3.92 × std_log_price × 100).
+     *                           Price-normalised: 15% means the same regardless of
+     *                           whether the property is $300k or $1.5m.
+     *                           Directly interpretable as model confidence.
+     * @param clsAttention       6-element attention weights over input tokens
+     *                           [community, year, week, property, time, market]
+     */
+    public record PredictionResult(
+        double  predictedPrice,
+        double  predictionStdPrice,
+        double  predictionCvPct,
+        float[] clsAttention
+    ) {
+        /** Convenience: predictedPrice only, for callers that don't need extras */
+        public static PredictionResult priceOnly(double price) {
+            return new PredictionResult(price, 0.0, 0.0, new float[6]);
+        }
+    }
 
     @Inject ModelArtifacts artifacts;
 
     private OrtEnvironment env;
-    private OrtSession    session;
+    private OrtSession     session;
 
     @PostConstruct
     void init() {
@@ -43,7 +76,13 @@ public class EmbeddingModel {
                 modelBytes = is.readAllBytes();
             }
             session = env.createSession(modelBytes, new OrtSession.SessionOptions());
-            LOG.info("ONNX model loaded successfully");
+            // Verify expected output count
+            long nOutputs = session.getNumOutputs();
+            LOG.infof("ONNX model loaded — %d output(s)", nOutputs);
+            if (nOutputs < 3) {
+                LOG.warn("Model has fewer than 3 outputs — uncertainty and attention will be zero. " +
+                         "Re-run export_model_for_java.py to regenerate the ONNX file.");
+            }
         } catch (Exception e) {
             throw new RuntimeException("Failed to load ONNX model", e);
         }
@@ -52,28 +91,22 @@ public class EmbeddingModel {
     @PreDestroy
     void close() {
         try { if (session != null) session.close(); } catch (Exception ignored) {}
-        try { if (env != null) env.close(); }     catch (Exception ignored) {}
+        try { if (env != null) env.close(); }         catch (Exception ignored) {}
     }
 
-    /**
-     * Predict price for a single property.
-     *
-     * @param h3Index   H3 level-9 index string
-     * @param saleDate  Date of sale / listing date
-     * @param sqft      Living area sq ft
-     * @param sqftLot   Lot size sq ft
-     * @param beds      Bedrooms
-     * @return predicted price in dollars
-     */
-    public double predict(String h3Index, LocalDate saleDate,
-                          double sqft, double sqftLot, double beds) {
+    // ── Public predict API ────────────────────────────────────────────────────
+
+    /** Predict with default market indicators. */
+    public PredictionResult predict(String h3Index, LocalDate saleDate,
+                                    double sqft, double sqftLot, double beds) {
         return predict(h3Index, saleDate, sqft, sqftLot, beds,
                        DEFAULT_MORTGAGE_RATE, DEFAULT_UNEMPLOYMENT_RATE);
     }
 
-    public double predict(String h3Index, LocalDate saleDate,
-                          double sqft, double sqftLot, double beds,
-                          double mortgageRate, double unemploymentRate) {
+    /** Predict with explicit market indicators. */
+    public PredictionResult predict(String h3Index, LocalDate saleDate,
+                                    double sqft, double sqftLot, double beds,
+                                    double mortgageRate, double unemploymentRate) {
         try {
             // ── Community neighbors (1 x 7) ───────────────────────────────
             int[] neighbors = artifacts.lookupH3Neighbors(h3Index);
@@ -94,21 +127,9 @@ public class EmbeddingModel {
             }};
 
             // ── Continuous time features (scaled) ─────────────────────────
-            LocalDate refDate = artifacts.getReferenceDate();
-            double timeTrend = ChronoUnit.DAYS.between(refDate, saleDate) / 365.25;
-            double dayOfYear = saleDate.getDayOfYear();
-            double sinDay    = Math.sin(2 * Math.PI * dayOfYear / 365.25);
-            double cosDay    = Math.cos(2 * Math.PI * dayOfYear / 365.25);
-            double sinMonth  = Math.sin(2 * Math.PI * saleDate.getMonthValue() / 12.0);
-            double cosMonth  = Math.cos(2 * Math.PI * saleDate.getMonthValue() / 12.0);
-
-            float[][] timeArr = {{
-                (float) artifacts.scaleFeature("time_trend", timeTrend),
-                (float) artifacts.scaleFeature("sin_day",    sinDay),
-                (float) artifacts.scaleFeature("cos_day",    cosDay),
-                (float) artifacts.scaleFeature("sin_month",  sinMonth),
-                (float) artifacts.scaleFeature("cos_month",  cosMonth)
-            }};
+            LocalDate refDate  = artifacts.getReferenceDate();
+            double    timeTrend = ChronoUnit.DAYS.between(refDate, saleDate) / 365.25;
+            float[][] timeArr  = {{(float) artifacts.scaleFeature("time_trend", timeTrend)}};
 
             // ── Market features (scaled) ──────────────────────────────────
             float[][] marketArr = {{
@@ -134,10 +155,36 @@ public class EmbeddingModel {
                 );
 
                 try (OrtSession.Result result = session.run(inputs)) {
-                    float[][] output = (float[][]) result.get(0).getValue();
-                    double scaledLogPrice = output[0][0];
-                    double logPrice = artifacts.inverseScaleLogPrice(scaledLogPrice);
-                    return Math.exp(logPrice);
+                    // Output 0: log_price_scaled  [1, 1]
+                    float[][] priceOut = (float[][]) result.get(0).getValue();
+                    double scaledLogPrice = priceOut[0][0];
+                    double logPrice       = artifacts.inverseScaleLogPrice(scaledLogPrice);
+                    double predictedPrice = Math.exp(logPrice);
+
+                    // Output 1: log_var_scaled  [1, 1]  — may be absent in old models
+                    double predStdPrice = 0.0;
+                    double predCvPct    = 0.0;
+                    if (result.size() > 1) {
+                        float[][] logVarOut = (float[][]) result.get(1).getValue();
+                        double logVarScaled = logVarOut[0][0];
+                        // std in unscaled log-price space
+                        double logPriceScale = artifacts.getLogPriceScale();
+                        double stdLogPrice   = Math.sqrt(Math.exp(logVarScaled)) * logPriceScale;
+                        // Dollar std (delta method: std_price ≈ price × std_log_price)
+                        predStdPrice = predictedPrice * stdLogPrice;
+                        // 95% CI width as % of predicted price: 3.92 × std_log_price × 100
+                        // This cancels the price factor — directly comparable across price levels
+                        predCvPct = 3.92 * stdLogPrice * 100.0;
+                    }
+
+                    // Output 2: cls_attention  [1, 6]  — may be absent in old models
+                    float[] clsAttn = new float[6];
+                    if (result.size() > 2) {
+                        float[][] attnOut = (float[][]) result.get(2).getValue();
+                        System.arraycopy(attnOut[0], 0, clsAttn, 0, Math.min(6, attnOut[0].length));
+                    }
+
+                    return new PredictionResult(predictedPrice, predStdPrice, predCvPct, clsAttn);
                 }
             }
         } catch (OrtException e) {
@@ -145,20 +192,20 @@ public class EmbeddingModel {
         }
     }
 
-    /**
-     * Batch predict for a list of property records.
-     */
-    public double[] predictBatch(List<PropertyRecord> records) {
-        double[] results = new double[records.size()];
+    // ── Batch predict ─────────────────────────────────────────────────────────
+
+    /** Batch predict — returns a PredictionResult per record. */
+    public PredictionResult[] predictBatch(List<BatchInput> records) {
+        PredictionResult[] results = new PredictionResult[records.size()];
         for (int i = 0; i < records.size(); i++) {
-            PropertyRecord r = records.get(i);
+            BatchInput r = records.get(i);
             results[i] = predict(r.h3Index(), r.saleDate(), r.sqft(), r.sqftLot(), r.beds());
         }
         return results;
     }
 
-    /** Simple value record for batch prediction */
-    public record PropertyRecord(
+    /** Lightweight input record for batch prediction. */
+    public record BatchInput(
         String h3Index, LocalDate saleDate,
         double sqft, double sqftLot, double beds
     ) {}

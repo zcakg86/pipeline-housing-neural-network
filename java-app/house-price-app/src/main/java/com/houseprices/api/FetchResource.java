@@ -84,27 +84,33 @@ public class FetchResource {
 
         try {
             lastRentcastFetch = Instant.now();
-            List<PropertyRecord> records = limit > 0
-                ? ingestion.fetchFromRentcastApi(limit)
-                : ingestion.fetchFromRentcastApi();
+            int effectiveLimit = limit > 0 ? limit : 500;
 
-            // Save to disk so it survives restarts
+            // Fetch raw JSON from API
+            var rawProperties = ingestion.getRentcastApi().fetchRecentSales(effectiveLimit);
+
+            // Save raw JSON to disk (same pattern as Zillow)
             File saveDir  = new File(rentcastWatchDir);
             saveDir.mkdirs();
-            File saveFile = new File(saveDir, "rentcast_latest.csv");
+            File saveFile = new File(saveDir, "rentcast_latest.json");
+
             watcher.markInProgress(saveFile.getAbsolutePath());
             try {
-                saveToCsv(records, saveFile);
-                LOG.infof("Saved RentCast CSV to %s", saveFile.getAbsolutePath());
+                mapper.writerWithDefaultPrettyPrinter().writeValue(saveFile,
+                    Map.of("requestMetadata", Map.of("status", "ok", "source", "java-api-fetch",
+                                                     "limit", effectiveLimit),
+                           "properties", rawProperties));
+                LOG.infof("Saved RentCast JSON to %s", saveFile.getAbsolutePath());
+
+                List<PropertyRecord> records = ingestion.ingestRentcastJson(saveFile);
+                store.upsert(records);
+                LOG.infof("Fetched and stored %d RentCast records", records.size());
+                return Map.of("status", "ok", "fetched", records.size(),
+                              "savedTo", saveFile.getPath(),
+                              "nextAllowedIn", cooldownHours + "h");
             } finally {
                 watcher.markDone(saveFile.getAbsolutePath());
             }
-
-            store.upsert(records);
-            LOG.infof("Fetched and stored %d RentCast records", records.size());
-            return Map.of("status", "ok", "fetched", records.size(),
-                          "savedTo", saveFile.getPath(),
-                          "nextAllowedIn", cooldownHours + "h");
         } catch (IllegalStateException e) {
             return Map.of("status", "error", "message", e.getMessage());
         } catch (Exception e) {

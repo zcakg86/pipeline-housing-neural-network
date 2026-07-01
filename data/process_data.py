@@ -13,4 +13,4 @@ df = df.h3.geo_to_h3(resolution = 7, lat_col = 'lat', lng_col = 'lng',
 df = df.h3.geo_to_h3(resolution = 10, lat_col = 'lat', lng_col = 'lng', 
                              set_index = False)
 df = df.reset_index(drop=True)
-df.to_csv('data/sales_2020_25.csv')
+df.to_csv('data/sales_2020_25.csv', index = False) # index arg just added, index in csv atm.

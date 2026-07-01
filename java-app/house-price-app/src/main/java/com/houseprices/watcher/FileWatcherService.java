@@ -102,6 +102,8 @@ public class FileWatcherService {
             List<PropertyRecord> records;
             if (source.equals("rentcast") && name.endsWith(".csv")) {
                 records = ingestion.ingestRentcastCsv(file);
+            } else if (source.equals("rentcast") && name.endsWith(".json")) {
+                records = ingestion.ingestRentcastJson(file);
             } else if (source.equals("zillow") && name.endsWith(".json")) {
                 records = ingestion.ingestZillowJson(file);
             } else if (source.equals("zillow") && name.endsWith(".csv")) {

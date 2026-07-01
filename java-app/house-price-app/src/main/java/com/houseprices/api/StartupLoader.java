@@ -25,12 +25,6 @@ public class StartupLoader {
     @ConfigProperty(name = "data.sales.csv",  defaultValue = "../../data/sales_2020_25.csv")
     String salesCsvPath;
 
-    @ConfigProperty(name = "data.rentcast.csv", defaultValue = "../../data/rentcast_recent_house_sales.csv")
-    String rentcastCsvPath;
-
-    @ConfigProperty(name = "data.zillow.json", defaultValue = "../../data/zillow_seattle_listings.json")
-    String zillowJsonPath;
-
     @ConfigProperty(name = "watcher.rentcast.dir", defaultValue = "data/rentcast")
     String rentcastWatchDir;
 
@@ -40,10 +34,8 @@ public class StartupLoader {
     void onStart(@Observes StartupEvent ev) {
         LOG.info("Loading initial data...");
 
-        // Load historical baseline data
+        // Load historical baseline sales data
         loadFile(salesCsvPath, "sales");
-        loadFile(rentcastCsvPath, "rentcast");
-        loadFile(zillowJsonPath, "zillow");
 
         // Load any previously fetched files saved in the watcher directories
         loadWatchDir(rentcastWatchDir, "rentcast");
@@ -69,10 +61,13 @@ public class StartupLoader {
             LOG.warnf("Startup data file not found, skipping: %s", path);
             return;
         }
+        String name = file.getName().toLowerCase();
         try {
             var records = switch (type) {
                 case "sales"    -> ingestion.ingestSalesCsv(file);
-                case "rentcast" -> ingestion.ingestRentcastCsv(file);
+                case "rentcast" -> name.endsWith(".json")
+                                    ? ingestion.ingestRentcastJson(file)
+                                    : ingestion.ingestRentcastCsv(file);
                 case "zillow"   -> ingestion.ingestZillowJson(file);
                 default         -> throw new IllegalArgumentException("Unknown type: " + type);
             };

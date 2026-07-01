@@ -1,0 +1,15 @@
+Todo Java
+Fix error color bar
+Test different algorithms
+Test optimizations
+
+python
+Scalers determined on training data?
+
+
+
+Be able to change variable on chart.
+Sometimes heatmap not removing itself, and shown by absolute pctError
+Remove default values fin ingestionservice.
+Update rentcast part of FetchResource.java to also save the rentcast response as JSON. 
+The csv created in ExportResource has issues:  sales has coordinates in id.

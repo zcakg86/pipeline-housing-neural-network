@@ -59,17 +59,17 @@ public class DataIngestionService {
                     double lat = parseDouble(cols, idx, "lat");
                     double lng = parseDouble(cols, idx, "lng");
 
-                    // h3_09 may be missing - fall back to computing from lat/lng
+                    // h3 index may be missing - fall back to computing from lat/lng
                     String h3Index = resolveH3(cols, idx, lat, lng);
 
                     double salePrice = parseDouble(cols, idx, "sale_price");
                     LocalDate saleDate = parseDate(cols, idx, "sale_date");
                     double sqft    = parseDouble(cols, idx, "sqft");
-                    double sqftLot = parseDoubleOrDefault(cols, idx, "sqft_lot", 5000);
+                    double sqftLot = parseDoubleOrDefault(cols, idx, "sqft_lot", 0);
 
                     // beds column name varies
                     double beds = parseDoubleOrDefault(cols, idx, "beds",
-                                  parseDoubleOrDefault(cols, idx, "bed", 3));
+                                  parseDoubleOrDefault(cols, idx, "bed", 0));
 
                     // baths: prefer combined 'baths', else sum bath_full + bath_3qtr + bath_half
                     double baths;
@@ -87,10 +87,11 @@ public class DataIngestionService {
                     String id = col(cols, idx, "sale_nbr");
                     if (id.isBlank()) id = lat + "_" + lng + "_" + lineNum;
 
-                    // Resolve community from H3 L9 index
+                    // Resolve community from H3 L8 index
                     String community = artifacts.lookupCommunity(h3Index);
 
-                    double predicted = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                    EmbeddingModel.PredictionResult pred = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                    double predicted = pred.predictedPrice();
                     double pctError  = salePrice > 0
                         ? 100.0 * (predicted - salePrice) / salePrice : 0;
 
@@ -102,7 +103,8 @@ public class DataIngestionService {
                         sqft, sqftLot, (int) beds, baths,
                         col(cols, idx, "home_type"),
                         saleDate, salePrice, null,
-                        predicted, pctError
+                        predicted, pctError,
+                        pred.predictionStdPrice(), pred.predictionCvPct(), pred.clsAttention()
                     ));
                 } catch (Exception e) {
                     // Skip malformed rows silently
@@ -129,14 +131,15 @@ public class DataIngestionService {
                 try {
                     double lat = parseDouble(cols, idx, "latitude");
                     double lng = parseDouble(cols, idx, "longitude");
-                    String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 9));
+                    String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
                     double salePrice = parseDoubleOrDefault(cols, idx, "lastSalePrice", 0);
                     LocalDate saleDate = parseDateOrToday(cols, idx, "lastSaleDate");
-                    double sqft    = parseDoubleOrDefault(cols, idx, "squareFootage", 1500);
-                    double sqftLot = parseDoubleOrDefault(cols, idx, "lotSize", 5000);
-                    double beds    = parseDoubleOrDefault(cols, idx, "bedrooms", 3);
+                    double sqft    = parseDoubleOrDefault(cols, idx, "squareFootage", 0);
+                    double sqftLot = parseDoubleOrDefault(cols, idx, "lotSize", 0);
+                    double beds    = parseDoubleOrDefault(cols, idx, "bedrooms", 0);
 
-                    double predicted = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                    EmbeddingModel.PredictionResult predR = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                    double predicted = predR.predictedPrice();
                     double pctError  = salePrice > 0
                         ? 100.0 * (predicted - salePrice) / salePrice : 0;
 
@@ -146,10 +149,11 @@ public class DataIngestionService {
                         "rentcast",
                         lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
                         sqft, sqftLot, (int) beds,
-                        parseDoubleOrDefault(cols, idx, "bathrooms", 2),
+                        parseDoubleOrDefault(cols, idx, "bathrooms", 0),
                         col(cols, idx, "propertyType"),
                         saleDate, salePrice, null,
-                        predicted, pctError
+                        predicted, pctError,
+                        predR.predictionStdPrice(), predR.predictionCvPct(), predR.clsAttention()
                     ));
                 } catch (Exception e) {
                     // Skip malformed rows
@@ -157,6 +161,54 @@ public class DataIngestionService {
             }
         }
         LOG.infof("Ingested %d Rentcast records from %s", records.size(), file.getName());
+        return records;
+    }
+
+    // ── Rentcast JSON (saved from API fetch) ─────────────────────────────────
+
+    @SuppressWarnings("unchecked")
+    public List<PropertyRecord> ingestRentcastJson(File file) throws IOException {
+        LOG.infof("Ingesting Rentcast JSON: %s", file.getName());
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        Map<String, Object> root = mapper.readValue(file,
+            mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+        List<Map<String, Object>> properties = (List<Map<String, Object>>) root.get("properties");
+        if (properties == null) return List.of();
+
+        List<PropertyRecord> records = new ArrayList<>();
+        for (Map<String, Object> p : properties) {
+            try {
+                double lat = toDouble(p.get("latitude"));
+                double lng = toDouble(p.get("longitude"));
+                String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
+
+                double salePrice = toDoubleOrDefault(p.get("lastSalePrice"), 0);
+                LocalDate saleDate = parseDateOrDefault(p.get("lastSaleDate"));
+                double sqft    = toDoubleOrDefault(p.get("squareFootage"), 0);
+                double sqftLot = toDoubleOrDefault(p.get("lotSize"), 0);
+                double beds    = toDoubleOrDefault(p.get("bedrooms"), 0);
+                double baths   = toDoubleOrDefault(p.get("bathrooms"), 0);
+
+                EmbeddingModel.PredictionResult predRcJson = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                double predicted = predRcJson.predictedPrice();
+                double pctError  = salePrice > 0 ? 100.0 * (predicted - salePrice) / salePrice : 0;
+
+                records.add(new PropertyRecord(
+                    String.valueOf(p.getOrDefault("id", "")),
+                    String.valueOf(p.getOrDefault("formattedAddress", "")),
+                    "rentcast",
+                    lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
+                    sqft, sqftLot, (int) beds, baths,
+                    String.valueOf(p.getOrDefault("propertyType", "")),
+                    saleDate, salePrice, null,
+                    predicted, pctError,
+                    predRcJson.predictionStdPrice(), predRcJson.predictionCvPct(), predRcJson.clsAttention()
+                ));
+            } catch (Exception e) {
+                // Skip malformed entries
+            }
+        }
+        LOG.infof("Ingested %d Rentcast JSON records from %s", records.size(), file.getName());
         return records;
     }
 
@@ -190,16 +242,16 @@ public class DataIngestionService {
         for (String col : new String[]{"h3_09", "h3_10", "h3_08", "h3_07"}) {
             String existing = col(cols, idx, col);
             if (!existing.isBlank()) {
-                // If it's not level 9, convert to level 9 parent/child
+                // If it's not level 8, convert to level 8 parent/child
                 try {
                     long cellLong = h3.stringToH3(existing);
                     int res = h3.getResolution(cellLong);
-                    if (res == 9) return existing;
+                    if (res == 8) return existing;
                     // For any other resolution just compute from lat/lng
                 } catch (Exception ignored) {}
             }
         }
-        return h3.h3ToString(h3.latLngToCell(lat, lng, 9));
+        return h3.h3ToString(h3.latLngToCell(lat, lng, 8));
     }
 
     private Map<String, Integer> headerIndex(String headerLine) {
@@ -279,16 +331,17 @@ public class DataIngestionService {
             try {
                 double lat = toDouble(p.get("latitude"));
                 double lng = toDouble(p.get("longitude"));
-                String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 9));
+                String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
 
                 double salePrice = toDoubleOrDefault(p.get("lastSalePrice"), 0);
                 LocalDate saleDate = parseDateOrDefault(p.get("lastSaleDate"));
-                double sqft    = toDoubleOrDefault(p.get("squareFootage"), 1500);
-                double sqftLot = toDoubleOrDefault(p.get("lotSize"), 5000);
-                double beds    = toDoubleOrDefault(p.get("bedrooms"), 3);
-                double baths   = toDoubleOrDefault(p.get("bathrooms"), 2);
+                double sqft    = toDoubleOrDefault(p.get("squareFootage"), 0);
+                double sqftLot = toDoubleOrDefault(p.get("lotSize"), 0);
+                double beds    = toDoubleOrDefault(p.get("bedrooms"), 0);
+                double baths   = toDoubleOrDefault(p.get("bathrooms"), 0);
 
-                double predicted = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                EmbeddingModel.PredictionResult predRcApi = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
+                double predicted = predRcApi.predictedPrice();
                 double pctError  = salePrice > 0 ? 100.0 * (predicted - salePrice) / salePrice : 0;
 
                 records.add(new PropertyRecord(
@@ -299,7 +352,8 @@ public class DataIngestionService {
                     sqft, sqftLot, (int) beds, baths,
                     String.valueOf(p.getOrDefault("propertyType", "")),
                     saleDate, salePrice, null,
-                    predicted, pctError
+                    predicted, pctError,
+                    predRcApi.predictionStdPrice(), predRcApi.predictionCvPct(), predRcApi.clsAttention()
                 ));
             } catch (Exception e) {
                 // Skip malformed entries
@@ -332,7 +386,7 @@ public class DataIngestionService {
     private PropertyRecord zillowMapToRecord(Map<String, Object> p) {
         double lat = toDouble(p.get("latitude"));
         double lng = toDouble(p.get("longitude"));
-        String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 9));
+        String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
 
         // sqft: API uses "area", file may also use "livingArea"
         double sqft    = toDoubleOrDefault(p.get("area"),
@@ -363,7 +417,8 @@ public class DataIngestionService {
         String id = String.valueOf(p.getOrDefault("id",
                     p.getOrDefault("zpid", address)));
 
-        double predicted = model.predict(h3Index, LocalDate.now(), sqft, sqftLot, beds);
+        EmbeddingModel.PredictionResult predZ = model.predict(h3Index, LocalDate.now(), sqft, sqftLot, beds);
+        double predicted = predZ.predictedPrice();
         double pctError  = price > 0 ? 100.0 * (predicted - price) / price : 0;
 
         return new PropertyRecord(
@@ -372,7 +427,8 @@ public class DataIngestionService {
             sqft, sqftLot, (int) beds, baths,
             String.valueOf(p.getOrDefault("homeType", "")),
             LocalDate.now(), price, url,
-            predicted, pctError
+            predicted, pctError,
+            predZ.predictionStdPrice(), predZ.predictionCvPct(), predZ.clsAttention()
         );
     }
 

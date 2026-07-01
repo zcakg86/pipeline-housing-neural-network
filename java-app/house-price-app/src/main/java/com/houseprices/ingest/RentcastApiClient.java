@@ -46,11 +46,14 @@ public class RentcastApiClient {
     @ConfigProperty(name = "rentcast.radius", defaultValue = "10")
     int radius;
 
-    @ConfigProperty(name = "rentcast.months", defaultValue = "6")
+    @ConfigProperty(name = "rentcast.months", defaultValue = "4")
     int months;
 
     @ConfigProperty(name = "rentcast.limit", defaultValue = "500")
     int limit;
+
+    @ConfigProperty(name = "rentcast.offset", defaultValue = "0")
+    int offset;
 
     private final HttpClient http = HttpClient.newBuilder()
         .connectTimeout(Duration.ofSeconds(30))
@@ -76,9 +79,14 @@ public class RentcastApiClient {
             + "&longitude=" + lng
             + "&radius=" + radius
             + "&limit=" + effectiveLimit
-            + "&saleDateRange=0:" + days;
+            + "&offset=" + offset
+            + "&includeTotalCount=true"
+            + "&saleDateRange=0:" + days
+            +"&propertyType=Townhouse%7CSingle%20Family";
 
-        LOG.infof("Fetching RentCast sales: lat=%.2f lng=%.2f radius=%d miles days=%d limit=%d",
+
+        LOG.infof("Fetching RentCast sales: lat=%.2f lng=%.2f"
+        +"radius=%d miles days=%d limit=%d",
             lat, lng, radius, days, effectiveLimit);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -95,13 +103,18 @@ public class RentcastApiClient {
                 + ": " + response.body().substring(0, Math.min(200, response.body().length())));
         }
 
-        Object parsed = mapper.readValue(response.body(), Object.class);
+        Object parsed = new com.fasterxml.jackson.databind.ObjectMapper()
+            .readValue(response.body(), Object.class);
 
         List<Map<String, Object>> properties;
         if (parsed instanceof List) {
             properties = (List<Map<String, Object>>) parsed;
         } else if (parsed instanceof Map) {
             Map<String, Object> root = (Map<String, Object>) parsed;
+            Object tc = root.get("totalCount");
+            if (tc instanceof Number) {
+                LOG.infof("RentCast totalCount: %d", ((Number) tc).intValue());
+            }
             Object props = root.getOrDefault("properties", root.get("results"));
             properties = props instanceof List ? (List<Map<String, Object>>) props : List.of();
         } else {

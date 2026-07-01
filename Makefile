@@ -29,9 +29,17 @@ help:
 	@echo ""
 
 # ── Python model training ─────────────────────────────────────────────────────
+sys-info:
+	@echo "=== System Info ==="
+	@echo "OS:            $$(uname -s 2>/dev/null || echo Windows)"
+	@echo "Make Version:  $(MAKE_VERSION)"
+	@echo "Shell:         $(SHELL)"
+	@python3 --version 2>&1 || echo "Python 3 not installed"
+	@docker --version 2>&1 || echo "Docker not installed"
+	@python3 -m unittest discover
 train:
 	@echo "Training model..."
-	python3 main_train_v4_h3l9.py
+	python3 main_train_v4_h3l8.py
 
 export:
 	@echo "Exporting model to ONNX..."
@@ -67,6 +75,30 @@ java-setup:
 
 java-kill:
 	@lsof -ti :8080 | xargs kill -9 2>/dev/null && echo "Killed process on port 8080" || echo "Nothing running on port 8080"
+
+# Fetch Rentcast data from terminal (tracks call count, max 40 remaining this month)
+# Usage: make rentcast-fetch LIMIT=500
+# Each call costs 1 API credit. You have 40 remaining.
+RENTCAST_COUNTER_FILE = .rentcast_call_count
+RENTCAST_MAX_CALLS    = 40
+LIMIT ?= 500
+
+rentcast-fetch:
+	@count=$$(cat $(RENTCAST_COUNTER_FILE) 2>/dev/null || echo 0); \
+	if [ $$count -ge $(RENTCAST_MAX_CALLS) ]; then \
+		echo "❌ API call limit reached ($$count/$(RENTCAST_MAX_CALLS)). Edit $(RENTCAST_COUNTER_FILE) to reset."; \
+		exit 1; \
+	fi; \
+	echo "📡 Fetching Rentcast via RentcastFetcher (call $$((count+1))/$(RENTCAST_MAX_CALLS), limit=$(LIMIT))..."; \
+	. $(JAVA_APP_DIR)/.env 2>/dev/null; \
+	/opt/homebrew/opt/openjdk/bin/java \
+		-DRENTCAST_API_KEY=$${RENTCAST_API_KEY:-} \
+		-cp "$(JAVA_APP_DIR)/target/quarkus-app/lib/main/*:$(JAVA_APP_DIR)/target/quarkus-app/app/*" \
+		com.houseprices.cli.RentcastFetcher $(LIMIT)
+
+rentcast-status:
+	@count=$$(cat $(RENTCAST_COUNTER_FILE) 2>/dev/null || echo 0); \
+	echo "Rentcast API calls used this month: $$count/$(RENTCAST_MAX_CALLS) ($$(($(RENTCAST_MAX_CALLS)-count)) remaining)"
 
 java-dev:
 	@echo "Starting Java app in dev mode at http://localhost:8080"

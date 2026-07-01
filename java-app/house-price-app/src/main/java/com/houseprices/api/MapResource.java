@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.MediaType;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.io.IOException;
 /**
  * REST API for the Leaflet.js map frontend.
@@ -20,36 +21,67 @@ public class MapResource {
     @Inject PropertyStore        store;
     @Inject H3AggregationService aggregation;
 
-    /** Rentcast recent sales as GeoJSON points */
+    /**
+     * Sales point layer — serves RentCast, historical sales, or both as GeoJSON points.
+     * source: "rentcast" | "sales" | "all"  (default "rentcast")
+     * Includes prediction uncertainty and CLS attention weights for variable-driven colouring.
+     */
     @GET
     @Path("/rentcast")
-    public Map<String, Object> rentcastPoints(
-            @QueryParam("maxError")  @DefaultValue("50")    double maxError,
-            @QueryParam("minSqft")   @DefaultValue("0")     double minSqft,
-            @QueryParam("maxSqft")   @DefaultValue("10000") double maxSqft,
-            @QueryParam("homeType")  @DefaultValue("all")   String homeType) {
+    public Map<String, Object> salesPoints(
+            @QueryParam("source")    @DefaultValue("rentcast") String source,
+            @QueryParam("minError")  @DefaultValue("-500")     double minError,
+            @QueryParam("maxError")  @DefaultValue("500")      double maxError,
+            @QueryParam("minSqft")   @DefaultValue("0")        double minSqft,
+            @QueryParam("maxSqft")   @DefaultValue("10000")    double maxSqft,
+            @QueryParam("homeType")  @DefaultValue("all")      String homeType,
+            @QueryParam("dateFrom")  @DefaultValue("")         String dateFrom,
+            @QueryParam("dateTo")    @DefaultValue("")         String dateTo) {
 
-        List<Map<String, Object>> features = store.getBySource("rentcast").stream()
+        // Choose records based on source param
+        Stream<PropertyRecord> base = switch (source) {
+            case "sales"    -> store.getBySource("sales").stream();
+            case "all"      -> Stream.concat(
+                                   store.getBySource("rentcast").stream(),
+                                   store.getBySource("sales").stream());
+            default         -> store.getBySource("rentcast").stream(); // "rentcast"
+        };
+
+        List<Map<String, Object>> features = base
             .filter(PropertyRecord::hasSalePrice)
-            .filter(r -> Math.abs(r.pctError()) <= maxError)
+            .filter(r -> r.pctError() >= minError && r.pctError() <= maxError)
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
             .filter(r -> homeType.equals("all") || homeType.equalsIgnoreCase(r.homeType()))
+            .filter(r -> filterByDate(r, dateFrom, dateTo))
             .map(r -> {
                 Map<String, Object> geom = Map.of(
                     "type", "Point",
                     "coordinates", new double[]{r.lng(), r.lat()}
                 );
                 Map<String, Object> props = new LinkedHashMap<>();
-                props.put("id",             r.id());
-                props.put("address",        r.address());
-                props.put("salePrice",      r.salePrice());
-                props.put("predictedPrice", r.predictedPrice());
-                props.put("pctError",       r.pctError());
-                props.put("sqft",           r.sqft());
-                props.put("beds",           r.beds());
-                props.put("baths",          r.baths());
-                props.put("homeType",       r.homeType());
-                props.put("saleDate",       r.saleDate() != null ? r.saleDate().toString() : "");
+                props.put("id",                  r.id());
+                props.put("address",             r.address());
+                props.put("source",              r.source());
+                props.put("salePrice",           r.salePrice());
+                props.put("predictedPrice",      r.predictedPrice());
+                props.put("pctError",            r.pctError());
+                props.put("predictionStdPrice",  r.predictionStdPrice());
+                props.put("predictionCvPct",     r.predictionCvPct());
+                props.put("sqft",                r.sqft());
+                props.put("beds",                r.beds());
+                props.put("baths",               r.baths());
+                props.put("homeType",            r.homeType());
+                props.put("saleDate",            r.saleDate() != null ? r.saleDate().toString() : "");
+                // CLS attention weights (null-safe)
+                float[] a = r.clsAttention();
+                if (a != null && a.length == 6) {
+                    props.put("attnCommunity", a[0]);
+                    props.put("attnYear",      a[1]);
+                    props.put("attnWeek",      a[2]);
+                    props.put("attnProperty",  a[3]);
+                    props.put("attnTime",      a[4]);
+                    props.put("attnMarket",    a[5]);
+                }
                 return Map.of("type", "Feature", "geometry", geom, "properties", props);
             })
             .collect(Collectors.toList());
@@ -57,17 +89,18 @@ public class MapResource {
         return Map.of("type", "FeatureCollection", "features", features);
     }
 
-    /** Zillow listings as GeoJSON points */
+    /** Zillow listings as GeoJSON points — includes uncertainty and attention for variable colouring */
     @GET
     @Path("/zillow")
     public Map<String, Object> zillowListings(
-            @QueryParam("maxError")   @DefaultValue("50")    double maxError,
+            @QueryParam("minError")   @DefaultValue("-500")  double minError,
+            @QueryParam("maxError")   @DefaultValue("500")   double maxError,
             @QueryParam("minSqft")    @DefaultValue("0")     double minSqft,
             @QueryParam("maxSqft")    @DefaultValue("10000") double maxSqft,
             @QueryParam("homeType")   @DefaultValue("all")   String homeType) {
 
         List<Map<String, Object>> features = store.getZillowListings().stream()
-            .filter(r -> Math.abs(r.pctError()) <= maxError || !r.hasSalePrice())
+            .filter(r -> !r.hasSalePrice() || (r.pctError() >= minError && r.pctError() <= maxError))
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
             .filter(r -> homeType.equals("all") || homeType.equalsIgnoreCase(r.homeType()))
             .map(r -> {
@@ -76,16 +109,27 @@ public class MapResource {
                     "coordinates", new double[]{r.lng(), r.lat()}
                 );
                 Map<String, Object> props = new LinkedHashMap<>();
-                props.put("id",             r.id());
-                props.put("address",        r.address());
-                props.put("listPrice",      r.salePrice());
-                props.put("predictedPrice", r.predictedPrice());
-                props.put("pctError",       r.pctError());
-                props.put("sqft",           r.sqft());
-                props.put("beds",           r.beds());
-                props.put("baths",          r.baths());
-                props.put("homeType",       r.homeType());
-                props.put("url",            r.listingUrl());
+                props.put("id",                  r.id());
+                props.put("address",             r.address());
+                props.put("listPrice",           r.salePrice());
+                props.put("predictedPrice",      r.predictedPrice());
+                props.put("pctError",            r.pctError());
+                props.put("predictionStdPrice",  r.predictionStdPrice());
+                props.put("predictionCvPct",     r.predictionCvPct());
+                props.put("sqft",                r.sqft());
+                props.put("beds",                r.beds());
+                props.put("baths",               r.baths());
+                props.put("homeType",            r.homeType());
+                props.put("url",                 r.listingUrl());
+                float[] a = r.clsAttention();
+                if (a != null && a.length == 6) {
+                    props.put("attnCommunity", a[0]);
+                    props.put("attnYear",      a[1]);
+                    props.put("attnWeek",      a[2]);
+                    props.put("attnProperty",  a[3]);
+                    props.put("attnTime",      a[4]);
+                    props.put("attnMarket",    a[5]);
+                }
                 return Map.of("type", "Feature", "geometry", geom, "properties", props);
             })
             .collect(Collectors.toList());
@@ -100,9 +144,11 @@ public class MapResource {
             @QueryParam("variable")  @DefaultValue("pct_error") String variable,
             @QueryParam("homeType")  @DefaultValue("all")       String homeType,
             @QueryParam("dateFrom")  @DefaultValue("")          String dateFrom,
-            @QueryParam("dateTo")    @DefaultValue("")          String dateTo) {
+            @QueryParam("dateTo")    @DefaultValue("")          String dateTo,
+            @QueryParam("minError")  @DefaultValue("-500")      double minError,
+            @QueryParam("maxError")  @DefaultValue("500")       double maxError) {
 
-        var hexStats = aggregation.aggregateSales(variable, homeType, dateFrom, dateTo);
+        var hexStats = aggregation.aggregateSales(variable, homeType, dateFrom, dateTo, minError, maxError);
         return aggregation.toGeoJson(hexStats, variable);
     }
 
@@ -110,14 +156,17 @@ public class MapResource {
     @GET
     @Path("/sales/points")
     public Map<String, Object> salesPoints(
-            @QueryParam("homeType") @DefaultValue("all") String homeType,
-            @QueryParam("dateFrom") @DefaultValue("")    String dateFrom,
-            @QueryParam("dateTo")   @DefaultValue("")    String dateTo) {
+            @QueryParam("homeType") @DefaultValue("all")  String homeType,
+            @QueryParam("dateFrom") @DefaultValue("")     String dateFrom,
+            @QueryParam("dateTo")   @DefaultValue("")     String dateTo,
+            @QueryParam("minError") @DefaultValue("-500") double minError,
+            @QueryParam("maxError") @DefaultValue("500")  double maxError) {
 
         List<Map<String, Object>> features = store.getSalesRecords().stream()
             .filter(PropertyRecord::hasSalePrice)
             .filter(r -> homeType.equals("all") || homeType.equalsIgnoreCase(r.homeType()))
             .filter(r -> filterByDate(r, dateFrom, dateTo))
+            .filter(r -> r.pctError() >= minError && r.pctError() <= maxError)
             .map(r -> {
                 Map<String, Object> geom = Map.of(
                     "type", "Point",
@@ -273,6 +322,7 @@ public class MapResource {
     @Path("/stats")    public Map<String, Object> stats() {
         List<PropertyRecord> zillow = store.getZillowListings();
         List<PropertyRecord> sales  = store.getSalesRecords();
+        List<PropertyRecord> rentcast  = store.getRentcastRecords();
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("counts", store.countsBySource());
@@ -298,6 +348,22 @@ public class MapResource {
                 .map(PropertyRecord::h3Index).filter(Objects::nonNull).distinct().count();
             result.put("sales", Map.of(
                 "total",       sales.size(),
+                "uniqueHexes", uniqueHexes,
+                "avgAbsError", avgError.orElse(0)
+            ));
+        }
+            
+        if (!rentcast.isEmpty()) {
+            OptionalDouble avgError = rentcast.stream()
+                .filter(PropertyRecord::hasSalePrice)
+                .mapToDouble(r -> Math.abs(r.pctError())).average();
+            long uniqueHexes = rentcast.stream()
+                .map(PropertyRecord::h3Index).filter(Objects::nonNull).distinct().count();
+            long uniqueid = rentcast.stream()
+                .map(PropertyRecord::id).filter(Objects::nonNull).distinct().count();
+            result.put("rentcast", Map.of(
+                "total",       rentcast.size(),
+                "uniqueSales", uniqueid,
                 "uniqueHexes", uniqueHexes,
                 "avgAbsError", avgError.orElse(0)
             ));

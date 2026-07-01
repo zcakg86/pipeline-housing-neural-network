@@ -48,6 +48,12 @@ public class PropertyStore {
         return result;
     }
 
+    public List<PropertyRecord> getRentcastRecords() {
+        List<PropertyRecord> result = new ArrayList<>();
+        result.addAll(getBySource("rentcast"));
+        return result;
+    }
+
     public List<PropertyRecord> getZillowListings() {
         return getBySource("zillow");
     }

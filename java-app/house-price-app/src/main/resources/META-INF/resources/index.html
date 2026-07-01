@@ -68,7 +68,15 @@
   <!-- Layer toggles -->
   <div class="divider"></div>
   <div class="row"><input type="checkbox" id="showZillow" checked/><label style="margin:0" for="showZillow">Zillow Listings <span style="color:#3399ff">●</span></label></div>
-  <div class="row"><input type="checkbox" id="showRentcast" checked/><label style="margin:0" for="showRentcast">RentCast Sales <span style="color:#00cc66">●</span></label></div>
+  <div class="row"><input type="checkbox" id="showRentcast" checked/><label style="margin:0" for="showRentcast">Sales Points <span style="color:#00cc66">●</span></label></div>
+  <div style="padding-left:20px">
+    <label style="margin-bottom:2px">Point source</label>
+    <select id="salesPointSource">
+      <option value="rentcast">RentCast only</option>
+      <option value="sales">Historical sales only</option>
+      <option value="all">RentCast + Historical</option>
+    </select>
+  </div>
   <div class="row"><input type="checkbox" id="showSales"  checked/><label style="margin:0" for="showSales">H3 Sales Layer</label></div>
   <div class="row"><input type="checkbox" id="showHeat"/><label style="margin:0" for="showHeat">Error Heatmap (replaces H3 layer)</label></div>
   <div class="row"><input type="checkbox" id="showCommunity"/><label style="margin:0" for="showCommunity">Community Layer</label></div>
@@ -81,6 +89,14 @@
     <option value="sale_price">Avg Sale Price</option>
     <option value="sqft">Avg Sqft</option>
     <option value="num_sales">Number of Sales</option>
+    <option value="pred_std">Prediction Uncertainty ($)</option>
+    <option value="pred_cv_pct">Prediction Uncertainty (% of price)</option>
+    <option value="attn_community">Attention — Community</option>
+    <option value="attn_year">Attention — Year</option>
+    <option value="attn_week">Attention — Week</option>
+    <option value="attn_property">Attention — Property</option>
+    <option value="attn_time">Attention — Time Trend</option>
+    <option value="attn_market">Attention — Market</option>
   </select>
 
   <!-- Property type filters -->
@@ -100,8 +116,15 @@
 
   <!-- Error filter -->
   <div class="divider"></div>
-  <label>Max Error Filter (%): <span class="val" id="errorVal">50</span></label>
-  <input type="range" id="maxError" min="5" max="100" value="50" step="5"/>
+  <label>Error Filter (%): <span class="val" id="minErrVal">-500</span> to <span class="val" id="maxErrVal">500</span></label>
+  <div class="row" style="gap:6px;align-items:center">
+    <input type="range" id="minError" min="-500" max="500" value="-500" step="5" style="flex:1"/>
+    <label style="margin:0;white-space:nowrap"><input type="checkbox" id="noFilterMin" style="width:auto"/> No min</label>
+  </div>
+  <div class="row" style="gap:6px;align-items:center">
+    <input type="range" id="maxError" min="-500" max="500" value="500"  step="5" style="flex:1"/>
+    <label style="margin:0;white-space:nowrap"><input type="checkbox" id="noFilterMax" style="width:auto"/> No max</label>
+  </div>
 
   <!-- Sqft filter -->
   <label>Sqft: <span class="val" id="sqftVal">0 – 10000</span></label>
@@ -130,7 +153,22 @@
     <h3>📈 Prediction Performance by Community</h3>
     <button class="close-btn" onclick="closePerfPopup()">✕</button>
   </div>
-  <div id="chartContainer" style="position:relative;height:340px;width:100%"><canvas id="perfChart"></canvas></div>
+  <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap;font-size:12px;color:#aaa">
+    <label style="margin:0">Y min: <input id="chartYMin" type="number" value="-100" step="10"
+      style="width:70px;background:#0f3460;color:#eee;border:1px solid #444;border-radius:4px;padding:2px 4px"
+      oninput="updateChartAxes()"/></label>
+    <label style="margin:0">Y max: <input id="chartYMax" type="number" value="100" step="10"
+      style="width:70px;background:#0f3460;color:#eee;border:1px solid #444;border-radius:4px;padding:2px 4px"
+      oninput="updateChartAxes()"/></label>
+    <label style="margin:0">From: <select id="chartQFrom"
+      style="background:#0f3460;color:#eee;border:1px solid #444;border-radius:4px;padding:2px 4px"
+      onchange="updateChartAxes()"></select></label>
+    <label style="margin:0">To: <select id="chartQTo"
+      style="background:#0f3460;color:#eee;border:1px solid #444;border-radius:4px;padding:2px 4px"
+      onchange="updateChartAxes()"></select></label>
+    <button onclick="resetChartAxes()" style="width:auto;padding:3px 10px;font-size:11px">Reset</button>
+  </div>
+  <div id="chartContainer" style="position:relative;height:320px;width:100%"><canvas id="perfChart"></canvas></div>
 </div>
 
 <script>
@@ -167,31 +205,103 @@ function pct(arr, p) {
   return s[Math.floor(p/100*(s.length-1))];
 }
 
-function errorColor(v, maxErr) {
-  const t = Math.min(Math.abs(v) / maxErr, 1);
-  return t < 0.5
-    ? `rgb(${lerp(0,255,t*2)},255,${lerp(80,0,t*2)})`
-    : `rgb(255,${lerp(255,0,(t-0.5)*2)},0)`;
+// ── Diverging error colour scale ──────────────────────────────────────────────
+// Anchors (populated from data each load):
+//   p10  → #2166AC  dark blue
+//   0    → #e0e0e0  neutral
+//   p90  → #B2182B  dark red
+// Values outside [p10, p90] are clamped to the anchor colours.
+// Sign is preserved: negative = blue side, positive = red side.
+const ERROR_PALETTE = {
+  darkBlue:    [33,  102, 172],   // #2166AC  ≤ p10
+  softBlue:    [67,  162, 202],   // #43a2ca
+  neutral:     [224, 224, 224],   // #e0e0e0  zero
+  softRed:     [227,  74,  51],   // #e34a33
+  darkRed:     [178,  24,  43],   // #B2182B  ≥ p90
+};
+
+// Compute percentile anchors from the current set of error values
+function computeErrorAnchors(values) {
+  const sorted = [...values].sort((a, b) => a - b);
+  const p = p => sorted[Math.max(0, Math.floor(p / 100 * (sorted.length - 1)))];
+  return { p10: p(10), p90: p(90) };
 }
 
-function getColorFn(variable, values, maxErr) {
-  if (variable === 'pct_error') return v => errorColor(v, maxErr);
+function errorColor(v, anchors) {
+  const { p10, p90 } = anchors;
+  const { darkBlue, softBlue, neutral, softRed, darkRed } = ERROR_PALETTE;
+
+  if (v <= 0) {
+    // Blue side: p10 (or below) → neutral (0)
+    const lo = Math.min(p10, 0);   // never let lo > 0
+    if (lo >= 0 || v <= lo) return `rgb(${darkBlue.join(',')})`;
+    const t = (v - lo) / (0 - lo);   // 0 at lo, 1 at 0
+    // t=0 → darkBlue, t=0.5 → softBlue, t=1 → neutral
+    if (t < 0.5) {
+      const s = t * 2;
+      return `rgb(${lerp(darkBlue[0],softBlue[0],s)},${lerp(darkBlue[1],softBlue[1],s)},${lerp(darkBlue[2],softBlue[2],s)})`;
+    } else {
+      const s = (t - 0.5) * 2;
+      return `rgb(${lerp(softBlue[0],neutral[0],s)},${lerp(softBlue[1],neutral[1],s)},${lerp(softBlue[2],neutral[2],s)})`;
+    }
+  } else {
+    // Red side: neutral (0) → p90 (or above)
+    const hi = Math.max(p90, 0);
+    if (hi <= 0 || v >= hi) return `rgb(${darkRed.join(',')})`;
+    const t = v / hi;   // 0 at 0, 1 at hi
+    // t=0 → neutral, t=0.5 → softRed, t=1 → darkRed
+    if (t < 0.5) {
+      const s = t * 2;
+      return `rgb(${lerp(neutral[0],softRed[0],s)},${lerp(neutral[1],softRed[1],s)},${lerp(neutral[2],softRed[2],s)})`;
+    } else {
+      const s = (t - 0.5) * 2;
+      return `rgb(${lerp(softRed[0],darkRed[0],s)},${lerp(softRed[1],darkRed[1],s)},${lerp(softRed[2],darkRed[2],s)})`;
+    }
+  }
+}
+
+function getErrorRange() {
+  const noMin = document.getElementById('noFilterMin').checked;
+  const noMax = document.getElementById('noFilterMax').checked;
+  return {
+    min: noMin ? -99999 : parseInt(document.getElementById('minError').value),
+    max: noMax ?  99999 : parseInt(document.getElementById('maxError').value)
+  };
+}
+function getColorFn(variable, values, anchors) {
+  if (variable === 'pct_error') return v => errorColor(v, anchors);
   const lo = pct(values, 5), hi = pct(values, 95), range = hi - lo || 1;
-  const palette = variable === 'sqft' ? COLORMAPS.Blues : COLORMAPS.YlOrRd;
+  // Attention weights and uncertainty use sequential palettes
+  const palette = (variable === 'sqft' || variable === 'pred_std' || variable === 'pred_cv_pct')
+    ? COLORMAPS.Blues
+    : COLORMAPS.YlOrRd;
   return v => interpolate(Math.max(0, Math.min(1, (v - lo) / range)), palette);
 }
 
 // ── Legend ────────────────────────────────────────────────────────────────────
 let legendControl = null;
 
-function buildLegend(variable, values, maxErr) {
+function buildLegend(variable, values, anchors) {
   if (legendControl) map.removeControl(legendControl);
   legendControl = L.control({ position: 'bottomright' });
   legendControl.onAdd = () => {
     const div = L.DomUtil.create('div');
     div.style.cssText = 'background:rgba(22,33,62,0.93);padding:10px 14px;border-radius:6px;' +
       'border:1px solid #0f3460;color:#eee;font-size:12px;min-width:155px;line-height:1.6';
-    const titles = { pct_error:'Avg Error (%)', sale_price:'Avg Sale Price', sqft:'Avg Sqft', num_sales:'# Sales' };
+    const titles = {
+      pct_error:       'Avg Error (%)',
+      sale_price:      'Avg Sale Price',
+      sqft:            'Avg Sqft',
+      num_sales:       '# Sales',
+      pred_std:        'Prediction Uncertainty ($)',
+      pred_cv_pct:     'Uncertainty (% of price)',
+      attn_community:  'Attention — Community',
+      attn_year:       'Attention — Year',
+      attn_week:       'Attention — Week',
+      attn_property:   'Attention — Property',
+      attn_time:       'Attention — Time Trend',
+      attn_market:     'Attention — Market',
+    };
     div.innerHTML = `<b style="color:#e94560">${titles[variable]||variable}</b><br>`;
 
     const swatch = (color, label) =>
@@ -200,14 +310,33 @@ function buildLegend(variable, values, maxErr) {
         <span>${label}</span></div>`;
 
     if (variable === 'pct_error') {
-      [-maxErr, -maxErr/2, 0, maxErr/2, maxErr].forEach(v => {
-        div.innerHTML += swatch(errorColor(v, maxErr),
-          v === 0 ? '0%' : (v > 0 ? `+${v.toFixed(0)}%` : `${v.toFixed(0)}%`));
+      const { p10, p90 } = anchors;
+      // Show: ≤p10, midpoint-neg, 0, midpoint-pos, ≥p90
+      const steps = [
+        { v: p10,        label: `≤${p10.toFixed(1)}%` },
+        { v: p10 / 2,    label: `${(p10/2).toFixed(1)}%` },
+        { v: 0,          label: '0%' },
+        { v: p90 / 2,    label: `+${(p90/2).toFixed(1)}%` },
+        { v: p90,        label: `≥+${p90.toFixed(1)}%` },
+      ];
+      steps.forEach(({ v, label }) => {
+        div.innerHTML += swatch(errorColor(v, anchors), label);
       });
+      div.innerHTML += `<div style="font-size:10px;color:#888;margin-top:3px">10th–90th pctile anchors</div>`;
     } else {
       const lo = pct(values,5), hi = pct(values,95);
-      const palette = variable === 'sqft' ? COLORMAPS.Blues : COLORMAPS.YlOrRd;
-      const fmt = variable === 'sale_price' ? v => '$'+Math.round(v).toLocaleString() : v => Math.round(v).toLocaleString();
+      const palette = (variable === 'sqft' || variable === 'pred_std' || variable === 'pred_cv_pct')
+        ? COLORMAPS.Blues : COLORMAPS.YlOrRd;
+      const isAttn = variable.startsWith('attn_');
+      const fmt = variable === 'sale_price'
+        ? v => '$' + Math.round(v).toLocaleString()
+        : variable === 'pred_std'
+        ? v => '$' + Math.round(v).toLocaleString()
+        : variable === 'pred_cv_pct'
+        ? v => v.toFixed(1) + '%'
+        : isAttn
+        ? v => (v * 100).toFixed(1) + '%'
+        : v => Math.round(v).toLocaleString();
       for (let i = 0; i <= 5; i++) {
         const t = i/5;
         div.innerHTML += swatch(interpolate(t, palette), fmt(lo + t*(hi-lo)));
@@ -227,7 +356,7 @@ async function loadSales() {
   if (legendControl) { map.removeControl(legendControl); legendControl = null; }
 
   const variable  = document.getElementById('variable').value;
-  const maxErr    = parseInt(document.getElementById('maxError').value);
+  const {min: minErr, max: maxErr} = getErrorRange();
   const homeType  = document.getElementById('salesType').value;
   const dateFrom  = document.getElementById('dateFrom').value;
   const dateTo    = document.getElementById('dateTo').value;
@@ -239,11 +368,12 @@ async function loadSales() {
 
   if (showHeat) {
     // Heatmap mode — fetch raw points
-    const res = await fetch(`/api/sales/points?homeType=${homeType}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
+    const res = await fetch(`/api/sales/points?homeType=${homeType}&dateFrom=${dateFrom}&dateTo=${dateTo}&minError=${minErr}&maxError=${maxErr}`);
     const gj  = await res.json();
     const pts  = (gj.features || []).map(f => {
-      const e = Math.abs(f.properties.pctError);
-      return [f.geometry.coordinates[1], f.geometry.coordinates[0], Math.min(e / 100, 1)];
+      const e = f.properties.pctError;
+      const t = Math.min(Math.abs(e) / 100, 1);
+      return [f.geometry.coordinates[1], f.geometry.coordinates[0], t];
     });
     console.log(`Heatmap: ${pts.length} points from /api/sales/points`);
     if (!L.heatLayer) {
@@ -254,7 +384,7 @@ async function loadSales() {
     if (pts.length) {
       heatLayer = L.heatLayer(pts, {
         radius: 20, blur: 15, maxZoom: 14, minOpacity: 0.2,
-        gradient: { 0.0: 'rgba(0,255,80,0.4)', 0.4: 'rgba(255,255,0,0.4)', 0.7: 'rgba(255,136,0,0.4)', 1.0: 'rgba(255,0,0,0.4)' }
+        gradient: { 0.0: 'rgba(224,224,224,0.5)', 0.35: 'rgba(67,162,202,0.5)', 0.5: 'rgba(33,102,172,0.5)', 0.65: 'rgba(227,74,51,0.5)', 1.0: 'rgba(178,24,43,0.5)' }
       }).addTo(map);
     } else {
       console.warn('No points returned for heatmap');
@@ -265,30 +395,41 @@ async function loadSales() {
 
   if (!showSales) return;
 
-  const res = await fetch(`/api/sales/h3?variable=${variable}&homeType=${homeType}&dateFrom=${dateFrom}&dateTo=${dateTo}`);
+  const res = await fetch(`/api/sales/h3?variable=${variable}&homeType=${homeType}&dateFrom=${dateFrom}&dateTo=${dateTo}&minError=${minErr}&maxError=${maxErr}`);
   const gj  = await res.json();
   const features = gj.features || [];
   if (!features.length) { if (legendControl) map.removeControl(legendControl); return; }
 
-  const values = features.map(f => f.properties.displayValue);
-  const colorFn = getColorFn(variable, values, maxErr);
+  const values  = features.map(f => f.properties.displayValue);
+  const anchors = variable === 'pct_error' ? computeErrorAnchors(values) : null;
+  const colorFn = getColorFn(variable, values, anchors);
 
   L.geoJSON(gj, {
     style: f => ({ fillColor: colorFn(f.properties.displayValue), fillOpacity: 0.55, color: '#444', weight: 0.5 }),
     onEachFeature: (f, layer) => {
       const p = f.properties;
+      const attnRow = (label, val) =>
+        val != null ? `${label}: ${(val*100).toFixed(1)}%<br>` : '';
       layer.bindPopup(
         `<b>H3 Hex</b>: ${p.h3Index}<br>` +
         `Sales: ${p.numSales}<br>` +
         `Avg Price: $${Math.round(p.avgSalePrice).toLocaleString()}<br>` +
         `Avg Predicted: $${Math.round(p.avgPredictedPrice).toLocaleString()}<br>` +
         `Avg Error: ${p.avgPctError.toFixed(1)}%<br>` +
-        `Avg Sqft: ${Math.round(p.avgSqft).toLocaleString()}`
+        `Avg Sqft: ${Math.round(p.avgSqft).toLocaleString()}<br>` +
+        `Pred Uncertainty: $${Math.round(p.avgPredStd ?? 0).toLocaleString()} (${(p.avgPredCvPct ?? 0).toFixed(1)}% of price)<br>` +
+        `<b>CLS Attention:</b><br>` +
+        attnRow('&nbsp; Community', p.attnCommunity) +
+        attnRow('&nbsp; Year',      p.attnYear) +
+        attnRow('&nbsp; Week',      p.attnWeek) +
+        attnRow('&nbsp; Property',  p.attnProperty) +
+        attnRow('&nbsp; Time',      p.attnTime) +
+        attnRow('&nbsp; Market',    p.attnMarket)
       );
     }
   }).addTo(salesLayer);
 
-  buildLegend(variable, values, maxErr);
+  buildLegend(variable, values, anchors);
 }
 
 function buildHeatLegend() {
@@ -300,49 +441,92 @@ function buildHeatLegend() {
       'border:1px solid #0f3460;color:#eee;font-size:12px;min-width:155px';
     div.innerHTML =
       `<b style="color:#e94560">Error Heatmap</b><br>` +
-      `<div style="background:linear-gradient(to right,rgba(0,255,80,0.6),rgba(255,255,0,0.6),rgba(255,136,0,0.6),rgba(255,0,0,0.6));` +
+      `<div style="background:linear-gradient(to right,rgba(33,102,172,0.7),rgba(224,224,224,0.7),rgba(178,24,43,0.7));` +
       `height:12px;border-radius:3px;margin:6px 0"></div>` +
       `<div style="display:flex;justify-content:space-between;font-size:10px;color:#aaa">` +
-      `<span>0%</span><span>50%</span><span>100%+</span></div>` +
-      `<div style="font-size:10px;color:#888;margin-top:3px">abs(pct error)</div>`;
+      `<span>− error</span><span>0</span><span>+ error</span></div>` +
+      `<div style="font-size:10px;color:#888;margin-top:3px">signed pct error</div>`;
     return div;
   };
   legendControl.addTo(map);
 }
 
-// ── Rentcast layer ────────────────────────────────────────────────────────────
+// ── Point variable accessor ───────────────────────────────────────────────────
+// Maps the variable selector value to the correct per-point property field.
+// Attention variables use the attn* fields; pred_std and sqft are direct;
+// everything else falls back to pctError.
+function pointVariableValue(props, variable) {
+  switch (variable) {
+    case 'sale_price':      return props.salePrice    ?? props.listPrice ?? 0;
+    case 'sqft':            return props.sqft         ?? 0;
+    case 'pred_std':        return props.predictionStdPrice ?? 0;
+    case 'pred_cv_pct':     return props.predictionCvPct   ?? 0;
+    case 'attn_community':  return props.attnCommunity ?? 0;
+    case 'attn_year':       return props.attnYear      ?? 0;
+    case 'attn_week':       return props.attnWeek      ?? 0;
+    case 'attn_property':   return props.attnProperty  ?? 0;
+    case 'attn_time':       return props.attnTime      ?? 0;
+    case 'attn_market':     return props.attnMarket    ?? 0;
+    default:                return props.pctError      ?? 0;
+  }
+}
+
+// ── Sales points layer (RentCast / historical / both) ────────────────────────
 async function loadRentcast() {
   rentcastLayer.clearLayers();
   if (!document.getElementById('showRentcast').checked) return;
 
-  const maxErr   = parseInt(document.getElementById('maxError').value);
-  const minSqft  = document.getElementById('minSqft').value;
-  const maxSqft  = document.getElementById('maxSqft').value;
-  const homeType = document.getElementById('salesType').value;
+  const variable  = document.getElementById('variable').value;
+  const {min: minErr, max: maxErr} = getErrorRange();
+  const minSqft   = document.getElementById('minSqft').value;
+  const maxSqft   = document.getElementById('maxSqft').value;
+  const homeType  = document.getElementById('salesType').value;
+  const dateFrom  = document.getElementById('dateFrom').value;
+  const dateTo    = document.getElementById('dateTo').value;
+  const source    = document.getElementById('salesPointSource').value;
 
-  const res = await fetch(`/api/rentcast?maxError=${maxErr}&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}`);
-  const gj  = await res.json();
-
+  const res = await fetch(
+    `/api/rentcast?source=${source}&minError=${minErr}&maxError=${maxErr}` +
+    `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}` +
+    `&dateFrom=${dateFrom}&dateTo=${dateTo}`
+  );
+  const gj = await res.json();
   if (!gj.features || gj.features.length === 0) return;
+
+  // Compute colour function from the loaded data (same approach as H3 layer)
+  const values  = gj.features.map(f => pointVariableValue(f.properties, variable));
+  const anchors = variable === 'pct_error' ? computeErrorAnchors(values) : null;
+  const colorFn = getColorFn(variable, values, anchors);
 
   L.geoJSON(gj, {
     pointToLayer: (f, latlng) => L.circleMarker(latlng, {
       radius:      6,
-      fillColor:   errorColor(f.properties.pctError, maxErr),
+      fillColor:   colorFn(pointVariableValue(f.properties, variable)),
       fillOpacity: 0.85,
-      color:       '#00cc66',   // green border — distinct from Zillow blue
+      color:       '#00cc66',
       weight:      1.5
     }),
     onEachFeature: (f, layer) => {
       const p = f.properties;
+      const attnRow = (label, val) =>
+        (val != null && val !== undefined) ? `${label}: ${(val*100).toFixed(1)}%<br>` : '';
+      const srcLabel = p.source === 'sales' ? 'Historical Sale' : 'RentCast Sale';
       layer.bindPopup(
-        `<b>${p.address || 'RentCast Sale'}</b><br>` +
-        `<i style="color:#00cc66">Recent Sale</i><br>` +
+        `<b>${p.address || srcLabel}</b><br>` +
+        `<i style="color:#00cc66">${srcLabel}</i><br>` +
         `Sale Price: $${Math.round(p.salePrice).toLocaleString()}<br>` +
         `Predicted: $${Math.round(p.predictedPrice).toLocaleString()}<br>` +
         `Error: ${p.pctError.toFixed(1)}%<br>` +
+        `Uncertainty: $${Math.round(p.predictionStdPrice ?? 0).toLocaleString()} (${(p.predictionCvPct ?? 0).toFixed(1)}% of price)<br>` +
         `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
-        (p.saleDate ? `Sold: ${p.saleDate}` : '')
+        (p.saleDate ? `Sold: ${p.saleDate}<br>` : '') +
+        `<b>CLS Attention:</b><br>` +
+        attnRow('&nbsp; Community', p.attnCommunity) +
+        attnRow('&nbsp; Year',      p.attnYear) +
+        attnRow('&nbsp; Week',      p.attnWeek) +
+        attnRow('&nbsp; Property',  p.attnProperty) +
+        attnRow('&nbsp; Time',      p.attnTime) +
+        attnRow('&nbsp; Market',    p.attnMarket)
       );
     }
   }).addTo(rentcastLayer);
@@ -353,28 +537,51 @@ async function loadZillow() {
   zillowLayer.clearLayers();
   if (!document.getElementById('showZillow').checked) return;
 
-  const maxErr   = parseInt(document.getElementById('maxError').value);
-  const minSqft  = document.getElementById('minSqft').value;
-  const maxSqft  = document.getElementById('maxSqft').value;
-  const homeType = document.getElementById('zillowType').value;
+  const variable  = document.getElementById('variable').value;
+  const {min: minErr, max: maxErr} = getErrorRange();
+  const minSqft   = document.getElementById('minSqft').value;
+  const maxSqft   = document.getElementById('maxSqft').value;
+  const homeType  = document.getElementById('zillowType').value;
 
-  const res = await fetch(`/api/zillow?maxError=${maxErr}&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}`);
-  const gj  = await res.json();
+  const res = await fetch(
+    `/api/zillow?minError=${minErr}&maxError=${maxErr}` +
+    `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}`
+  );
+  const gj = await res.json();
+  if (!gj.features || !gj.features.length) return;
+
+  const values  = gj.features.map(f => pointVariableValue(f.properties, variable));
+  const anchors = variable === 'pct_error' ? computeErrorAnchors(values) : null;
+  const colorFn = getColorFn(variable, values, anchors);
 
   L.geoJSON(gj, {
     pointToLayer: (f, latlng) => L.circleMarker(latlng, {
-      radius: 7, fillColor: errorColor(f.properties.pctError, maxErr),
-      fillOpacity: 0.85, color: '#3399ff', weight: 1.5
+      radius:      7,
+      fillColor:   colorFn(pointVariableValue(f.properties, variable)),
+      fillOpacity: 0.85,
+      color:       '#3399ff',
+      weight:      1.5
     }),
     onEachFeature: (f, layer) => {
       const p = f.properties;
+      const attnRow = (label, val) =>
+        (val != null && val !== undefined) ? `${label}: ${(val*100).toFixed(1)}%<br>` : '';
       layer.bindPopup(
         `<b>${p.address}</b><br>` +
-        `List: $${Math.round(p.listPrice||0).toLocaleString()}<br>` +
+        `<i style="color:#3399ff">Zillow Listing</i><br>` +
+        `List: $${Math.round(p.listPrice || 0).toLocaleString()}<br>` +
         `Predicted: $${Math.round(p.predictedPrice).toLocaleString()}<br>` +
         `Error: ${p.pctError.toFixed(1)}%<br>` +
+        `Uncertainty: $${Math.round(p.predictionStdPrice ?? 0).toLocaleString()} (${(p.predictionCvPct ?? 0).toFixed(1)}% of price)<br>` +
         `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
         `Type: ${p.homeType}<br>` +
+        `<b>CLS Attention:</b><br>` +
+        attnRow('&nbsp; Community', p.attnCommunity) +
+        attnRow('&nbsp; Year',      p.attnYear) +
+        attnRow('&nbsp; Week',      p.attnWeek) +
+        attnRow('&nbsp; Property',  p.attnProperty) +
+        attnRow('&nbsp; Time',      p.attnTime) +
+        attnRow('&nbsp; Market',    p.attnMarket) +
         (p.url ? `<a href="${p.url}" target="_blank">View Listing</a>` : '')
       );
     }
@@ -393,7 +600,12 @@ async function loadStats() {
   if (s.sales) html +=
     `<b>Historical Sales</b><br>Total: ${s.sales.total}<br>` +
     `Unique Hexes: ${s.sales.uniqueHexes}<br>` +
-    `Avg Abs Error: ${s.sales.avgAbsError.toFixed(1)}%`;
+    `Avg Abs Error: ${s.sales.avgAbsError.toFixed(1)}%<br><br>`;
+  if (s.rentcast) html +=
+    `<b>Recent Sales</b><br>Total: ${s.rentcast.total}<br>` +
+    `Unique Hexes: ${s.rentcast.uniqueHexes}<br>` +
+    `Unique Sales: ${s.rentcast.uniqueSales}<br>`+
+    `Avg Abs Error: ${s.rentcast.avgAbsError.toFixed(1)}%`;
   document.getElementById('stats').innerHTML = html || 'No data loaded yet.';
 }
 
@@ -564,8 +776,7 @@ function buildChart(data) {
   const ctx = document.getElementById('perfChart').getContext('2d');
   perfChart = new Chart(ctx, {
     type: 'line',
-    data: { labels: allQuarters, datasets },
-    options: {
+    data: { labels: allQuarters, datasets },    options: {
       responsive: true,
       maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
@@ -598,6 +809,7 @@ function buildChart(data) {
       scales: {
         x: { ticks: { color: '#aaa', font: { size: 10 } }, grid: { color: '#1a3a6e' } },
         y: {
+          min: -100, max: 100,
           ticks: { color: '#aaa', callback: v => v + '%' },
           grid:  { color: '#1a3a6e' },
           title: { display: true, text: 'Avg % Error', color: '#aaa' }
@@ -605,6 +817,20 @@ function buildChart(data) {
       }
     }
   });
+
+  // Store all quarters and all data on each dataset for axis filtering
+  perfChart._allQuarters = allQuarters;
+  datasets.forEach(ds => { ds._allData = [...ds.data]; });
+
+  // Populate quarter dropdowns
+  const qFrom = document.getElementById('chartQFrom');
+  const qTo   = document.getElementById('chartQTo');
+  qFrom.innerHTML = ''; qTo.innerHTML = '';
+  allQuarters.forEach(q => {
+    qFrom.innerHTML += `<option value="${q}">${q}</option>`;
+    qTo.innerHTML   += `<option value="${q}">${q}</option>`;
+  });
+  qTo.value = allQuarters[allQuarters.length - 1];
 }
 
 function updateChartSelection() {
@@ -614,6 +840,46 @@ function updateChartSelection() {
     ds.hidden = !active;
   });
   perfChart.update();
+}
+
+function updateChartAxes() {
+  if (!perfChart) return;
+  const yMin = parseFloat(document.getElementById('chartYMin').value);
+  const yMax = parseFloat(document.getElementById('chartYMax').value);
+  const qFrom = document.getElementById('chartQFrom').value;
+  const qTo   = document.getElementById('chartQTo').value;
+
+  // Y axis
+  perfChart.options.scales.y.min = isNaN(yMin) ? undefined : yMin;
+  perfChart.options.scales.y.max = isNaN(yMax) ? undefined : yMax;
+
+  // X axis - filter labels and data to selected quarter range
+  const allQ = perfChart._allQuarters;
+  const fromIdx = allQ.indexOf(qFrom);
+  const toIdx   = allQ.indexOf(qTo);
+  const filtered = allQ.slice(
+    fromIdx >= 0 ? fromIdx : 0,
+    toIdx   >= 0 ? toIdx + 1 : allQ.length
+  );
+  perfChart.data.labels = filtered;
+  perfChart.data.datasets.forEach(ds => {
+    ds.data = filtered.map(q => {
+      const i = allQ.indexOf(q);
+      return ds._allData[i];
+    });
+  });
+  perfChart.update();
+}
+
+function resetChartAxes() {
+  document.getElementById('chartYMin').value = '-100';
+  document.getElementById('chartYMax').value = '100';
+  if (perfChart) {
+    const allQ = perfChart._allQuarters;
+    document.getElementById('chartQFrom').value = allQ[0];
+    document.getElementById('chartQTo').value   = allQ[allQ.length - 1];
+  }
+  updateChartAxes();
 }
 
 // ── Draggable popup ───────────────────────────────────────────────────────────
@@ -645,12 +911,30 @@ document.getElementById('showZillow').addEventListener('change', loadZillow);
 document.getElementById('showRentcast').addEventListener('change', loadRentcast);
 document.getElementById('showSales').addEventListener('change', loadSales);
 document.getElementById('showHeat').addEventListener('change', loadSales);
+document.getElementById('variable').addEventListener('change', () => { loadSales(); loadZillow(); loadRentcast(); });
+document.getElementById('salesPointSource').addEventListener('change', loadRentcast);
 document.getElementById('zillowType').addEventListener('change', loadZillow);
 document.getElementById('salesType').addEventListener('change', () => { loadSales(); loadRentcast(); });
-document.getElementById('dateFrom').addEventListener('change', loadSales);
-document.getElementById('dateTo').addEventListener('change', loadSales);
-document.getElementById('maxError').addEventListener('input', e => {
-  document.getElementById('errorVal').textContent = e.target.value;
+document.getElementById('dateFrom').addEventListener('change', () => { loadSales(); loadRentcast(); });
+document.getElementById('dateTo').addEventListener('change', () => { loadSales(); loadRentcast(); });
+document.getElementById('minError').addEventListener('input', () => {
+  document.getElementById('minErrVal').textContent = document.getElementById('minError').value;
+  loadSales(); loadZillow(); loadRentcast();
+});
+document.getElementById('maxError').addEventListener('input', () => {
+  document.getElementById('maxErrVal').textContent = document.getElementById('maxError').value;
+  loadSales(); loadZillow(); loadRentcast();
+});
+document.getElementById('noFilterMin').addEventListener('change', () => {
+  const disabled = document.getElementById('noFilterMin').checked;
+  document.getElementById('minError').disabled = disabled;
+  document.getElementById('minErrVal').textContent = disabled ? '–' : document.getElementById('minError').value;
+  loadSales(); loadZillow(); loadRentcast();
+});
+document.getElementById('noFilterMax').addEventListener('change', () => {
+  const disabled = document.getElementById('noFilterMax').checked;
+  document.getElementById('maxError').disabled = disabled;
+  document.getElementById('maxErrVal').textContent = disabled ? '–' : document.getElementById('maxError').value;
   loadSales(); loadZillow(); loadRentcast();
 });
 document.getElementById('minSqft').addEventListener('input', () => { updateSqftLabel(); loadZillow(); loadRentcast(); });

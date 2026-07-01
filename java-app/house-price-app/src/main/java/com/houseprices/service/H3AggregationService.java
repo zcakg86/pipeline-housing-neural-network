@@ -9,6 +9,7 @@ import org.jboss.logging.Logger;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Aggregates sales records by H3 L9 hexagon for the map layer.
@@ -35,7 +36,14 @@ public class H3AggregationService {
         double avgPctError,
         double avgSqft,
         int    numSales,
-        // Polygon boundary as [[lng, lat], ...]
+        double avgPredStd,          // avg prediction std dev in $
+        double avgPredCvPct,        // avg 95% CI width as % of predicted price
+        double attnCommunity,
+        double attnYear,
+        double attnWeek,
+        double attnProperty,
+        double attnTime,
+        double attnMarket,
         List<double[]> boundary
     ) {}
 
@@ -43,11 +51,16 @@ public class H3AggregationService {
      * Aggregate all sales records by H3 index with optional filters.
      */
     public List<HexStats> aggregateSales(String variable, String homeType,
-                                          String dateFrom, String dateTo) {
+                                          String dateFrom, String dateTo,
+                                          double minError, double maxError) {
         List<PropertyRecord> sales = store.getSalesRecords().stream()
             .filter(PropertyRecord::hasSalePrice)
-            .filter(r -> homeType == null || homeType.equals("all")
-                      || homeType.equalsIgnoreCase(r.homeType()))
+            .filter(r -> r.pctError() >= minError && r.pctError() <= maxError)
+            .filter(r -> {
+                if (homeType == null || homeType.equals("all")) return true;
+                String rt = r.homeType();
+                return rt != null && !rt.isBlank() && homeType.equalsIgnoreCase(rt);
+            })
             .filter(r -> filterByDate(r, dateFrom, dateTo))
             .collect(Collectors.toList());
 
@@ -67,6 +80,21 @@ public class H3AggregationService {
             double avgPredicted = group.stream().mapToDouble(PropertyRecord::predictedPrice).average().orElse(0);
             double avgPctError  = group.stream().mapToDouble(PropertyRecord::pctError).average().orElse(0);
             double avgSqft      = group.stream().mapToDouble(PropertyRecord::sqft).average().orElse(0);
+            double avgPredStd   = group.stream().mapToDouble(PropertyRecord::predictionStdPrice).average().orElse(0);
+            double avgPredCvPct = group.stream().mapToDouble(PropertyRecord::predictionCvPct).average().orElse(0);
+
+            // Average each of the 6 CLS attention weights across records in this hex
+            float[] avgAttn = new float[6];
+            long attnCount = group.stream().filter(r -> r.clsAttention() != null && r.clsAttention().length == 6).count();
+            if (attnCount > 0) {
+                for (PropertyRecord r : group) {
+                    float[] a = r.clsAttention();
+                    if (a != null && a.length == 6) {
+                        for (int t = 0; t < 6; t++) avgAttn[t] += a[t];
+                    }
+                }
+                for (int t = 0; t < 6; t++) avgAttn[t] /= attnCount;
+            }
 
             // Get H3 polygon boundary: list of (lat, lng) -> convert to (lng, lat) for GeoJSON
             List<double[]> boundary;
@@ -83,7 +111,10 @@ public class H3AggregationService {
             }
 
             result.add(new HexStats(hexId, avgSalePrice, avgPredicted,
-                avgPctError, avgSqft, group.size(), boundary));
+                avgPctError, avgSqft, group.size(), avgPredStd, avgPredCvPct,
+                avgAttn[0], avgAttn[1], avgAttn[2],
+                avgAttn[3], avgAttn[4], avgAttn[5],
+                boundary));
         }
 
         LOG.debugf("Aggregated %d hexes from %d sales records", result.size(), sales.size());
@@ -102,15 +133,24 @@ public class H3AggregationService {
         return true;
     }
 
-    /** Build a GeoJSON FeatureCollection from aggregated hex stats */    public Map<String, Object> toGeoJson(List<HexStats> hexStats, String variable) {
+    /** Build a GeoJSON FeatureCollection from aggregated hex stats */
+    public Map<String, Object> toGeoJson(List<HexStats> hexStats, String variable) {
         List<Map<String, Object>> features = new ArrayList<>();
 
         for (HexStats hex : hexStats) {
             double displayValue = switch (variable) {
-                case "sale_price" -> hex.avgSalePrice();
-                case "sqft"       -> hex.avgSqft();
-                case "num_sales"  -> hex.numSales();
-                default           -> hex.avgPctError();  // pct_error
+                case "sale_price"       -> hex.avgSalePrice();
+                case "sqft"             -> hex.avgSqft();
+                case "num_sales"        -> hex.numSales();
+                case "pred_std"         -> hex.avgPredStd();
+                case "pred_cv_pct"      -> hex.avgPredCvPct();
+                case "attn_community"   -> hex.attnCommunity();
+                case "attn_year"        -> hex.attnYear();
+                case "attn_week"        -> hex.attnWeek();
+                case "attn_property"    -> hex.attnProperty();
+                case "attn_time"        -> hex.attnTime();
+                case "attn_market"      -> hex.attnMarket();
+                default                 -> hex.avgPctError();  // pct_error
             };
 
             Map<String, Object> geometry = Map.of(
@@ -119,13 +159,21 @@ public class H3AggregationService {
             );
 
             Map<String, Object> props = new LinkedHashMap<>();
-            props.put("h3Index",          hex.h3Index());
-            props.put("displayValue",     displayValue);
-            props.put("avgSalePrice",     hex.avgSalePrice());
-            props.put("avgPredictedPrice",hex.avgPredictedPrice());
-            props.put("avgPctError",      hex.avgPctError());
-            props.put("avgSqft",          hex.avgSqft());
-            props.put("numSales",         hex.numSales());
+            props.put("h3Index",           hex.h3Index());
+            props.put("displayValue",      displayValue);
+            props.put("avgSalePrice",      hex.avgSalePrice());
+            props.put("avgPredictedPrice", hex.avgPredictedPrice());
+            props.put("avgPctError",       hex.avgPctError());
+            props.put("avgSqft",           hex.avgSqft());
+            props.put("numSales",          hex.numSales());
+            props.put("avgPredStd",        hex.avgPredStd());
+            props.put("avgPredCvPct",      hex.avgPredCvPct());
+            props.put("attnCommunity",     hex.attnCommunity());
+            props.put("attnYear",          hex.attnYear());
+            props.put("attnWeek",          hex.attnWeek());
+            props.put("attnProperty",      hex.attnProperty());
+            props.put("attnTime",          hex.attnTime());
+            props.put("attnMarket",        hex.attnMarket());
 
             features.add(Map.of("type", "Feature", "geometry", geometry, "properties", props));
         }

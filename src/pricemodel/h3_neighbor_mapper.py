@@ -1,172 +1,143 @@
 """
 H3 L9 Neighbor Mapper
-Automatically computes and caches H3 L9 community neighbor mappings
+Computes and caches h3_l9_neighbor_communities.json:
+  { h3_09_hex: [community_idx_center, n1, n2, n3, n4, n5, n6] }
+
+Community indices come from community_map.json (h3_09 → community ID).
+Rows with no community mapping get the unknown index (= max community ID + 1).
+No community vocab file is saved — community_map.json is the source of truth.
 """
-import pandas as pd
-import h3
 import json
 import os
-from collections import defaultdict
+import h3
 
 
-def compute_h3_l9_neighbor_mappings(dataframe, community_map_path='data/community_map.json',
-                                     output_dir='data', force_recompute=False):
+def compute_neighbor_communities(
+    dataframe,
+    community_map_path: str = 'data/community_map.json',
+    output_dir: str = 'data',
+    force_recompute: bool = False,
+):
     """
-    Compute H3 L9 community neighbor mappings from a dataframe
-    
-    Args:
-        dataframe: DataFrame with 'h3_09' column (or 'lat'/'lng' to generate it)
-        community_map_path: Path to H3 L7 -> community mapping JSON
-        output_dir: Directory to save output files
-        force_recompute: If True, recompute even if files exist
-    
-    Returns:
-        tuple: (l9_to_community, l9_neighbor_map, community_vocab)
+    Build (or load from cache) the h3_l8_neighbor_communities.json mapping.
+
+    For every unique h3_09 hex in *dataframe*, computes grid_disk(hex, 1) —
+    the center cell plus its 6 H3 neighbours — then maps each to its community
+    index using community_map.json.  Unknown hexes get the unknown index.
+
+    Parameters
+    ----------
+    dataframe         : DataFrame that must have an 'h3_09' column.
+                        If it also has a 'community' column that column is used
+                        directly; otherwise community_map.json is loaded and
+                        applied first.
+    community_map_path: Path to community_map.json  (h3_09 hex → community int).
+    output_dir        : Directory to read/write the cached neighbor file.
+    force_recompute   : Ignore the cache and recompute from scratch.
+
+    Returns
+    -------
+    h3_neighbor_map : dict  { h3_08_hex: [int × 7] }
+    n_communities   : int   number of real communities (unknown = n_communities)
     """
-    
-    # Check if files already exist
-    output_l9_community = os.path.join(output_dir, 'h3_l9_to_community.json')
-    output_l9_neighbors = os.path.join(output_dir, 'h3_l9_neighbor_communities.json')
-    output_vocab = os.path.join(output_dir, 'community_vocab_l9.json')
-    
-    if not force_recompute and all(os.path.exists(f) for f in [output_l9_community, output_l9_neighbors, output_vocab]):
-        print("  H3 L9 neighbor mappings already exist, loading from cache...")
-        with open(output_l9_community, 'r') as f:
-            l9_to_community = json.load(f)
-        with open(output_l9_neighbors, 'r') as f:
-            l9_neighbor_map = json.load(f)
-        with open(output_vocab, 'r') as f:
-            vocab_data = json.load(f)
-        print(f"  ✓ Loaded {len(l9_neighbor_map)} L9 hex mappings from cache")
-        return l9_to_community, l9_neighbor_map, vocab_data
-    
-    print("  Computing H3 L9 community neighbor mappings...")
-    
-    # Ensure h3_09 column exists
-    df = dataframe.copy()
-    if 'h3_09' not in df.columns:
-        if 'lat' not in df.columns or 'lng' not in df.columns:
-            raise ValueError("DataFrame must have either 'h3_09' or 'lat'/'lng' columns")
-        print("    Generating H3 L9 indices from lat/lng...")
-        df['h3_09'] = df.apply(
-            lambda row: h3.latlng_to_cell(row['lat'], row['lng'], 9),
-            axis=1
-        )
-    
-    # Get unique H3 level 9 indices
-    active_l9_hexes = df['h3_09'].dropna().unique()
-    print(f"    Found {len(active_l9_hexes)} unique H3 L9 hexes")
-    
-    # Load community mapping (H3 L7 -> community)
+    output_path = os.path.join(output_dir, 'h3_l8_neighbor_communities.json')
+
+    # --- Load cache if available ---
+    if not force_recompute and os.path.exists(output_path):
+        print(f"  Loading cached neighbor map from {output_path}...")
+        with open(output_path, 'r') as f:
+            h3_neighbor_map = json.load(f)
+        # Derive n_communities from the community_map
+        n_communities = _load_n_communities(community_map_path)
+        print(f"  ✓ Loaded {len(h3_neighbor_map)} hex mappings  "
+              f"(n_communities={n_communities}, unknown={n_communities})")
+        return h3_neighbor_map, n_communities
+
+    # --- Load community_map ---
     if not os.path.exists(community_map_path):
-        raise FileNotFoundError(f"Community map not found: {community_map_path}")
-    
+        raise FileNotFoundError(
+            f"community_map.json not found at '{community_map_path}'. "
+            "This file must exist before neighbor communities can be computed."
+        )
+    print(f"  Loading community map from {community_map_path}...")
     with open(community_map_path, 'r') as f:
-        community_map_l7 = json.load(f)
-    print(f"    Loaded {len(community_map_l7)} H3 L7 -> community mappings")
-    
-    # Create L9 to community mapping by looking up parent L7
-    l9_to_community = {}
-    unmapped_count = 0
-    
-    for hex_l9 in active_l9_hexes:
-        # Get parent L7 hex
-        hex_l7 = h3.cell_to_parent(hex_l9, 7)
-        
-        # Look up community
-        if hex_l7 in community_map_l7:
-            l9_to_community[hex_l9] = community_map_l7[hex_l7]
-        else:
-            unmapped_count += 1
-            l9_to_community[hex_l9] = -1  # Unknown
-    
-    print(f"    Mapped {len(l9_to_community) - unmapped_count}/{len(active_l9_hexes)} L9 hexes")
-    
-    # Get unique communities
-    communities = sorted([c for c in set(l9_to_community.values()) if c != -1])
-    print(f"    Unique communities: {len(communities)}")
-    
-    # Create community vocabulary (community_id -> index)
-    community_vocab = {comm_id: idx for idx, comm_id in enumerate(communities)}
-    UNKNOWN_COMMUNITY_ID = len(communities)  # Index for unknown/padding
-    vocab_size = len(communities) + 1
-    
-    # Precompute neighbor mappings
-    print(f"    Computing neighbor mappings for {len(active_l9_hexes)} hexes...")
-    l9_neighbor_map = {}
-    
-    for i, hex_id in enumerate(active_l9_hexes):
-        if (i + 1) % 2000 == 0:
-            print(f"      Progress: {i+1}/{len(active_l9_hexes)}", end='\r')
-        
-        # Get hex + 6 neighbors (grid_disk with k=1 returns center + ring)
+        community_map = json.load(f)   # { h3_09_hex: community_id (int) }
+
+    n_communities = max(community_map.values()) + 1
+    unknown_idx   = n_communities                 # one past the last real community
+    print(f"  Community map: {len(community_map)} hexes, "
+          f"{n_communities} communities, unknown index = {unknown_idx}")
+
+    # --- Ensure 'community' column exists on the dataframe ---
+    df = dataframe.copy()
+    if 'community' not in df.columns:
+        print("  'community' column not found — deriving from community_map.json...")
+        df['community'] = df['h3_08'].map(community_map)
+        mapped = df['community'].notna().sum()
+        print(f"  ✓ Mapped {mapped}/{len(df)} rows  ({len(df)-mapped} unmapped → unknown)")
+
+    # --- Compute neighbor communities for every unique h3_09 ---
+    active_hexes = df['h3_08'].dropna().unique()
+    print(f"  Computing neighbor communities for {len(active_hexes)} unique H3 L8 hexes...")
+
+    h3_neighbor_map = {}
+    for i, hex_id in enumerate(active_hexes):
+        if (i + 1) % 5000 == 0:
+            print(f"    {i+1}/{len(active_hexes)}", end='\r')
+
+        # grid_disk(k=1) returns center + up to 6 neighbours (always 7 for interior cells)
         try:
             disk = list(h3.grid_disk(hex_id, 1))
-        except:
-            # Fallback for older h3 versions
-            disk = list(h3.k_ring(hex_id, 1))
-        
-        # Map them to their community IDs
-        community_ids = []
-        for n_id in disk:
-            if n_id in l9_to_community:
-                comm_id = l9_to_community[n_id]
-                if comm_id == -1:
-                    community_ids.append(UNKNOWN_COMMUNITY_ID)
-                else:
-                    # Convert to vocabulary index
-                    community_ids.append(community_vocab[comm_id])
-            else:
-                community_ids.append(UNKNOWN_COMMUNITY_ID)
-        
-        # Pad or truncate to exactly 7 elements (1 center + up to 6 neighbors)
-        community_ids = (community_ids + [UNKNOWN_COMMUNITY_ID] * 7)[:7]
-        
-        l9_neighbor_map[hex_id] = community_ids
-    
-    print(f"\n    ✓ Computed {len(l9_neighbor_map)} neighbor mappings")
-    
-    # Save mappings
+        except AttributeError:
+            disk = list(h3.k_ring(hex_id, 1))   # older h3 API
+
+        # Map each disk hex to its community index; pad/truncate to exactly 7
+        community_ids = [
+            community_map.get(n_hex, unknown_idx)
+            for n_hex in disk
+        ]
+        community_ids = (community_ids + [unknown_idx] * 7)[:7]
+
+        h3_neighbor_map[hex_id] = community_ids
+
+    print(f"\n  ✓ Computed {len(h3_neighbor_map)} neighbor mappings")
+
+    # --- Save cache ---
     os.makedirs(output_dir, exist_ok=True)
-    
-    with open(output_l9_community, 'w') as f:
-        json.dump(l9_to_community, f)
-    
-    with open(output_l9_neighbors, 'w') as f:
-        json.dump(l9_neighbor_map, f)
-    
-    vocab_data = {
-        'community_to_idx': community_vocab,
-        'idx_to_community': {idx: comm_id for comm_id, idx in community_vocab.items()},
-        'vocab_size': vocab_size,
-        'unknown_idx': UNKNOWN_COMMUNITY_ID,
-        'num_communities': len(communities)
-    }
-    
-    with open(output_vocab, 'w') as f:
-        json.dump(vocab_data, f, indent=2)
-    
-    print(f"    ✓ Saved mappings to {output_dir}/")
-    
-    return l9_to_community, l9_neighbor_map, vocab_data
+    with open(output_path, 'w') as f:
+        json.dump(h3_neighbor_map, f)
+    print(f"  ✓ Saved to {output_path}")
+
+    return h3_neighbor_map, n_communities
 
 
-def ensure_h3_l9_mappings(dataframe, community_map_path='data/community_map.json',
-                          output_dir='data'):
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _load_n_communities(community_map_path: str) -> int:
+    """Return the number of real communities from community_map.json."""
+    with open(community_map_path, 'r') as f:
+        community_map = json.load(f)
+    return max(community_map.values()) + 1
+
+
+def ensure_neighbor_communities(
+    dataframe,
+    community_map_path: str = 'data/community_map.json',
+    output_dir: str = 'data',
+):
     """
-    Ensure H3 L9 neighbor mappings exist, computing them if necessary
-    
-    Args:
-        dataframe: DataFrame with h3_09 or lat/lng columns
-        community_map_path: Path to community map JSON
-        output_dir: Directory for output files
-    
-    Returns:
-        tuple: (l9_to_community, l9_neighbor_map, vocab_data)
+    Convenience wrapper: load from cache or compute, never force-recompute.
+
+    Returns
+    -------
+    h3_neighbor_map : dict  { h3_08 hex: [int × 7] }
+    n_communities   : int
     """
-    return compute_h3_l9_neighbor_mappings(
-        dataframe, 
+    return compute_neighbor_communities(
+        dataframe,
         community_map_path=community_map_path,
         output_dir=output_dir,
-        force_recompute=False
+        force_recompute=False,
     )
