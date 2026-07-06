@@ -46,4 +46,4 @@ The project includes a robust `ModelManager` framework that orchestrates the ent
 *   **Java Export:** Model export is supported for Java deployment via `export_model_for_java.py`.
 
 ### **Java Integration**
-See `java-app/house-price-app/README.md` for details on the Java consumer app and how the exported model is consumed in the Java service.
+See [java-app/house-price-app/README.md](https://github.com/zcakg86/pipeline-housing-neural-network/tree/kiraze/java-app/house-price-app) for the Java app and how the exported model is consumed.
