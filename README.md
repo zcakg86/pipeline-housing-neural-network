@@ -22,12 +22,13 @@ See https://github.com/andykrause/kingCoData
 ### **Neural Network Architecture**
 The core model utilizes a Transformer-inspired architecture adapted for structured tabular data:
 
-*   **Input Representation:** The model ingests heterogeneous data types by projecting them into a shared latent embedding space:
+*   **Input Representation:** The model ingests heterogeneous data types by projecting them into a shared latent embedding space.
 *   **Categorical Embeddings:** Learnable vector representations for *Community* (Location), *Year*, and *Week* (Seasonality).
-*   **Numerical Projections:** Linear transformation of physical features (*Sqft, Lot Size, Beds*).
-*   **Sequence Construction:** These feature vectors are stacked to form a sequence, prepended by a learnable **`[CLS]` (Classification) Token**.
-*   **Self-Attention Mechanism:** A Multi-Head Attention layer enables every feature to contextually interact with every other feature. The `[CLS]` token aggregates a global summary of the property by "attending" to the specific nuances of the location, time, and physical specs.
-*   **Regression Head:** The final price prediction is generated via a Multi-Layer Perceptron (MLP) that processes only the contextualized `[CLS]` output, effectively using it as a learned embedding of the entire listing.
+*   **Numeric Projections:** Linear projections map numerical groups — property features, continuous time features, and market indicators — into the same latent dimension before they are combined.
+*   **Sequence Construction:** These vectors are stacked as tokens to form a sequence, prepended by a learnable **`[CLS]` token**.
+*   **Self-Attention Mechanism:** A Multi-Head Attention layer enables every token to interact with every other token. The `[CLS]` token aggregates a global summary of the listing by attending to location, time, property, and market signals.
+*   **Regression Head:** The final price prediction is generated from the contextualized `[CLS]` output via a Multi-Layer Perceptron (MLP).
+*   **Uncertainty Output:** An optional uncertainty head is available and returns a log-variance estimate alongside the prediction.
 
 ### **Pipeline & Data Lifecycle**
 The project includes a robust `ModelManager` framework that orchestrates the entire machine learning lifecycle:
@@ -42,3 +43,7 @@ The project includes a robust `ModelManager` framework that orchestrates the ent
 *   **Data Manipulation:** Pandas, NumPy
 *   **Preprocessing:** Scikit-Learn (StandardScaler)
 *   **Serialization:** Joblib, Pickle, JSON
+*   **Java Export:** Model export is supported for Java deployment via `export_model_for_java.py`.
+
+### **Java Integration**
+See `java-app/house-price-app/README.md` for details on the Java consumer app and how the exported model is consumed in the Java service.
