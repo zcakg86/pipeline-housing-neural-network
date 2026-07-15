@@ -292,6 +292,18 @@ public class MapResource {
                 (a, b) -> a
             ));
 
+        Map<String, double[]> communityStats = new HashMap<>();
+        for (PropertyRecord r : store.getSalesRecords()) {
+            if (r.h3Index() == null || r.community() == null || r.community().isBlank()) continue;
+            double[] stats = communityStats.computeIfAbsent(r.community(), k -> new double[6]);
+            stats[0] += 1;                       // count
+            stats[1] += r.salePrice();
+            stats[2] += r.predictedPrice();
+            stats[3] += r.pctError();
+            stats[4] += r.sqft();
+            stats[5] += r.predictionStdPrice();
+        }
+
         List<Map<String, Object>> features = new ArrayList<>();
         try {
             com.uber.h3core.H3Core h3 = com.uber.h3core.H3Core.newInstance();
@@ -305,10 +317,27 @@ public class MapResource {
                     .collect(Collectors.toList());
                 if (!coords.isEmpty()) coords.add(coords.get(0));
 
+                double[] stats = communityStats.getOrDefault(community, new double[6]);
+                long salesCount = (long) stats[0];
+                double meanSalePrice = salesCount > 0 ? stats[1] / salesCount : 0;
+                double meanPredictedPrice = salesCount > 0 ? stats[2] / salesCount : 0;
+                double avgPctError = salesCount > 0 ? stats[3] / salesCount : 0;
+                double meanSqft = salesCount > 0 ? stats[4] / salesCount : 0;
+                double meanPredStd = salesCount > 0 ? stats[5] / salesCount : 0;
+
                 features.add(Map.of(
                     "type", "Feature",
                     "geometry", Map.of("type", "Polygon", "coordinates", List.of(coords)),
-                    "properties", Map.of("community", community, "h3L9", hexId)
+                    "properties", Map.of(
+                        "community", community,
+                        "h3L9", hexId,
+                        "salesCount", salesCount,
+                        "meanSalePrice", meanSalePrice,
+                        "meanPredictedPrice", meanPredictedPrice,
+                        "avgPctError", avgPctError,
+                        "meanSqft", meanSqft,
+                        "meanPredStd", meanPredStd
+                    )
                 ));
             }
         } catch (Exception e) {

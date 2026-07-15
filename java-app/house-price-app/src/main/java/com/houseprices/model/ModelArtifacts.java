@@ -67,7 +67,7 @@ public class ModelArtifacts {
 
             // ── H3 Neighbor Map ───────────────────────────────────────────────
             Map<String, List<Integer>> rawH3 = mapper.readValue(
-                resource("h3_l9_neighbor_communities.json"),
+                resource("h3_l8_neighbor_communities.json"),
                 mapper.getTypeFactory().constructMapType(Map.class, String.class, List.class)
             );
             rawH3.forEach((hex, neighbors) -> {
@@ -76,12 +76,12 @@ public class ModelArtifacts {
             });
             LOG.infof("Loaded H3 neighbor map: %d hexes", h3NeighborMap.size());
 
-            // ── Community map (H3 L9 → community ID) ─────────────────────────
-            // community_map.json is the source of truth: h3_09_hex -> community_id (int).
+            // ── Community map (H3 L8 → community ID) ─────────────────────────
+            // community_map.json is the source of truth: h3_08_hex -> community_id (int).
             // No separate community vocab file — indices are already 0-based in the neighbor map.
             communityMap = mapper.readValue(resource("community_map.json"),
                 mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Integer.class));
-            LOG.infof("Loaded community map: %d H3 L9 entries", communityMap.size());
+            LOG.infof("Loaded community map: %d H3 L8 entries", communityMap.size());
 
             // ── Metadata ──────────────────────────────────────────────────────
             Map<String, Object> meta = mapper.readValue(resource("model_metadata.json"),

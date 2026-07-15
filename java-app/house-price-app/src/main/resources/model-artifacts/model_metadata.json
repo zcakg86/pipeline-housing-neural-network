@@ -6,7 +6,7 @@
   "continuous_time_dim": 1,
   "market_dim": 2,
   "n_communities": 281,
-  "year_length": 7,
+  "year_length": 8,
   "week_length": 53,
   "use_neighborhood_pooling": true,
   "pooling_strategy": "mean",

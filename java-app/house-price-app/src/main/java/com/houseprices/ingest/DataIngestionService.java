@@ -82,11 +82,8 @@ public class DataIngestionService {
                         baths = full + three * 0.75 + half * 0.5;
                         if (baths == 0) baths = 2;
                     }
-
-                    // sale_nbr used as id
-                    String id = col(cols, idx, "sale_nbr");
-                    if (id.isBlank()) id = lat + "_" + lng + "_" + lineNum;
-
+                    // Unique ID
+                    String id = String.valueOf(lineNum);
                     // Resolve community from H3 L8 index
                     String community = artifacts.lookupCommunity(h3Index);
 

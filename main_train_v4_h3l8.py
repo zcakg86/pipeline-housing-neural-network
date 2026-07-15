@@ -17,6 +17,7 @@ import h3
 from pricemodel.embedding_model import dataset
 from pricemodel.model_manager import modelmanager
 
+
 def main():
     print("=" * 70)
     print("Training Model with H3 L Neighborhood-Aware Embeddings")
@@ -29,7 +30,9 @@ def main():
     data._map_communities(df)
 
     print("\n1. Preparing dataset features...")
-    data._prepare_data(include_market_indicators=True)
+    data._prepare_data(
+        market_indicator_cache_path='data/market_indicators/fred_indicators.csv'
+    )
     
     # Check neighborhood mapping
     if 'community_neighbors' in data.dataframe.columns:
@@ -78,7 +81,7 @@ def main():
         batch=256,
         learning_rate=0.0003,
         dropout_rate=0.2,
-        estimate_uncertainty=True, 
+        estimate_uncertainty=False, 
         patience=20
     )
     
@@ -94,11 +97,11 @@ def main():
     ax.legend(fontsize=11)
     ax.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.savefig('outputs/training_curves.png', dpi=150)
-    print("   Saved: outputs/training_curves.png")
+    plt.savefig(manager.directory + '/training_curves.png', dpi=150)
+    print("   Saved: " + manager.directory + "/training_curves.png")
     
     # Generate predictions
-    print("\n8. Generating predictions...")
+    print("\n8. Generating predictions for whole dataset, with uncertainty calculation...")
     manager.add_predictions_to_data(return_uncertainty=True)
     
     # Calculate metrics
@@ -138,6 +141,7 @@ def main():
         'h3_level': 8,
         'neighborhood_pooling': True,
         'pooling_strategy': manager.pooling_strategy,
+        'estimate_uncertainty': manager.estimate_uncertainty,
         'num_communities': manager.n_communities,
         'num_samples': len(manager.dataframe),
         'mape': f"{mape:.2f}%",
@@ -151,13 +155,13 @@ def main():
         'model_directory': str(manager.directory)
     }
     
-    with open('outputs/model_summary.txt', 'w') as f:
+    with open(manager.directory + '/model_summary.txt', 'w') as f:
         f.write("Model Training Summary\n")
         f.write("=" * 50 + "\n\n")
         for key, value in summary.items():
             f.write(f"{key}: {value}\n")
     
-    print("   Summary saved: outputs/model_summary.txt")
+    print("   Summary saved: " + manager.directory + "/model_summary.txt")
     
     print("\n" + "=" * 70)
     print("✓ Model Training Complete!")

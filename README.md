@@ -9,11 +9,18 @@ This project implements an end-to-end deep learning pipeline designed to forecas
 * Produce dashboard map to present model predictions and performance.
 
 
-# Data
-Residential Sales data:\
-Andy Krause https://www.kaggle.com/datasets/andykrause/kingcountysales/data Version 8: kingco_sales.csv\
-Data produced from property assessment data made available by the King County Department of Assessments.\
-See https://github.com/andykrause/kingCoData
+### Data
+*   **Historical Residential Sales data:**\
+Kaggle [King County Sales, Andy Krause](https://www.kaggle.com/datasets/andykrause/kingcountysales/data) Version 8: kingco_sales.csv\
+Contains sales of single family homes in King County, sold between 1999 and year end 2025.
+*   **Recent House Sales:**\
+RentCast API properties endpoint.
+*   **Zillow listings:**\
+Fetched from HasData API.
+*  **Macroeconomic indicators:**\
+FED of St Louis: [FRED graph](https://fred.stlouisfed.org/graph/fredgraph.csv?id=") \
+  MORTGAGE30US : 30-year fixed mortgage rate (weekly, %)\
+  UNRATE       : US civilian unemployment rate (monthly, %)
 
 ### **Feature processing**
 * H3 Index for spatial representation

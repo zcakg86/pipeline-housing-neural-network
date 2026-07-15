@@ -8,9 +8,6 @@ df = df[['sale_date','sale_price','sale_nbr','latitude','longitude','sqft','sqft
 df['sale_date']=pd.to_datetime(df['sale_date'])
 df = df[df['sale_date']>'2020-01-01']
 df = df.rename(columns={'latitude': 'lat', 'longitude': 'lng'})
-df = df.h3.geo_to_h3(resolution = 7, lat_col = 'lat', lng_col = 'lng', 
-                             set_index = False)
-df = df.h3.geo_to_h3(resolution = 10, lat_col = 'lat', lng_col = 'lng', 
-                             set_index = False)
 df = df.reset_index(drop=True)
 df.to_csv('data/sales_2020_25.csv', index = False) # index arg just added, index in csv atm.
+

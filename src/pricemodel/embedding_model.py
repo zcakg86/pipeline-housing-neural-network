@@ -15,6 +15,11 @@ from datetime import datetime
 import json
 from typing import Optional, Tuple, Dict
 
+try:
+    from fetch_market_indicators import fetch_fred_series, CACHE_FILE
+except ImportError:
+    from ..fetch_market_indicators import fetch_fred_series, CACHE_FILE
+
 # Handle both relative and absolute imports
 try:
     from .h3_community_embedding import H3CommunityEmbedding
@@ -147,20 +152,56 @@ class dataset:
         # Stash the enriched dataframe so _prepare_data can use it directly
         self.dataframe = df
         return self
+    
+    def _add_market_indicators(self, df, market_indicator_cache_path=None):
+        if market_indicator_cache_path is None:
+            market_indicator_cache_path = CACHE_FILE
 
-    def _prepare_data(self, include_market_indicators=True):
+        indicator_frame = None
+
+        try:
+            print("  Attempting to fetch indicators from FRED...")
+            indicator_frame = pd.DataFrame({
+                'mortgage_rate': fetch_fred_series('MORTGAGE30US', start='2019-01-01'),
+                'unemployment_rate': fetch_fred_series('UNRATE', start='2019-01-01'),
+            })
+            indicator_frame.index.name = 'date'
+        except Exception as exc:
+            if os.path.exists(market_indicator_cache_path):
+                print(f"  Warning: refresh from FRED failed ({exc}); using cached data.")
+                print(f"  Loading cached indicators from {market_indicator_cache_path}...")
+                indicator_frame = pd.read_csv(market_indicator_cache_path, index_col='date', parse_dates=True)
+            else:
+                raise RuntimeError(f"Could not fetch indicators from FRED and no cache is available: {exc}") from exc
+
+        if indicator_frame is not None:
+            indicator_frame = indicator_frame.copy()
+            indicator_frame.index = pd.to_datetime(indicator_frame.index)
+            indicator_frame = indicator_frame.sort_index()
+            indicator_frame = indicator_frame.ffill().bfill()
+
+            sale_dates = pd.to_datetime(df['sale_date']).dt.normalize()
+            for col in ['mortgage_rate', 'unemployment_rate']:
+                if col in indicator_frame.columns:
+                    df[col] = sale_dates.map(indicator_frame[col])
+            df[['mortgage_rate', 'unemployment_rate']] = df[['mortgage_rate', 'unemployment_rate']].ffill().bfill()
+
+    def _prepare_data(self, market_indicator_cache_path=None):
         """
-        Data preparation: cleaning, feature engineering, and vocab creation.
+        Data preparation: add market indicators, cleaning, feature engineering, and vocab creation.
+
         Community mapping (community_neighbors, n_communities) must already be
         set — call _map_communities() first, or pass a dataframe that already
         has a 'community_neighbors' column with 0-based indices.
 
         Parameters:
-            include_market_indicators:  Whether to merge in mortgage/unemployment cols
+            market_indicator_cache_path: Optional path to a cached indicator CSV.
         """
-        # Use pre-mapped dataframe if _map_communities was called, otherwise use
-        # the dataframe as-is (caller already attached community_neighbors).
+
         df = self.dataframe
+
+        self._add_market_indicators(df, market_indicator_cache_path=market_indicator_cache_path)
+
         # --- Data Cleaning & Filtering ---
         df['sale_date'] = pd.to_datetime(df['sale_date'])
         df = df.sort_values('sale_date')
@@ -192,15 +233,6 @@ class dataset:
         df['sin_month']   = np.sin(2 * np.pi * df['month'] / 12)
         df['cos_month']   = np.cos(2 * np.pi * df['month'] / 12)
         df['quarter']     = df['sale_date'].dt.quarter
-
-        # --- Market Indicators ---
-        if include_market_indicators:
-            if 'mortgage_rate' not in df.columns:
-                print("Warning: mortgage_rate not found. Add market indicators using MarketIndicatorFetcher")
-                df['mortgage_rate'] = 6.5
-            if 'unemployment_rate' not in df.columns:
-                print("Warning: unemployment_rate not found. Add market indicators using MarketIndicatorFetcher")
-                df['unemployment_rate'] = 4.0
 
         # --- Year Vocabulary ---
         min_year = int(df['year'].min())
@@ -386,7 +418,7 @@ class price_predictor:
                  community_embedding_length,
                  year_length, week_length, learning_rate,
                  dropout_rate=0.1, estimate_uncertainty=False,
-                 use_neighborhood_pooling=True, pooling_strategy='mean'):
+                 use_neighborhood_pooling=False, pooling_strategy='mean'):
         self.device = device
         self.estimate_uncertainty = estimate_uncertainty  # training loss only
         self.use_neighborhood_pooling = use_neighborhood_pooling

@@ -296,7 +296,9 @@ class modelmanager:
         self.pooling_strategy = pooling_strategy
         self.dropout_rate = dropout_rate
         self.epochs = epochs
-        # Initialize or update predictor
+        self.estimate_uncertainty = estimate_uncertainty
+        # Initialize or update predictor. The manager owns the flag so the
+        # predictor always receives the same value that processor() derived.
         if self.predictor is None:
             self.predictor = price_predictor(
                 self.device, embedding_dim, hidden_dim, 

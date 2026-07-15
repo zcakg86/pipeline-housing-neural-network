@@ -280,73 +280,54 @@ function getColorFn(variable, values, anchors) {
 
 // ── Legend ────────────────────────────────────────────────────────────────────
 let legendControl = null;
+let communityLegendControl = null;
+let communityColorMap = new Map();
 
-function buildLegend(variable, values, anchors) {
-  if (legendControl) map.removeControl(legendControl);
-  legendControl = L.control({ position: 'bottomright' });
-  legendControl.onAdd = () => {
-    const div = L.DomUtil.create('div');
-    div.style.cssText = 'background:rgba(22,33,62,0.93);padding:10px 14px;border-radius:6px;' +
-      'border:1px solid #0f3460;color:#eee;font-size:12px;min-width:155px;line-height:1.6';
-    const titles = {
-      pct_error:       'Avg Error (%)',
-      sale_price:      'Avg Sale Price',
-      sqft:            'Avg Sqft',
-      num_sales:       '# Sales',
-      pred_std:        'Prediction Uncertainty ($)',
-      pred_cv_pct:     'Uncertainty (% of price)',
-      attn_community:  'Attention — Community',
-      attn_year:       'Attention — Year',
-      attn_week:       'Attention — Week',
-      attn_property:   'Attention — Property',
-      attn_time:       'Attention — Time Trend',
-      attn_market:     'Attention — Market',
-    };
-    div.innerHTML = `<b style="color:#e94560">${titles[variable]||variable}</b><br>`;
-
-    const swatch = (color, label) =>
-      `<div style="display:flex;align-items:center;gap:6px;margin:1px 0">
-        <span style="display:inline-block;width:16px;height:11px;background:${color};border-radius:2px;flex-shrink:0"></span>
-        <span>${label}</span></div>`;
-
-    if (variable === 'pct_error') {
-      const { p10, p90 } = anchors;
-      // Show: ≤p10, midpoint-neg, 0, midpoint-pos, ≥p90
-      const steps = [
-        { v: p10,        label: `≤${p10.toFixed(1)}%` },
-        { v: p10 / 2,    label: `${(p10/2).toFixed(1)}%` },
-        { v: 0,          label: '0%' },
-        { v: p90 / 2,    label: `+${(p90/2).toFixed(1)}%` },
-        { v: p90,        label: `≥+${p90.toFixed(1)}%` },
-      ];
-      steps.forEach(({ v, label }) => {
-        div.innerHTML += swatch(errorColor(v, anchors), label);
-      });
-      div.innerHTML += `<div style="font-size:10px;color:#888;margin-top:3px">10th–90th pctile anchors</div>`;
-    } else {
-      const lo = pct(values,5), hi = pct(values,95);
-      const palette = (variable === 'sqft' || variable === 'pred_std' || variable === 'pred_cv_pct')
-        ? COLORMAPS.Blues : COLORMAPS.YlOrRd;
-      const isAttn = variable.startsWith('attn_');
-      const fmt = variable === 'sale_price'
-        ? v => '$' + Math.round(v).toLocaleString()
-        : variable === 'pred_std'
-        ? v => '$' + Math.round(v).toLocaleString()
-        : variable === 'pred_cv_pct'
-        ? v => v.toFixed(1) + '%'
-        : isAttn
-        ? v => (v * 100).toFixed(1) + '%'
-        : v => Math.round(v).toLocaleString();
-      for (let i = 0; i <= 5; i++) {
-        const t = i/5;
-        div.innerHTML += swatch(interpolate(t, palette), fmt(lo + t*(hi-lo)));
-      }
-      div.innerHTML += `<div style="font-size:10px;color:#888;margin-top:3px">5th–95th pctile</div>`;
-    }
-    return div;
-  };
-  legendControl.addTo(map);
+function ptKey(pt) {
+  return `${pt[0].toFixed(6)},${pt[1].toFixed(6)}`;
 }
+
+function segmentKey(a, b) {
+  const aKey = ptKey(a);
+  const bKey = ptKey(b);
+  return aKey < bKey ? `${aKey}|${bKey}` : `${bKey}|${aKey}`;
+}
+
+function polygonRings(feature) {
+  const geom = feature.geometry;
+  if (!geom || !geom.coordinates) return [];
+  if (geom.type === 'Polygon') return geom.coordinates;
+  if (geom.type === 'MultiPolygon') return geom.coordinates.flat();
+  return [];
+}
+
+function buildCommunityAdjacency(features) {
+  const segmentOwners = new Map();
+  const adjacency = new Map();
+
+  features.forEach(feature => {
+    const id = String(feature.properties.community);
+    adjacency.set(id, new Set());
+    polygonRings(feature).forEach(ring => {
+      for (let i = 0; i + 1 < ring.length; i++) {
+        const key = segmentKey(ring[i], ring[i + 1]);
+        if (!segmentOwners.has(key)) segmentOwners.set(key, new Set());
+        segmentOwners.get(key).add(id);
+      }
+    });
+  });
+
+  segmentOwners.forEach(owners => {
+    if (owners.size <= 1) return;
+    const ids = [...owners];
+    ids.forEach(a => ids.forEach(b => {
+      if (a !== b) adjacency.get(a).add(b);
+    }));
+  });
+
+  return adjacency;
+}
+
 
 // ── Sales H3 layer ────────────────────────────────────────────────────────────
 async function loadSales() {
@@ -655,9 +636,109 @@ const COMMUNITY_COLORS = [
 ];
 let selectedCommunities = new Set(); // empty = all selected
 
-function communityColor(id, allIds) {
-  const i = allIds.indexOf(id);
-  return COMMUNITY_COLORS[i % COMMUNITY_COLORS.length];
+function ptKey(pt) {
+  return `${pt[0].toFixed(6)},${pt[1].toFixed(6)}`;
+}
+
+function segmentKey(a, b) {
+  const aKey = ptKey(a);
+  const bKey = ptKey(b);
+  return aKey < bKey ? `${aKey}|${bKey}` : `${bKey}|${aKey}`;
+}
+
+function polygonRings(feature) {
+  const geom = feature.geometry;
+  if (!geom || !geom.coordinates) return [];
+  if (geom.type === 'Polygon') return geom.coordinates;
+  if (geom.type === 'MultiPolygon') return geom.coordinates.flat();
+  return [];
+}
+
+function buildCommunityAdjacency(features) {
+  const segmentOwners = new Map();
+  const adjacency = new Map();
+
+  features.forEach(feature => {
+    const id = String(feature.properties.community);
+    adjacency.set(id, new Set());
+    polygonRings(feature).forEach(ring => {
+      for (let i = 0; i + 1 < ring.length; i++) {
+        const key = segmentKey(ring[i], ring[i + 1]);
+        if (!segmentOwners.has(key)) segmentOwners.set(key, new Set());
+        segmentOwners.get(key).add(id);
+      }
+    });
+  });
+
+  segmentOwners.forEach(owners => {
+    if (owners.size <= 1) return;
+    const ids = [...owners];
+    ids.forEach(a => ids.forEach(b => {
+      if (a !== b) adjacency.get(a).add(b);
+    }));
+  });
+
+  return adjacency;
+}
+
+function buildCommunityColorMap(features) {
+  const adjacency = buildCommunityAdjacency(features);
+  const ids = [...adjacency.keys()];
+  ids.sort((a, b) => (adjacency.get(b)?.size || 0) - (adjacency.get(a)?.size || 0));
+
+  const map = new Map();
+  const usage = new Map(COMMUNITY_COLORS.map(color => [color, 0]));
+
+  ids.forEach((id) => {
+    const used = new Set();
+    (adjacency.get(id) || []).forEach(neighbor => {
+      if (map.has(neighbor)) used.add(map.get(neighbor));
+    });
+
+    const available = COMMUNITY_COLORS.filter(color => !used.has(color));
+    let assigned;
+    if (available.length) {
+      assigned = available.reduce((best, color) =>
+        (usage.get(color) < usage.get(best) ? color : best), available[0]
+      );
+    } else {
+      assigned = COMMUNITY_COLORS[0];
+    }
+
+    map.set(id, assigned);
+    usage.set(assigned, usage.get(assigned) + 1);
+  });
+
+  return map;
+}
+
+function buildCommunityLegend(colorMap) {
+  if (communityLegendControl) map.removeControl(communityLegendControl);
+  communityLegendControl = L.control({ position: 'topright' });
+  communityLegendControl.onAdd = () => {
+    const div = L.DomUtil.create('div');
+    div.style.cssText =
+      'background:rgba(22,33,62,0.93);padding:10px 10px;border-radius:6px;' +
+      'border:1px solid #0f3460;color:#eee;font-size:11px;line-height:1.4;max-height:300px;overflow:auto;min-width:180px';
+    div.innerHTML = `<b style="color:#e94560">Community colors</b><br>`;
+
+    let count = 0;
+    for (const [community, color] of colorMap.entries()) {
+      if (count >= 18) {
+        div.innerHTML += `<div style="color:#888; margin-top:6px">...+${colorMap.size - 18} more</div>`;
+        break;
+      }
+      div.innerHTML +=
+        `<div style="display:flex;align-items:center;gap:6px;margin:5px 0">` +
+          `<span style="display:inline-block;width:16px;height:12px;background:${color};border-radius:3px;flex-shrink:0"></span>` +
+          `<span>Community ${community}</span>` +
+        `</div>`;
+      count += 1;
+    }
+
+    return div;
+  };
+  communityLegendControl.addTo(map);
 }
 
 // ── Community map layer ───────────────────────────────────────────────────────
@@ -665,39 +746,62 @@ let perfData = null; // cached performance response
 
 async function loadCommunityLayer() {
   communityLayer.clearLayers();
-  if (!document.getElementById('showCommunity').checked) return;
+  if (!document.getElementById('showCommunity').checked) {
+    if (communityLegendControl) {
+      map.removeControl(communityLegendControl);
+      communityLegendControl = null;
+    }
+    return;
+  }
 
-  // Ensure perf data loaded so we know the top communities + colors
   if (!perfData) perfData = await (await fetch('/api/performance')).json();
-  const topIds = perfData.communities || [];
-  if (!topIds.length) return;
-
   const res = await fetch('/api/sales/community');
   const gj  = await res.json();
+  communityColorMap = buildCommunityColorMap(gj.features || []);
 
   L.geoJSON(gj, {
     style: f => {
-      const c = f.properties.community;
+      const c = String(f.properties.community);
       const active = selectedCommunities.size === 0 || selectedCommunities.has(c);
-      const color = communityColor(c, topIds);
+      const color = communityColorMap.get(c) || '#888';
       return {
-        fillColor:   topIds.includes(c) ? color : '#555',
+        fillColor:   color,
         fillOpacity: active ? 0.45 : 0.1,
-        color:       topIds.includes(c) ? color : '#333',
+        color:       color,
         weight:      0.8
       };
     },
     onEachFeature: (f, layer) => {
-      const c = f.properties.community;
+      const p = f.properties || {};
+      const c = String(p.community);
+      const salesCount = p.salesCount || 0;
+      const meanPrice = Math.round((p.meanSalePrice || 0));
+      const meanPred   = Math.round((p.meanPredictedPrice || 0));
+      const avgError   = (p.avgPctError ?? 0).toFixed(1);
+      const meanSqft   = Math.round((p.meanSqft || 0));
+      const meanStd    = Math.round(((p.meanPredStd || 0) * 1.96));
+
       layer.on('click', () => toggleCommunity(c));
-      layer.bindTooltip(`Community ${c}`, { sticky: true });
+      layer.bindTooltip(
+        `<b>Community ${c}</b><br>` +
+        `Sales: ${salesCount}<br>` +
+        `Mean Price: $${meanPrice.toLocaleString()}<br>` +
+        `Mean Predicted: $${meanPred.toLocaleString()}<br>` +
+        `Avg Error: ${avgError}%<br>` +
+        `Avg Sqft: ${meanSqft.toLocaleString()}<br>` +
+        `95% CI: ±$${meanStd}`,
+        { sticky: true }
+      );
     }
   }).addTo(communityLayer);
+
+  buildCommunityLegend(communityColorMap);
 }
 
 function toggleCommunity(id) {
-  if (selectedCommunities.has(id)) selectedCommunities.delete(id);
-  else selectedCommunities.add(id);
+  const key = String(id);
+  if (selectedCommunities.has(key)) selectedCommunities.delete(key);
+  else selectedCommunities.add(key);
   loadCommunityLayer();
   if (perfChart) updateChartSelection();
 }
