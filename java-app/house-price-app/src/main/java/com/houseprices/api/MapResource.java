@@ -2,14 +2,24 @@ package com.houseprices.api;
 
 import com.houseprices.ingest.PropertyRecord;
 import com.houseprices.service.H3AggregationService;
+import com.houseprices.service.PropertyRequestFilter;
 import com.houseprices.service.PropertyStore;
+import com.houseprices.service.SyntheticPredictionService;
+import com.houseprices.model.WaterProximityService;
+import com.houseprices.model.EmbeddingModel;
+import com.houseprices.model.LightGBMModel;
+import com.houseprices.model.MarketIndicatorService;
+import com.houseprices.model.ModelArtifacts;
+import com.houseprices.model.PredictionContext;
+import com.houseprices.model.PredictionContextFactory;
+import com.houseprices.model.FeatureContract;
+import com.uber.h3core.H3Core;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.io.IOException;
 /**
  * REST API for the Leaflet.js map frontend.
@@ -18,8 +28,121 @@ import java.io.IOException;
 @Produces(MediaType.APPLICATION_JSON)
 public class MapResource {
 
+    private static final int DEFAULT_POINT_LIMIT = 5_000;
+    private static final int MAX_POINT_LIMIT = 20_000;
+    private static final int RAW_POINT_MIN_ZOOM = 13;
+    private final H3Core h3;
+
+    public MapResource() {
+        try { h3 = H3Core.newInstance(); }
+        catch (IOException exception) { throw new RuntimeException("H3Core init failed", exception); }
+    }
+
     @Inject PropertyStore        store;
     @Inject H3AggregationService aggregation;
+    @Inject SyntheticPredictionService syntheticPredictions;
+    @Inject WaterProximityService waterProximity;
+    @Inject EmbeddingModel neuralModel;
+    @Inject LightGBMModel lightgbmModel;
+    @Inject MarketIndicatorService marketIndicators;
+    @Inject ModelArtifacts modelArtifacts;
+    @Inject PredictionContextFactory contextFactory;
+
+    /** File-backed H3 L9 synthetic properties, recalculated for the requested date. */
+    @GET
+    @Path("/synthetic")
+    public Map<String, Object> syntheticLayer(
+            @QueryParam("saleDate") @DefaultValue("") String saleDate) {
+        try {
+            java.time.LocalDate date = saleDate == null || saleDate.isBlank()
+                ? java.time.LocalDate.now()
+                : java.time.LocalDate.parse(saleDate);
+            return syntheticPredictions.predict(date);
+        } catch (IllegalArgumentException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    @GET
+    @Path("/synthetic/meta")
+    public Map<String, Object> syntheticMetadata() {
+        return Map.of(
+            "count", syntheticPredictions.size(),
+            "defaultSaleDate", java.time.LocalDate.now().toString(),
+            "minimumSaleDate", syntheticPredictions.minimumPredictionDate().toString(),
+            "monthStep", 1
+        );
+    }
+
+    /** Exact LightGBM plus exact-group and sampled-feature neural Shapley effects. */
+    @GET
+    @Path("/synthetic/explanation")
+    public Map<String, Object> syntheticExplanation(
+            @QueryParam("h3Index") @DefaultValue("") String h3Index,
+            @QueryParam("saleDate") @DefaultValue("") String saleDate) {
+        if (h3Index == null || h3Index.isBlank()) {
+            throw new BadRequestException("h3Index is required");
+        }
+        try {
+            java.time.LocalDate date = saleDate == null || saleDate.isBlank()
+                ? java.time.LocalDate.now()
+                : java.time.LocalDate.parse(saleDate);
+            return syntheticPredictions.explain(h3Index, date);
+        } catch (IllegalArgumentException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    /** Feature contributions for one stored Zillow, RentCast, or historical-sale point. */
+    @GET
+    @Path("/points/explanation")
+    public Map<String, Object> pointExplanation(
+            @QueryParam("source") @DefaultValue("") String source,
+            @QueryParam("id") @DefaultValue("") String id) {
+        if (!Set.of("zillow", "rentcast", "sales").contains(source)) {
+            throw new BadRequestException("source must be zillow, rentcast, or sales");
+        }
+        if (id == null || id.isBlank()) throw new BadRequestException("id is required");
+        PropertyRecord record = store.findBySourceAndId(source, id)
+            .orElseThrow(() -> new NotFoundException("Property record not found"));
+        java.time.LocalDate date = record.saleDate() == null
+            ? java.time.LocalDate.now() : record.saleDate();
+
+        // Historical CSV predictions used their row-specific economic values.
+        // Live Zillow/RentCast ingestion currently uses the deployment defaults.
+        double mortgageRate = FeatureContract.DEFAULT_MORTGAGE_RATE;
+        double unemploymentRate = FeatureContract.DEFAULT_UNEMPLOYMENT_RATE;
+        String indicatorDate = "deployment defaults";
+        if ("sales".equals(source)) {
+            MarketIndicatorService.MarketIndicators market = marketIndicators.lookup(date);
+            mortgageRate = market.mortgageRate();
+            unemploymentRate = market.unemploymentRate();
+            indicatorDate = market.effectiveDate().toString();
+        }
+        EmbeddingModel.BatchInput input = new EmbeddingModel.BatchInput(
+            record.h3Index(), date, record.sqft(), record.sqftLot(), record.beds(),
+            record.lat(), record.lng(), mortgageRate, unemploymentRate
+        );
+        java.time.LocalDate latestSnapshotSale = modelArtifacts.getLocalMarketLatestSaleDate();
+        boolean snapshotLookAhead = latestSnapshotSale != null && !date.isAfter(latestSnapshotSale);
+        PredictionContext context = contextFactory.prepare(input, snapshotLookAhead);
+
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("source", source);
+        result.put("id", id);
+        result.put("address", record.address());
+        result.put("h3Index", record.h3Index());
+        result.put("saleDate", date.toString());
+        result.put("mortgageRate", mortgageRate);
+        result.put("unemploymentRate", unemploymentRate);
+        result.put("marketIndicatorDate", indicatorDate);
+        result.put("storedNeuralPrediction", record.predictedPrice());
+        result.put("storedLightgbmPrediction", record.lightgbmPredictedPrice());
+        result.put("historicalSnapshotReconstruction", snapshotLookAhead);
+        result.put("explanation", lightgbmModel.explainPrepared(context));
+        result.put("neuralExplanation", neuralModel.explainPrepared(context));
+        return result;
+    }
 
     /**
      * Sales point layer — serves RentCast, historical sales, or both as GeoJSON points.
@@ -36,23 +159,36 @@ public class MapResource {
             @QueryParam("maxSqft")   @DefaultValue("10000")    double maxSqft,
             @QueryParam("homeType")  @DefaultValue("all")      String homeType,
             @QueryParam("dateFrom")  @DefaultValue("")         String dateFrom,
-            @QueryParam("dateTo")    @DefaultValue("")         String dateTo) {
+            @QueryParam("dateTo")    @DefaultValue("")         String dateTo,
+            @QueryParam("west") Double west,
+            @QueryParam("south") Double south,
+            @QueryParam("east") Double east,
+            @QueryParam("north") Double north,
+            @QueryParam("zoom") @DefaultValue("12") int zoom,
+            @QueryParam("limit") @DefaultValue("5000") int limit) {
 
-        // Choose records based on source param
-        Stream<PropertyRecord> base = switch (source) {
-            case "sales"    -> store.getBySource("sales").stream();
-            case "all"      -> Stream.concat(
-                                   store.getBySource("rentcast").stream(),
-                                   store.getBySource("sales").stream());
-            default         -> store.getBySource("rentcast").stream(); // "rentcast"
+        PropertyRequestFilter filter = requestFilter(
+            homeType, dateFrom, dateTo, minError, maxError, west, south, east, north
+        );
+        PropertyStore.Snapshot snapshot = store.snapshot();
+        List<PropertyRecord> base = switch (source) {
+            case "sales" -> snapshot.sales();
+            case "all" -> snapshot.completedSales();
+            default -> snapshot.rentcast();
         };
-
-        List<Map<String, Object>> features = base
+        List<PropertyRecord> matches = base.stream()
             .filter(PropertyRecord::hasSalePrice)
-            .filter(r -> r.pctError() >= minError && r.pctError() <= maxError)
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
-            .filter(r -> homeType.equals("all") || homeType.equalsIgnoreCase(r.homeType()))
-            .filter(r -> filterByDate(r, dateFrom, dateTo))
+            .filter(r -> filter.includes(r, r.pctError()))
+            .toList();
+        if (zoom < RAW_POINT_MIN_ZOOM) {
+            List<Map<String, Object>> features = detailedPointClusters(matches, zoom);
+            return pointCollection(features, matches.size(), false, true, zoom);
+        }
+
+        int effectiveLimit = validatedLimit(limit);
+        boolean truncated = matches.size() > effectiveLimit;
+        List<Map<String, Object>> features = matches.stream().limit(effectiveLimit)
             .map(r -> {
                 Map<String, Object> geom = Map.of(
                     "type", "Point",
@@ -65,6 +201,8 @@ public class MapResource {
                 props.put("salePrice",           r.salePrice());
                 props.put("predictedPrice",      r.predictedPrice());
                 props.put("pctError",            r.pctError());
+                props.put("lightgbmPredictedPrice", r.lightgbmPredictedPrice());
+                props.put("lightgbmPctError", r.lightgbmPctError());
                 props.put("predictionStdPrice",  r.predictionStdPrice());
                 props.put("predictionCvPct",     r.predictionCvPct());
                 props.put("sqft",                r.sqft());
@@ -72,6 +210,7 @@ public class MapResource {
                 props.put("baths",               r.baths());
                 props.put("homeType",            r.homeType());
                 props.put("saleDate",            r.saleDate() != null ? r.saleDate().toString() : "");
+                putWaterFeatures(props, r);
                 // CLS attention weights (null-safe)
                 float[] a = r.clsAttention();
                 if (a != null && a.length == 6) {
@@ -86,7 +225,7 @@ public class MapResource {
             })
             .collect(Collectors.toList());
 
-        return Map.of("type", "FeatureCollection", "features", features);
+        return pointCollection(features, matches.size(), truncated, false, zoom);
     }
 
     /** Zillow listings as GeoJSON points — includes uncertainty and attention for variable colouring */
@@ -97,12 +236,28 @@ public class MapResource {
             @QueryParam("maxError")   @DefaultValue("500")   double maxError,
             @QueryParam("minSqft")    @DefaultValue("0")     double minSqft,
             @QueryParam("maxSqft")    @DefaultValue("10000") double maxSqft,
-            @QueryParam("homeType")   @DefaultValue("all")   String homeType) {
+            @QueryParam("homeType")   @DefaultValue("all")   String homeType,
+            @QueryParam("west") Double west,
+            @QueryParam("south") Double south,
+            @QueryParam("east") Double east,
+            @QueryParam("north") Double north,
+            @QueryParam("zoom") @DefaultValue("12") int zoom,
+            @QueryParam("limit") @DefaultValue("5000") int limit) {
 
-        List<Map<String, Object>> features = store.getZillowListings().stream()
-            .filter(r -> !r.hasSalePrice() || (r.pctError() >= minError && r.pctError() <= maxError))
+        PropertyRequestFilter filter = requestFilter(
+            homeType, "", "", minError, maxError, west, south, east, north
+        );
+        List<PropertyRecord> matches = store.snapshot().zillow().stream()
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
-            .filter(r -> homeType.equals("all") || homeType.equalsIgnoreCase(r.homeType()))
+            .filter(r -> filter.includes(r, r.pctError()))
+            .toList();
+        if (zoom < RAW_POINT_MIN_ZOOM) {
+            List<Map<String, Object>> features = detailedPointClusters(matches, zoom);
+            return pointCollection(features, matches.size(), false, true, zoom);
+        }
+        int effectiveLimit = validatedLimit(limit);
+        boolean truncated = matches.size() > effectiveLimit;
+        List<Map<String, Object>> features = matches.stream().limit(effectiveLimit)
             .map(r -> {
                 Map<String, Object> geom = Map.of(
                     "type", "Point",
@@ -111,9 +266,13 @@ public class MapResource {
                 Map<String, Object> props = new LinkedHashMap<>();
                 props.put("id",                  r.id());
                 props.put("address",             r.address());
+                props.put("source",              r.source());
                 props.put("listPrice",           r.salePrice());
+                props.put("zestimate",           r.zestimate());
                 props.put("predictedPrice",      r.predictedPrice());
                 props.put("pctError",            r.pctError());
+                props.put("lightgbmPredictedPrice", r.lightgbmPredictedPrice());
+                props.put("lightgbmPctError", r.lightgbmPctError());
                 props.put("predictionStdPrice",  r.predictionStdPrice());
                 props.put("predictionCvPct",     r.predictionCvPct());
                 props.put("sqft",                r.sqft());
@@ -121,6 +280,9 @@ public class MapResource {
                 props.put("baths",               r.baths());
                 props.put("homeType",            r.homeType());
                 props.put("url",                 r.listingUrl());
+                props.put("saleDate",            r.saleDate() != null ? r.saleDate().toString() : "");
+                props.put("predictionDate",      r.saleDate() != null ? r.saleDate().toString() : "");
+                putWaterFeatures(props, r);
                 float[] a = r.clsAttention();
                 if (a != null && a.length == 6) {
                     props.put("attnCommunity", a[0]);
@@ -134,7 +296,7 @@ public class MapResource {
             })
             .collect(Collectors.toList());
 
-        return Map.of("type", "FeatureCollection", "features", features);
+        return pointCollection(features, matches.size(), truncated, false, zoom);
     }
 
     /** H3-aggregated sales as GeoJSON polygons */
@@ -142,45 +304,28 @@ public class MapResource {
     @Path("/sales/h3")
     public Map<String, Object> salesH3(
             @QueryParam("variable")  @DefaultValue("pct_error") String variable,
+            @QueryParam("model")     @DefaultValue("neural")    String model,
             @QueryParam("homeType")  @DefaultValue("all")       String homeType,
             @QueryParam("dateFrom")  @DefaultValue("")          String dateFrom,
             @QueryParam("dateTo")    @DefaultValue("")          String dateTo,
             @QueryParam("minError")  @DefaultValue("-500")      double minError,
             @QueryParam("maxError")  @DefaultValue("500")       double maxError) {
 
-        var hexStats = aggregation.aggregateSales(variable, homeType, dateFrom, dateTo, minError, maxError);
-        return aggregation.toGeoJson(hexStats, variable);
-    }
-
-    /** Raw sales points for heatmap (lat, lng, pct_error) */
-    @GET
-    @Path("/sales/points")
-    public Map<String, Object> salesPoints(
-            @QueryParam("homeType") @DefaultValue("all")  String homeType,
-            @QueryParam("dateFrom") @DefaultValue("")     String dateFrom,
-            @QueryParam("dateTo")   @DefaultValue("")     String dateTo,
-            @QueryParam("minError") @DefaultValue("-500") double minError,
-            @QueryParam("maxError") @DefaultValue("500")  double maxError) {
-
-        List<Map<String, Object>> features = store.getSalesRecords().stream()
-            .filter(PropertyRecord::hasSalePrice)
-            .filter(r -> homeType.equals("all") || homeType.equalsIgnoreCase(r.homeType()))
-            .filter(r -> filterByDate(r, dateFrom, dateTo))
-            .filter(r -> r.pctError() >= minError && r.pctError() <= maxError)
-            .map(r -> {
-                Map<String, Object> geom = Map.of(
-                    "type", "Point",
-                    "coordinates", new double[]{r.lng(), r.lat()}
-                );
-                Map<String, Object> props = new LinkedHashMap<>();
-                props.put("pctError",   r.pctError());
-                props.put("salePrice",  r.salePrice());
-                props.put("sqft",       r.sqft());
-                return Map.of("type", "Feature", "geometry", geom, "properties", props);
-            })
-            .collect(Collectors.toList());
-
-        return Map.of("type", "FeatureCollection", "features", features);
+        String effectiveModel = "predicted_price_lightgbm".equals(variable)
+            ? "lightgbm"
+            : "predicted_price_neural".equals(variable) ? "neural" : model;
+        try {
+            PropertyRequestFilter filter = PropertyRequestFilter.parse(
+                homeType, dateFrom, dateTo, minError, maxError,
+                null, null, null, null
+            );
+            var hexStats = aggregation.aggregateSales(
+                variable, effectiveModel, filter
+            );
+            return aggregation.toGeoJson(hexStats, variable, effectiveModel);
+        } catch (IllegalArgumentException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
     }
 
     /** Distinct home types across all sources */
@@ -196,24 +341,181 @@ public class MapResource {
         return Map.of("zillow", zillowTypes, "sales", salesTypes);
     }
 
-    private boolean filterByDate(PropertyRecord r, String from, String to) {
-        if ((from == null || from.isBlank()) && (to == null || to.isBlank())) return true;
-        if (r.saleDate() == null) return false;
+    private PropertyRequestFilter requestFilter(
+            String homeType,
+            String dateFrom,
+            String dateTo,
+            double minError,
+            double maxError,
+            Double west,
+            Double south,
+            Double east,
+            Double north) {
         try {
-            if (from != null && !from.isBlank()) {
-                if (r.saleDate().isBefore(java.time.LocalDate.parse(from))) return false;
-            }
-            if (to != null && !to.isBlank()) {
-                if (r.saleDate().isAfter(java.time.LocalDate.parse(to))) return false;
-            }
-        } catch (Exception ignored) {}
-        return true;
+            return PropertyRequestFilter.parse(
+                homeType, dateFrom, dateTo, minError, maxError,
+                west, south, east, north
+            );
+        } catch (IllegalArgumentException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
     }
 
-    /**
-     * Quarterly prediction performance by community.
-     * Returns top N communities by sale count with avg pct_error and std dev per quarter.
-     */
+    private int validatedLimit(int limit) {
+        if (limit < 1) throw new BadRequestException("limit must be positive");
+        return Math.min(limit, MAX_POINT_LIMIT);
+    }
+
+    private Map<String, Object> pointCollection(
+            List<Map<String, Object>> features, int matched, boolean truncated,
+            boolean clustered, int zoom) {
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("type", "FeatureCollection");
+        result.put("matched", matched);
+        result.put("returned", features.size());
+        result.put("truncated", truncated);
+        result.put("clustered", clustered);
+        result.put("zoom", zoom);
+        result.put("features", features);
+        return result;
+    }
+
+    private int clusterResolution(int zoom) {
+        if (zoom <= 9) return 6;
+        if (zoom <= 11) return 7;
+        return 8;
+    }
+
+    private Map<String, PointAccumulator> cluster(List<PropertyRecord> records, int zoom) {
+        int resolution = clusterResolution(zoom);
+        Map<String, PointAccumulator> clusters = new LinkedHashMap<>();
+        for (PropertyRecord record : records) {
+            String cell;
+            try {
+                long original = h3.latLngToCell(record.lat(), record.lng(), resolution);
+                cell = h3.h3ToString(original);
+            } catch (Exception exception) {
+                continue;
+            }
+            clusters.computeIfAbsent(cell, ignored -> new PointAccumulator()).add(record);
+        }
+        return clusters;
+    }
+
+    private List<Map<String, Object>> detailedPointClusters(
+            List<PropertyRecord> records, int zoom) {
+        List<Map<String, Object>> features = new ArrayList<>();
+        for (Map.Entry<String, PointAccumulator> entry : cluster(records, zoom).entrySet()) {
+            PointAccumulator values = entry.getValue();
+            Map<String, Object> properties = values.properties();
+            properties.put("id", entry.getKey());
+            properties.put("source", "cluster");
+            properties.put("cluster", true);
+            properties.put("count", values.count);
+            features.add(pointFeature(values.avgLng(), values.avgLat(), properties));
+        }
+        return features;
+    }
+
+    private Map<String, Object> pointFeature(
+            double longitude, double latitude, Map<String, Object> properties) {
+        return Map.of(
+            "type", "Feature",
+            "geometry", Map.of("type", "Point", "coordinates", new double[]{longitude, latitude}),
+            "properties", properties
+        );
+    }
+
+    private static final class PointAccumulator {
+        int count;
+        int attentionCount;
+        double lat;
+        double lng;
+        double salePrice;
+        double zestimate;
+        int zestimateCount;
+        double neuralPrediction;
+        double treePrediction;
+        double neuralError;
+        double treeError;
+        double predictionStd;
+        double predictionCv;
+        double sqft;
+        double beds;
+        double baths;
+        final double[] attention = new double[6];
+
+        void add(PropertyRecord record) {
+            count++;
+            lat += record.lat();
+            lng += record.lng();
+            salePrice += record.salePrice();
+            if (record.zestimate() > 0) {
+                zestimate += record.zestimate();
+                zestimateCount++;
+            }
+            neuralPrediction += record.predictedPrice();
+            treePrediction += record.lightgbmPredictedPrice();
+            neuralError += record.pctError();
+            treeError += record.lightgbmPctError();
+            predictionStd += record.predictionStdPrice();
+            predictionCv += record.predictionCvPct();
+            sqft += record.sqft();
+            beds += record.beds();
+            baths += record.baths();
+            float[] weights = record.clsAttention();
+            if (weights != null && weights.length == 6) {
+                attentionCount++;
+                for (int index = 0; index < 6; index++) attention[index] += weights[index];
+            }
+        }
+
+        double avgLat() { return lat / count; }
+        double avgLng() { return lng / count; }
+
+        Map<String, Object> properties() {
+            double divisor = count;
+            double attentionDivisor = Math.max(1, attentionCount);
+            Map<String, Object> result = new LinkedHashMap<>();
+            result.put("salePrice", salePrice / divisor);
+            result.put("listPrice", salePrice / divisor);
+            result.put("zestimate", zestimateCount > 0 ? zestimate / zestimateCount : 0.0);
+            result.put("predictedPrice", neuralPrediction / divisor);
+            result.put("lightgbmPredictedPrice", treePrediction / divisor);
+            result.put("pctError", neuralError / divisor);
+            result.put("lightgbmPctError", treeError / divisor);
+            result.put("predictionStdPrice", predictionStd / divisor);
+            result.put("predictionCvPct", predictionCv / divisor);
+            result.put("sqft", sqft / divisor);
+            result.put("beds", beds / divisor);
+            result.put("baths", baths / divisor);
+            result.put("attnCommunity", attention[0] / attentionDivisor);
+            result.put("attnYear", attention[1] / attentionDivisor);
+            result.put("attnWeek", attention[2] / attentionDivisor);
+            result.put("attnProperty", attention[3] / attentionDivisor);
+            result.put("attnTime", attention[4] / attentionDivisor);
+            result.put("attnMarket", attention[5] / attentionDivisor);
+            return result;
+        }
+    }
+
+    private double selectedError(PropertyRecord record, String model) {
+        return "lightgbm".equalsIgnoreCase(model)
+            ? record.lightgbmPctError() : record.pctError();
+    }
+
+    private void putWaterFeatures(Map<String, Object> properties, PropertyRecord record) {
+        WaterProximityService.WaterFeatures water = waterProximity.lookup(
+            record.lat(), record.lng()
+        );
+        properties.put("distanceToWaterM", water.distanceToWaterM());
+        properties.put(
+            "waterProximity", WaterProximityService.waterProximity(water.distanceToWaterM())
+        );
+        properties.put("isWaterfront", water.isWaterfront() == 1.0);
+    }
+
+    /** Quarterly neural and LightGBM errors for every mapped community. */
     @GET
     @Path("/performance")
     public Map<String, Object> performance(
@@ -224,47 +526,58 @@ public class MapResource {
             .filter(r -> r.community() != null && !r.community().isBlank())
             .collect(Collectors.toList());
 
-        if (sales.isEmpty()) return Map.of("communities", List.of(), "series", List.of());
+        if (sales.isEmpty()) return Map.of(
+            "communities", List.of(), "defaultCommunities", List.of(), "series", List.of()
+        );
 
         // Find top N communities by count
         Map<String, Long> countByCommunity = sales.stream()
             .collect(Collectors.groupingBy(PropertyRecord::community, Collectors.counting()));
-        List<String> topCommunities = countByCommunity.entrySet().stream()
+        List<String> allCommunities = countByCommunity.entrySet().stream()
             .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
-            .limit(topN)
             .map(Map.Entry::getKey)
             .collect(Collectors.toList());
+        List<String> topCommunities = allCommunities.stream().limit(topN).toList();
+        List<Map<String, Object>> communityOptions = allCommunities.stream()
+            .map(community -> Map.<String, Object>of(
+                "id", community,
+                "count", countByCommunity.getOrDefault(community, 0L)
+            ))
+            .toList();
 
         // Group by community + quarter
         // quarter key: "YYYY-QN"
-        Map<String, Map<String, List<Double>>> data = new LinkedHashMap<>();
+        Map<String, Map<String, List<PropertyRecord>>> data = new LinkedHashMap<>();
         for (PropertyRecord r : sales) {
-            if (!topCommunities.contains(r.community())) continue;
             if (r.saleDate() == null) continue;
             int year = r.saleDate().getYear();
             int q    = (r.saleDate().getMonthValue() - 1) / 3 + 1;
             String quarter = year + "-Q" + q;
             data.computeIfAbsent(r.community(), k -> new LinkedHashMap<>())
                 .computeIfAbsent(quarter, k -> new ArrayList<>())
-                .add(r.pctError());
+                .add(r);
         }
 
         // Build series per community
         List<Map<String, Object>> series = new ArrayList<>();
-        for (String community : topCommunities) {
-            Map<String, List<Double>> byQuarter = data.getOrDefault(community, Map.of());
+        for (String community : allCommunities) {
+            Map<String, List<PropertyRecord>> byQuarter = data.getOrDefault(community, Map.of());
             List<Map<String, Object>> points = new ArrayList<>();
-            for (Map.Entry<String, List<Double>> e : new TreeMap<>(byQuarter).entrySet()) {
-                List<Double> errors = e.getValue();
-                double mean = errors.stream().mapToDouble(Double::doubleValue).average().orElse(0);
-                double variance = errors.stream()
-                    .mapToDouble(v -> (v - mean) * (v - mean)).average().orElse(0);
-                double std = Math.sqrt(variance);
+            for (Map.Entry<String, List<PropertyRecord>> e : new TreeMap<>(byQuarter).entrySet()) {
+                List<PropertyRecord> records = e.getValue();
+                double neuralMean = records.stream().mapToDouble(PropertyRecord::pctError).average().orElse(0);
+                double lightgbmMean = records.stream().mapToDouble(PropertyRecord::lightgbmPctError).average().orElse(0);
+                double neuralStd = Math.sqrt(records.stream()
+                    .mapToDouble(r -> Math.pow(r.pctError() - neuralMean, 2)).average().orElse(0));
+                double lightgbmStd = Math.sqrt(records.stream()
+                    .mapToDouble(r -> Math.pow(r.lightgbmPctError() - lightgbmMean, 2)).average().orElse(0));
                 points.add(Map.of(
                     "quarter", e.getKey(),
-                    "mean",    mean,
-                    "std",     std,
-                    "count",   errors.size()
+                    "neuralMean", neuralMean,
+                    "neuralStd", neuralStd,
+                    "lightgbmMean", lightgbmMean,
+                    "lightgbmStd", lightgbmStd,
+                    "count", records.size()
                 ));
             }
             series.add(Map.of(
@@ -274,7 +587,11 @@ public class MapResource {
             ));
         }
 
-        return Map.of("communities", topCommunities, "series", series);
+        return Map.of(
+            "communities", communityOptions,
+            "defaultCommunities", topCommunities,
+            "series", series
+        );
     }
 
     /**
@@ -283,8 +600,9 @@ public class MapResource {
     @GET
     @Path("/sales/community")
     public Map<String, Object> communityLayer() {
+        List<PropertyRecord> sales = store.snapshot().completedSales();
         // Collect unique H3 L9 → community from sales records
-        Map<String, String> h3ToCommunity = store.getSalesRecords().stream()
+        Map<String, String> h3ToCommunity = sales.stream()
             .filter(r -> r.h3Index() != null && r.community() != null && !r.community().isBlank())
             .collect(Collectors.toMap(
                 PropertyRecord::h3Index,
@@ -293,51 +611,52 @@ public class MapResource {
             ));
 
         Map<String, double[]> communityStats = new HashMap<>();
-        for (PropertyRecord r : store.getSalesRecords()) {
+        for (PropertyRecord r : sales) {
             if (r.h3Index() == null || r.community() == null || r.community().isBlank()) continue;
-            double[] stats = communityStats.computeIfAbsent(r.community(), k -> new double[6]);
+            double[] stats = communityStats.computeIfAbsent(r.community(), k -> new double[8]);
             stats[0] += 1;                       // count
             stats[1] += r.salePrice();
             stats[2] += r.predictedPrice();
             stats[3] += r.pctError();
             stats[4] += r.sqft();
             stats[5] += r.predictionStdPrice();
+            stats[6] += r.lightgbmPredictedPrice();
+            stats[7] += r.lightgbmPctError();
         }
 
         List<Map<String, Object>> features = new ArrayList<>();
         try {
-            com.uber.h3core.H3Core h3 = com.uber.h3core.H3Core.newInstance();
             for (Map.Entry<String, String> entry : h3ToCommunity.entrySet()) {
                 String hexId    = entry.getKey();
                 String community = entry.getValue();
-                List<com.uber.h3core.util.LatLng> boundary =
-                    h3.cellToBoundary(h3.stringToH3(hexId));
-                List<double[]> coords = boundary.stream()
-                    .map(ll -> new double[]{ll.lng, ll.lat})
-                    .collect(Collectors.toList());
-                if (!coords.isEmpty()) coords.add(coords.get(0));
+                List<double[]> coords = aggregation.boundaryFor(hexId);
 
-                double[] stats = communityStats.getOrDefault(community, new double[6]);
+                double[] stats = communityStats.getOrDefault(community, new double[8]);
                 long salesCount = (long) stats[0];
                 double meanSalePrice = salesCount > 0 ? stats[1] / salesCount : 0;
-                double meanPredictedPrice = salesCount > 0 ? stats[2] / salesCount : 0;
-                double avgPctError = salesCount > 0 ? stats[3] / salesCount : 0;
+                double meanNeuralPredictedPrice = salesCount > 0 ? stats[2] / salesCount : 0;
+                double avgNeuralPctError = salesCount > 0 ? stats[3] / salesCount : 0;
                 double meanSqft = salesCount > 0 ? stats[4] / salesCount : 0;
                 double meanPredStd = salesCount > 0 ? stats[5] / salesCount : 0;
+                double meanLightgbmPredictedPrice = salesCount > 0 ? stats[6] / salesCount : 0;
+                double avgLightgbmPctError = salesCount > 0 ? stats[7] / salesCount : 0;
+
+                Map<String, Object> properties = new LinkedHashMap<>();
+                properties.put("community", community);
+                properties.put("h3L9", hexId);
+                properties.put("salesCount", salesCount);
+                properties.put("meanSalePrice", meanSalePrice);
+                properties.put("meanNeuralPredictedPrice", meanNeuralPredictedPrice);
+                properties.put("meanLightgbmPredictedPrice", meanLightgbmPredictedPrice);
+                properties.put("avgNeuralPctError", avgNeuralPctError);
+                properties.put("avgLightgbmPctError", avgLightgbmPctError);
+                properties.put("meanSqft", meanSqft);
+                properties.put("meanPredStd", meanPredStd);
 
                 features.add(Map.of(
                     "type", "Feature",
                     "geometry", Map.of("type", "Polygon", "coordinates", List.of(coords)),
-                    "properties", Map.of(
-                        "community", community,
-                        "h3L9", hexId,
-                        "salesCount", salesCount,
-                        "meanSalePrice", meanSalePrice,
-                        "meanPredictedPrice", meanPredictedPrice,
-                        "avgPctError", avgPctError,
-                        "meanSqft", meanSqft,
-                        "meanPredStd", meanPredStd
-                    )
+                    "properties", properties
                 ));
             }
         } catch (Exception e) {
@@ -349,55 +668,84 @@ public class MapResource {
     /** Summary statistics */
     @GET
     @Path("/stats")    public Map<String, Object> stats() {
-        List<PropertyRecord> zillow = store.getZillowListings();
-        List<PropertyRecord> sales  = store.getSalesRecords();
-        List<PropertyRecord> rentcast  = store.getRentcastRecords();
+        PropertyStore.Snapshot snapshot = store.snapshot();
+        List<PropertyRecord> zillow = snapshot.zillow();
+        List<PropertyRecord> sales = snapshot.completedSales();
+        List<PropertyRecord> rentcast = snapshot.rentcast();
 
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("counts", store.countsBySource());
+        result.put("counts", Map.of(
+            "sales", snapshot.sales().size(),
+            "rentcast", snapshot.rentcast().size(),
+            "zillow", snapshot.zillow().size()
+        ));
 
         if (!zillow.isEmpty()) {
-            OptionalDouble avgList = zillow.stream()
-                .filter(PropertyRecord::hasSalePrice)
-                .mapToDouble(PropertyRecord::salePrice).average();
-            OptionalDouble avgPred = zillow.stream()
-                .mapToDouble(PropertyRecord::predictedPrice).average();
+            double listTotal = 0;
+            int listCount = 0;
+            double neuralTotal = 0;
+            double treeTotal = 0;
+            for (PropertyRecord record : zillow) {
+                if (record.hasSalePrice()) {
+                    listTotal += record.salePrice();
+                    listCount++;
+                }
+                neuralTotal += record.predictedPrice();
+                treeTotal += record.lightgbmPredictedPrice();
+            }
             result.put("zillow", Map.of(
                 "total",        zillow.size(),
-                "avgListPrice", avgList.orElse(0),
-                "avgPredicted", avgPred.orElse(0)
+                "avgListPrice", listCount == 0 ? 0 : listTotal / listCount,
+                "avgNeuralPredicted", neuralTotal / zillow.size(),
+                "avgLightgbmPredicted", treeTotal / zillow.size()
             ));
         }
 
         if (!sales.isEmpty()) {
-            OptionalDouble avgError = sales.stream()
-                .filter(PropertyRecord::hasSalePrice)
-                .mapToDouble(r -> Math.abs(r.pctError())).average();
-            long uniqueHexes = sales.stream()
-                .map(PropertyRecord::h3Index).filter(Objects::nonNull).distinct().count();
+            ErrorStats values = errorStats(sales);
             result.put("sales", Map.of(
                 "total",       sales.size(),
-                "uniqueHexes", uniqueHexes,
-                "avgAbsError", avgError.orElse(0)
+                "uniqueHexes", values.hexes.size(),
+                "neuralAvgAbsError", values.avgNeuralError(),
+                "lightgbmAvgAbsError", values.avgTreeError()
             ));
         }
             
         if (!rentcast.isEmpty()) {
-            OptionalDouble avgError = rentcast.stream()
-                .filter(PropertyRecord::hasSalePrice)
-                .mapToDouble(r -> Math.abs(r.pctError())).average();
-            long uniqueHexes = rentcast.stream()
-                .map(PropertyRecord::h3Index).filter(Objects::nonNull).distinct().count();
-            long uniqueid = rentcast.stream()
-                .map(PropertyRecord::id).filter(Objects::nonNull).distinct().count();
+            ErrorStats values = errorStats(rentcast);
             result.put("rentcast", Map.of(
                 "total",       rentcast.size(),
-                "uniqueSales", uniqueid,
-                "uniqueHexes", uniqueHexes,
-                "avgAbsError", avgError.orElse(0)
+                "uniqueSales", values.ids.size(),
+                "uniqueHexes", values.hexes.size(),
+                "neuralAvgAbsError", values.avgNeuralError(),
+                "lightgbmAvgAbsError", values.avgTreeError()
             ));
         }
 
         return result;
+    }
+
+    private ErrorStats errorStats(List<PropertyRecord> records) {
+        ErrorStats result = new ErrorStats();
+        for (PropertyRecord record : records) {
+            if (record.h3Index() != null) result.hexes.add(record.h3Index());
+            if (record.id() != null) result.ids.add(record.id());
+            if (record.hasSalePrice()) {
+                result.count++;
+                result.neuralError += Math.abs(record.pctError());
+                result.treeError += Math.abs(record.lightgbmPctError());
+            }
+        }
+        return result;
+    }
+
+    private static final class ErrorStats {
+        int count;
+        double neuralError;
+        double treeError;
+        final Set<String> hexes = new HashSet<>();
+        final Set<String> ids = new HashSet<>();
+        double avgNeuralError() { return count == 0 ? 0 : neuralError / count; }
+        double avgTreeError() { return count == 0 ? 0 : treeError / count; }
     }
 }

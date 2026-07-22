@@ -4,17 +4,81 @@ import pandas as pd
 import numpy as np
 
 
-def create_location_network(df, location_var, max_k=5, min_neighbors=2):
+def create_location_network(
+    df,
+    location_var,
+    max_k=5,
+    min_neighbors=2,
+    feature_similarity_strength=0.75,
+    similarity_floor=0.10,
+    summary_end_date=None,
+):
     """
-    Creates a spatial network using Dynamic Ring Expansion.
+    Creates a spatial-and-market network using Dynamic Ring Expansion.
     - Dense areas: Connects at k=1 and stops.
     - Sparse areas: Expands up to max_k to find 'min_neighbors', avoiding islands.
+    - Edge weights combine distance with similarity in local price and property
+      summaries, so Louvain sees both contiguity and market structure.
+
+    ``summary_end_date`` can restrict summaries to a training cutoff and should
+    be used when the resulting communities are evaluated on later transactions.
     """
     active_hexes = set(df[location_var].unique())
     print(f'Active H3 Locations: {len(active_hexes)}')
 
+    df_temp = df.copy()
+    df_temp['sale_date'] = pd.to_datetime(df_temp['sale_date'])
+    if 'price_per_sqft' not in df_temp.columns:
+        df_temp['price_per_sqft'] = df_temp['sale_price'] / df_temp['sqft']
+    if summary_end_date is not None:
+        cutoff = pd.to_datetime(summary_end_date)
+        df_temp = df_temp[df_temp['sale_date'] <= cutoff]
+        if df_temp.empty:
+            raise ValueError("No sales remain before summary_end_date")
+    df_temp['sale_year'] = df_temp['sale_date'].dt.year
+    beds_column = 'beds' if 'beds' in df_temp.columns else 'sale_nbr'
+    yearly_metrics = df_temp.groupby([location_var, 'sale_year']).agg({
+        'price_per_sqft': ['median', 'std'],
+        'sqft': ['median', 'std'],
+        'sqft_lot': ['median', 'std'],
+        beds_column: 'median'
+    }).fillna(0)
+    yearly_metrics.columns = [
+        'price_per_sqft', 'price_sqft_std', 'sqft', 'sqft_std',
+        'lot', 'lot_std', 'beds'
+    ]
+    features_df = yearly_metrics.groupby(level=location_var).mean()
+
+    # Robustly standardize transformed summaries. Price and property signals
+    # receive equal total influence regardless of their original units.
+    similarity_df = features_df.copy()
+    for column in ['price_per_sqft', 'price_sqft_std', 'sqft', 'sqft_std', 'lot', 'lot_std']:
+        similarity_df[column] = np.log1p(similarity_df[column].clip(lower=0))
+    medians = similarity_df.median()
+    scales = (similarity_df - medians).abs().median().replace(0, 1.0)
+    similarity_df = (similarity_df - medians) / scales
+    similarity_df = similarity_df.replace([np.inf, -np.inf], np.nan).fillna(0.0)
+
+    price_columns = ['price_per_sqft', 'price_sqft_std']
+    property_columns = ['sqft', 'sqft_std', 'lot', 'lot_std', 'beds']
+
+    def feature_similarity(left, right):
+        if left not in similarity_df.index or right not in similarity_df.index:
+            return 0.0
+        price_distance = np.mean(
+            (similarity_df.loc[left, price_columns].values -
+             similarity_df.loc[right, price_columns].values) ** 2
+        )
+        property_distance = np.mean(
+            (similarity_df.loc[left, property_columns].values -
+             similarity_df.loc[right, property_columns].values) ** 2
+        )
+        return float(np.exp(-np.sqrt(0.5 * price_distance + 0.5 * property_distance)))
+
     G = nx.Graph()
-    G.add_nodes_from(active_hexes)
+    for hex_id in active_hexes:
+        attrs = features_df.loc[hex_id].to_dict() if hex_id in features_df.index else {}
+        G.add_node(hex_id, **attrs)
 
     for hex_id in active_hexes:
         neighbors_found = 0
@@ -27,25 +91,29 @@ def create_location_network(df, location_var, max_k=5, min_neighbors=2):
 
             for neighbor in ring:
                 if neighbor in active_hexes:
-                    weight = 1.0 / k
-                    G.add_edge(hex_id, neighbor, weight=weight)
+                    spatial_weight = 1.0 / k
+                    similarity = feature_similarity(hex_id, neighbor)
+                    adjusted_similarity = similarity_floor + (1.0 - similarity_floor) * similarity
+                    weight = spatial_weight * (
+                        (1.0 - feature_similarity_strength) +
+                        feature_similarity_strength * adjusted_similarity
+                    )
+                    G.add_edge(
+                        hex_id,
+                        neighbor,
+                        weight=weight,
+                        spatial_weight=spatial_weight,
+                        feature_similarity=similarity,
+                    )
                     neighbors_found += 1
 
             if neighbors_found >= min_neighbors:
                 break
 
-    print(f'Created {G.number_of_edges()} dynamic spatial edges.')
-
-    df_temp = df.copy()
-    df_temp['sale_year'] = pd.to_datetime(df_temp['sale_date']).dt.year
-    yearly_metrics = df_temp.groupby([location_var, 'sale_year']).agg({
-        'price_per_sqft': ['median', 'std'],
-        'sqft': ['median', 'std'],
-        'sqft_lot': ['median', 'std'],
-        'sale_nbr': 'median'
-    }).fillna(0)
-    yearly_metrics.columns = ['price_per_sqft', 'price_sqft_std', 'sqft', 'sqft_std', 'lot', 'lot_std', 'beds']
-    features_df = yearly_metrics.groupby(level=location_var).mean()
+    print(
+        f'Created {G.number_of_edges()} dynamic spatial-market edges '
+        f'(feature strength={feature_similarity_strength:.2f}).'
+    )
 
     return G, features_df.to_dict('index'), features_df, features_df.values
 
@@ -174,10 +242,15 @@ def detect_communities(G, base_res=1.0, max_comm_size=50, seed=42):
 
 
 def run_community_analysis(df, location_var, max_k=5, max_comm_size=50,
-                           min_neighbors=2, base_res=1.0, seed=42):
+                           min_neighbors=2, base_res=1.0, seed=42,
+                           feature_similarity_strength=0.75,
+                           similarity_floor=0.10, summary_end_date=None):
     print("1. Creating dynamic spatial network...")
     G, location_features, features_df, array = create_location_network(
-        df, location_var, max_k=max_k, min_neighbors=min_neighbors
+        df, location_var, max_k=max_k, min_neighbors=min_neighbors,
+        feature_similarity_strength=feature_similarity_strength,
+        similarity_floor=similarity_floor,
+        summary_end_date=summary_end_date,
     )
 
     print("2. Detecting balanced communities...")

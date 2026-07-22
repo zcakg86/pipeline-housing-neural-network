@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "neighbor_count": 7,
+  "defaults": {
+    "mortgage_rate": 6.5,
+    "unemployment_rate": 4
+  },
+  "groups": {
+    "property": [
+      "sqft",
+      "sqft_lot",
+      "beds",
+      "water_proximity",
+      "is_waterfront"
+    ],
+    "time": [
+      "time_trend"
+    ],
+    "market": [
+      "mortgage_rate",
+      "unemployment_rate"
+    ],
+    "local_market": [
+      "local_mean_log_price",
+      "local_log_price_std",
+      "local_log1p_sales_count",
+      "local_recency_years",
+      "local_price_trend"
+    ],
+    "rings": [
+      "center",
+      "neighbor_1",
+      "neighbor_2",
+      "neighbor_3",
+      "neighbor_4",
+      "neighbor_5",
+      "neighbor_6"
+    ]
+  },
+  "neural_inputs": {
+    "community_indices": [
+      "batch",
+      7
+    ],
+    "year": [
+      "batch"
+    ],
+    "week": [
+      "batch"
+    ],
+    "property_features": [
+      "batch",
+      5
+    ],
+    "time_features": [
+      "batch",
+      1
+    ],
+    "market_features": [
+      "batch",
+      2
+    ],
+    "local_market_features": [
+      "batch",
+      7,
+      5
+    ]
+  },
+  "lightgbm_feature_names": [
+    "community_center",
+    "community_neighbor_1",
+    "community_neighbor_2",
+    "community_neighbor_3",
+    "community_neighbor_4",
+    "community_neighbor_5",
+    "community_neighbor_6",
+    "year",
+    "week",
+    "sqft",
+    "sqft_lot",
+    "beds",
+    "water_proximity",
+    "is_waterfront",
+    "time_trend",
+    "mortgage_rate",
+    "unemployment_rate",
+    "center_local_mean_log_price",
+    "center_local_log_price_std",
+    "center_local_log1p_sales_count",
+    "center_local_recency_years",
+    "center_local_price_trend",
+    "neighbor_1_local_mean_log_price",
+    "neighbor_1_local_log_price_std",
+    "neighbor_1_local_log1p_sales_count",
+    "neighbor_1_local_recency_years",
+    "neighbor_1_local_price_trend",
+    "neighbor_2_local_mean_log_price",
+    "neighbor_2_local_log_price_std",
+    "neighbor_2_local_log1p_sales_count",
+    "neighbor_2_local_recency_years",
+    "neighbor_2_local_price_trend",
+    "neighbor_3_local_mean_log_price",
+    "neighbor_3_local_log_price_std",
+    "neighbor_3_local_log1p_sales_count",
+    "neighbor_3_local_recency_years",
+    "neighbor_3_local_price_trend",
+    "neighbor_4_local_mean_log_price",
+    "neighbor_4_local_log_price_std",
+    "neighbor_4_local_log1p_sales_count",
+    "neighbor_4_local_recency_years",
+    "neighbor_4_local_price_trend",
+    "neighbor_5_local_mean_log_price",
+    "neighbor_5_local_log_price_std",
+    "neighbor_5_local_log1p_sales_count",
+    "neighbor_5_local_recency_years",
+    "neighbor_5_local_price_trend",
+    "neighbor_6_local_mean_log_price",
+    "neighbor_6_local_log_price_std",
+    "neighbor_6_local_log1p_sales_count",
+    "neighbor_6_local_recency_years",
+    "neighbor_6_local_price_trend"
+  ],
+  "display_units": {
+    "sqft": "sqft",
+    "sqft_lot": "sqft",
+    "beds": "count",
+    "water_proximity": "score_0_to_1",
+    "is_waterfront": "boolean",
+    "time_trend": "years",
+    "mortgage_rate": "percent",
+    "unemployment_rate": "percent",
+    "local_mean_log_price": "log_dollars",
+    "local_log_price_std": "log_dollars",
+    "local_log1p_sales_count": "log_count",
+    "local_recency_years": "years",
+    "local_price_trend": "log_dollars_per_year"
+  }
+}
+

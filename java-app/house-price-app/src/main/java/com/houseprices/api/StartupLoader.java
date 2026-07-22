@@ -10,6 +10,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * Loads initial data from configured CSV/JSON files on startup.
@@ -50,14 +51,20 @@ public class StartupLoader {
         if (!dir.exists() || !dir.isDirectory()) return;
         File[] files = dir.listFiles();
         if (files == null) return;
+        Arrays.sort(files, java.util.Comparator.comparing(File::getName));
         for (File file : files) {
+            String name = file.getName().toLowerCase();
+            if (!file.isFile() || !name.endsWith(".json") || name.contains("previous")) {
+                LOG.debugf("Skipping non-JSON startup entry: %s", file.getPath());
+                continue;
+            }
             loadFile(file.getPath(), type);
         }
     }
 
     private void loadFile(String path, String type) {
         File file = new File(path);
-        if (!file.exists()) {
+        if (!file.isFile()) {
             LOG.warnf("Startup data file not found, skipping: %s", path);
             return;
         }
@@ -65,9 +72,7 @@ public class StartupLoader {
         try {
             var records = switch (type) {
                 case "sales"    -> ingestion.ingestSalesCsv(file);
-                case "rentcast" -> name.endsWith(".json")
-                                    ? ingestion.ingestRentcastJson(file)
-                                    : ingestion.ingestRentcastCsv(file);
+                case "rentcast" -> ingestion.ingestRentcastJson(file);
                 case "zillow"   -> ingestion.ingestZillowJson(file);
                 default         -> throw new IllegalArgumentException("Unknown type: " + type);
             };

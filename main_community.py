@@ -1,61 +1,48 @@
-#%%
-import sys
-sys.path.append('src')
-
+"""Build H3 communities from leakage-safe local property and price summaries."""
 import json
-import pandas as pd
-import numpy as np
+from pathlib import Path
+
 import h3
-pd.set_option('mode.chained_assignment', None)
-from spatial.spatial_graph_detection import *
+import pandas as pd
 
-#%%
-df = pd.read_csv('data/sales_2020_25.csv')
-# drop column 'Unnamed: 0'
-df = df.drop('Unnamed: 0', axis=1)
-df['price_per_sqft']=df['sale_price']/df['sqft']
-df['sale_date']=pd.to_datetime(df['sale_date'])
-# remove null and zero values
-df = df.dropna(subset=['sale_price', 'lat', 'lng', 'sqft', 'sale_nbr', 'sale_date','sqft_lot'])
-df = df[df['sale_price'] > 0]
-df = df[df['sqft'] > 0]
-df = df[df['sale_nbr'] > 0]
-df['h3_08'] = df.apply(
-    lambda row: h3.latlng_to_cell(row['lat'], row['lng'], 8) 
-    if pd.notna(row['lat']) and pd.notna(row['lng']) 
-    else None,
-    axis=1
-)
-#%% 
-# Name of your location column
-location_col = 'h3_08'
-
-print("Starting Community Detection Pipeline...\n")
-
-# Run the main analysis pipeline
-(location_features, 
-    G, 
-    features_df, 
-    features_array, 
-    community_dict, 
-    summary) = run_community_analysis(df=df,
-                            location_var=location_col, 
-                            min_neighbors=2,
-                            max_k=6,
-                            max_comm_size=50,   # hard cap per community
-                            base_res=1,       # start higher to favour smaller communities
-                            seed=42)
+from spatial.spatial_graph_detection import run_community_analysis
 
 
-# ==========================================
-# 3. EXPORT TO JSON
-# ==========================================
-output_filename = "data/community_map.json"
+def prepare_sales(path):
+    """Load valid arms-length sales and attach their H3 level-8 location."""
+    frame = pd.read_csv(path).drop(columns=["Unnamed: 0"], errors="ignore")
+    frame["sale_date"] = pd.to_datetime(frame["sale_date"])
+    required = ["sale_price", "lat", "lng", "sqft", "sale_nbr", "sale_date", "sqft_lot"]
+    frame = frame.dropna(subset=required)
+    frame = frame[(frame["sale_price"] > 0) & (frame["sqft"] > 0) & (frame["sale_nbr"] > 0)]
+    frame["price_per_sqft"] = frame["sale_price"] / frame["sqft"]
+    frame["h3_08"] = [h3.latlng_to_cell(lat, lng, 8) for lat, lng in zip(frame.lat, frame.lng)]
+    return frame
 
-# Save the dictionary mapping { 'h3_08_string': community_id } to JSON
-with open(output_filename, 'w') as f:
-    json.dump(community_dict, f, indent=4)
-    
-print(f"\n✅ Successfully saved community mappings to '{output_filename}'")
 
-# %%
+def main():
+    """Detect communities and write the H3-to-community deployment map."""
+    frame = prepare_sales("data/sales_2020_25.csv")
+    # Only the chronological training partition may shape price/property
+    # similarity; validation-period prices must remain unseen by the graph.
+    summary_cutoff = frame["sale_date"].sort_values().iloc[int(0.7 * len(frame))]
+    print(f"Community summaries use sales through {summary_cutoff.date()}")
+    *_, community_map, _ = run_community_analysis(
+        df=frame,
+        location_var="h3_08",
+        min_neighbors=2,
+        max_k=6,
+        max_comm_size=50,
+        base_res=1,
+        feature_similarity_strength=0.75,
+        similarity_floor=0.10,
+        summary_end_date=summary_cutoff,
+        seed=42,
+    )
+    destination = Path("data/community_map.json")
+    destination.write_text(json.dumps(community_map, indent=2) + "\n", encoding="utf-8")
+    print(f"Saved {len(community_map):,} community mappings to {destination}")
+
+
+if __name__ == "__main__":
+    main()

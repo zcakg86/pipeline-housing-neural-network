@@ -8,8 +8,8 @@ import org.jboss.logging.Logger;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Aggregates sales records by H3 L9 hexagon for the map layer.
@@ -23,6 +23,7 @@ public class H3AggregationService {
     @Inject PropertyStore store;
 
     private final H3Core h3;
+    private final Map<String, List<double[]>> boundaryCache = new ConcurrentHashMap<>();
 
     public H3AggregationService() {
         try { h3 = H3Core.newInstance(); }
@@ -32,8 +33,10 @@ public class H3AggregationService {
     public record HexStats(
         String h3Index,
         double avgSalePrice,
-        double avgPredictedPrice,
-        double avgPctError,
+        double avgNeuralPredictedPrice,
+        double avgLightgbmPredictedPrice,
+        double avgNeuralPctError,
+        double avgLightgbmPctError,
         double avgSqft,
         int    numSales,
         double avgPredStd,          // avg prediction std dev in $
@@ -48,98 +51,122 @@ public class H3AggregationService {
     ) {}
 
     /**
-     * Aggregate all sales records by H3 index with optional filters.
+     * Aggregate the current immutable sales snapshot by H3 cell. The caller
+     * supplies a prevalidated filter so date and viewport parsing never occurs
+     * in this hot per-record loop.
      */
-    public List<HexStats> aggregateSales(String variable, String homeType,
-                                          String dateFrom, String dateTo,
-                                          double minError, double maxError) {
-        List<PropertyRecord> sales = store.getSalesRecords().stream()
-            .filter(PropertyRecord::hasSalePrice)
-            .filter(r -> r.pctError() >= minError && r.pctError() <= maxError)
-            .filter(r -> {
-                if (homeType == null || homeType.equals("all")) return true;
-                String rt = r.homeType();
-                return rt != null && !rt.isBlank() && homeType.equalsIgnoreCase(rt);
-            })
-            .filter(r -> filterByDate(r, dateFrom, dateTo))
-            .collect(Collectors.toList());
-
-        if (sales.isEmpty()) return List.of();
-
-        // Group by H3 index
-        Map<String, List<PropertyRecord>> byHex = sales.stream()
-            .filter(r -> r.h3Index() != null && !r.h3Index().isBlank())
-            .collect(Collectors.groupingBy(PropertyRecord::h3Index));
-
-        List<HexStats> result = new ArrayList<>();
-        for (Map.Entry<String, List<PropertyRecord>> entry : byHex.entrySet()) {
-            String hexId = entry.getKey();
-            List<PropertyRecord> group = entry.getValue();
-
-            double avgSalePrice = group.stream().mapToDouble(PropertyRecord::salePrice).average().orElse(0);
-            double avgPredicted = group.stream().mapToDouble(PropertyRecord::predictedPrice).average().orElse(0);
-            double avgPctError  = group.stream().mapToDouble(PropertyRecord::pctError).average().orElse(0);
-            double avgSqft      = group.stream().mapToDouble(PropertyRecord::sqft).average().orElse(0);
-            double avgPredStd   = group.stream().mapToDouble(PropertyRecord::predictionStdPrice).average().orElse(0);
-            double avgPredCvPct = group.stream().mapToDouble(PropertyRecord::predictionCvPct).average().orElse(0);
-
-            // Average each of the 6 CLS attention weights across records in this hex
-            float[] avgAttn = new float[6];
-            long attnCount = group.stream().filter(r -> r.clsAttention() != null && r.clsAttention().length == 6).count();
-            if (attnCount > 0) {
-                for (PropertyRecord r : group) {
-                    float[] a = r.clsAttention();
-                    if (a != null && a.length == 6) {
-                        for (int t = 0; t < 6; t++) avgAttn[t] += a[t];
-                    }
-                }
-                for (int t = 0; t < 6; t++) avgAttn[t] /= attnCount;
-            }
-
-            // Get H3 polygon boundary: list of (lat, lng) -> convert to (lng, lat) for GeoJSON
-            List<double[]> boundary;
-            try {
-                List<com.uber.h3core.util.LatLng> latLngs = h3.cellToBoundary(h3.stringToH3(hexId));
-                boundary = latLngs.stream()
-                    .map(ll -> new double[]{ll.lng, ll.lat})
-                    .collect(Collectors.toList());
-                // Close the polygon
-                if (!boundary.isEmpty()) boundary.add(boundary.get(0));
-            } catch (Exception e) {
-                LOG.warnf("Could not get boundary for hex %s: %s", hexId, e.getMessage());
-                continue;
-            }
-
-            result.add(new HexStats(hexId, avgSalePrice, avgPredicted,
-                avgPctError, avgSqft, group.size(), avgPredStd, avgPredCvPct,
-                avgAttn[0], avgAttn[1], avgAttn[2],
-                avgAttn[3], avgAttn[4], avgAttn[5],
-                boundary));
+    public List<HexStats> aggregateSales(
+            String variable,
+            String model,
+            PropertyRequestFilter filter) {
+        Map<String, Accumulator> byHex = new HashMap<>();
+        int matched = 0;
+        for (PropertyRecord record : store.getSalesRecords()) {
+            if (!record.hasSalePrice()) continue;
+            double error = errorForModel(record, model);
+            if (!filter.includes(record, error)) continue;
+            if (record.h3Index() == null || record.h3Index().isBlank()) continue;
+            byHex.computeIfAbsent(record.h3Index(), ignored -> new Accumulator()).add(record);
+            matched++;
         }
 
-        LOG.debugf("Aggregated %d hexes from %d sales records", result.size(), sales.size());
+        List<HexStats> result = new ArrayList<>(byHex.size());
+        for (Map.Entry<String, Accumulator> entry : byHex.entrySet()) {
+            try {
+                result.add(entry.getValue().finish(entry.getKey(), boundaryFor(entry.getKey())));
+            } catch (Exception exception) {
+                LOG.warnf("Could not get boundary for hex %s: %s",
+                    entry.getKey(), exception.getMessage());
+            }
+        }
+        LOG.debugf("Aggregated %d hexes from %d matching sales records", result.size(), matched);
         return result;
     }
 
-    private boolean filterByDate(PropertyRecord r, String from, String to) {
-        if ((from == null || from.isBlank()) && (to == null || to.isBlank())) return true;
-        if (r.saleDate() == null) return false;
-        try {
-            if (from != null && !from.isBlank())
-                if (r.saleDate().isBefore(java.time.LocalDate.parse(from))) return false;
-            if (to != null && !to.isBlank())
-                if (r.saleDate().isAfter(java.time.LocalDate.parse(to))) return false;
-        } catch (Exception ignored) {}
-        return true;
+    private static final class Accumulator {
+        int count;
+        int attentionCount;
+        double salePrice;
+        double neuralPrediction;
+        double treePrediction;
+        double neuralError;
+        double treeError;
+        double sqft;
+        double predictionStd;
+        double predictionCv;
+        final double[] attention = new double[6];
+
+        void add(PropertyRecord record) {
+            count++;
+            salePrice += record.salePrice();
+            neuralPrediction += record.predictedPrice();
+            treePrediction += record.lightgbmPredictedPrice();
+            neuralError += record.pctError();
+            treeError += record.lightgbmPctError();
+            sqft += record.sqft();
+            predictionStd += record.predictionStdPrice();
+            predictionCv += record.predictionCvPct();
+            float[] weights = record.clsAttention();
+            if (weights != null && weights.length == 6) {
+                attentionCount++;
+                for (int index = 0; index < attention.length; index++) {
+                    attention[index] += weights[index];
+                }
+            }
+        }
+
+        HexStats finish(String h3Index, List<double[]> boundary) {
+            double divisor = Math.max(1, count);
+            double attentionDivisor = Math.max(1, attentionCount);
+            return new HexStats(
+                h3Index, salePrice / divisor, neuralPrediction / divisor,
+                treePrediction / divisor, neuralError / divisor, treeError / divisor,
+                sqft / divisor, count, predictionStd / divisor, predictionCv / divisor,
+                attention[0] / attentionDivisor, attention[1] / attentionDivisor,
+                attention[2] / attentionDivisor, attention[3] / attentionDivisor,
+                attention[4] / attentionDivisor, attention[5] / attentionDivisor,
+                boundary
+            );
+        }
+    }
+
+    private double errorForModel(PropertyRecord record, String model) {
+        return "lightgbm".equalsIgnoreCase(model)
+            ? record.lightgbmPctError() : record.pctError();
+    }
+
+    /** Immutable cached GeoJSON boundary for a fixed H3 cell. */
+    public List<double[]> boundaryFor(String h3Index) {
+        return boundaryCache.computeIfAbsent(h3Index, key -> {
+            List<double[]> coordinates = h3.cellToBoundary(h3.stringToH3(key)).stream()
+                .map(value -> new double[]{value.lng, value.lat})
+                .collect(Collectors.toCollection(ArrayList::new));
+            if (!coordinates.isEmpty()) {
+                double[] first = coordinates.get(0);
+                coordinates.add(new double[]{first[0], first[1]});
+            }
+            return Collections.unmodifiableList(coordinates);
+        });
     }
 
     /** Build a GeoJSON FeatureCollection from aggregated hex stats */
-    public Map<String, Object> toGeoJson(List<HexStats> hexStats, String variable) {
+    public Map<String, Object> toGeoJson(
+        List<HexStats> hexStats, String variable, String model
+    ) {
         List<Map<String, Object>> features = new ArrayList<>();
 
         for (HexStats hex : hexStats) {
+            boolean useLightgbm = "lightgbm".equalsIgnoreCase(model);
+            double selectedPrediction = useLightgbm
+                ? hex.avgLightgbmPredictedPrice() : hex.avgNeuralPredictedPrice();
+            double selectedError = useLightgbm
+                ? hex.avgLightgbmPctError() : hex.avgNeuralPctError();
             double displayValue = switch (variable) {
                 case "sale_price"       -> hex.avgSalePrice();
+                case "predicted_price", "predicted_price_neural"
+                                          -> hex.avgNeuralPredictedPrice();
+                case "predicted_price_lightgbm"
+                                          -> hex.avgLightgbmPredictedPrice();
                 case "sqft"             -> hex.avgSqft();
                 case "num_sales"        -> hex.numSales();
                 case "pred_std"         -> hex.avgPredStd();
@@ -150,7 +177,7 @@ public class H3AggregationService {
                 case "attn_property"    -> hex.attnProperty();
                 case "attn_time"        -> hex.attnTime();
                 case "attn_market"      -> hex.attnMarket();
-                default                 -> hex.avgPctError();  // pct_error
+                default                 -> selectedError;  // pct_error
             };
 
             Map<String, Object> geometry = Map.of(
@@ -162,8 +189,11 @@ public class H3AggregationService {
             props.put("h3Index",           hex.h3Index());
             props.put("displayValue",      displayValue);
             props.put("avgSalePrice",      hex.avgSalePrice());
-            props.put("avgPredictedPrice", hex.avgPredictedPrice());
-            props.put("avgPctError",       hex.avgPctError());
+            props.put("avgNeuralPredictedPrice", hex.avgNeuralPredictedPrice());
+            props.put("avgLightgbmPredictedPrice", hex.avgLightgbmPredictedPrice());
+            props.put("avgNeuralPctError", hex.avgNeuralPctError());
+            props.put("avgLightgbmPctError", hex.avgLightgbmPctError());
+            props.put("colorModel", useLightgbm ? "lightgbm" : "neural");
             props.put("avgSqft",           hex.avgSqft());
             props.put("numSales",          hex.numSales());
             props.put("avgPredStd",        hex.avgPredStd());

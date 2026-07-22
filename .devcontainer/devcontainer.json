@@ -1,69 +1,81 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.0/containers/python-3
 {
-	"name": "Python 3",
-	"forwardPorts": [8000],
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": "..",
-		"args": {
-			// Options
-			"NODE_VERSION": "none"
-		}
-	},
-
-	// Configure tool-specific properties.
-	"customizations": {
-		// Configure properties specific to VS Code.
-		"vscode": {
-			// Set *default* container specific settings.json values on container create.
-			"settings": {
-				"python.defaultInterpreterPath": "/usr/local/bin/python",
-				"python.linting.enabled": true,
-				"python.linting.pylintEnabled": true,
-				"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-				"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-				"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-				"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-				"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-				"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
-				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
-				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
-			},
-
-			// Add the IDs of extensions you want installed when the container is created.
-			"extensions": [
-				"ms-python.python",
-				"ms-toolsai.jupyter"
-			]
-		}
-	},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install --upgrade pip && pip3 install --user -r requirements.txt", //&& streamlit run streamlit_app.py",
-		
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode",
-	"features": {
-		"azure-cli": "latest",
-		"ghcr.io/devcontainers/features/java:1": {
-			"installMaven": true,
-			"installAnt": true,
-			"version": "8",
-			"jdkDistro": "ms",
-			"gradleVersion": "latest",
-			"mavenVersion": "latest",
-			"antVersion": "latest",
-			"groovyVersion": "latest"
-		}
-	},
-
-	"remoteEnv": {
-		"TZ": "America/Los_Angeles"
-	}
-
+  "name": "House Price Models and Quarkus App",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "VARIANT": "3.11-bookworm"
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "jdkDistro": "ms",
+      "installMaven": false
+    }
+  },
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  },
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "Quarkus house-price app",
+      "protocol": "http",
+      "onAutoForward": "notify"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "silent"
+  },
+  "containerEnv": {
+    "TZ": "America/Los_Angeles",
+    "PYTHONUNBUFFERED": "1",
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1"
+  },
+  "remoteEnv": {
+    "PATH": "${containerWorkspaceFolder}/.venv/bin:${containerEnv:PATH}",
+    "PYTHONPATH": "${containerWorkspaceFolder}/src",
+    "MPLCONFIGDIR": "${containerWorkspaceFolder}/.cache/matplotlib",
+    "QUARKUS_HTTP_HOST": "0.0.0.0"
+  },
+  "secrets": {
+    "RENTCAST_API_KEY": {
+      "description": "Optional RentCast API key. Fetches remain protected by the application's call budget and cooldown."
+    },
+    "ZILLOW_API_KEY": {
+      "description": "Optional HasData/Zillow API key used only when the Zillow fetch action is explicitly invoked."
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+        "python.terminal.activateEnvironment": true,
+        "java.import.maven.enabled": true,
+        "files.exclude": {
+          "**/__pycache__": true,
+          "**/target": true
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "vscjava.vscode-java-pack",
+        "redhat.vscode-quarkus"
+      ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "README.md",
+        "main_train.py",
+        "java-app/house-price-app/README.md"
+      ]
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "waitFor": "postCreateCommand",
+  "remoteUser": "vscode"
 }

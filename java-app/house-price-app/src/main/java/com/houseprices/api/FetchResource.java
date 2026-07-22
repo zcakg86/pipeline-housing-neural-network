@@ -1,9 +1,8 @@
 package com.houseprices.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.houseprices.ingest.DataIngestionService;
-import com.houseprices.ingest.PropertyRecord;
-import com.houseprices.service.PropertyStore;
+import com.houseprices.ingest.RentcastApiClient;
+import com.houseprices.ingest.ZillowApiClient;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -11,16 +10,24 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * REST endpoints to trigger live API fetches from Rentcast and Zillow.
  *
  * Both endpoints require ?confirm=true to prevent accidental calls (billed per call).
- * A cooldown period (default 6h) prevents repeated calls within a short window.
+ * RentCast has a default 24h cooldown in addition to its persistent call budget.
  *
  * POST /api/fetch/rentcast?confirm=true
  * POST /api/fetch/zillow?confirm=true&maxPages=N
@@ -32,8 +39,8 @@ public class FetchResource {
 
     private static final Logger LOG = Logger.getLogger(FetchResource.class);
 
-    @Inject DataIngestionService ingestion;
-    @Inject PropertyStore        store;
+    @Inject RentcastApiClient rentcastApi;
+    @Inject ZillowApiClient zillowApi;
     @Inject ObjectMapper         mapper;
     @Inject com.houseprices.watcher.FileWatcherService watcher;
 
@@ -44,28 +51,32 @@ public class FetchResource {
     String rentcastWatchDir;
 
     /** Minimum hours between API calls. Set to 0 to disable. */
-    @ConfigProperty(name = "fetch.cooldown.hours", defaultValue = "6")
+    @ConfigProperty(name = "fetch.cooldown.hours", defaultValue = "0")
     int cooldownHours;
+
+    @ConfigProperty(name = "fetch.rentcast.cooldown.hours", defaultValue = "24")
+    int rentcastCooldownHours;
 
     private Instant lastZillowFetch   = Instant.EPOCH;
     private Instant lastRentcastFetch = Instant.EPOCH;
 
     // ── Guards ────────────────────────────────────────────────────────────────
 
-    private Map<String, Object> checkGuards(String source, boolean confirm, Instant lastFetch) {
+    private Map<String, Object> checkGuards(
+            String source, boolean confirm, Instant lastFetch, int sourceCooldownHours) {
         if (!confirm) {
             return Map.of("status", "error",
                 "message", "Add ?confirm=true to confirm. You are billed per API request.");
         }
-        if (cooldownHours > 0) {
+        if (sourceCooldownHours > 0) {
             Duration since = Duration.between(lastFetch, Instant.now());
-            if (since.toHours() < cooldownHours) {
-                long minutesLeft = Duration.ofHours(cooldownHours).minus(since).toMinutes();
+            if (since.toHours() < sourceCooldownHours) {
+                long minutesLeft = Duration.ofHours(sourceCooldownHours).minus(since).toMinutes();
                 return Map.of("status", "error",
                     "message", String.format(
                         "Cooldown active for %s: %d minutes remaining (cooldown=%dh). " +
-                        "Override with fetch.cooldown.hours=0 in application.properties.",
-                        source, minutesLeft, cooldownHours));
+                        "Change the source cooldown setting in application.properties to override.",
+                        source, minutesLeft, sourceCooldownHours));
             }
         }
         return null;
@@ -79,37 +90,49 @@ public class FetchResource {
             @QueryParam("confirm") @DefaultValue("false") boolean confirm,
             @QueryParam("limit")   @DefaultValue("0")     int limit) {
 
-        Map<String, Object> guard = checkGuards("rentcast", confirm, lastRentcastFetch);
+        Map<String, Object> guard = checkGuards(
+            "rentcast", confirm, lastRentcastFetch, rentcastCooldownHours
+        );
         if (guard != null) return guard;
 
         try {
             lastRentcastFetch = Instant.now();
             int effectiveLimit = limit > 0 ? limit : 500;
 
+            int reservedCall = com.houseprices.cli.RentcastFetcher.reserveExternalCall(
+                java.nio.file.Path.of(rentcastWatchDir)
+            );
+            LOG.infof("Reserved persistent RentCast call %d/45", reservedCall);
+
             // Fetch raw JSON from API
-            var rawProperties = ingestion.getRentcastApi().fetchRecentSales(effectiveLimit);
+            var rawProperties = rentcastApi.fetchRecentSales(effectiveLimit);
 
             // Save raw JSON to disk (same pattern as Zillow)
             File saveDir  = new File(rentcastWatchDir);
             saveDir.mkdirs();
-            File saveFile = new File(saveDir, "rentcast_latest.json");
+            String timestamp = LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS")
+            );
+            File saveFile = new File(saveDir, "rentcast_" + timestamp + ".json");
 
-            watcher.markInProgress(saveFile.getAbsolutePath());
+            CompletableFuture<com.houseprices.watcher.FileWatcherService.IngestionResult> completion =
+                watcher.expect(saveFile);
             try {
-                mapper.writerWithDefaultPrettyPrinter().writeValue(saveFile,
+                writeJsonAtomically(saveFile,
                     Map.of("requestMetadata", Map.of("status", "ok", "source", "java-api-fetch",
-                                                     "limit", effectiveLimit),
+                                                     "limit", effectiveLimit,
+                                                     "fetchedAt", Instant.now().toString(),
+                                                     "reservedCallNumber", reservedCall),
                            "properties", rawProperties));
                 LOG.infof("Saved RentCast JSON to %s", saveFile.getAbsolutePath());
-
-                List<PropertyRecord> records = ingestion.ingestRentcastJson(saveFile);
-                store.upsert(records);
-                LOG.infof("Fetched and stored %d RentCast records", records.size());
-                return Map.of("status", "ok", "fetched", records.size(),
+                var result = completion.get(120, TimeUnit.SECONDS);
+                return Map.of("status", "ok", "fetched", rawProperties.size(),
+                              "ingested", result.parsedAndChanged(),
                               "savedTo", saveFile.getPath(),
-                              "nextAllowedIn", cooldownHours + "h");
-            } finally {
-                watcher.markDone(saveFile.getAbsolutePath());
+                              "nextAllowedIn", rentcastCooldownHours + "h");
+            } catch (Exception exception) {
+                watcher.cancelExpected(saveFile, completion);
+                throw exception;
             }
         } catch (IllegalStateException e) {
             return Map.of("status", "error", "message", e.getMessage());
@@ -125,35 +148,42 @@ public class FetchResource {
             @QueryParam("confirm")  @DefaultValue("false") boolean confirm,
             @QueryParam("maxPages") @DefaultValue("0")     int maxPages) {
 
-        Map<String, Object> guard = checkGuards("zillow", confirm, lastZillowFetch);
+        Map<String, Object> guard = checkGuards(
+            "zillow", confirm, lastZillowFetch, cooldownHours
+        );
         if (guard != null) return guard;
 
         try {
             lastZillowFetch = Instant.now();
 
             var rawProperties = maxPages > 0
-                ? ingestion.getZillowApi().fetchListings(maxPages)
-                : ingestion.getZillowApi().fetchListings();
+                ? zillowApi.fetchListings(maxPages)
+                : zillowApi.fetchListings();
 
-            File saveDir  = new File(zillowWatchDir);
+            File saveDir = new File(zillowWatchDir);
             saveDir.mkdirs();
-            File saveFile = new File(saveDir, "zillow_latest.json");
+            String timestamp = LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss_SSS")
+            );
+            File saveFile = new File(saveDir, "zillow_" + timestamp + ".json");
 
-            watcher.markInProgress(saveFile.getAbsolutePath());
+            CompletableFuture<com.houseprices.watcher.FileWatcherService.IngestionResult> completion =
+                watcher.expect(saveFile);
             try {
-                mapper.writerWithDefaultPrettyPrinter().writeValue(saveFile,
-                    Map.of("requestMetadata", Map.of("status", "ok", "source", "java-api-fetch"),
+                writeJsonAtomically(saveFile,
+                    Map.of("requestMetadata", Map.of(
+                               "status", "ok", "source", "java-api-fetch",
+                               "fetchedAt", Instant.now().toString()),
                            "properties", rawProperties));
                 LOG.infof("Saved Zillow JSON to %s", saveFile.getAbsolutePath());
-
-                List<PropertyRecord> records = ingestion.ingestZillowJson(saveFile);
-                store.upsert(records);
-                LOG.infof("Fetched and stored %d Zillow records", records.size());
-                return Map.of("status", "ok", "fetched", records.size(),
+                var result = completion.get(120, TimeUnit.SECONDS);
+                return Map.of("status", "ok", "fetched", rawProperties.size(),
+                              "ingested", result.parsedAndChanged(),
                               "savedTo", saveFile.getPath(),
                               "nextAllowedIn", cooldownHours + "h");
-            } finally {
-                watcher.markDone(saveFile.getAbsolutePath());
+            } catch (Exception exception) {
+                watcher.cancelExpected(saveFile, completion);
+                throw exception;
             }
         } catch (IllegalStateException e) {
             return Map.of("status", "error", "message", e.getMessage());
@@ -169,46 +199,46 @@ public class FetchResource {
     public Map<String, Object> fetchStatus() {
         Instant now = Instant.now();
         return Map.of(
-            "cooldownHours", cooldownHours,
-            "zillow",   fetchInfo(lastZillowFetch, now),
-            "rentcast", fetchInfo(lastRentcastFetch, now)
+            "zillow",   fetchInfo(lastZillowFetch, now, cooldownHours),
+            "rentcast", fetchInfo(lastRentcastFetch, now, rentcastCooldownHours)
         );
     }
 
-    private Map<String, Object> fetchInfo(Instant last, Instant now) {
+    private Map<String, Object> fetchInfo(Instant last, Instant now, int sourceCooldownHours) {
         if (last.equals(Instant.EPOCH))
-            return Map.of("lastFetch", "never", "cooldownActive", false);
+            return Map.of(
+                "lastFetch", "never", "cooldownActive", false,
+                "cooldownHours", sourceCooldownHours
+            );
         Duration since = Duration.between(last, now);
-        boolean active = cooldownHours > 0 && since.toHours() < cooldownHours;
+        boolean active = sourceCooldownHours > 0 && since.toHours() < sourceCooldownHours;
         return Map.of(
             "lastFetch",        last.toString(),
             "minutesAgo",       since.toMinutes(),
+            "cooldownHours",    sourceCooldownHours,
             "cooldownActive",   active,
-            "minutesRemaining", active ? Duration.ofHours(cooldownHours).minus(since).toMinutes() : 0
+            "minutesRemaining", active
+                ? Duration.ofHours(sourceCooldownHours).minus(since).toMinutes() : 0
         );
     }
 
-    private void saveToCsv(List<PropertyRecord> records, File file) throws java.io.IOException {
-        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(file))) {
-            pw.println("id,address,latitude,longitude,lastSalePrice,squareFootage,lotSize,bedrooms,bathrooms,propertyType,lastSaleDate");
-            for (PropertyRecord r : records) {
-                pw.printf("%s,%s,%.6f,%.6f,%.0f,%.0f,%.0f,%.0f,%.1f,%s,%s%n",
-                    csvEscape(r.id()),
-                    csvEscape(r.address()),
-                    r.lat(), r.lng(),
-                    r.salePrice(), r.sqft(), r.sqftLot(),
-                    (double) r.beds(), r.baths(),
-                    csvEscape(r.homeType()),
-                    r.saleDate() != null ? r.saleDate().toString() : ""
-                );
-            }
+    private void writeJsonAtomically(File destination, Object value) throws IOException {
+        java.nio.file.Path destinationPath = destination.toPath();
+        java.nio.file.Path pendingDir = destinationPath.getParent().resolve(".pending");
+        Files.createDirectories(pendingDir);
+        java.nio.file.Path temporary = pendingDir.resolve(
+            destination.getName() + "." + UUID.randomUUID() + ".tmp"
+        );
+        mapper.writerWithDefaultPrettyPrinter().writeValue(temporary.toFile(), value);
+        try {
+            Files.move(
+                temporary,
+                destinationPath,
+                StandardCopyOption.ATOMIC_MOVE,
+                StandardCopyOption.REPLACE_EXISTING
+            );
+        } catch (AtomicMoveNotSupportedException exc) {
+            Files.move(temporary, destinationPath, StandardCopyOption.REPLACE_EXISTING);
         }
-    }
-
-    private String csvEscape(String s) {
-        if (s == null) return "";
-        if (s.contains(",") || s.contains("\"") || s.contains("\n"))
-            return "\"" + s.replace("\"", "\"\"") + "\"";
-        return s;
     }
 }

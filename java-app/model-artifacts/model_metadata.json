@@ -2,19 +2,22 @@
   "model_version": "current",
   "embedding_dim": 128,
   "hidden_dim": 256,
-  "property_dim": 3,
+  "property_dim": 5,
   "continuous_time_dim": 1,
   "market_dim": 2,
-  "n_communities": 281,
+  "local_feature_dim": 5,
+  "n_communities": 278,
   "year_length": 8,
-  "week_length": 53,
+  "week_length": 54,
   "use_neighborhood_pooling": true,
   "pooling_strategy": "mean",
   "reference_date": "2020-01-02T00:00:00",
   "property_features": [
     "sqft",
     "sqft_lot",
-    "beds"
+    "beds",
+    "water_proximity",
+    "is_waterfront"
   ],
   "time_features": [
     "time_trend"
@@ -23,13 +26,21 @@
     "mortgage_rate",
     "unemployment_rate"
   ],
+  "local_market_features": [
+    "local_mean_log_price",
+    "local_log_price_std",
+    "local_log1p_sales_count",
+    "local_recency_years",
+    "local_price_trend"
+  ],
   "input_order": [
     "community_indices (long[batch,7])",
     "year (long[batch])",
     "week (long[batch])",
-    "property_features (float[batch,3])",
+    "property_features (float[batch,5])",
     "time_features (float[batch,1])",
-    "market_features (float[batch,2])"
+    "market_features (float[batch,2])",
+    "local_market_features (float[batch,7,5])"
   ],
   "output": "log_price_scaled (float[batch,1]) - apply log_price scaler inverse then exp()"
 }

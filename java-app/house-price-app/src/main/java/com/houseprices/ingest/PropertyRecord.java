@@ -32,11 +32,14 @@ public record PropertyRecord(
     // Sale / listing
     LocalDate saleDate,
     double    salePrice,         // 0 if unknown (Zillow listing)
+    double    zestimate,         // Zillow estimate, 0 if unavailable/not applicable
     String    listingUrl,        // Zillow URL if applicable
 
     // Predictions (populated after inference)
     double    predictedPrice,
     double    pctError,          // 0 if salePrice unknown
+    double    lightgbmPredictedPrice,
+    double    lightgbmPctError,  // 0 if salePrice unknown
 
     // Uncertainty and attention (populated after inference)
     double    predictionStdPrice, // std dev of prediction in $ (0 if unavailable)

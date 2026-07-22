@@ -1,0 +1,628 @@
+CODEBASE AUDIT — STRUCTURE, READABILITY, REDUNDANCY, AND JAVA COST
+Date: 2026-07-21
+
+Scope
+-----
+This audit covers the Python training/export path and the Java/Quarkus mapping
+application. It is a read-only review except for this report. Recommendations
+are ranked by expected benefit; speculative abstractions and optimizations that
+are unlikely to improve the current workload are explicitly deprioritized.
+
+Implementation update (2026-07-21)
+----------------------------------
+The prioritized Java findings and the Structure/Reliability recommendations in
+this report have now been implemented.
+
+- Point endpoints now accept viewport/zoom/limit inputs, return H3 clusters
+  below zoom 13, cap detailed points, and report matched/returned/truncated data.
+- Browser point requests are cancelled when superseded and slider/map reloads
+  are debounced.
+- API results are atomically saved as timestamped JSON; the file watcher is the
+  sole ingestion owner. RentCast CSV and unused direct API transformation paths
+  were retired. Unchanged IDs skip inference and changed rows use batch inference.
+- Startup/watcher inputs are restricted to active JSON files; archival `previous`
+  files, state directories, pending files, and unsupported formats are ignored.
+- H3 aggregation is single-pass, H3 boundaries are cached, request dates are
+  parsed once and validated, and store snapshots are reused per request.
+- Neural and LightGBM paths share one prepared PredictionContext, including one
+  raw local-market lookup; local snapshot dates are parsed during artifact load.
+- Synthetic feature explanations are click-only and cached (up to 500 entries),
+  avoiding the 512-coalition feature calculation during ordinary hover.
+
+Structure and reliability implementation (2026-07-21)
+------------------------------------------------------
+- J1/J2: index.html now contains markup only; styling lives in styles.css and
+  behavior is split across js/api.js, js/map.js, js/explanations.js,
+  js/charts.js, js/app.js, and js/layers/*.js. Confirmed duplicate/dead
+  explanation helpers were removed during extraction.
+- J3: service/PropertyRequestFilter.java parses and validates date, error,
+  home-type, and viewport filters once per request. MapResource and
+  H3AggregationService share the resulting immutable predicate.
+- J4: src/pricemodel/feature_contract.py generates feature_contract.json.
+  model/FeatureContract.java validates its version, tensor widths, feature
+  order, and fallback economics during Java startup; both model adapters check
+  their deployed metadata against it.
+- J5: source-specific ingestion parsing now feeds the previously implemented
+  shared normalize/deduplicate/batch-predict/record-assembly path. JSON remains
+  the external-source boundary and historical sales remain CSV-backed.
+- P1: embedding_model.py is a compatibility facade. Deterministic preparation,
+  the torch network, and optimization now live in data_pipeline.py, network.py,
+  and trainer.py with descriptive class names and temporary legacy aliases.
+- P2: evaluation.py owns report rows/community reliability metrics and
+  checkpoint_io.py owns atomic persistence/round-trip verification. ModelManager
+  remains the orchestration boundary to preserve checkpoint compatibility.
+- P3: main_train.py performs one atomic checkpoint save/reload and later
+  writes results separately, avoiding repeated multi-megabyte weight rewrites.
+- P4/P5: training reads only an explicitly selected frozen FRED cache; network
+  refresh is a separate command. DatasetBuilder honors community_map_path and no
+  longer creates unused calendar/presentation columns in the core tensor path.
+- P6: main_retrain.py now has argparse/main guarding, forces chronological
+  splitting, uses the current TrainingConfig flow, and labels uncalibrated
+  uncertainty correctly.
+- P7: export_model_for_java.py and export_lightgbm_for_java.py are import-safe,
+  composable exporters. deploy_models_for_java.py stages both models, verifies
+  native/ONNX parity and the shared contract, creates a SHA-256 manifest, then
+  uses deployment.atomic_deploy() for a single same-filesystem directory swap.
+  The only canonical deployment is now the Java resources model-artifacts dir.
+- P8: pyproject.toml defines the src-layout packages; supported scripts use
+  package imports without modifying sys.path. Make targets set PYTHONPATH=src
+  for checkout execution, while editable installation is also supported.
+
+Verification added:
+- tests/test_structure_reliability.py protects exporter import safety, generated
+  feature-contract round trips, and rejection of incomplete bundles.
+- The complete Python suite passes 27 tests; the Java Maven suite passes with
+  startup contract/model validation active.
+
+Post-change steady-state measurements on the same local app:
+- Viewport at zoom 11: 36,917 detailed-source matches -> 108 H3 clusters,
+  79,409 bytes, 0.038-0.044 seconds after warm-up.
+- A zoom-14 Seattle viewport: 180 individual detailed points, 132,138 bytes,
+  0.035 seconds.
+- H3 sales aggregation: 0.050 seconds warm versus approximately 0.203 seconds
+  before the rewrite.
+- Synthetic prediction: 0.354 seconds; complete two-model explanation: 0.039
+  seconds, with 7/52 neural group/feature effects and 52 tree effects intact.
+
+Executive summary
+-----------------
+1. The dominant confirmed Java cost is sending and rendering all property
+   points, not reconstructing models or calculating a single explanation. The
+   detailed Sales/RentCast point endpoint returned 71.1 MB in 3.93 seconds on
+   its first request and 0.67 seconds after its water-feature cache was warm.
+   Browser JSON parsing and creation of roughly 97,000 Leaflet markers occur
+   after those measurements and add further latency and memory pressure.
+2. The neural and LightGBM models are not reconstructed when a layer is loaded.
+   Both are application-scoped and construct their ONNX sessions once during
+   application startup. Explanation requests reuse those sessions. The repeated
+   work in explanations is feature preparation/local-market lookup, and this is
+   modest at present: a warmed complete two-model explanation took 35–46 ms.
+3. RentCast/Zillow ingestion performs two single-row model calls per record.
+   Converting a whole file/API result first and using the existing batch APIs
+   should materially reduce ingestion time as incoming files grow.
+4. The largest maintainability risks are a monolithic 1,828-line index.html,
+   training/data/model responsibilities combined in embedding_model.py, a
+   1,156-line stateful model manager, repeated feature contracts across Python,
+   Java, and JavaScript, and stale top-level scripts.
+5. The first implementation phase should therefore target bounded/viewport
+   point APIs, client request cancellation/debouncing, batch ingestion, and
+   startup file filtering. Explanation refactoring should follow for clarity,
+   but it is not the current performance bottleneck.
+
+Method and measured baseline
+----------------------------
+The Java application was run locally in Quarkus development mode with Java 21.
+It loaded 97,651 records (96,689 historical sales, 409 RentCast, 553 Zillow).
+The timings below are single-machine wall times from curl against localhost.
+They include server processing and local transfer, but exclude browser JSON
+parsing, Leaflet object creation, painting, and interaction. They are useful for
+relative ranking, not production capacity estimates.
+
+Endpoint / operation                              Time       Download
+----------------------------------------------------------------------
+/api/rentcast?source=all, first detailed request  3.925 s    71,054,872 B
+/api/rentcast?source=all, water cache warm        0.670 s    71,054,872 B
+/api/sales/h3 (all records)                       0.203 s     2,783,693 B
+/api/sales/community                              0.085 s     2,030,349 B
+/api/stats                                        0.042 s           453 B
+/api/synthetic, cold date                         0.479 s     2,913,422 B
+/api/synthetic, cached date                       0.029 s     2,913,422 B
+/api/synthetic/explanation, warmed                0.035–0.046 s  21,644 B
+
+The detailed point endpoint returned historical-sale/RentCast features including
+model predictions, uncertainty, attention, and water fields. Its first request
+also calculated and cached water distance for previously unseen coordinates.
+Response size and browser rendering remain the larger practical issue.
+
+The synthetic cold path predicted 2,947 H3 cells with both models in about
+0.41 seconds according to the service log. Its three-date server cache is highly
+effective. The 2.9 MB response remains a network/browser cost on every reload.
+
+
+PRIORITIZED FINDINGS
+====================
+
+P0 — Bound point-layer queries and rendering
+---------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/java/com/houseprices/api/MapResource.java:136-200
+- java-app/house-price-app/src/main/java/com/houseprices/api/MapResource.java:276-307
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:418-465
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:1136-1198
+
+MapResource filters, maps, and serializes every matching record as GeoJSON. The
+browser then parses the complete response and creates a Leaflet object for each
+point. With source=all, the detailed endpoint is 71.1 MB; it took 3.93 seconds
+while populating the water cache and 0.67 seconds with that cache warm. The heat
+endpoint has a different, smaller contract but still returns 24.6 MB of raw
+points. Repeated slider actions can start more requests before earlier ones
+complete.
+
+Recommended change:
+- Send the current map bounds and zoom to the server.
+- At high zoom, return only points inside the viewport with an explicit maximum.
+- At lower zoom, return server-side H3 bins/clusters rather than raw points.
+- Add a response count/truncation flag so the UI makes sampling visible.
+- Use AbortController in the browser to cancel superseded fetches.
+
+This will provide a substantial improvement. Simple pagination is less suitable
+for a map because it produces arbitrary partial geography. Vector tiles are a
+strong longer-term option if the dataset grows substantially, but viewport H3
+aggregation is simpler and likely sufficient now.
+
+
+P1 — Batch predictions during RentCast and Zillow ingestion
+-----------------------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/java/com/houseprices/ingest/DataIngestionService.java:169-220
+- java-app/house-price-app/src/main/java/com/houseprices/ingest/DataIngestionService.java:227-278
+- java-app/house-price-app/src/main/java/com/houseprices/ingest/DataIngestionService.java:414-458
+- java-app/house-price-app/src/main/java/com/houseprices/ingest/DataIngestionService.java:480-540
+- java-app/house-price-app/src/main/java/com/houseprices/api/FetchResource.java:87-180
+- java-app/house-price-app/src/main/java/com/houseprices/watcher/FileWatcherService.java:87-120
+- java-app/house-price-app/src/main/java/com/houseprices/service/PropertyStore.java:20-30
+- Individual neural calls: DataIngestionService.java:190,249,429,514
+- Individual LightGBM calls: DataIngestionService.java:196,254,434,519
+- Existing batch APIs: model/EmbeddingModel.java:287-305 and
+  model/LightGBMModel.java:186-212
+
+"Incoming record" needs a precise definition here. The watcher processes an
+entire newly created file. Every property in that file currently causes one
+neural ONNX run and one LightGBM ONNX run before PropertyStore.upsert. It does
+not first determine whether source + ID is absent or unchanged. A new ID is
+added; an existing source + ID is replaced, but it has still paid for inference.
+The watcher listens to ENTRY_CREATE, not record-level additions inside an
+existing JSON file and not file modifications.
+
+The Fetch buttons do not currently rely on the watcher for ingestion. Each one:
+1. calls its external API,
+2. writes a JSON file,
+3. directly reads/ingests that JSON and upserts the resulting records, and
+4. uses FileWatcherService.markInProgress so the watcher should skip the same
+   created file.
+
+This gives two possible ingestion owners and requires timing coordination. The
+same transformation/prediction sequence is also duplicated for RentCast CSV,
+RentCast JSON, RentCast API, and Zillow. ONNX execution has fixed per-call costs,
+so it scales poorly even though the current 409/553-record startup load is
+tolerable.
+
+Recommended change:
+- Make JSON files the canonical boundary for RentCast and Zillow. A Fetch button
+  should reserve/call the API and atomically save the raw response, then return a
+  saved/queued result. The watcher should be the single ingestion owner and
+  publish completion/error status for the UI.
+- Parse and normalize all rows from a new JSON file into a shared intermediate
+  input record.
+- Compare normalized identity/content with PropertyStore before inference. Batch
+  only new or materially changed rows. An unchanged ID can be skipped; a changed
+  record must be re-predicted before replacing it.
+- Resolve date-specific indicators once per distinct date.
+- Call predictBatch once per chunk for each model.
+- Assemble PropertyRecord values after the two batch results return.
+- Keep ingestSalesCsv solely for the historical sales dataset.
+- Retire ingestRentcastCsv and its startup/watcher branches after migrating or
+  archiving data/rentcast/rentcast_previous.csv.
+- Retire the unused direct transformation methods fetchFromRentcastApi and
+  fetchFromZillowApi in DataIngestionService.java:403-476, plus the unused
+  FetchResource.saveToCsv method at FetchResource.java:219-241. Do not remove
+  RentcastApiClient or ZillowApiClient: the Fetch buttons still require them to
+  obtain the raw JSON.
+
+If immediate synchronous layer refresh is more important than watcher ownership,
+the alternative is one shared save-and-ingest coordinator called by FetchResource,
+with the watcher reserved only for externally dropped files. Either design is
+sound; retain exactly one ingestion owner for each saved file.
+
+This improves both computation and readability and uses APIs that already exist.
+
+
+P1 — Prevent duplicate and stale browser requests
+-------------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:418-465
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:698-724
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:1136-1198
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:1202-1319
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:1772-1811
+
+Error and square-foot sliders call loadSales, loadZillow, and loadRentcast on
+every input event. Sales has a request-id guard, but old network/server work is
+not cancelled. RentCast and Zillow lack equivalent stale-response protection.
+With a 71 MB response, one superseded request is expensive.
+
+Recommended change:
+- Debounce these sliders (200–300 ms is adequate).
+- Maintain one AbortController per layer and abort the previous request.
+- Retain request IDs as a final stale-result guard.
+- Do not request hidden layers until they become visible.
+
+This is low complexity and has a direct benefit under normal interaction.
+
+
+P1 — Ignore directories and unsupported files at startup/watcher entry
+-----------------------------------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/java/com/houseprices/api/StartupLoader.java:48-77
+- java-app/house-price-app/src/main/java/com/houseprices/watcher/FileWatcherService.java:72-77
+- java-app/house-price-app/src/main/java/com/houseprices/watcher/FileWatcherService.java:87-120
+
+StartupLoader passes every child of the watch directories to ingestion. During
+the audit it attempted to ingest RentCast .state and .pending directories and
+logged errors. The watcher also waits for a created path before checking its
+extension/type.
+
+Recommended change:
+- Require file.isFile()/Files.isRegularFile before processing.
+- Accept only the supported extension/source combinations before waitForFile.
+- Keep state and pending files in a subdirectory the data loader explicitly
+  excludes, or prefix-filter them.
+
+This removes misleading errors and unnecessary waits with no functional tradeoff.
+
+
+P2 — Make H3 aggregation single-pass and reuse static geometry
+--------------------------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/java/com/houseprices/service/H3AggregationService.java:55-127
+- java-app/house-price-app/src/main/java/com/houseprices/service/H3AggregationService.java:134-143
+- java-app/house-price-app/src/main/java/com/houseprices/service/PropertyStore.java:32-53
+
+The service copies the combined sales collection, collects matching records into
+a second list, groups them into lists, then traverses each H3 group separately
+for eight averages, attention count, and attention totals. It also reconstructs
+the unchanged H3 polygon boundary on every request. The endpoint currently takes
+about 203 ms, so this is a secondary rather than urgent bottleneck.
+
+Recommended change:
+- Use one mutable accumulator per H3 cell (count, sums, attention count/sums).
+- Cache immutable H3 boundaries by H3 ID.
+- Parse from/to dates once before iterating; return HTTP 400 for invalid values
+  rather than silently accepting them.
+- Add a monotonically increasing PropertyStore version. Cache complete aggregate
+  responses by filter only if profiling after the single-pass rewrite still
+  shows a need; invalidate them when the store version changes.
+
+Do not add broad result caching first. It increases invalidation complexity, and
+the single-pass/boundary changes should be measured before further work.
+
+
+P2 — Avoid repeated large PropertyStore snapshots inside one request
+--------------------------------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/java/com/houseprices/service/PropertyStore.java:32-63
+- java-app/house-price-app/src/main/java/com/houseprices/api/MapResource.java:439-448
+- java-app/house-price-app/src/main/java/com/houseprices/api/MapResource.java:510-572
+
+getBySource creates a new list, and getSalesRecords creates another combined
+list. communityLayer calls getSalesRecords twice, making two large snapshots.
+Stats also scans the list repeatedly.
+
+Recommended change:
+- Take one snapshot per request and reuse it.
+- Make community and stats accumulations single-pass where convenient.
+- If contention/copy cost becomes material, expose a safe immutable snapshot
+  associated with the store version. Do not expose mutable concurrent maps
+  directly merely to avoid allocation.
+
+The first two changes are straightforward. A new store abstraction is only worth
+it if allocation profiling confirms continuing pressure after point APIs are
+bounded.
+
+
+P2 — Consolidate feature preparation, but do not treat it as a hot emergency
+----------------------------------------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/java/com/houseprices/model/EmbeddingModel.java:307-401
+- java-app/house-price-app/src/main/java/com/houseprices/model/EmbeddingModel.java:409-474
+- java-app/house-price-app/src/main/java/com/houseprices/model/EmbeddingModel.java:722-761
+- java-app/house-price-app/src/main/java/com/houseprices/model/LightGBMModel.java:275-321
+- java-app/house-price-app/src/main/java/com/houseprices/model/ModelArtifacts.java:200-267
+- java-app/house-price-app/src/main/java/com/houseprices/model/ModelArtifacts.java:269-292
+
+Neural prediction, neural explanation, feature-level neural explanation, and
+LightGBM each construct variants of the same community/date/water/local context.
+A two-model explanation performs scaled local lookup, raw local lookup for neural
+display values, and raw local lookup for LightGBM. rollingTrend scans and parses
+recent sale dates during each lookup.
+
+Recommended change:
+- Introduce an immutable PredictionContext prepared once per observation, holding
+  communities, year/week indices, raw property/water values, date trend,
+  indicators, raw local [7,5], and scaled local [7,5].
+- Let each model adapter project that context into its own tensor/matrix.
+- Parse recent local sale dates when loading ModelArtifacts instead of repeatedly
+  converting strings to LocalDate.
+
+This is a worthwhile readability and consistency improvement, and will help if
+explanation traffic grows. It is not presently a major latency fix: the complete
+warmed explanation was only 35–46 ms.
+
+
+P3 — Explanation behavior and synchronization
+----------------------------------------------
+Locations:
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:813-892
+- java-app/house-price-app/src/main/resources/META-INF/resources/index.html:698-724
+- java-app/house-price-app/src/main/java/com/houseprices/model/EmbeddingModel.java:307-401
+- java-app/house-price-app/src/main/java/com/houseprices/model/EmbeddingModel.java:404-474
+- java-app/house-price-app/src/main/java/com/houseprices/model/LightGBMModel.java:214-273
+
+Opening a synthetic tooltip requests full LightGBM TreeSHAP, 128 exact neural
+group coalitions, and a 512-row sampled neural feature batch. The click popup then
+reuses the browser cache. LightGBM explain is synchronized, so simultaneous
+TreeSHAP requests serialize. The cache is cleared whenever loadSynthetic runs.
+
+Model reconstruction concern: no reconstruction occurs here. EmbeddingModel is
+@ApplicationScoped and creates its ONNX session once at EmbeddingModel.java:
+121-155. LightGBMModel is also @ApplicationScoped and creates its session once at
+LightGBMModel.java:70-90. SyntheticPredictionService caches the last three dates
+at SyntheticPredictionService.java:31-48 and performs batched prediction at
+SyntheticPredictionService.java:99-107.
+
+Possible change, only if usage metrics show hover volume/concurrency:
+- Calculate summary group effects on hover and defer the 512 feature calculation
+  until the user clicks “show contributions”; or make all explanations click-only.
+- Preserve the per-observation cache across harmless layer redraws, keyed by
+  artifact/model version + date + H3 cell.
+
+At the measured 35–46 ms per complete warmed explanation, splitting the endpoint
+is not a priority unless hover traffic creates queues. Avoid adding complexity
+solely on the assumption that 512 rows must be expensive; they run in one batch.
+
+
+STRUCTURE AND READABILITY FINDINGS
+==================================
+
+Java/JavaScript
+---------------
+
+J1. Split the monolithic browser application.
+Location: java-app/house-price-app/src/main/resources/META-INF/resources/index.html
+(1,828 lines).
+
+The file combines styles, markup, global state, API calls, filters, every Leaflet
+layer, tooltip/popup HTML, explanation formatting, and chart behavior. A useful
+build-free split is:
+- styles.css
+- js/api.js (fetch, cancellation, common query/filter construction)
+- js/layers/sales.js, synthetic.js, water.js
+- js/explanations.js
+- js/charts.js
+- js/app.js (state and wiring)
+
+This will make layer lifecycles and network behavior testable without introducing
+a frontend framework.
+
+J2. Remove confirmed dead/duplicated explanation helpers.
+Locations:
+- index.html:794-812 — neuralGroupForFeature and signedEffect are unused.
+- index.html:813-815 — detailedExplanationHtml is only a one-line wrapper.
+- index.html:726-744 duplicates modelFeatureLabel/modelFeatureValue at 925-941.
+
+Remove these while extracting explanations.js. This is safe cleanup rather than
+an abstraction project.
+
+J3. Centralize request filter parsing.
+Locations:
+- api/MapResource.java:323-334
+- service/H3AggregationService.java:134-143
+
+Date filtering logic is duplicated and LocalDate.parse is called inside the
+per-record predicate. Create one validated request filter object per endpoint.
+This improves both readability and per-record CPU use.
+
+J4. Remove duplicated model and feature defaults.
+Locations:
+- model/EmbeddingModel.java:36-37
+- model/LightGBMModel.java:33-34
+- api/MapResource.java:96-100
+
+Mortgage/unemployment defaults and feature positions are repeated. More broadly,
+the feature contract is copied across Python, both Java models, and JavaScript
+display/grouping code. Export one feature_contract.json containing ordered names,
+groups, tensor shapes, display units, and baselines, then validate both deployed
+models against it at startup. This is primarily drift prevention. Do not replace
+simple typed Java access with unvalidated dynamic maps.
+
+J5. Consolidate duplicated ingestion adapters.
+Location: ingest/DataIngestionService.java:169-278 and 414-540.
+
+CSV/JSON/API branches repeat normalization, feature construction, two model calls,
+errors, and PropertyRecord creation. Keep parsing source-specific, but share the
+normalization/batch-prediction/record-assembly stages described in P1.
+
+
+Python
+------
+
+P1. Split embedding_model.py by responsibility.
+Locations:
+- src/pricemodel/embedding_model.py:45-342 — dataset preparation
+- src/pricemodel/embedding_model.py:345-554 — EnhancedEmbeddingModel
+- src/pricemodel/embedding_model.py:557-1136 — price_predictor/training
+- src/pricemodel/embedding_model.py:1146-1158 — tensor vocabulary helper
+
+Recommended modules: data_pipeline.py, network.py, trainer.py. Keep temporary
+re-export aliases so existing scripts/checkpoints do not break. Rename lower-case
+classes dataset, price_predictor, and modelmanager gradually to DatasetBuilder,
+PriceTrainer, and ModelManager.
+
+P2. Reduce ModelManager responsibilities.
+Location: src/pricemodel/model_manager.py (1,156 lines).
+
+It owns tensor construction, scaler fitting, splitting, training orchestration,
+inference/report rows, community metrics, checkpoint serialization, and reload.
+Extract checkpoint I/O and evaluation/reporting first; these have narrow contracts.
+Avoid breaking apart every method at once because model compatibility is valuable.
+
+P3. Remove repeated model saves in the main training workflow.
+Locations:
+- main_train.py (formerly main_train_v4_h3l8.py): checkpoint/report workflow
+- src/pricemodel/model_manager.py:889-929
+
+The script saves before plotting, save_and_reload_for_evaluation saves again at
+line 908, and the script saves again after metrics. Preserve the safety goal with
+one atomic best-checkpoint save, one round-trip verification/reload, and a
+separate results/metadata write that does not rewrite weights. This is mostly
+clarity and disk-I/O cleanup; it is not a training-time bottleneck.
+
+P4. Make market-indicator preparation deterministic by default.
+Location: src/pricemodel/embedding_model.py:187-220.
+
+_add_market_indicators attempts live FRED retrieval even when a cache path is
+provided and falls back to cache only on failure. This adds network work and makes
+training inputs less reproducible. Separate “refresh indicators” from “prepare
+training data”; training should read an explicitly selected frozen cache unless
+the user requests refresh.
+
+P5. Fix or remove misleading dataset API/state.
+Locations:
+- src/pricemodel/embedding_model.py:75-116 — _map_communities accepts a map path
+  but overwrites it with output_dir/community_map.json at line 115.
+- src/pricemodel/embedding_model.py:280 onward — price_per_sqft and extra calendar
+  columns are produced although the neural tensor contract uses only the fields
+  in model_manager.py:82-89.
+
+Honor community_map_path or remove the argument. Trace consumers of presentation-
+only columns and move them out of core model preparation where possible. Do not
+delete columns until report/export consumers are tested.
+
+P6. Retire or repair stale top-level retraining script.
+Location: main_retrain.py:1-91.
+
+The module executes immediately on import, contains several unused imports,
+requests temporal_split=False at line 74 even though local-feature safety forces
+a chronological split, and trains with estimate_uncertainty=False while claiming
+the uncertainty head is usable at inference at line 86. Convert it to a guarded
+main(), use the current configuration object/workflow, and state that an untrained
+uncertainty head is unreliable. If the script is no longer part of the supported
+workflow, archive/delete it rather than maintaining a second training path.
+
+P7. Make export scripts composable and deployment atomic.
+Locations:
+- export_model_for_java.py:17-305 — procedural execution begins at import
+- export_lightgbm_for_java.py:167-180 — independent artifact deployment
+- java-app/model-artifacts (33 MB)
+- java-app/house-price-app/src/main/resources/model-artifacts (33 MB)
+
+The neural exporter has no main guard and writes immediately on import. The neural
+and LightGBM exporters independently copy overlapping deployment artifacts, which
+can produce a mixed-version Java bundle. There are also two complete 33 MB artifact
+directories.
+
+Recommended change:
+- Give both exporters argparse + main() and shared artifact-copy helpers.
+- Export both models to a versioned staging directory.
+- Validate model contracts and prediction parity there.
+- Write a deployment manifest with hashes/model versions/snapshot date.
+- Atomically sync the validated bundle to one canonical Java resource directory.
+- Treat java-app/model-artifacts as staging or remove the duplicate after updating
+  documentation/Make targets; do not keep two manually synchronized canonical sets.
+
+P8. Package imports consistently.
+Locations:
+- src/pricemodel/embedding_model.py:19-42
+- src/pricemodel/model_manager.py:17-23
+- main_retrain.py:4-5
+- export_model_for_java.py:5-6
+
+Fallback imports and sys.path.append('src') mask packaging errors. Define the
+package in pyproject.toml and run scripts as installed/module entry points. This
+is worthwhile when reorganizing modules, but need not precede the P0/P1 runtime
+work.
+
+
+LOW-PRIORITY OR DO-NOT-OPTIMIZE-YET ITEMS
+=========================================
+- /api/stats is only ~42 ms and 453 bytes. A single-pass rewrite is clean but not
+  worth a dedicated performance project.
+- Complete warmed explanations are ~35–46 ms. They should be consolidated for
+  consistency, not replaced with a more complex approximation solely for speed.
+- Synthetic inference is already batched and its warm cache reduces server work
+  to ~29 ms. Increase the cache beyond three dates only if user behavior shows
+  frequent revisits; otherwise it stores large response trees for little gain.
+- PropertyStore immutable/versioned snapshots should follow bounded point APIs.
+  Avoid a complex indexing layer until allocation/CPU profiling shows it remains
+  necessary.
+- local_market_features.py is reasonably cohesive and already has a deterministic
+  compressed cache. Splitting its cache serialization from rolling-state logic is
+  optional, not a current problem.
+- Experimental random-forest code duplicates tabular feature preparation. If it
+  is unused, mark it archived rather than building a shared abstraction solely
+  to support an obsolete model.
+
+
+SUGGESTED IMPLEMENTATION ORDER
+==============================
+
+Phase 1 — immediate, measurable wins
+1. Add viewport/zoom-aware point endpoints and low-zoom H3 clustering.
+2. Add AbortController, stale-result guards, and slider debouncing.
+3. Batch RentCast/Zillow neural and LightGBM predictions through one normalized
+   ingestion pipeline.
+4. Filter startup/watcher inputs to regular supported files.
+5. Re-run the same endpoint benchmark and record browser performance/memory for
+   a full-county view and a zoomed viewport.
+
+Phase 2 — bounded Java cleanup
+6. Convert H3 aggregation to one pass and cache H3 boundaries.
+7. Reuse one PropertyStore snapshot per request and centralize validated filters.
+8. Extract index.html into small build-free modules.
+9. Add PredictionContext and pre-parse local recent-sale dates; verify that model
+   predictions and all contribution reconstruction checks remain identical.
+
+Phase 3 — Python/deployment reliability
+10. Introduce a typed training configuration and remove stale main_retrain behavior.
+11. Split dataset/network/trainer and checkpoint/evaluation responsibilities with
+    compatibility re-exports.
+12. Create one generated feature contract and validate it in Java.
+13. Unify both Java exporters into an atomic, manifested deployment bundle and
+    remove the duplicate artifact source of truth.
+14. Reduce the training workflow to one atomic checkpoint save/verification.
+
+
+VALIDATION TO REQUIRE FOR EACH PHASE
+====================================
+- Existing Java and Python tests remain green.
+- Prediction parity: neural and LightGBM values before/after refactors agree to
+  existing ONNX tolerances.
+- Explanation invariants: LightGBM contributions reconstruct its log prediction;
+  neural feature effects sum to exact group effects and the full log prediction.
+- Leakage safeguards: production local features reject dates on/before the latest
+  snapshot sale date; demonstration behavior remains explicit.
+- Runtime comparison: endpoint wall time, bytes, returned/aggregated point count,
+  and browser main-thread/memory measurements are recorded before and after.
+- Ingestion comparison: records/second for a fixed saved input and identical
+  resulting PropertyRecord values.
+
+Conclusion
+----------
+The application is not spending its time rebuilding models for contributions.
+Its largest current cost is moving and rendering unbounded point data. Addressing
+that, batching incoming-record inference, and preventing superseded browser calls
+will yield much larger improvements than altering Shapley computation. The major
+structural changes should then focus on one ingestion pipeline, one generated
+feature contract, modular frontend code, and a single atomic model-deployment
+bundle; each reduces concrete duplication or drift risk without changing model
+behavior.

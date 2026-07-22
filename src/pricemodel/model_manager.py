@@ -14,16 +14,20 @@ from datetime import datetime
 import json
 from typing import Optional, Tuple, Dict, List
 
-# Handle both relative and absolute imports
-try:
-    from .embedding_model import dataset, price_predictor, vocab_replace_tensor
-except ImportError:
-    from embedding_model import dataset, price_predictor, vocab_replace_tensor
+from .data_pipeline import vocab_replace_tensor
+from .feature_contract import (
+    LOCAL_FEATURES, MARKET_FEATURES, PROPERTY_FEATURES, TIME_FEATURES
+)
+from .trainer import PriceTrainer
+from .reproducibility import seed_everything
 
 
-class modelmanager:
-    """
-    Enhanced model manager with retraining pipeline and uncertainty estimation
+class ModelManager:
+    """Coordinate tensors, splits, training, and high-level model lifecycle.
+
+    Evaluation/report construction and checkpoint serialization are delegated to
+    focused modules. The manager retains orchestration state so existing training
+    scripts and checkpoint formats remain compatible.
     """
     def __init__(self, model_name="property_model"):
         self.device = torch.device('mps' if torch.mps.is_available()
@@ -42,6 +46,11 @@ class modelmanager:
         self.scalers = {}
         self.predictor = None
         self.reference_date = None
+        self.local_feature_dim = len(self._LOCAL_FEATURES)
+        self.local_market_snapshot = None
+        self.neighbor_cells_map = None
+        self.train_community_loss_weights = None
+        self.val_community_loss_weights = None
         
         # Model architecture params
         self.embedding_dim = None
@@ -57,23 +66,33 @@ class modelmanager:
         self.epochs = None
         self.pooling_strategy = 'mean'
         self.use_neighborhood_pooling = False
+        self.global_aux_weight = 0.5
+        self.residual_penalty = 1e-2
+        self.lr_plateau_factor = 0.5
+        self.lr_plateau_patience = 3
+        self.min_learning_rate = 1e-6
+        self.uncertainty_calibration_epochs = 10
+        self.uncertainty_patience = 3
+        self.random_seed = 42
+        self.train_indices = None
+        self.val_indices = None
         
         # Vocabularies
         self.year_vocab = None
         self.week_vocab = None
-        
-        os.makedirs(self.directory, exist_ok=True)
+
     
     # Features that need scaling — shared across processor and scaler helpers
-    _PROPERTY_FEATURES = ['sqft', 'sqft_lot', 'beds']
-    _TIME_FEATURES     = ['time_trend']
-    _MARKET_FEATURES   = ['mortgage_rate', 'unemployment_rate']
+    _PROPERTY_FEATURES = list(PROPERTY_FEATURES)
+    _TIME_FEATURES     = list(TIME_FEATURES)
+    _MARKET_FEATURES   = list(MARKET_FEATURES)
+    _LOCAL_FEATURES    = list(LOCAL_FEATURES)
     _TARGET_FEATURE    = 'log_price'
 
     def processor(self, data, scale_mode = ''):
         """
         Enhanced processor with continuous time and market features.
-        Now handles H3 L9 neighborhood community tensors (batch, 7).
+        Handles H3 L8 neighborhood community tensors (batch, 7).
 
         Scalers are NOT fitted here.  They are fitted exclusively on the
         training split after split_data() is called.  If pre-fitted scalers
@@ -96,6 +115,23 @@ class modelmanager:
         self.week_vocab   = data.week_vocab
         self.year_vocab   = data.year_vocab
         self.reference_date = data.reference_date
+        self.local_market_snapshot = getattr(data, 'local_market_snapshot', None)
+        self.neighbor_cells_map = getattr(data, 'neighbor_cells_map', None)
+
+        local_market_features = getattr(data, 'local_market_features', None)
+        if self.local_feature_dim > 0:
+            if local_market_features is None:
+                raise ValueError(
+                    "Local residual model requires dataset.local_market_features; "
+                    "call dataset._map_communities() before _prepare_data()."
+                )
+            self._local_market_raw = np.asarray(local_market_features, dtype=np.float32)
+            expected_shape = (len(self.dataframe), 7, self.local_feature_dim)
+            if self._local_market_raw.shape != expected_shape:
+                raise ValueError(
+                    f"Expected local market tensor {expected_shape}, got "
+                    f"{self._local_market_raw.shape}"
+                )
 
         # Remember scale_mode so split_data knows what to do
         self._scale_mode = scale_mode
@@ -117,7 +153,7 @@ class modelmanager:
                     community_neighbors_list.append([unknown_idx] * 7)
             community_tensor = torch.tensor(community_neighbors_list, dtype=torch.long)
             self.use_neighborhood_pooling = True
-            print(f"Using H3 L9 neighborhood pooling: community tensor shape {community_tensor.shape}")
+            print(f"Using H3 L8 neighborhood pooling: community tensor shape {community_tensor.shape}")
         else:
             # Fallback: single community index per row (legacy path)
             community_tensor = torch.tensor(data.dataframe['community'].values, dtype=torch.long)
@@ -149,6 +185,16 @@ class modelmanager:
         for feature in all_features:
             if feature in self.scalers and feature in df.columns:
                 df[f"{feature}_scaled"] = self.scalers[feature].transform(df[[feature]])
+        if self.local_feature_dim > 0 and hasattr(self, '_local_market_raw'):
+            scaled = np.empty_like(self._local_market_raw, dtype=np.float32)
+            for feature_idx, feature in enumerate(self._LOCAL_FEATURES):
+                if feature not in self.scalers:
+                    raise ValueError(f"Loaded checkpoint is missing local scaler '{feature}'")
+                channel = self._local_market_raw[:, :, feature_idx].reshape(-1, 1)
+                scaled[:, :, feature_idx] = self.scalers[feature].transform(channel).reshape(
+                    len(df), 7
+                )
+            self._local_market_scaled = scaled
 
     def _fit_and_apply_scalers_on_split(self, train_indices):
         """
@@ -156,6 +202,11 @@ class modelmanager:
         Called from split_data() so scalers never see validation data.
         Saves scaler files to self.directory as before.
         """
+        # split_data() runs before train_model(), so this fresh timestamped run
+        # directory does not exist yet. Scaler persistence is the first write in
+        # a new training run and must create it itself.
+        os.makedirs(self.directory, exist_ok=True)
+
         scale_mode = getattr(self, '_scale_mode', 'fit')
         all_features = (self._PROPERTY_FEATURES + self._TIME_FEATURES +
                         self._MARKET_FEATURES + [self._TARGET_FEATURE])
@@ -189,6 +240,24 @@ class modelmanager:
             # Apply to the full dataframe (train + val)
             self.dataframe[f"{feature}_scaled"] = scaler.transform(self.dataframe[[feature]])
 
+        if self.local_feature_dim > 0:
+            self._local_market_scaled = np.empty_like(self._local_market_raw, dtype=np.float32)
+            for feature_idx, feature in enumerate(self._LOCAL_FEATURES):
+                scaler_path = os.path.join(self.directory, f"{feature}_scaler.pkl")
+                scaler = self.scalers.get(feature)
+                train_values = self._local_market_raw[train_indices, :, feature_idx].reshape(-1, 1)
+                if scaler is None and os.path.exists(scaler_path) and scale_mode != "force_new":
+                    scaler = joblib.load(scaler_path)
+                if scaler is None:
+                    scaler = StandardScaler().fit(train_values)
+                    joblib.dump(scaler, scaler_path)
+                self.scalers[feature] = scaler
+                all_values = self._local_market_raw[:, :, feature_idx].reshape(-1, 1)
+                self._local_market_scaled[:, :, feature_idx] = scaler.transform(
+                    all_values
+                ).reshape(len(self.dataframe), 7)
+                print(f"  Fitted/applied local scaler for {feature}")
+
         # Rebuild the TensorDataset now that scaled columns are correct
         self._build_tensor_dataset()
 
@@ -198,15 +267,18 @@ class modelmanager:
         time_features     = self._TIME_FEATURES
         market_features   = self._MARKET_FEATURES
 
-        self.tensors = TensorDataset(
+        tensors = [
             self._community_tensor,
             torch.tensor(self.dataframe['year'].values, dtype=torch.long),
             torch.tensor(self.dataframe['week'].values, dtype=torch.long),
             torch.tensor(self.dataframe[[f'{f}_scaled' for f in property_features]].values, dtype=torch.float32),
             torch.tensor(self.dataframe[[f'{f}_scaled' for f in time_features]].values, dtype=torch.float32),
             torch.tensor(self.dataframe[[f'{f}_scaled' for f in market_features]].values, dtype=torch.float32),
-            torch.tensor(self.dataframe['log_price_scaled'].values, dtype=torch.float32)
-        )
+        ]
+        if self.local_feature_dim > 0:
+            tensors.append(torch.tensor(self._local_market_scaled, dtype=torch.float32))
+        tensors.append(torch.tensor(self.dataframe['log_price_scaled'].values, dtype=torch.float32))
+        self.tensors = TensorDataset(*tensors)
     
     def split_data(self, train_ratio=0.8, temporal_split=False):
         """
@@ -217,6 +289,13 @@ class modelmanager:
 
         temporal_split: If True, uses chronological split instead of random.
         """
+        if self.local_feature_dim > 0 and not temporal_split:
+            print(
+                "Local market features require rolling chronological evaluation; "
+                "overriding temporal_split=True to prevent cross-split target leakage."
+            )
+            temporal_split = True
+
         total_length = len(self.dataframe)
         train_size   = int(train_ratio * total_length)
 
@@ -229,6 +308,11 @@ class modelmanager:
             perm          = torch.randperm(total_length).tolist()
             train_indices = perm[:train_size]
             val_indices   = perm[train_size:]
+
+        # Retain original dataframe positions for split-specific diagnostics.
+        # add_predictions_to_data() predicts in this same row order.
+        self.train_indices = np.asarray(train_indices, dtype=np.int64)
+        self.val_indices = np.asarray(val_indices, dtype=np.int64)
 
         # --- Fit scalers on training rows only, then apply to full dataframe ---
         print(f"\nFitting scalers on {len(train_indices)} training rows "
@@ -245,6 +329,37 @@ class modelmanager:
             self.val_dataset   = Subset(self.tensors, val_indices)
 
         self.tensor_length = total_length
+
+        if self.local_feature_dim > 0:
+            def _dataset_level_community_weights(indices):
+                communities = self._community_tensor[indices]
+                centers = communities[:, 0] if communities.ndim == 2 else communities
+                counts = torch.bincount(
+                    centers,
+                    minlength=self.n_communities + 1,
+                ).to(torch.float32)
+                active = counts > 0
+                weights = torch.zeros_like(counts)
+                # N / (G * n_c) gives every active community equal total
+                # influence while keeping the dataset-wide mean weight at 1.
+                weights[active] = (
+                    len(indices) /
+                    (active.sum().to(torch.float32) * counts[active])
+                )
+                return weights
+
+            self.train_community_loss_weights = _dataset_level_community_weights(
+                train_indices
+            )
+            self.val_community_loss_weights = _dataset_level_community_weights(
+                val_indices
+            )
+            print(
+                "Precomputed dataset-level community loss weights "
+                f"(train groups: "
+                f"{int((self.train_community_loss_weights > 0).sum())}, "
+                f"val groups: {int((self.val_community_loss_weights > 0).sum())})"
+            )
 
         # --- Vocab replacement (year / week raw → vocab index) ---
         def _replace_vocab_in_subset(subset, indices):
@@ -271,165 +386,195 @@ class modelmanager:
         print(f"Split complete — train: {len(train_indices)}, val: {len(val_indices)}")
 
         return self
-    
+
     def train_model(self, embedding_dim=16, hidden_dim=32, 
-                   property_dim=3, continuous_time_dim=1, market_dim=2,
+                   property_dim=None, continuous_time_dim=1, market_dim=2,
                    epochs=50, batch=256, learning_rate=0.0003,
                    dropout_rate=0.1, estimate_uncertainty=True,
-                   pooling_strategy='mean', patience=20):
+                   pooling_strategy='mean', patience=20,
+                   global_aux_weight=0.5, residual_penalty=1e-2,
+                   lr_plateau_factor=0.5, lr_plateau_patience=3,
+                   min_learning_rate=1e-6,
+                   uncertainty_calibration_epochs=10,
+                   uncertainty_patience=3, random_seed=42):
         """
-        Train the enhanced model with H3 L9 neighborhood pooling
+        Train the enhanced model with H3 neighborhood pooling
         
         Args:
             pooling_strategy: 'mean', 'center_weighted', or 'learnable'
         """
-        train_loader = DataLoader(self.train_dataset, batch_size=batch, shuffle=True)
+        os.makedirs(self.directory, exist_ok=True)
+
+        # Seed before constructing either the shuffled loader or model weights.
+        # Supplying the generator explicitly prevents unrelated torch calls from
+        # changing the training-row order.
+        data_loader_generator = seed_everything(random_seed)
+
+        valid_pooling_strategies = {'mean', 'center_weighted', 'learnable'}
+        if pooling_strategy not in valid_pooling_strategies:
+            raise ValueError(
+                f"Unknown pooling strategy '{pooling_strategy}'; expected one of "
+                f"{sorted(valid_pooling_strategies)}"
+            )
+        train_loader = DataLoader(
+            self.train_dataset,
+            batch_size=batch,
+            shuffle=True,
+            generator=data_loader_generator,
+        )
         val_loader = DataLoader(self.val_dataset, batch_size=batch, drop_last=False)
         
         # Store architecture params
         self.embedding_dim = embedding_dim
         self.hidden_dim = hidden_dim
+        if property_dim is None:
+            property_dim = len(self._PROPERTY_FEATURES)
+        if property_dim != len(self._PROPERTY_FEATURES):
+            raise ValueError(
+                f"property_dim={property_dim} but the configured property feature "
+                f"contract has {len(self._PROPERTY_FEATURES)} fields: {self._PROPERTY_FEATURES}"
+            )
         self.property_dim = property_dim
         self.continuous_time_dim = continuous_time_dim
         self.market_dim = market_dim
         self.learning_rate = learning_rate
-        self.pooling_strategy = pooling_strategy
         self.dropout_rate = dropout_rate
         self.epochs = epochs
         self.estimate_uncertainty = estimate_uncertainty
+        self.global_aux_weight = global_aux_weight
+        self.residual_penalty = residual_penalty
+        self.lr_plateau_factor = lr_plateau_factor
+        self.lr_plateau_patience = lr_plateau_patience
+        self.min_learning_rate = min_learning_rate
+        self.uncertainty_calibration_epochs = uncertainty_calibration_epochs
+        self.uncertainty_patience = uncertainty_patience
+        self.random_seed = random_seed
         # Initialize or update predictor. The manager owns the flag so the
         # predictor always receives the same value that processor() derived.
         if self.predictor is None:
-            self.predictor = price_predictor(
+            community_embedding_length = (
+                self.n_communities if self.use_neighborhood_pooling
+                else self.n_communities + 1
+            )
+            self.predictor = PriceTrainer(
                 self.device, embedding_dim, hidden_dim, 
                 property_dim, continuous_time_dim, market_dim,
-                self.n_communities + 1,   # +1 to include the unknown index slot (= n_communities)
+                community_embedding_length,
                 self.year_length, self.week_length,
-                learning_rate, dropout_rate, estimate_uncertainty,
+                learning_rate, epochs, len(train_loader),
+                dropout_rate, estimate_uncertainty,
                 use_neighborhood_pooling=self.use_neighborhood_pooling,
-                pooling_strategy=pooling_strategy
+                pooling_strategy=pooling_strategy,
+                local_feature_dim=self.local_feature_dim,
+                global_aux_weight=global_aux_weight,
+                residual_penalty=residual_penalty,
+                lr_plateau_factor=lr_plateau_factor,
+                lr_plateau_patience=lr_plateau_patience,
+                min_learning_rate=min_learning_rate,
+                train_community_loss_weights=self.train_community_loss_weights,
+                val_community_loss_weights=self.val_community_loss_weights,
             )
         else:
+            if self.use_neighborhood_pooling:
+                embedding = self.predictor.model.community_embedding
+                current_strategy = embedding.pooling_strategy
+                if pooling_strategy != current_strategy:
+                    if 'learnable' in {pooling_strategy, current_strategy}:
+                        raise ValueError(
+                            "Switching to or from learnable pooling changes model "
+                            "parameters; create a new model instead of continuing "
+                            "training an existing predictor."
+                        )
+                    embedding.pooling_strategy = pooling_strategy
+                    print(
+                        f"Updated pooling strategy: {current_strategy} -> "
+                        f"{pooling_strategy}"
+                    )
             # Update learning rate for continued training
             for param_group in self.predictor.optimizer.param_groups:
                 param_group['lr'] = learning_rate
-        
+            self.predictor.global_aux_weight = global_aux_weight
+            self.predictor.residual_penalty = residual_penalty
+            self.predictor.configure_scheduler(
+                factor=lr_plateau_factor,
+                patience=lr_plateau_patience,
+                min_lr=min_learning_rate,
+            )
+            self.predictor.set_community_loss_weights(
+                self.train_community_loss_weights,
+                self.val_community_loss_weights,
+            )
+
+        if self.use_neighborhood_pooling:
+            # The live module is authoritative, preventing checkpoint metadata
+            # from drifting away from the behavior actually used in forward().
+            self.pooling_strategy = (
+                self.predictor.model.community_embedding.pooling_strategy
+            )
+        else:
+            self.pooling_strategy = pooling_strategy
+
         start_time = datetime.now()
-        train_losses, val_losses = self.predictor.train(
-            train_loader, val_loader, epochs, patience
-        )
+        if estimate_uncertainty:
+            train_losses, val_losses = self.predictor.train_two_stage(
+                train_loader,
+                val_loader,
+                mean_epochs=epochs,
+                mean_patience=patience,
+                uncertainty_epochs=uncertainty_calibration_epochs,
+                uncertainty_patience=uncertainty_patience,
+                learning_rate=learning_rate,
+            )
+        else:
+            train_losses, val_losses = self.predictor.train(
+                train_loader, val_loader, epochs, patience
+            )
         end_time = datetime.now()
         
         print(f'{(end_time-start_time).total_seconds():.2f} seconds to train')
         
         self.results['train_losses'] = train_losses
         self.results['val_losses'] = val_losses
+        self.results['learning_rates'] = self.predictor.learning_rates
+        self.results['best_epoch'] = self.predictor.best_epoch
+        self.results['best_val_loss'] = self.predictor.best_val_loss
+        self.results['training_strategy'] = (
+            'mse_then_frozen_uncertainty_nll' if estimate_uncertainty else 'mse'
+        )
+        if estimate_uncertainty:
+            self.results['diagnostic_history'] = self.predictor.diagnostic_history
+            self.results['best_uncertainty_epoch'] = self.predictor.best_uncertainty_epoch
+            self.results['best_val_nll'] = self.predictor.best_val_nll
         
         return self
     
-    def add_predictions_to_data(self, return_uncertainty=True):
-        """
-        Add predictions with uncertainty estimates and CLS attention weights to dataframe.
-        Uncertainty is always available regardless of training loss used.
-        """
-        year_tensor = vocab_replace_tensor(self.tensors.tensors[1], self.year_vocab)
-        week_tensor = vocab_replace_tensor(self.tensors.tensors[2], self.week_vocab)
-        
-        new_dataset = list(self.tensors.tensors)
-        new_dataset[1] = year_tensor
-        new_dataset[2] = week_tensor
-        new_dataset = TensorDataset(*new_dataset)
-        
-        loader = DataLoader(new_dataset, batch_size=256)
-        self.predictor.eval()
-        
-        predictions  = []
-        uncertainties = []
-        targets       = []
-        cls_attentions = []
-        
-        with torch.no_grad():
-            for batch in loader:
-                batch = tuple(t.to(self.predictor.device) for t in batch)
-                community, year, week, property_feat, time_feat, market_feat, target = batch
-                
-                if return_uncertainty:
-                    # Uncertainty head is always built — available regardless of training loss
-                    pred, log_var = self.predictor.model(
-                        community, year, week, property_feat, time_feat, market_feat,
-                        return_uncertainty=True
-                    )
-                    uncertainties.extend(torch.exp(log_var / 2).cpu().numpy())
-                else:
-                    pred = self.predictor.model(
-                        community, year, week, property_feat, time_feat, market_feat
-                    )
-                
-                predictions.extend(pred.cpu().numpy())
-                targets.extend(target.cpu().numpy())
-                
-                if self.predictor.model.last_cls_attention is not None:
-                    cls_attn = self.predictor.model.last_cls_attention.mean(dim=1).cpu().numpy()
-                    cls_attentions.extend(cls_attn)
-        
-        # Reshape
-        predictions = np.array(predictions).reshape(-1, 1)
-        targets = np.array(targets).reshape(-1, 1)
-        
-        # Inverse transform
-        scaler = self.scalers['log_price']
-        predicted_log_price = scaler.inverse_transform(predictions).ravel()
-        target_log_price = scaler.inverse_transform(targets).ravel()
-        
-        # Add to dataframe
-        self.dataframe['predicted_log_price'] = predicted_log_price
-        self.dataframe['predicted_price'] = np.exp(predicted_log_price)
-        self.dataframe['target_log'] = target_log_price
-        self.dataframe['target'] = np.exp(target_log_price)
-        
-        # Add CLS attention weights
-        # Tokens: [community, year, week, property, time, market]
-        if len(cls_attentions) > 0:
-            cls_attentions = np.array(cls_attentions)
-            self.dataframe['cls_attn_community'] = cls_attentions[:, 0]
-            self.dataframe['cls_attn_year'] = cls_attentions[:, 1]
-            self.dataframe['cls_attn_week'] = cls_attentions[:, 2]
-            self.dataframe['cls_attn_property'] = cls_attentions[:, 3]
-            self.dataframe['cls_attn_time'] = cls_attentions[:, 4]
-            self.dataframe['cls_attn_market'] = cls_attentions[:, 5]
-            
-            print(f"\nCLS Attention Weights (average across all predictions):")
-            print(f"  Community: {self.dataframe['cls_attn_community'].mean():.3f}")
-            print(f"  Year:      {self.dataframe['cls_attn_year'].mean():.3f}")
-            print(f"  Week:      {self.dataframe['cls_attn_week'].mean():.3f}")
-            print(f"  Property:  {self.dataframe['cls_attn_property'].mean():.3f}")
-            print(f"  Time:      {self.dataframe['cls_attn_time'].mean():.3f}")
-            print(f"  Market:    {self.dataframe['cls_attn_market'].mean():.3f}")
-        
-        # Uncertainty (in log space, then convert to price space)
-        if len(uncertainties) > 0:
-            uncertainties = np.array(uncertainties).reshape(-1, 1)
-            uncertainty_unscaled = scaler.scale_[0] * np.array(uncertainties).ravel()
-            self.dataframe['prediction_std_log'] = uncertainty_unscaled
-            # Approximate std in price space using delta method
-            self.dataframe['prediction_std_price'] = self.dataframe['predicted_price'] * uncertainty_unscaled
-            # 95% confidence interval
-            self.dataframe['price_lower_95'] = np.exp(predicted_log_price - 1.96 * uncertainty_unscaled)
-            self.dataframe['price_upper_95'] = np.exp(predicted_log_price + 1.96 * uncertainty_unscaled)
-        
-        # Error metrics
-        self.dataframe['price_error'] = self.dataframe['predicted_price'] - self.dataframe['sale_price']
-        self.dataframe['pct_error'] = 100 * (self.dataframe['price_error'] / self.dataframe['sale_price'])
-        
-        print(f'\nMean absolute percentage error: {self.dataframe["pct_error"].abs().mean():.2f}%')
-        
-        if len(uncertainties) > 0:
-            # Check calibration: what % of actual prices fall within 95% CI
-            in_ci = ((self.dataframe['sale_price'] >= self.dataframe['price_lower_95']) & 
-                    (self.dataframe['sale_price'] <= self.dataframe['price_upper_95']))
-            print(f'95% CI coverage: {in_ci.mean()*100:.1f}% (should be ~95%)')
-        
-        return self
+    def add_predictions_to_data(
+        self,
+        return_uncertainty=True,
+        community_min_support=20,
+        community_shrinkage_strength=20.0,
+    ):
+        """Attach prediction/report columns through the evaluation component."""
+        from .evaluation import add_predictions_to_data
+        return add_predictions_to_data(
+            self,
+            return_uncertainty=return_uncertainty,
+            community_min_support=community_min_support,
+            community_shrinkage_strength=community_shrinkage_strength,
+        )
+
+    def _calculate_validation_community_metrics(
+        self,
+        min_support=20,
+        shrinkage_strength=20.0,
+    ):
+        """Compatibility wrapper for validation-only community evaluation."""
+        from .evaluation import calculate_validation_community_metrics
+        return calculate_validation_community_metrics(
+            self,
+            min_support=min_support,
+            shrinkage_strength=shrinkage_strength,
+        )
     
     def extend_year_vocab(self, new_years):
         """
@@ -525,110 +670,31 @@ class modelmanager:
 
         return self
 
+    def _synchronize_device(self):
+        """Finish queued accelerator work before checkpoint operations."""
+        from .checkpoint_io import synchronize_device
+        return synchronize_device(self)
+
+    def save_and_reload_for_evaluation(self):
+        """Persist once and verify the exact state used for evaluation."""
+        from .checkpoint_io import save_and_reload_for_evaluation
+        return save_and_reload_for_evaluation(self)
+
     def save_model(self):
-        """Save model, scalers, and vocabularies"""
-        os.makedirs(self.directory, exist_ok=True)
-        
-        # Save model checkpoint
-        torch.save({
-            'model_state_dict': self.predictor.model.state_dict(),
-            'optimizer_state_dict': self.predictor.optimizer.state_dict(),
-            'results': self.results,
-            'embedding_dim': self.embedding_dim,
-            'hidden_dim': self.hidden_dim,
-            'property_dim': self.property_dim,
-            'continuous_time_dim': self.continuous_time_dim,
-            'market_dim': self.market_dim,
-            'n_communities': self.n_communities,
-            # community_embedding_size = n_communities + 1 (includes the unknown index slot)
-            'community_embedding_size': self.n_communities + 1,
-            'year_length': self.year_length,
-            'week_length': self.week_length,
-            'learning_rate': self.learning_rate,
-            'pooling_strategy': self.pooling_strategy,
-            'use_neighborhood_pooling': self.use_neighborhood_pooling,
-            'reference_date': self.reference_date.isoformat() if self.reference_date else None
-        }, f'{self.directory}/model.pth')
-        
-        # Save vocabularies
-        with open(f'{self.directory}/year_vocab.json', 'w') as f:
-            json.dump(self.year_vocab, f)
-        with open(f'{self.directory}/week_vocab.json', 'w') as f:
-            json.dump(self.week_vocab, f)
-        
-        # Save results
-        with open(f'{self.directory}/results.json', 'w') as f:
-            json.dump(self.results, f, indent=2)
-        
-        print(f"Model saved to {self.directory}")
-        print(f"  Using neighborhood pooling: {self.use_neighborhood_pooling}")
-        if self.use_neighborhood_pooling:
-            print(f"  Pooling strategy: {self.pooling_strategy}")
-        
-        return self
-    
+        """Atomically persist weights and immutable deployment artifacts."""
+        from .checkpoint_io import save_model
+        return save_model(self)
+
+    def save_results(self):
+        """Persist updated metrics without rewriting model weights."""
+        from .checkpoint_io import save_results
+        return save_results(self)
+
     def load_model(self, directory):
-        """Load saved model and artifacts"""
-        from pathlib import Path
-        directory = Path(directory)
-        self.directory = directory
-        
-        # Load checkpoint
-        ckpt = torch.load(directory / "model.pth", map_location=self.device)
-        
-        # Restore architecture params
-        self.embedding_dim = ckpt['embedding_dim']
-        self.hidden_dim = ckpt['hidden_dim']
-        self.property_dim = ckpt['property_dim']
-        self.continuous_time_dim = ckpt['continuous_time_dim']
-        self.market_dim = ckpt['market_dim']
-        self.n_communities = ckpt['n_communities']
-        self.year_length = ckpt['year_length']
-        self.week_length = ckpt['week_length']
-        self.learning_rate = ckpt['learning_rate']
-        self.pooling_strategy = ckpt.get('pooling_strategy', 'mean')
-        self.use_neighborhood_pooling = ckpt.get('use_neighborhood_pooling', False)
-        
-        if ckpt.get('reference_date'):
-            self.reference_date = pd.to_datetime(ckpt['reference_date'])
-        
-        # Recreate predictor
-        # community_embedding_size = n_communities + 1 (includes unknown slot).
-        # Fall back to n_communities + 1 for older checkpoints that didn't save this key.
-        community_embedding_size = ckpt.get('community_embedding_size', self.n_communities + 1)
-        self.predictor = price_predictor(
-            self.device, self.embedding_dim, self.hidden_dim,
-            self.property_dim, self.continuous_time_dim, self.market_dim,
-            community_embedding_size, self.year_length, self.week_length,
-            self.learning_rate,
-            use_neighborhood_pooling=self.use_neighborhood_pooling,
-            pooling_strategy=self.pooling_strategy
-        )
-        
-        # Load weights
-        self.predictor.model.load_state_dict(ckpt['model_state_dict'])
-        self.predictor.optimizer.load_state_dict(ckpt['optimizer_state_dict'])
-        self.predictor.eval()
-        
-        # Load scalers
-        for feature in ['sqft', 'sqft_lot', 'beds', 'time_trend', 'sin_day', 'cos_day', 
-                       'sin_month', 'cos_month', 'mortgage_rate', 'unemployment_rate', 'log_price']:
-            scaler_path = directory / f"{feature}_scaler.pkl"
-            if scaler_path.exists():
-                self.scalers[feature] = joblib.load(scaler_path)
-        
-        # Load vocabularies
-        with open(directory / "year_vocab.json", "r") as f:
-            self.year_vocab = json.load(f)
-        with open(directory / "week_vocab.json", "r") as f:
-            self.week_vocab = json.load(f)
-        
-        # Load results
-        self.results = ckpt.get("results", {})
-        
-        print(f"Model loaded from {directory}")
-        print(f"  Using neighborhood pooling: {self.use_neighborhood_pooling}")
-        if self.use_neighborhood_pooling:
-            print(f"  Pooling strategy: {self.pooling_strategy}")
-        
-        return self
+        """Restore weights and supporting artifacts from a checkpoint directory."""
+        from .checkpoint_io import load_model
+        return load_model(self, directory)
+
+
+# Compatibility alias for existing imports while callers migrate.
+modelmanager = ModelManager

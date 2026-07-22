@@ -29,6 +29,9 @@ CACHE_DIR  = "data/market_indicators"
 CACHE_FILE = os.path.join(CACHE_DIR, "fred_indicators.csv")
 
 
+from pricemodel.market_indicators import join_indicators_backward_asof
+
+
 # ── FRED fetch ────────────────────────────────────────────────────────────────
 
 def fetch_fred_series(series_id: str, start: str = "2019-01-01") -> pd.Series:
@@ -126,17 +129,19 @@ def build_indicator_table(start: str = "2019-01-01") -> pd.DataFrame:
         s.name = col_name
         series[col_name] = s
 
-    combined = pd.DataFrame(series)
+    combined = pd.DataFrame(series).sort_index()
     daily_idx = pd.date_range(start=combined.index.min(), end=datetime.today(), freq="D")
-    combined  = combined.reindex(daily_idx).ffill().bfill()
+    # Forward fill is causal: a daily row only carries observations from the
+    # same date or earlier.  Do not backward fill the beginning of a series.
+    combined = combined.reindex(daily_idx).ffill()
     combined.index.name = "date"
 
-    # QA: no NaNs after fill
+    # Missing leading values are intentional when one series starts later.
     remaining_na = combined.isna().sum().sum()
     if remaining_na > 0:
-        print(f"  ⚠ {remaining_na} NaN values remain after forward/back fill")
+        print(f"  ⚠ {remaining_na} leading values remain missing (no future backfill)")
     else:
-        print(f"  ✓ No missing values after fill")
+        print(f"  ✓ No missing values after causal forward fill")
 
     combined.to_csv(CACHE_FILE)
     print(f"✓ Saved indicator table → {CACHE_FILE} ({len(combined)} daily rows)\n")
@@ -223,16 +228,13 @@ def join_indicators_to_sales(
     print(f"  ✓ {len(sales)} records "
           f"({sales['sale_date'].min().date()} → {sales['sale_date'].max().date()})")
 
-    # Join by date
-    sale_dates = sales["sale_date"].dt.normalize()
-    for col in ["mortgage_rate", "unemployment_rate"]:
-        if col in indicators.columns:
-            sales[col] = sale_dates.map(indicators[col])
-
-    # Fill gaps (holidays, missing weeks)
-    for col in ["mortgage_rate", "unemployment_rate"]:
-        if col in sales.columns:
-            sales[col] = sales[col].ffill().bfill()
+    # Strictly backward-looking join. A sale can use an observation on its
+    # date or earlier, never one from a later date.
+    sales = join_indicators_backward_asof(
+        sales,
+        indicators,
+        require_complete=True,
+    )
 
     if run_qa:
         qa_indicators(indicators, sales)

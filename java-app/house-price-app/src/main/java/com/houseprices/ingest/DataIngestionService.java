@@ -1,22 +1,26 @@
 package com.houseprices.ingest;
 
 import com.houseprices.model.EmbeddingModel;
+import com.houseprices.model.LightGBMModel;
+import com.houseprices.model.PredictionContext;
+import com.houseprices.model.PredictionContextFactory;
+import com.houseprices.service.PropertyStore;
 import com.uber.h3core.H3Core;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 
 /**
- * Ingests property data from CSV files (Rentcast drops, sales history, Zillow)
- * and directly from the Rentcast / Zillow APIs.
- * One method per source type; all return List<PropertyRecord>.
+ * Ingests historical sales CSV and canonical RentCast/Zillow JSON files.
+ * Live JSON records are normalized first and inferred in model batches.
  */
 @ApplicationScoped
 public class DataIngestionService {
@@ -29,9 +33,10 @@ public class DataIngestionService {
     };
 
     @Inject EmbeddingModel    model;
-    @Inject RentcastApiClient rentcastApi;
-    @Inject ZillowApiClient   zillowApi;
+    @Inject LightGBMModel     lightgbm;
     @Inject com.houseprices.model.ModelArtifacts artifacts;
+    @Inject PredictionContextFactory contextFactory;
+    @Inject PropertyStore store;
 
     private final H3Core h3;
 
@@ -83,14 +88,63 @@ public class DataIngestionService {
                         if (baths == 0) baths = 2;
                     }
                     // Unique ID
-                    String id = String.valueOf(lineNum);
+                    String id = buildUniqueRecordId(
+                        "sales", col(cols, idx, "id"), lineNum, lat, lng
+                    );
                     // Resolve community from H3 L8 index
                     String community = artifacts.lookupCommunity(h3Index);
 
-                    EmbeddingModel.PredictionResult pred = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
-                    double predicted = pred.predictedPrice();
-                    double pctError  = salePrice > 0
-                        ? 100.0 * (predicted - salePrice) / salePrice : 0;
+                    double predicted;
+                    double pctError;
+                    double predictionStdPrice;
+                    double predictionCvPct;
+                    float[] clsAttention;
+                    double lightgbmPredicted;
+                    double lightgbmPctError;
+
+                    if (idx.containsKey("predicted_price")) {
+                        // Historical baseline predictions were generated in
+                        // Python with row-specific causal local features. Do
+                        // not run them through the current deployment snapshot.
+                        predicted = parseDouble(cols, idx, "predicted_price");
+                        pctError = parseDoubleOrDefault(
+                            cols,
+                            idx,
+                            "pct_error",
+                            salePrice > 0 ? 100.0 * (predicted - salePrice) / salePrice : 0
+                        );
+                        predictionStdPrice = parseDoubleOrDefault(
+                            cols, idx, "prediction_std_price", 0
+                        );
+                        predictionCvPct = predicted > 0
+                            ? 3.92 * predictionStdPrice / predicted * 100.0
+                            : 0.0;
+                        clsAttention = parseAttention(cols, idx);
+                    } else {
+                        EmbeddingModel.PredictionResult pred = model.predict(
+                            h3Index, saleDate, sqft, sqftLot, beds, lat, lng
+                        );
+                        predicted = pred.predictedPrice();
+                        pctError = salePrice > 0
+                            ? 100.0 * (predicted - salePrice) / salePrice : 0;
+                        predictionStdPrice = pred.predictionStdPrice();
+                        predictionCvPct = pred.predictionCvPct();
+                        clsAttention = pred.clsAttention();
+                    }
+
+                    if (idx.containsKey("lightgbm_predicted_price")) {
+                        lightgbmPredicted = parseDouble(cols, idx, "lightgbm_predicted_price");
+                        lightgbmPctError = parseDoubleOrDefault(
+                            cols,
+                            idx,
+                            "lightgbm_pct_error",
+                            salePrice > 0
+                                ? 100.0 * (lightgbmPredicted - salePrice) / salePrice : 0
+                        );
+                    } else {
+                        lightgbmPredicted = 0.0;
+                        lightgbmPctError = 0.0;
+                    }
 
                     records.add(new PropertyRecord(
                         id,
@@ -99,9 +153,10 @@ public class DataIngestionService {
                         lat, lng, h3Index, community,
                         sqft, sqftLot, (int) beds, baths,
                         col(cols, idx, "home_type"),
-                        saleDate, salePrice, null,
+                        saleDate, salePrice, 0.0, null,
                         predicted, pctError,
-                        pred.predictionStdPrice(), pred.predictionCvPct(), pred.clsAttention()
+                        lightgbmPredicted, lightgbmPctError,
+                        predictionStdPrice, predictionCvPct, clsAttention
                     ));
                 } catch (Exception e) {
                     // Skip malformed rows silently
@@ -109,55 +164,6 @@ public class DataIngestionService {
             }
         }
         LOG.infof("Ingested %d sales records from %s", records.size(), file.getName());
-        return records;
-    }
-
-    // ── Rentcast CSV (data/rentcast_recent_house_sales.csv format) ───────────
-
-    public List<PropertyRecord> ingestRentcastCsv(File file) throws IOException {
-        LOG.infof("Ingesting Rentcast CSV: %s", file.getName());
-        List<PropertyRecord> records = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String headerLine = br.readLine();
-            if (headerLine == null) return records;
-            Map<String, Integer> idx = headerIndex(headerLine);
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] cols = parseCsvLine(line);
-                try {
-                    double lat = parseDouble(cols, idx, "latitude");
-                    double lng = parseDouble(cols, idx, "longitude");
-                    String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
-                    double salePrice = parseDoubleOrDefault(cols, idx, "lastSalePrice", 0);
-                    LocalDate saleDate = parseDateOrToday(cols, idx, "lastSaleDate");
-                    double sqft    = parseDoubleOrDefault(cols, idx, "squareFootage", 0);
-                    double sqftLot = parseDoubleOrDefault(cols, idx, "lotSize", 0);
-                    double beds    = parseDoubleOrDefault(cols, idx, "bedrooms", 0);
-
-                    EmbeddingModel.PredictionResult predR = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
-                    double predicted = predR.predictedPrice();
-                    double pctError  = salePrice > 0
-                        ? 100.0 * (predicted - salePrice) / salePrice : 0;
-
-                    records.add(new PropertyRecord(
-                        col(cols, idx, "id"),
-                        col(cols, idx, "formattedAddress"),
-                        "rentcast",
-                        lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
-                        sqft, sqftLot, (int) beds,
-                        parseDoubleOrDefault(cols, idx, "bathrooms", 0),
-                        col(cols, idx, "propertyType"),
-                        saleDate, salePrice, null,
-                        predicted, pctError,
-                        predR.predictionStdPrice(), predR.predictionCvPct(), predR.clsAttention()
-                    ));
-                } catch (Exception e) {
-                    // Skip malformed rows
-                }
-            }
-        }
-        LOG.infof("Ingested %d Rentcast records from %s", records.size(), file.getName());
         return records;
     }
 
@@ -172,7 +178,7 @@ public class DataIngestionService {
         List<Map<String, Object>> properties = (List<Map<String, Object>>) root.get("properties");
         if (properties == null) return List.of();
 
-        List<PropertyRecord> records = new ArrayList<>();
+        List<PendingProperty> pending = new ArrayList<>();
         for (Map<String, Object> p : properties) {
             try {
                 double lat = toDouble(p.get("latitude"));
@@ -183,29 +189,23 @@ public class DataIngestionService {
                 LocalDate saleDate = parseDateOrDefault(p.get("lastSaleDate"));
                 double sqft    = toDoubleOrDefault(p.get("squareFootage"), 0);
                 double sqftLot = toDoubleOrDefault(p.get("lotSize"), 0);
-                double beds    = toDoubleOrDefault(p.get("bedrooms"), 0);
+                int beds       = (int) toDoubleOrDefault(p.get("bedrooms"), 0);
                 double baths   = toDoubleOrDefault(p.get("bathrooms"), 0);
-
-                EmbeddingModel.PredictionResult predRcJson = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
-                double predicted = predRcJson.predictedPrice();
-                double pctError  = salePrice > 0 ? 100.0 * (predicted - salePrice) / salePrice : 0;
-
-                records.add(new PropertyRecord(
-                    String.valueOf(p.getOrDefault("id", "")),
-                    String.valueOf(p.getOrDefault("formattedAddress", "")),
-                    "rentcast",
-                    lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
-                    sqft, sqftLot, (int) beds, baths,
-                    String.valueOf(p.getOrDefault("propertyType", "")),
-                    saleDate, salePrice, null,
-                    predicted, pctError,
-                    predRcJson.predictionStdPrice(), predRcJson.predictionCvPct(), predRcJson.clsAttention()
+                String address = stringValue(p.get("formattedAddress"));
+                String id = stringValue(p.get("id"));
+                if (id.isBlank()) id = address + "|" + saleDate;
+                pending.add(new PendingProperty(
+                    id, address, "rentcast", lat, lng, h3Index,
+                    artifacts.lookupCommunity(h3Index), sqft, sqftLot, beds, baths,
+                    stringValue(p.get("propertyType")), saleDate, salePrice, 0.0, null
                 ));
             } catch (Exception e) {
-                // Skip malformed entries
+                LOG.debugf("Skipping malformed RentCast entry: %s", e.getMessage());
             }
         }
-        LOG.infof("Ingested %d Rentcast JSON records from %s", records.size(), file.getName());
+        List<PropertyRecord> records = predictChanged(pending);
+        LOG.infof("Ingested %d changed RentCast records from %s (%d parsed)",
+            records.size(), file.getName(), pending.size());
         return records;
     }
 
@@ -220,16 +220,140 @@ public class DataIngestionService {
         List<Map<String, Object>> properties = (List<Map<String, Object>>) root.get("properties");
         if (properties == null) return List.of();
 
-        List<PropertyRecord> records = new ArrayList<>();
+        LocalDate observationDate = jsonObservationDate(root, file);
+        List<PendingProperty> pending = new ArrayList<>();
         for (Map<String, Object> p : properties) {
             try {
-                records.add(zillowMapToRecord(p));
+                pending.add(zillowMapToPending(p, observationDate));
             } catch (Exception e) {
-                // Skip malformed entries
+                LOG.debugf("Skipping malformed Zillow entry: %s", e.getMessage());
             }
         }
-        LOG.infof("Ingested %d Zillow listings from %s", records.size(), file.getName());
+        List<PropertyRecord> records = predictChanged(pending);
+        LOG.infof("Ingested %d changed Zillow listings from %s (%d parsed)",
+            records.size(), file.getName(), pending.size());
         return records;
+    }
+
+    private record PendingProperty(
+        String id, String address, String source,
+        double lat, double lng, String h3Index, String community,
+        double sqft, double sqftLot, int beds, double baths, String homeType,
+        LocalDate saleDate, double salePrice, double zestimate, String listingUrl
+    ) {}
+
+    private List<PropertyRecord> predictChanged(List<PendingProperty> parsed) {
+        Map<String, PendingProperty> unique = new LinkedHashMap<>();
+        for (PendingProperty value : parsed) {
+            unique.put(value.source() + "\u0000" + value.id(), value);
+        }
+        LocalDate latestSnapshotSale = artifacts.getLocalMarketLatestSaleDate();
+        List<PendingProperty> changed = unique.values().stream()
+            .filter(value -> latestSnapshotSale == null
+                || value.saleDate().isAfter(latestSnapshotSale))
+            .filter(value -> store.findBySourceAndId(value.source(), value.id())
+                .map(existing -> !sameModelInputs(existing, value))
+                .orElse(true))
+            .toList();
+        if (changed.isEmpty()) return List.of();
+
+        List<EmbeddingModel.BatchInput> inputs = changed.stream()
+            .map(value -> new EmbeddingModel.BatchInput(
+                value.h3Index(), value.saleDate(), value.sqft(), value.sqftLot(),
+                value.beds(), value.lat(), value.lng()
+            ))
+            .toList();
+        List<PredictionContext> contexts = contextFactory.prepareAll(inputs, false);
+        EmbeddingModel.PredictionResult[] neural = model.predictPrepared(contexts);
+        double[] tree = lightgbm.predictPrepared(contexts);
+        List<PropertyRecord> records = new ArrayList<>(changed.size());
+        for (int index = 0; index < changed.size(); index++) {
+            PendingProperty value = changed.get(index);
+            EmbeddingModel.PredictionResult prediction = neural[index];
+            double neuralError = value.salePrice() > 0
+                ? 100.0 * (prediction.predictedPrice() - value.salePrice()) / value.salePrice()
+                : 0.0;
+            double treeError = value.salePrice() > 0
+                ? 100.0 * (tree[index] - value.salePrice()) / value.salePrice()
+                : 0.0;
+            records.add(new PropertyRecord(
+                value.id(), value.address(), value.source(), value.lat(), value.lng(),
+                value.h3Index(), value.community(), value.sqft(), value.sqftLot(),
+                value.beds(), value.baths(), value.homeType(), value.saleDate(),
+                value.salePrice(), value.zestimate(), value.listingUrl(), prediction.predictedPrice(),
+                neuralError, tree[index], treeError, prediction.predictionStdPrice(),
+                prediction.predictionCvPct(), prediction.clsAttention()
+            ));
+        }
+        return records;
+    }
+
+    private boolean sameModelInputs(PropertyRecord existing, PendingProperty value) {
+        return Objects.equals(existing.address(), value.address())
+            && Double.compare(existing.lat(), value.lat()) == 0
+            && Double.compare(existing.lng(), value.lng()) == 0
+            && Objects.equals(existing.h3Index(), value.h3Index())
+            && Double.compare(existing.sqft(), value.sqft()) == 0
+            && Double.compare(existing.sqftLot(), value.sqftLot()) == 0
+            && existing.beds() == value.beds()
+            && Double.compare(existing.baths(), value.baths()) == 0
+            && Objects.equals(existing.homeType(), value.homeType())
+            && Objects.equals(existing.saleDate(), value.saleDate())
+            && Double.compare(existing.salePrice(), value.salePrice()) == 0
+            && Double.compare(existing.zestimate(), value.zestimate()) == 0
+            && Objects.equals(existing.listingUrl(), value.listingUrl());
+    }
+
+    private LocalDate jsonObservationDate(Map<String, Object> root, File file) {
+        Object metadataValue = root.get("requestMetadata");
+        if (metadataValue instanceof Map<?, ?> metadata) {
+            Object fetchedAt = metadata.get("fetchedAt");
+            if (fetchedAt != null) {
+                try {
+                    return Instant.parse(String.valueOf(fetchedAt))
+                        .atZone(ZoneId.systemDefault()).toLocalDate();
+                } catch (Exception ignored) {}
+            }
+        }
+        return Instant.ofEpochMilli(file.lastModified())
+            .atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private PendingProperty zillowMapToPending(
+            Map<String, Object> p, LocalDate observationDate) {
+        double lat = toDouble(p.get("latitude"));
+        double lng = toDouble(p.get("longitude"));
+        String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
+        double sqft = toDoubleOrDefault(p.get("area"),
+            toDoubleOrDefault(p.get("livingArea"), 1500));
+        double sqftLot = toDoubleOrDefault(p.get("lotAreaValue"), 5000);
+        int beds = (int) toDoubleOrDefault(p.get("beds"),
+            toDoubleOrDefault(p.get("bedrooms"), 3));
+        double baths = toDoubleOrDefault(p.get("baths"),
+            toDoubleOrDefault(p.get("bathrooms"), 2));
+        double price = toDoubleOrDefault(p.get("price"), 0);
+        double zestimate = toDoubleOrDefault(p.get("zestimate"), 0);
+        String url = stringValue(p.getOrDefault("url", p.get("detailUrl")));
+        String address;
+        Object addressValue = p.get("address");
+        if (addressValue instanceof Map<?, ?> addressMap) {
+            address = stringValue(addressMap.get("street")) + ", "
+                + stringValue(addressMap.get("city")) + ", "
+                + stringValue(addressMap.get("state"));
+        } else {
+            address = stringValue(addressValue);
+        }
+        String id = stringValue(p.getOrDefault("id", p.get("zpid")));
+        if (id.isBlank()) id = address;
+        return new PendingProperty(
+            id, address, "zillow", lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
+            sqft, sqftLot, beds, baths, stringValue(p.get("homeType")),
+            observationDate, price, zestimate, url
+        );
+    }
+
+    private String stringValue(Object value) {
+        return value == null ? "" : String.valueOf(value);
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -271,12 +395,20 @@ public class DataIngestionService {
         try { return Double.parseDouble(col(cols, idx, name)); } catch (Exception e) { return def; }
     }
 
-    private LocalDate parseDate(String[] cols, Map<String, Integer> idx, String name) {
-        return parseLocalDate(col(cols, idx, name));
+    private float[] parseAttention(String[] cols, Map<String, Integer> idx) {
+        String[] names = {
+            "cls_attn_community", "cls_attn_year", "cls_attn_week",
+            "cls_attn_property", "cls_attn_time", "cls_attn_market"
+        };
+        float[] attention = new float[names.length];
+        for (int i = 0; i < names.length; i++) {
+            attention[i] = (float) parseDoubleOrDefault(cols, idx, names[i], 0.0);
+        }
+        return attention;
     }
 
-    private LocalDate parseDateOrToday(String[] cols, Map<String, Integer> idx, String name) {
-        try { return parseLocalDate(col(cols, idx, name)); } catch (Exception e) { return LocalDate.now(); }
+    private LocalDate parseDate(String[] cols, Map<String, Integer> idx, String name) {
+        return parseLocalDate(col(cols, idx, name));
     }
 
     private LocalDate parseLocalDate(String s) {
@@ -311,122 +443,13 @@ public class DataIngestionService {
         return tokens.toArray(new String[0]);
     }
 
-    // ── API fetch methods ─────────────────────────────────────────────────────
-
-    /**
-     * Fetch recent sales from the RentCast API and return as PropertyRecords.
-     * Requires rentcast.api.key to be set in application.properties.
-     */
-    public List<PropertyRecord> fetchFromRentcastApi() throws Exception {
-        return fetchFromRentcastApi(0);
-    }
-
-    public List<PropertyRecord> fetchFromRentcastApi(int limitOverride) throws Exception {
-        List<Map<String, Object>> raw = rentcastApi.fetchRecentSales(limitOverride);
-        List<PropertyRecord> records = new ArrayList<>();
-        for (Map<String, Object> p : raw) {
-            try {
-                double lat = toDouble(p.get("latitude"));
-                double lng = toDouble(p.get("longitude"));
-                String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
-
-                double salePrice = toDoubleOrDefault(p.get("lastSalePrice"), 0);
-                LocalDate saleDate = parseDateOrDefault(p.get("lastSaleDate"));
-                double sqft    = toDoubleOrDefault(p.get("squareFootage"), 0);
-                double sqftLot = toDoubleOrDefault(p.get("lotSize"), 0);
-                double beds    = toDoubleOrDefault(p.get("bedrooms"), 0);
-                double baths   = toDoubleOrDefault(p.get("bathrooms"), 0);
-
-                EmbeddingModel.PredictionResult predRcApi = model.predict(h3Index, saleDate, sqft, sqftLot, beds);
-                double predicted = predRcApi.predictedPrice();
-                double pctError  = salePrice > 0 ? 100.0 * (predicted - salePrice) / salePrice : 0;
-
-                records.add(new PropertyRecord(
-                    String.valueOf(p.getOrDefault("id", "")),
-                    String.valueOf(p.getOrDefault("formattedAddress", "")),
-                    "rentcast",
-                    lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
-                    sqft, sqftLot, (int) beds, baths,
-                    String.valueOf(p.getOrDefault("propertyType", "")),
-                    saleDate, salePrice, null,
-                    predicted, pctError,
-                    predRcApi.predictionStdPrice(), predRcApi.predictionCvPct(), predRcApi.clsAttention()
-                ));
-            } catch (Exception e) {
-                // Skip malformed entries
-            }
-        }
-        LOG.infof("Transformed %d RentCast API records", records.size());
-        return records;
-    }
-
-    /**
-     * Fetch current listings from the Zillow API and return as PropertyRecords.
-     * Requires zillow.api.key to be set in application.properties.
-     */
-    public List<PropertyRecord> fetchFromZillowApi() throws Exception {
-        List<Map<String, Object>> raw = zillowApi.fetchListings();
-        List<PropertyRecord> records = new ArrayList<>();
-        for (Map<String, Object> p : raw) {
-            try {
-                records.add(zillowMapToRecord(p));
-            } catch (Exception e) {
-                // Skip malformed entries
-            }
-        }
-        LOG.infof("Transformed %d Zillow API records", records.size());
-        return records;
-    }
-
-    /** Shared conversion from a raw Zillow property map to a PropertyRecord */
-    @SuppressWarnings("unchecked")
-    private PropertyRecord zillowMapToRecord(Map<String, Object> p) {
-        double lat = toDouble(p.get("latitude"));
-        double lng = toDouble(p.get("longitude"));
-        String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
-
-        // sqft: API uses "area", file may also use "livingArea"
-        double sqft    = toDoubleOrDefault(p.get("area"),
-                         toDoubleOrDefault(p.get("livingArea"), 1500));
-        double sqftLot = toDoubleOrDefault(p.get("lotAreaValue"), 5000);
-        double beds    = toDoubleOrDefault(p.get("beds"),
-                         toDoubleOrDefault(p.get("bedrooms"), 3));
-        double baths   = toDoubleOrDefault(p.get("baths"),
-                         toDoubleOrDefault(p.get("bathrooms"), 2));
-        double price   = toDoubleOrDefault(p.get("price"), 0);
-
-        // url: API uses "url", file may use "detailUrl"
-        String url = String.valueOf(p.getOrDefault("url",
-                     p.getOrDefault("detailUrl", "")));
-
-        // address: may be a nested map {street, city, state} or a plain string
-        String address;
-        Object addrObj = p.get("address");
-        if (addrObj instanceof Map) {
-            Map<String, Object> addrMap = (Map<String, Object>) addrObj;
-            address = addrMap.getOrDefault("street", "") + ", "
-                    + addrMap.getOrDefault("city", "") + ", "
-                    + addrMap.getOrDefault("state", "");
-        } else {
-            address = String.valueOf(addrObj != null ? addrObj : "");
-        }
-
-        String id = String.valueOf(p.getOrDefault("id",
-                    p.getOrDefault("zpid", address)));
-
-        EmbeddingModel.PredictionResult predZ = model.predict(h3Index, LocalDate.now(), sqft, sqftLot, beds);
-        double predicted = predZ.predictedPrice();
-        double pctError  = price > 0 ? 100.0 * (predicted - price) / price : 0;
-
-        return new PropertyRecord(
-            id, address, "zillow",
-            lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
-            sqft, sqftLot, (int) beds, baths,
-            String.valueOf(p.getOrDefault("homeType", "")),
-            LocalDate.now(), price, url,
-            predicted, pctError,
-            predZ.predictionStdPrice(), predZ.predictionCvPct(), predZ.clsAttention()
-        );
+    static String buildUniqueRecordId(
+        String source, String preferredId, int rowNumber, double lat, double lng
+    ) {
+        String stablePart = preferredId == null || preferredId.isBlank()
+            ? String.format(java.util.Locale.ROOT, "%.5f_%.5f", lat, lng)
+            : preferredId.trim();
+        return source + "_" + stablePart + "_" + rowNumber;
     }
 
     private LocalDate parseDateOrDefault(Object o) {
@@ -434,7 +457,4 @@ public class DataIngestionService {
         catch (Exception e) { return LocalDate.now(); }
     }
 
-    /** Expose API clients for callers that need the raw response (e.g. to save to disk) */
-    public ZillowApiClient getZillowApi()   { return zillowApi; }
-    public RentcastApiClient getRentcastApi() { return rentcastApi; }
 }

@@ -1,91 +1,92 @@
-"""
-Load trained Pytorch Model and retrain and save.
-"""
-import sys
-sys.path.append('src')
+"""Retrain a saved neural model with the current leakage-safe workflow."""
 
-import os
-import json
-import joblib
-import torch
-import numpy as np
-import pandas as pd
-import h3
+from __future__ import annotations
+
+import argparse
+from datetime import datetime
 from pathlib import Path
-from glob import glob
 
-# ── 1. Find latest model ──────────────────────────────────────────────────────
-def find_latest_model():
-    dirs = sorted(glob('outputs/models/*/model.pth'))
-    if not dirs:
-        raise FileNotFoundError("No trained model found in outputs/models/")
-    return Path(dirs[-1]).parent
+import pandas as pd
 
-model_dir = find_latest_model()
-print(f"Latest model loaded from: {model_dir}")
+from pricemodel.data_pipeline import DatasetBuilder
+from pricemodel.model_manager import ModelManager
+from pricemodel.training_config import TrainingConfig
 
 
-# ── 2. Load model via model manager ──────────────────────────────────────────
-from pricemodel.model_manager import modelmanager
-from pricemodel.embedding_model import dataset
-manager = modelmanager()
-manager.load_model(model_dir)
+def find_latest_model(root=Path("outputs/models")):
+    """Return the newest checkpoint directory by its timestamped path."""
+    checkpoints = sorted(root.glob("*/model.pth"))
+    if not checkpoints:
+        raise FileNotFoundError(f"No trained model found below {root}")
+    return checkpoints[-1].parent
 
-print(f"  Neighborhood pooling: {manager.use_neighborhood_pooling}")
-print(f"  Pooling strategy:     {manager.pooling_strategy}")
-print(f"  Communities:          {manager.n_communities}")
 
-# Load and prepare data
-def load_and_prepare_data():
-    """Load and combine sales data with RentCast data, apply H3 L9 indexing"""
-    
-    print("\n1. Loading and combining datasets...")
-    
-    # Load main sales data
-    print("   Loading data/sales_2020_25.csv...")
-    df = pd.read_csv('data/sales_2020_25.csv')
-    
-    # Apply H3 Level 9 indexing
-    print("\n   Applying H3 Level 9 indexing...")
-    if 'h3_09' not in df.columns or df['h3_09'].isna().any():
-        print("   Generating H3 L9 indices from lat/lng...")
-        df['h3_09'] = df.apply(
-            lambda row: h3.latlng_to_cell(row['lat'], row['lng'], 9) 
-            if pd.notna(row['lat']) and pd.notna(row['lng']) 
-            else None,
-            axis=1
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model-dir", type=Path)
+    parser.add_argument("--data", default="data/sales_2020_25.csv")
+    parser.add_argument(
+        "--indicators",
+        default="data/market_indicators/fred_indicators.csv",
+        help="Frozen dated indicator CSV; this command never refreshes FRED.",
+    )
+    parser.add_argument("--epochs", type=int, default=5)
+    parser.add_argument("--batch-size", type=int, default=256)
+    parser.add_argument("--learning-rate", type=float, default=3e-4)
+    parser.add_argument("--patience", type=int, default=5)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument(
+        "--skip-uncertainty",
+        action="store_true",
+        help="Train only the mean model; deployed uncertainty will be unreliable.",
+    )
+    parser.add_argument("--output-dir", type=Path)
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    """Load architecture metadata, retrain chronologically, and save a new run."""
+    args = parse_args(argv)
+    source_model = args.model_dir or find_latest_model()
+    print(f"Loading architecture from: {source_model}")
+
+    manager = ModelManager()
+    manager.load_model(source_model)
+    output_dir = args.output_dir or (
+        Path("outputs/models")
+        / f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_retrain"
+    )
+    manager.directory = output_dir
+
+    data = DatasetBuilder()
+    data._map_communities(pd.read_csv(args.data), output_dir="data")
+    data._prepare_data(market_indicator_cache_path=args.indicators)
+    manager.processor(data)
+    manager.split_data(train_ratio=0.7, temporal_split=True)
+
+    estimate_uncertainty = not args.skip_uncertainty
+    if not estimate_uncertainty:
+        print(
+            "WARNING: uncertainty calibration is disabled; prediction intervals "
+            "from this checkpoint must not be treated as reliable."
         )
-        print(f"   ✓ Generated H3 L9 indices for {df['h3_09'].notna().sum()} properties")
-    else:
-        print(f"   ✓ H3 L9 indices already present: {df['h3_09'].notna().sum()} properties")
-    
-    # Show date range
-    df['sale_date'] = pd.to_datetime(df['sale_date'])
-    print(f"\n   Date range: {df['sale_date'].min()} to {df['sale_date'].max()}")
-    
-    return df
+    config = TrainingConfig(
+        sales_csv=args.data,
+        market_indicator_csv=args.indicators,
+        epochs=args.epochs,
+        batch_size=args.batch_size,
+        learning_rate=args.learning_rate,
+        patience=args.patience,
+        estimate_uncertainty=estimate_uncertainty,
+        pooling_strategy=manager.pooling_strategy,
+        uncertainty_calibration_epochs=10 if estimate_uncertainty else 0,
+        random_seed=args.seed,
+    )
+    manager.train_model(**config.train_kwargs(len(manager._PROPERTY_FEATURES)))
+    manager.save_and_reload_for_evaluation()
+    print(f"Retrained checkpoint saved and verified at: {manager.directory}")
+    return manager
 
-df = load_and_prepare_data()
-data = dataset()
-data._map_communities()
-data._prepare_data()
 
-manager.processor(data)
-manager.split_data(train_ratio=0.7, temporal_split=False)
-
-manager.train_model(
-    embedding_dim=128,
-    hidden_dim=256,
-    property_dim=3,
-    continuous_time_dim=1,
-    market_dim=2,
-    epochs=5,
-    batch=256,
-    learning_rate=0.0003,
-    dropout_rate=0.2,
-    estimate_uncertainty=False,   # MSE for training — uncertainty head used at inference only
-    pooling_strategy='mean',
-    patience=20
-)
-
-manager.save_model()
+if __name__ == "__main__":
+    main()

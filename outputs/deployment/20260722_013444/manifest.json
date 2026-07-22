@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-07-22T01:34:45.922201+00:00",
+  "sources": {
+    "neural_model_dir": "outputs/models/20260721_182820"
+  },
+  "files": {
+    "community_map.json": {
+      "sha256": "665b9a30772f107c3863419add5977c2783e2b88be5631863cc4e60540010321",
+      "bytes": 81456
+    },
+    "feature_contract.json": {
+      "sha256": "458efcdc31f3e4ef079f0ada609100eb3e9afcc4d12debd1240e62400179eb7d",
+      "bytes": 3285
+    },
+    "fred_indicators.csv": {
+      "sha256": "db082e3758b73f06616e32dd67ebb9ac09a96568e1b532206e2975559a3b5908",
+      "bytes": 54373
+    },
+    "h3_l8_neighbor_cells.json": {
+      "sha256": "4f000eb07da6e9e73b6d6f26671e210e21d02eb9f12f31438b0958bd8d8a3311",
+      "bytes": 574530
+    },
+    "h3_l8_neighbor_communities.json": {
+      "sha256": "609b83af989644585afec82d69e60400c3315608f9740b64d8af6ca8f477c577",
+      "bytes": 268549
+    },
+    "king_county_water.geojson": {
+      "sha256": "634a024dbb390f6e502d678aebe3488f60908d9313f797c08d3dab788a4f3c8c",
+      "bytes": 4630203
+    },
+    "lightgbm.onnx": {
+      "sha256": "ba87e7d6d98fd10b6d5f4c6ac1133b935583e10e6215c68aa93bfb4886c33f89",
+      "bytes": 20187990
+    },
+    "lightgbm_metadata.json": {
+      "sha256": "6c9fc0981275cc8c11e7366391dd7e42588fba868c6ef0ddba56f3ee82470f0e",
+      "bytes": 2500
+    },
+    "lightgbm_model.txt": {
+      "sha256": "131c99763543e4814c6dbab68dc943035e0bcadf5efda79f7e31a01e024d21d0",
+      "bytes": 3717772
+    },
+    "local_market_snapshot.json": {
+      "sha256": "900711f05d35140ce0479eb52a8b96c7685657852ebf27dd18ae21eb05fa18b4",
+      "bytes": 2384656
+    },
+    "model.onnx": {
+      "sha256": "759985ded1a7a1e95790199aea02de6f24174401322dc82565b5fd1d75251869",
+      "bytes": 1148294
+    },
+    "model_metadata.json": {
+      "sha256": "e842d2fb98d11681ea1164b15ce48f7c3166590260550b64d89654c753549143",
+      "bytes": 828
+    },
+    "scalers.json": {
+      "sha256": "4e1d0e90ea3df9d6927a686ce270684439e2797f057f80e2c8a87dc39e16f502",
+      "bytes": 1269
+    },
+    "synthetic_h3_l8_grid.json": {
+      "sha256": "13aa382b6fd2af0c9a36ea497ad851786fd520d556208ddb136acb1453869699",
+      "bytes": 1094767
+    },
+    "week_vocab.json": {
+      "sha256": "0d99442a4efac736c2bf428f5044a62aa1d56938944bc9723c778ff2a4867903",
+      "bytes": 637
+    },
+    "year_vocab.json": {
+      "sha256": "08fa6a765caac78b208f3b995a7f3293baf8b688af1d8e91799b41d71f303720",
+      "bytes": 110
+    }
+  }
+}

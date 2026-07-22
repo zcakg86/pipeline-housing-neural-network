@@ -1,0 +1,54 @@
+{
+  "model": "RandomForestRegressor",
+  "target": "log_price",
+  "prediction_transform": "exp",
+  "parameters": {
+    "n_estimators": 100,
+    "max_depth": 24,
+    "min_samples_leaf": 5,
+    "max_features": "sqrt",
+    "n_jobs": -1,
+    "random_state": 42
+  },
+  "features": {
+    "encoding": {
+      "community_center": "one_hot",
+      "community_neighbors": "six-neighbor multi_hot_counts",
+      "year": "one_hot",
+      "week": "one_hot"
+    },
+    "numeric_features": [
+      "sqft",
+      "sqft_lot",
+      "beds",
+      "time_trend",
+      "mortgage_rate",
+      "unemployment_rate"
+    ],
+    "local_market_features": [
+      "local_mean_log_price",
+      "local_log_price_std",
+      "local_log1p_sales_count",
+      "local_recency_years",
+      "local_price_trend"
+    ],
+    "local_market_shape": [
+      7,
+      5
+    ],
+    "community_width": 279,
+    "year_width": 8,
+    "week_width": 54,
+    "feature_count": 661
+  },
+  "metrics": {
+    "validation_mape": 18.97104150472901,
+    "validation_median_ape": 13.674042159898283,
+    "validation_rmse": 755080.0981088349,
+    "validation_sample_count": 29007,
+    "training_sample_count": 67682,
+    "train_ratio": 0.7,
+    "split": "chronological"
+  },
+  "timestamp": "2026-07-17T14:39:55"
+}

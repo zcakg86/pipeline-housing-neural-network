@@ -1,264 +1,183 @@
-"""
-Export trained PyTorch model and all artifacts for Java/ONNX consumption.
-Outputs to java-app/model-artifacts/
-"""
-import sys
-sys.path.append('src')
+"""Stage and verify a trained neural model for Java ONNX inference.
 
-import os
+Nothing is written during import. Run with ``--deploy`` to atomically replace
+the Java resource bundle after all required neural and LightGBM artifacts have
+been validated; without it, the versioned staging bundle is retained for review.
+"""
+from __future__ import annotations
+
+import argparse
 import json
-import joblib
-import torch
-import numpy as np
-import pandas as pd
+import shutil
 from pathlib import Path
-from glob import glob
 
-OUTPUT_DIR = Path('java-app/model-artifacts')
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+import numpy as np
+import torch
 
-
-# ── 1. Find latest model ──────────────────────────────────────────────────────
-def find_latest_model():
-    dirs = sorted(glob('outputs/models/*/model.pth'))
-    if not dirs:
-        raise FileNotFoundError("No trained model found in outputs/models/")
-    return Path(dirs[-1]).parent
-
-model_dir = find_latest_model()
-print(f"Exporting model from: {model_dir}")
-
-
-# ── 2. Load model via model manager ──────────────────────────────────────────
-from pricemodel.model_manager import modelmanager
-
-manager = modelmanager()
-manager.load_model(model_dir)
-# Move to CPU for ONNX export (MPS device not supported by ONNX tracer)
-manager.predictor.model = manager.predictor.model.cpu()
-manager.predictor.model.eval()
-print(f"  Neighborhood pooling: {manager.use_neighborhood_pooling}")
-print(f"  Pooling strategy:     {manager.pooling_strategy}")
-print(f"  Communities:          {manager.n_communities}")
-
-
-# ── 3. Export ONNX ────────────────────────────────────────────────────────────
-print("\nExporting ONNX model...")
-
-batch = 2  # Use batch > 1 so dynamic axes work
-community_in = torch.zeros(batch, 7, dtype=torch.long)
-year_in      = torch.zeros(batch, dtype=torch.long)
-week_in      = torch.zeros(batch, dtype=torch.long)
-prop_in      = torch.zeros(batch, manager.property_dim,        dtype=torch.float32)
-time_in      = torch.zeros(batch, manager.continuous_time_dim, dtype=torch.float32)
-market_in    = torch.zeros(batch, manager.market_dim,          dtype=torch.float32)
-
-onnx_path = OUTPUT_DIR / 'model.onnx'
+from pricemodel.deployment import atomic_deploy, create_staging_directory, write_manifest
+from pricemodel.feature_contract import FEATURE_CONTRACT, write_feature_contract
+from pricemodel.model_manager import ModelManager
 
 
 class ModelWithExtras(torch.nn.Module):
-    """
-    Thin wrapper that exposes three outputs for ONNX export:
-      - log_price_scaled  : shape [batch, 1]   — scaled log price
-      - log_var_scaled    : shape [batch, 1]   — log variance (uncertainty head)
-      - cls_attention     : shape [batch, 6]   — CLS→token attention weights
-                            token order: community, year, week, property, time, market
-    """
+    """Expose price, uncertainty, and averaged CLS attention to ONNX/Java."""
+
     def __init__(self, model):
         super().__init__()
         self.model = model
 
-    def forward(self, community_indices, year, week,
-                property_features, time_features, market_features):
+    def forward(self, community_indices, year, week, property_features,
+                time_features, market_features, local_market_features=None):
         log_price, log_var = self.model(
-            community_indices, year, week,
-            property_features, time_features, market_features,
-            return_uncertainty=True
+            community_indices, year, week, property_features, time_features,
+            market_features, local_market_features, return_uncertainty=True,
+            need_weights=True,
         )
-        # last_cls_attention: [batch, n_heads, 6] → average over heads → [batch, 6]
-        cls_attn = self.model.last_cls_attention.mean(dim=1)  # [batch, 6]
-        return log_price, log_var, cls_attn
+        return log_price, log_var, self.model.last_cls_attention.mean(dim=1)
 
 
-wrapper = ModelWithExtras(manager.predictor.model)
-wrapper.eval()
-
-torch.onnx.export(
-    wrapper,
-    (community_in, year_in, week_in, prop_in, time_in, market_in),
-    str(onnx_path),
-    input_names=['community_indices', 'year', 'week',
-                 'property_features', 'time_features', 'market_features'],
-    output_names=['log_price_scaled', 'log_var_scaled', 'cls_attention'],
-    dynamic_axes={
-        'community_indices': {0: 'batch'},
-        'year':              {0: 'batch'},
-        'week':              {0: 'batch'},
-        'property_features': {0: 'batch'},
-        'time_features':     {0: 'batch'},
-        'market_features':   {0: 'batch'},
-        'log_price_scaled':  {0: 'batch'},
-        'log_var_scaled':    {0: 'batch'},
-        'cls_attention':     {0: 'batch'},
-    },
-    opset_version=17
-)
-print(f"  ✓ Saved: {onnx_path}  (outputs: log_price_scaled, log_var_scaled, cls_attention[6])")
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--model-dir", help="Training checkpoint directory; defaults to latest")
+    parser.add_argument("--bundle-dir", help="Existing/new staging bundle directory")
+    parser.add_argument("--deploy", action="store_true", help="Atomically install the complete bundle")
+    return parser.parse_args(argv)
 
 
-# ── 4. Export scalers as JSON ─────────────────────────────────────────────────
-print("\nExporting scalers as JSON...")
-
-scaler_features = [
-    'sqft', 'sqft_lot', 'beds',
-    'time_trend',   # continuous_time_dim=1 (sin/cos removed)
-    'mortgage_rate', 'unemployment_rate',
-    'log_price'
-]
-
-scalers_json = {}
-for feat in scaler_features:
-    if feat in manager.scalers:
-        sc = manager.scalers[feat]
-        scalers_json[feat] = {
-            'mean': float(sc.mean_[0]),
-            'scale': float(sc.scale_[0])
-        }
-    else:
-        print(f"  Warning: scaler for '{feat}' not found")
-
-with open(OUTPUT_DIR / 'scalers.json', 'w') as f:
-    json.dump(scalers_json, f, indent=2)
-print(f"  ✓ Saved: {OUTPUT_DIR}/scalers.json  ({len(scalers_json)} scalers)")
+def find_latest_model():
+    """Return the latest timestamped directory containing model.pth."""
+    candidates = sorted(Path("outputs/models").glob("*/model.pth"))
+    if not candidates:
+        raise FileNotFoundError("No trained model found in outputs/models")
+    return candidates[-1].parent
 
 
-# ── 5. Export vocabularies ────────────────────────────────────────────────────
-print("\nExporting vocabularies...")
-# Year vocab
-year_vocab_out = {}
-for k, v in manager.year_vocab.items():
-    year_vocab_out[str(k)] = int(v)
-
-with open(OUTPUT_DIR / 'year_vocab.json', 'w') as f:
-    json.dump(year_vocab_out, f, indent=2)
-
-# Week vocab
-week_vocab_out = {}
-for k, v in manager.week_vocab.items():
-    week_vocab_out[str(k)] = int(v)
-
-with open(OUTPUT_DIR / 'week_vocab.json', 'w') as f:
-    json.dump(week_vocab_out, f, indent=2)
-
-print(f"  ✓ year_vocab.json      ({len(year_vocab_out)} entries)")
-print(f"  ✓ week_vocab.json      ({len(week_vocab_out)} entries)")
+def _copy_required(source, destination, description):
+    if not Path(source).is_file():
+        raise FileNotFoundError(f"{source} is required for {description}")
+    shutil.copy2(source, destination)
 
 
-# ── 6. Export community map and H3 neighbor map ───────────────────────────────
-import shutil
+def _export_onnx(manager, destination):
+    """Export the model and verify numeric parity on a dynamic batch."""
+    model = manager.predictor.model.cpu().eval()
+    wrapper = ModelWithExtras(model).eval()
+    batch = 2
+    inputs = [
+        torch.zeros(batch, 7, dtype=torch.long),
+        torch.zeros(batch, dtype=torch.long),
+        torch.zeros(batch, dtype=torch.long),
+        torch.zeros(batch, manager.property_dim),
+        torch.zeros(batch, manager.continuous_time_dim),
+        torch.zeros(batch, manager.market_dim),
+    ]
+    names = ["community_indices", "year", "week", "property_features",
+             "time_features", "market_features"]
+    if manager.local_feature_dim:
+        inputs.append(torch.zeros(batch, 7, manager.local_feature_dim))
+        names.append("local_market_features")
+    outputs = ["log_price_scaled", "log_var_scaled", "cls_attention"]
+    dynamic_axes = {name: {0: "batch"} for name in names + outputs}
+    torch.onnx.export(
+        wrapper, tuple(inputs), str(destination), input_names=names,
+        output_names=outputs, dynamic_axes=dynamic_axes, opset_version=17,
+    )
 
-print("\nExporting community map...")
-community_map_src = Path('data/community_map.json')
-if community_map_src.exists():
-    shutil.copy(community_map_src, OUTPUT_DIR / 'community_map.json')
-    with open(community_map_src) as f:
-        cm = json.load(f)
-    n_communities = max(cm.values()) + 1
-    print(f"  ✓ Copied community_map.json ({len(cm)} H3 L9 hexes, {n_communities} communities)")
-else:
-    print("  Warning: data/community_map.json not found — Java app will not resolve communities")
-
-print("\nExporting H3 L8 neighbor map...")
-h3_neighbor_src = Path('data/h3_l8_neighbor_communities.json')
-if h3_neighbor_src.exists():
-    shutil.copy(h3_neighbor_src, OUTPUT_DIR / 'h3_l8_neighbor_communities.json')
-    with open(h3_neighbor_src) as f:
-        h3_map = json.load(f)
-    print(f"  ✓ Copied h3_l8_neighbor_communities.json ({len(h3_map)} hexes)")
-else:
-    print("  Warning: h3_l8_neighbor_communities.json not found")
-
-
-# ── 7. Export model metadata ──────────────────────────────────────────────────
-print("\nExporting model metadata...")
-
-ckpt = torch.load(model_dir / 'model.pth', map_location='cpu')
-reference_date = ckpt.get('reference_date', None)
-
-metadata = {
-    'model_version': 'current',
-    'embedding_dim': manager.embedding_dim,
-    'hidden_dim': manager.hidden_dim,
-    'property_dim': manager.property_dim,
-    'continuous_time_dim': manager.continuous_time_dim,
-    'market_dim': manager.market_dim,
-    'n_communities': manager.n_communities,
-    'year_length': manager.year_length,
-    'week_length': manager.week_length,
-    'use_neighborhood_pooling': manager.use_neighborhood_pooling,
-    'pooling_strategy': manager.pooling_strategy,
-    'reference_date': reference_date,
-    'property_features': ['sqft', 'sqft_lot', 'beds'],
-    'time_features': ['time_trend'],
-    'market_features': ['mortgage_rate', 'unemployment_rate'],
-    'input_order': [
-        'community_indices (long[batch,7])',
-        'year (long[batch])',
-        'week (long[batch])',
-        f'property_features (float[batch,{manager.property_dim}])',
-        f'time_features (float[batch,{manager.continuous_time_dim}])',
-        f'market_features (float[batch,{manager.market_dim}])'
-    ],
-    'output': 'log_price_scaled (float[batch,1]) - apply log_price scaler inverse then exp()'
-}
-
-with open(OUTPUT_DIR / 'model_metadata.json', 'w') as f:
-    json.dump(metadata, f, indent=2)
-print(f"  ✓ Saved: {OUTPUT_DIR}/model_metadata.json")
-
-
-# ── 8. Verify ONNX output matches PyTorch ────────────────────────────────────
-print("\nVerifying ONNX output matches PyTorch...")
-try:
-    import onnxruntime as ort
-
-    sess = ort.InferenceSession(str(onnx_path))
-
-    # Run PyTorch
+    try:
+        import onnxruntime as ort
+    except ImportError as exc:
+        raise RuntimeError("onnxruntime is required to verify deployment parity") from exc
     with torch.no_grad():
-        pt_price, pt_logvar, pt_attn = wrapper(
-            community_in, year_in, week_in, prop_in, time_in, market_in
-        )
-        pt_out = pt_price.numpy()
-
-    # Run ONNX
-    onnx_price, onnx_logvar, onnx_attn = sess.run(None, {
-        'community_indices': community_in.numpy(),
-        'year':              year_in.numpy(),
-        'week':              week_in.numpy(),
-        'property_features': prop_in.numpy(),
-        'time_features':     time_in.numpy(),
-        'market_features':   market_in.numpy(),
-    })
-
-    max_diff = np.abs(pt_out - onnx_price).max()
-    print(f"  Max difference PyTorch vs ONNX (price): {max_diff:.2e}")
-    if max_diff < 1e-4:
-        print("  ✓ ONNX output matches PyTorch")
-    else:
-        print("  ⚠ Larger than expected difference - check model")
-    print(f"  log_var range:    [{onnx_logvar.min():.3f}, {onnx_logvar.max():.3f}]")
-    print(f"  cls_attention sum per row: {onnx_attn.sum(axis=1)}")  # should be ~1.0
-
-except ImportError:
-    print("  onnxruntime not installed, skipping verification")
-    print("  Install with: pip install onnxruntime")
+        expected = wrapper(*inputs)[0].numpy()
+    actual = ort.InferenceSession(str(destination), providers=["CPUExecutionProvider"]).run(
+        None, {name: value.numpy() for name, value in zip(names, inputs)}
+    )[0]
+    maximum_difference = float(np.max(np.abs(expected - actual)))
+    if maximum_difference >= 1e-4:
+        raise ValueError(f"Neural ONNX parity failed: max log-price difference {maximum_difference}")
+    return maximum_difference
 
 
-# ── Summary ───────────────────────────────────────────────────────────────────
-print(f"\n{'='*60}")
-print(f"Export complete → {OUTPUT_DIR}/")
-print(f"{'='*60}")
-for f in sorted(OUTPUT_DIR.iterdir()):
-    size_kb = f.stat().st_size / 1024
-    print(f"  {f.name:<45} {size_kb:>8.1f} KB")
+def export_neural(args):
+    """Create a self-describing neural artifact bundle and optionally deploy it."""
+    model_dir = Path(args.model_dir) if args.model_dir else find_latest_model()
+    bundle_dir = Path(args.bundle_dir) if args.bundle_dir else create_staging_directory()
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+
+    manager = ModelManager().load_model(model_dir)
+    if list(manager._PROPERTY_FEATURES) != FEATURE_CONTRACT["groups"]["property"]:
+        raise ValueError("Neural property feature order differs from feature_contract.json")
+    if list(manager._LOCAL_FEATURES[:manager.local_feature_dim]) != FEATURE_CONTRACT["groups"]["local_market"]:
+        raise ValueError("Neural local feature order differs from feature_contract.json")
+
+    maximum_difference = _export_onnx(manager, bundle_dir / "model.onnx")
+    scaler_features = (
+        list(manager._PROPERTY_FEATURES) + list(manager._TIME_FEATURES)
+        + list(manager._MARKET_FEATURES) + ["log_price"]
+        + list(manager._LOCAL_FEATURES[:manager.local_feature_dim])
+    )
+    scalers = {
+        name: {"mean": float(manager.scalers[name].mean_[0]),
+               "scale": float(manager.scalers[name].scale_[0])}
+        for name in scaler_features
+        if name in manager.scalers
+    }
+    missing_scalers = sorted(set(scaler_features).difference(scalers))
+    if missing_scalers:
+        raise ValueError("Checkpoint is missing scalers: " + ", ".join(missing_scalers))
+    (bundle_dir / "scalers.json").write_text(json.dumps(scalers, indent=2) + "\n")
+    (bundle_dir / "year_vocab.json").write_text(json.dumps(manager.year_vocab, indent=2) + "\n")
+    (bundle_dir / "week_vocab.json").write_text(json.dumps(manager.week_vocab, indent=2) + "\n")
+
+    checkpoint = torch.load(model_dir / "model.pth", map_location="cpu")
+    metadata = {
+        "model_version": model_dir.name,
+        "embedding_dim": manager.embedding_dim,
+        "hidden_dim": manager.hidden_dim,
+        "property_dim": manager.property_dim,
+        "continuous_time_dim": manager.continuous_time_dim,
+        "market_dim": manager.market_dim,
+        "local_feature_dim": manager.local_feature_dim,
+        "n_communities": manager.n_communities,
+        "year_length": manager.year_length,
+        "week_length": manager.week_length,
+        "use_neighborhood_pooling": manager.use_neighborhood_pooling,
+        "pooling_strategy": manager.pooling_strategy,
+        "reference_date": checkpoint.get("reference_date"),
+        "property_features": list(manager._PROPERTY_FEATURES),
+        "time_features": list(manager._TIME_FEATURES),
+        "market_features": list(manager._MARKET_FEATURES),
+        "local_market_features": list(manager._LOCAL_FEATURES[:manager.local_feature_dim]),
+        "max_verified_log_price_difference": maximum_difference,
+    }
+    (bundle_dir / "model_metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
+
+    # Static geography and dated state are copied only after model/contract
+    # validation, so a failed export cannot disturb the live Java application.
+    sources = {
+        "community_map.json": Path("data/community_map.json"),
+        "h3_l8_neighbor_communities.json": Path("data/h3_l8_neighbor_communities.json"),
+        "h3_l8_neighbor_cells.json": Path("data/h3_l8_neighbor_cells.json"),
+        "local_market_snapshot.json": Path("data/local_market_snapshot.json"),
+        "king_county_water.geojson": Path("data/osm/king_county_water.geojson"),
+        "fred_indicators.csv": Path("data/market_indicators/fred_indicators.csv"),
+    }
+    for name, source in sources.items():
+        if not source.exists() and name in {"h3_l8_neighbor_cells.json", "local_market_snapshot.json"}:
+            source = model_dir / name
+        _copy_required(source, bundle_dir / name, "Java neural inference")
+    write_feature_contract(bundle_dir / "feature_contract.json")
+    write_manifest(bundle_dir, sources={"neural_model_dir": str(model_dir)})
+    if args.deploy:
+        atomic_deploy(bundle_dir)
+    print(f"Verified neural ONNX max log-price difference: {maximum_difference:.8f}")
+    print(f"Exported neural artifacts to: {bundle_dir}")
+    return bundle_dir
+
+
+def main(argv=None):
+    return export_neural(parse_args(argv))
+
+
+if __name__ == "__main__":
+    main()

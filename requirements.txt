@@ -1,27 +1,28 @@
-pandas
-numpy
-h3pandas
-h3<4
-torch
-scikit-learn
-matplotlib
-panel
-watchfiles
-jupyter_bokeh
-ipykernel
-ipywidgets
-ipywidgets_bokeh
-python-louvain
-#contextily
-pytorch-forecasting
-seaborn
-datashader
-holoviews
-geoviews
-glasbey
-requests
-joblib
-fastapi
-uvicorn[standard]
-python-multipart
-schedule
+# Tested with Python 3.11.9. These are the maintained pipeline's direct
+# dependencies; transitive packages are resolved by pip.
+
+# Numerical data and classical models
+numpy==2.3.1
+pandas==2.3.1
+scipy==1.16.0
+scikit-learn==1.7.1
+joblib==1.5.1
+
+# Neural training
+torch==2.7.1
+
+# Spatial features and community detection
+h3==4.4.2
+networkx==3.5
+python-louvain==0.16
+shapely==2.1.2
+
+# LightGBM and Java model export/parity checks
+lightgbm==4.6.0
+onnx==1.20.1
+onnxmltools==1.16.0
+onnxruntime==1.24.4
+
+# Reports and frozen economic-indicator refresh
+matplotlib==3.10.3
+requests==2.32.4

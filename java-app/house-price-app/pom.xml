@@ -52,6 +52,12 @@
             <artifactId>onnxruntime</artifactId>
             <version>1.19.2</version>
         </dependency>
+        <!-- Native LightGBM contribution predictions (exact TreeSHAP) -->
+        <dependency>
+            <groupId>io.github.metarank</groupId>
+            <artifactId>lightgbm4j</artifactId>
+            <version>4.6.0-2</version>
+        </dependency>
         <!-- H3 spatial indexing -->
         <dependency>
             <groupId>com.uber</groupId>
@@ -100,6 +106,11 @@
                 <configuration>
                     <parameters>true</parameters>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.5.0</version>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>

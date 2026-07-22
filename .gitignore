@@ -43,6 +43,7 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+data/cache/
 nosetests.xml
 coverage.xml
 *.cover
@@ -169,3 +170,13 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Raw OpenStreetMap extracts (large, reproducibly downloadable source data)
+data/osm/*.osm.pbf
+
+# Local historical data (large, reproducibly downloadable source data)
+data/sales_2020_25.csv
+data/sales_2020_25_with_predictions.csv
+
+# Devcontainer. Archived.
+.devcontainer/

@@ -85,7 +85,7 @@ public class ZillowApiClient {
                 + "&homeTypes%5B%5D=townhome";
 
             LOG.infof("Fetching Zillow page %d/%d...", page, maxPages);
-
+            LOG.infof("URL: %s", url);
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("x-api-key", apiKey)

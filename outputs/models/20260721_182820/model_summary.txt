@@ -1,0 +1,24 @@
+Model Training Summary
+==================================================
+
+model_version: current
+h3_level: 8
+neighborhood_pooling: True
+pooling_strategy: center_weighted
+estimate_uncertainty: True
+num_communities: 278
+num_samples: 96689
+mape: 17.04%
+median_ape: 12.22%
+rmse: $524,019
+embedding_dim: 128
+hidden_dim: 256
+epochs_trained: 10
+best_epoch: 5
+best_uncertainty_epoch: 9
+best_validation_nll: -0.5081915855407715
+saved_model_val_loss: 0.2357
+evaluation_checkpoint_reloaded: True
+last_observed_train_loss: 0.3244
+last_observed_val_loss: 0.2762
+model_directory: outputs/models/20260721_182820

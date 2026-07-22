@@ -25,6 +25,7 @@ import java.util.Map;
  *   rentcast.radius     (default: 10 miles)
  *   rentcast.months     (default: 6)
  *   rentcast.limit      (default: 500)
+ *   rentcast.timeout.seconds (default: 180)
  */
 @ApplicationScoped
 public class RentcastApiClient {
@@ -55,6 +56,9 @@ public class RentcastApiClient {
     @ConfigProperty(name = "rentcast.offset", defaultValue = "0")
     int offset;
 
+    @ConfigProperty(name = "rentcast.timeout.seconds", defaultValue = "180")
+    int requestTimeoutSeconds;
+
     private final HttpClient http = HttpClient.newBuilder()
         .connectTimeout(Duration.ofSeconds(30))
         .build();
@@ -74,6 +78,9 @@ public class RentcastApiClient {
         }
 
         int effectiveLimit = limitOverride > 0 ? limitOverride : limit;
+        if (effectiveLimit < 1 || effectiveLimit > 500) {
+            throw new IllegalArgumentException("RentCast limit must be between 1 and 500");
+        }
         int days = months * 30;
         String url = BASE_URL + "?latitude=" + lat
             + "&longitude=" + lng
@@ -91,6 +98,7 @@ public class RentcastApiClient {
 
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(url))
+            .timeout(Duration.ofSeconds(requestTimeoutSeconds))
             .header("X-Api-Key", apiKey)
             .header("accept", "application/json")
             .GET()

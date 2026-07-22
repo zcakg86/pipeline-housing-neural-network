@@ -50,7 +50,89 @@ The project includes a robust `ModelManager` framework that orchestrates the ent
 *   **Data Manipulation:** Pandas, NumPy
 *   **Preprocessing:** Scikit-Learn (StandardScaler)
 *   **Serialization:** Joblib, Pickle, JSON
-*   **Java Export:** Model export is supported for Java deployment via `export_model_for_java.py`.
+*   **Java Export:** `deploy_models_for_java.py` stages both models, verifies
+    ONNX parity and the shared feature contract, writes a hash manifest, and
+    atomically installs one Java artifact bundle.
+
+For checkout-based development, commands use the `src` package layout:
+
+```bash
+python3 -m pip install -e .
+# or prefix an individual command with PYTHONPATH=src
+```
 
 ### **Java Integration**
 See [java-app/house-price-app/README.md](https://github.com/zcakg86/pipeline-housing-neural-network/tree/kiraze/java-app/house-price-app) for the Java app and how the exported model is consumed.
+
+### GitHub Codespaces
+
+The `.devcontainer` configuration provides Python 3.11, Java 21, the pinned
+Python environment, warmed Maven dependencies, and a private forwarded Quarkus
+port. After the Codespace finishes its setup:
+
+```bash
+make test
+make java-dev
+```
+
+Port 8080 appears as **Quarkus house-price app** in the Codespaces Ports panel.
+See [.devcontainer/README.md](.devcontainer/README.md) for required model
+artifacts, optional API secrets, and the boundary between Codespaces development
+and production deployment.
+
+### Random Forest baseline
+
+`main_random_forest.py` trains a quick `RandomForestRegressor` baseline using
+the same chronological 70/30 split and prepared inputs as the neural model.
+Community, year, and week values are encoded categorically; the six neighboring
+communities use a multi-hot representation, and all 7 x 5 leakage-safe local
+market values are included.
+
+```bash
+python3 main_random_forest.py
+```
+
+Artifacts are written under `outputs/random_forest/<timestamp>/`, including the
+Joblib model, validation-only metrics, and validation predictions.
+
+### LightGBM baseline
+
+`main_lightgbm.py` uses the same prepared inputs and final chronological 30%
+holdout. Community, neighbor-community, year, and week values are passed as
+native categorical features. Boosting rounds are selected using a chronological
+slice inside the training period, after which the model is refit on the full 70%
+training period before the final holdout is evaluated.
+
+```bash
+python3 main_lightgbm.py
+```
+
+On macOS, install LightGBM's OpenMP runtime once with `brew install libomp`.
+
+Artifacts are written under `outputs/lightgbm/<timestamp>/`, including Joblib
+and native LightGBM models, metrics, feature importance, and validation
+predictions.
+
+### Water proximity features
+
+Both the neural and LightGBM pipelines calculate `distance_to_water_m` from a
+property coordinate to the nearest retained OSM water boundary, retaining it
+for diagnostics and map display. The model-facing continuous feature is
+`water_proximity = exp(-distance_to_water_m / 100)`, which is about `0.0067` at
+500 metres. `is_waterfront` remains `1` at 50 metres or less and `0` otherwise.
+Lakes, river-area boundaries, canal-area boundaries, and coastline are
+included; `waterway=*` centerlines are not used.
+
+The canonical geometry is `data/osm/king_county_water.geojson`. Rebuild it from
+the local Washington PBF with:
+
+```bash
+python3 scripts/extract_osm_water.py
+```
+
+To retrain both models, export their ONNX artifacts, and copy everything needed
+by the Java app:
+
+```bash
+make retrain-deploy
+```

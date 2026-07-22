@@ -1,6 +1,6 @@
 """
 H3 Community Embedding with Neighborhood Pooling
-Uses H3 L9 hexagons with their 6 neighbors' community information
+Uses H3 L8 hexagons with their 6 neighbors' community information
 """
 import torch
 import torch.nn as nn
@@ -60,6 +60,10 @@ class H3CommunityEmbedding(nn.Module):
         """
         # Shape: (Batch_Size, 7, Embedding_Dim)
         embeds = self.embedding(hex_community_matrix)
+        return self.pool_embeddings(embeds)
+
+    def pool_embeddings(self, embeds):
+        """Pool an already-embedded ``[batch, 7, embedding_dim]`` tensor."""
         
         if self.pooling_strategy == 'mean':
             # Simple mean pooling across all 7 embeddings
@@ -94,6 +98,37 @@ class H3CommunityEmbedding(nn.Module):
             return torch.softmax(self.pool_weights, dim=0).detach()
         else:
             return None
+
+
+class LocalNeighborhoodEncoder(nn.Module):
+    """Encode seven H3-local market states without collapsing them prematurely."""
+
+    def __init__(self, embedding_dim, local_feature_dim, dropout_rate=0.1):
+        super().__init__()
+        self.local_feature_layer = nn.Linear(local_feature_dim, embedding_dim)
+        # k=1 has two meaningful roles: center and neighbor. Treating the six
+        # neighbors symmetrically avoids learning arbitrary H3-ID sort order.
+        self.position_embedding = nn.Embedding(2, embedding_dim)
+        self.fusion_norm = nn.LayerNorm(embedding_dim)
+        self.attention_score = nn.Linear(embedding_dim, 1)
+        self.dropout = nn.Dropout(dropout_rate)
+
+    def forward(self, cell_community_embeddings, local_market_features):
+        """
+        Args:
+            cell_community_embeddings: ``[batch, 7, embedding_dim]``
+            local_market_features: ``[batch, 7, local_feature_dim]``
+        """
+        positions = torch.tensor(
+            [0, 1, 1, 1, 1, 1, 1], device=local_market_features.device
+        )
+        positions = self.position_embedding(positions).unsqueeze(0)
+        local_projection = torch.relu(self.local_feature_layer(local_market_features))
+        tokens = self.fusion_norm(cell_community_embeddings + local_projection + positions)
+        scores = self.attention_score(torch.tanh(tokens)).squeeze(-1)
+        weights = torch.softmax(scores, dim=1)
+        pooled = (self.dropout(tokens) * weights.unsqueeze(-1)).sum(dim=1)
+        return pooled, weights
 
 
 # Example usage and testing

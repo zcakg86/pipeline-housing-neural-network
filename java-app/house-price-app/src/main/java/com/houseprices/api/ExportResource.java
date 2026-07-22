@@ -42,16 +42,16 @@ public class ExportResource {
             try (PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out)))) {
                 pw.println("id,address,source,lat,lng,h3Index,community," +
                            "sqft,sqftLot,beds,baths,homeType," +
-                           "saleDate,salePrice,predictedPrice,pctError,listingUrl");
+                           "saleDate,salePrice,zestimate,predictedPrice,pctError,listingUrl");
                 for (PropertyRecord r : records) {
-                    pw.printf("%s,%s,%s,%.6f,%.6f,%s,%s,%.0f,%.0f,%d,%.1f,%s,%s,%.0f,%.0f,%.2f,%s%n",
+                    pw.printf("%s,%s,%s,%.6f,%.6f,%s,%s,%.0f,%.0f,%d,%.1f,%s,%s,%.0f,%.0f,%.0f,%.2f,%s%n",
                         esc(r.id()), esc(r.address()), esc(r.source()),
                         r.lat(), r.lng(),
                         esc(r.h3Index()), esc(r.community()),
                         r.sqft(), r.sqftLot(), r.beds(), r.baths(),
                         esc(r.homeType()),
                         r.saleDate() != null ? r.saleDate().toString() : "",
-                        r.salePrice(), r.predictedPrice(), r.pctError(),
+                        r.salePrice(), r.zestimate(), r.predictedPrice(), r.pctError(),
                         esc(r.listingUrl())
                     );
                 }
