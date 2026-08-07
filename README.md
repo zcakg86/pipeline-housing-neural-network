@@ -1,21 +1,17 @@
 # Project: Spatial Real Estate Price Prediction
 
 ### **Executive Summary**
-This project implements an end-to-end house-price pipeline with three deployed
-models: an attention-based neural network, a LightGBM baseline, and an
-independent monthly H3 GraphSAGE spatial GNN. They share property, seasonal, and
-economic inputs while representing location differently.
-
-### Aims
-* Implement location-specific embedding through spatial features and community detection, that can estimate prices without bias across King County.
-* Provide accurate estimates throughout time.
-* Produce dashboard map to present model predictions and performance.
-
+This project delivers an end-to-end house-price prediction pipeline with three deployed models:
+*  an attention-based neural network that combines property, time, economic, community, and local H3 neighbourhood-market features;
+*  a LightGBM baseline using the corresponding feature set;
+*  a GraphSAGE spatial GNN that represents H3 cells as a monthly, leakage-safe graph and learns from neighbouring market states.
+All models share core property, seasonal, and economic inputs. They differ primarily in how they represent spatial context: community embeddings and local k-ring market summaries in the neural and LightGBM models, versus monthly graph message passing in the Spatial GNN.
+![App Screenshot](Screenshot.png)
 
 ### Data
 *   **Historical Residential Sales data:**\
-Kaggle [King County Sales, Andy Krause](https://www.kaggle.com/datasets/andykrause/kingcountysales/data) Version 8: kingco_sales.csv\
-Contains sales of single family homes in King County, sold between 1999 and year end 2025.
+Kaggle [King County Sales](https://www.kaggle.com/datasets/andykrause/kingcountysales/data) Version 8: kingco_sales.csv\
+Contains sales of single family homes in King County, sold between 1999 and 2025.
 *   **Recent House Sales:**\
 RentCast API properties endpoint.
 *   **Zillow listings:**\
@@ -200,3 +196,4 @@ GNN, and copy one complete bundle to the Java app:
 ```bash
 make retrain-deploy
 ```
+
