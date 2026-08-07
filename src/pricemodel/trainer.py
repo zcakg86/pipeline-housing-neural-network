@@ -22,7 +22,8 @@ class PriceTrainer:
     def __init__(self, device, embedding_dim, hidden_dim, property_dim,
                  continuous_time_dim, market_dim,
                  community_embedding_length,
-                 year_length, week_length, learning_rate,
+                 community_embedding_dim,
+                 learning_rate,
                  epochs, len_train_loader,
                  dropout_rate=0.1, estimate_uncertainty=False,
                  use_neighborhood_pooling=False, pooling_strategy='mean',
@@ -52,8 +53,8 @@ class PriceTrainer:
         self.model = EnhancedEmbeddingModel(
             embedding_dim, hidden_dim, property_dim,
             continuous_time_dim, market_dim,
-            community_embedding_length, 
-            year_length, week_length,
+            community_embedding_length,
+            community_embedding_dim=community_embedding_dim,
             dropout_rate=dropout_rate,
             use_neighborhood_pooling=use_neighborhood_pooling,
             pooling_strategy=pooling_strategy,
@@ -118,16 +119,16 @@ class PriceTrainer:
         """Single training step with optional uncertainty loss"""
         batch = tuple(t.to(self.device) for t in batch)
         if self.local_feature_dim > 0:
-            community, year, week, property_feat, time_feat, market_feat, local_feat, targets = batch
+            community, property_feat, time_feat, market_feat, local_feat, targets = batch
         else:
-            community, year, week, property_feat, time_feat, market_feat, targets = batch
+            community, property_feat, time_feat, market_feat, targets = batch
             local_feat = None
         
         self.optimizer.zero_grad(set_to_none=True)
         
         if self.estimate_uncertainty:
             predictions, log_var, components = self.model(
-                community, year, week, property_feat, time_feat, market_feat,
+                community, property_feat, time_feat, market_feat,
                 local_feat, return_uncertainty=True, return_components=True
             )
             # Negative log-likelihood (Gaussian).
@@ -143,7 +144,7 @@ class PriceTrainer:
             loss = self._reduce_loss(per_sample_loss, community)
         else:
             predictions, components = self.model(
-                community, year, week, property_feat, time_feat, market_feat,
+                community, property_feat, time_feat, market_feat,
                 local_feat, return_components=True
             )
             loss = self._reduce_loss(
@@ -192,13 +193,13 @@ class PriceTrainer:
                 for batch in val_loader:
                     batch = tuple(t.to(self.device) for t in batch)
                     if self.local_feature_dim > 0:
-                        community, year, week, property_feat, time_feat, market_feat, local_feat, targets = batch
+                        community, property_feat, time_feat, market_feat, local_feat, targets = batch
                     else:
-                        community, year, week, property_feat, time_feat, market_feat, targets = batch
+                        community, property_feat, time_feat, market_feat, targets = batch
                         local_feat = None
                     if self.estimate_uncertainty:
                         predictions, log_var, components = self.model(
-                            community, year, week, property_feat, time_feat, market_feat,
+                            community, property_feat, time_feat, market_feat,
                             local_feat, return_uncertainty=True, return_components=True
                         )
                         log_var = torch.clamp(log_var, min=-6.0, max=6.0)
@@ -213,7 +214,7 @@ class PriceTrainer:
                         )
                     else:
                         predictions, components = self.model(
-                            community, year, week, property_feat, time_feat, market_feat,
+                            community, property_feat, time_feat, market_feat,
                             local_feat, return_components=True
                         )
                         loss = self._reduce_loss(
@@ -292,11 +293,11 @@ class PriceTrainer:
     def _unpack_batch(self, batch):
         batch = tuple(t.to(self.device) for t in batch)
         if self.local_feature_dim > 0:
-            community, year, week, property_feat, time_feat, market_feat, local_feat, targets = batch
+            community, property_feat, time_feat, market_feat, local_feat, targets = batch
         else:
-            community, year, week, property_feat, time_feat, market_feat, targets = batch
+            community, property_feat, time_feat, market_feat, targets = batch
             local_feat = None
-        return community, year, week, property_feat, time_feat, market_feat, local_feat, targets
+        return community, property_feat, time_feat, market_feat, local_feat, targets
 
     def _diagnostic_vector(self, predictions, log_var, components, targets):
         """Return device-side diagnostic sums; synchronize only at epoch end."""
@@ -333,12 +334,12 @@ class PriceTrainer:
         }
 
     def _mean_train_step(self, batch):
-        community, year, week, property_feat, time_feat, market_feat, local_feat, targets = (
+        community, property_feat, time_feat, market_feat, local_feat, targets = (
             self._unpack_batch(batch)
         )
         self.optimizer.zero_grad(set_to_none=True)
         predictions, log_var, components = self.model(
-            community, year, week, property_feat, time_feat, market_feat,
+            community, property_feat, time_feat, market_feat,
             local_feat, return_uncertainty=True, return_components=True,
         )
         loss = self._reduce_loss(
@@ -362,12 +363,12 @@ class PriceTrainer:
         )
 
     def _uncertainty_train_step(self, batch):
-        community, year, week, property_feat, time_feat, market_feat, local_feat, targets = (
+        community, property_feat, time_feat, market_feat, local_feat, targets = (
             self._unpack_batch(batch)
         )
         self.optimizer.zero_grad(set_to_none=True)
         predictions, log_var, components = self.model(
-            community, year, week, property_feat, time_feat, market_feat,
+            community, property_feat, time_feat, market_feat,
             local_feat, return_uncertainty=True, return_components=True,
         )
         clipped_log_var = torch.clamp(log_var.reshape(-1), min=-6.0, max=6.0)
@@ -392,11 +393,11 @@ class PriceTrainer:
         diagnostic_total = torch.zeros(7, device=self.device)
         with torch.no_grad():
             for batch in loader:
-                community, year, week, property_feat, time_feat, market_feat, local_feat, targets = (
+                community, property_feat, time_feat, market_feat, local_feat, targets = (
                     self._unpack_batch(batch)
                 )
                 predictions, log_var, components = self.model(
-                    community, year, week, property_feat, time_feat, market_feat,
+                    community, property_feat, time_feat, market_feat,
                     local_feat, return_uncertainty=True, return_components=True,
                 )
                 residual = predictions.reshape(-1) - targets.reshape(-1)

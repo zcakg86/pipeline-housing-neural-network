@@ -32,7 +32,8 @@ class PropertyStoreTest {
             id, "address", source, 47.6, -122.3, "8828d542d7fffff", "1",
             2_000, 4_000, 3, 2, "Single Family", LocalDate.of(2026, 7, 1),
             price, 0, null, 520_000, 4, 515_000, 3, 20_000, 15,
-            new float[]{.1f, .2f, .1f, .2f, .2f, .2f}
+            510_000, 2,
+            new float[]{.1f, .3f, .3f, .3f}
         );
     }
 }

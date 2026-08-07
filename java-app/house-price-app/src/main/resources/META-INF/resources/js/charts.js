@@ -42,7 +42,17 @@ let communityGeoJsonPromise = null;
 
 async function ensureCommunityColorMap() {
   if (!communityGeoJsonPromise) {
-    communityGeoJsonPromise = fetch('/api/sales/community').then(response => response.json());
+    beginMapEvent('community-geometry', 'Preparing community map geometry…');
+    communityGeoJsonPromise = fetch('/api/sales/community')
+      .then(response => response.json())
+      .then(value => {
+        completeMapEvent('community-geometry', 'Community map geometry ready');
+        return value;
+      })
+      .catch(error => {
+        completeMapEvent('community-geometry');
+        throw error;
+      });
   }
   communityGeoJson = await communityGeoJsonPromise;
   if (!communityColorMap.size) {
@@ -85,7 +95,16 @@ let perfData = null; // cached performance response
 let perfDefaultsInitialized = false;
 
 async function ensurePerformanceData() {
-  if (!perfData) perfData = await (await fetch('/api/performance')).json();
+  if (!perfData) {
+    beginMapEvent('community-performance', 'Calculating community-level trends…');
+    try {
+      perfData = await (await fetch('/api/performance')).json();
+      completeMapEvent('community-performance', 'Community-level trends ready');
+    } catch (error) {
+      completeMapEvent('community-performance');
+      throw error;
+    }
+  }
   if (!perfDefaultsInitialized) {
     selectedCommunities = new Set(
       (perfData.defaultCommunities || []).map(String)
@@ -127,8 +146,15 @@ async function loadCommunityLayer() {
     return;
   }
 
-  await ensurePerformanceData();
-  await ensureCommunityColorMap();
+  const firstLoad = !historicalSalesLoaded;
+  if (firstLoad) beginMapEvent('community-sales-load', 'Loading historical sales for community trends…');
+  try {
+    await ensurePerformanceData();
+    await ensureCommunityColorMap();
+  } finally {
+    if (firstLoad) completeMapEvent('community-sales-load', 'Community layer ready');
+  }
+  historicalSalesLoaded = true;
   const gj = communityGeoJson;
 
   L.geoJSON(gj, {
@@ -153,6 +179,7 @@ async function loadCommunityLayer() {
       const neuralError = (p.avgNeuralPctError ?? 0).toFixed(1);
       const lightgbmError = (p.avgLightgbmPctError ?? 0).toFixed(1);
       const meanSqft   = Math.round((p.meanSqft || 0));
+      const meanSqftLot = Math.round((p.meanSqftLot || 0));
       const meanStd    = Math.round(((p.meanPredStd || 0) * 1.96));
 
       layer.on('click', () => toggleCommunity(c));
@@ -163,6 +190,7 @@ async function loadCommunityLayer() {
         `<b>Neural:</b> $${meanNeuralPred.toLocaleString()} (${neuralError}%)<br>` +
         `<b>LightGBM:</b> $${meanLightgbmPred.toLocaleString()} (${lightgbmError}%)<br>` +
         `Avg Sqft: ${meanSqft.toLocaleString()}<br>` +
+        `Avg Lot Sqft: ${meanSqftLot.toLocaleString()}<br>` +
         `95% CI: ±$${meanStd}`,
         { sticky: true }
       );
@@ -204,7 +232,56 @@ function closeFeaturePopup() {
   document.getElementById('featurePopup').style.visibility = 'hidden';
 }
 
+function communityTrendDefinition() {
+  const variable = document.getElementById('chartVariable').value;
+  const model = document.getElementById('chartModel').value;
+  const modelPrefix = model === 'lightgbm' ? 'lightgbm' : model === 'gnn' ? 'gnn' : 'neural';
+  const definitions = {
+    mean_error: {
+      key: `${modelPrefix}Mean`, title: 'Mean signed error', unit: 'percent',
+      minimum: -100, maximum: 100
+    },
+    mape: {
+      key: `${modelPrefix}Mape`, title: 'Mean absolute error', unit: 'percent',
+      minimum: 0, maximum: 100
+    },
+    predicted_price: {
+      key: `${modelPrefix}PredictedMean`, title: 'Mean predicted price', unit: 'money',
+      minimum: undefined, maximum: undefined
+    },
+    sale_price: {
+      key: 'actualMean', title: 'Mean sale price', unit: 'money',
+      minimum: undefined, maximum: undefined
+    },
+    count: {
+      key: 'count', title: 'Sales count', unit: 'count',
+      minimum: 0, maximum: undefined
+    }
+  };
+  return { ...definitions[variable], variable, model };
+}
+
+function trendValueLabel(value, definition) {
+  if (value == null) return '';
+  if (definition.unit === 'money') return `$${Math.round(value).toLocaleString()}`;
+  if (definition.unit === 'percent') return `${Number(value).toFixed(1)}%`;
+  return Math.round(value).toLocaleString();
+}
+
+function rebuildCommunityTrendChart() {
+  if (!perfData) return;
+  const definition = communityTrendDefinition();
+  document.getElementById('chartModel').disabled =
+    ['sale_price', 'count'].includes(definition.variable);
+  if (perfChart) {
+    perfChart.destroy();
+    perfChart = null;
+  }
+  buildChart(perfData);
+}
+
 function buildChart(data) {
+  const definition = communityTrendDefinition();
   const allQuarters = [...new Set(
     data.series.flatMap(s => s.points.map(p => p.quarter))
   )].sort();
@@ -215,28 +292,13 @@ function buildChart(data) {
     const qMap  = Object.fromEntries(s.points.map(p => [p.quarter, p]));
 
     datasets.push({
-      label: `C${s.community} Neural`,
+      label: `Community ${s.community}`,
       communityId: String(s.community),
-      modelName: 'Neural',
-      data: allQuarters.map(q => qMap[q]?.neuralMean ?? null),
+      modelName: definition.model,
+      data: allQuarters.map(q => qMap[q]?.[definition.key] ?? null),
       borderColor: color,
       backgroundColor: color + '33',
       borderWidth: 2,
-      pointRadius: 2,
-      tension: 0.25,
-      spanGaps: true,
-      fill: false
-    });
-    datasets.push({
-      label: `C${s.community} LightGBM`,
-      communityId: String(s.community),
-      modelName: 'LightGBM',
-      data: allQuarters.map(q => qMap[q]?.lightgbmMean ?? null),
-      borderColor: color,
-      backgroundColor: color + '77',
-      borderWidth: 2,
-      borderDash: [6, 3],
-      pointStyle: 'rectRot',
       pointRadius: 2,
       tension: 0.25,
       spanGaps: true,
@@ -271,19 +333,27 @@ function buildChart(data) {
           titleColor: '#e94560',
           bodyColor: '#eee',
           callbacks: {
-            label: ctx => {
-              return `${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(1)}%`;
-            }
+            label: context =>
+              `${context.dataset.label}: ${trendValueLabel(context.parsed.y, definition)}`
           }
         }
       },
       scales: {
         x: { ticks: { color: '#aaa', font: { size: 10 } }, grid: { color: '#1a3a6e' } },
         y: {
-          min: -100, max: 100,
-          ticks: { color: '#aaa', callback: v => v + '%' },
+          min: definition.minimum, max: definition.maximum,
+          ticks: {
+            color: '#aaa',
+            callback: value => trendValueLabel(value, definition)
+          },
           grid:  { color: '#1a3a6e' },
-          title: { display: true, text: 'Avg % Error', color: '#aaa' }
+          title: {
+            display: true,
+            text: `${definition.title}` +
+              (['sale_price', 'count'].includes(definition.variable)
+                ? '' : ` — ${definition.model === 'lightgbm' ? 'LightGBM' : 'Neural Network'}`),
+            color: '#aaa'
+          }
         }
       }
     }
@@ -302,6 +372,10 @@ function buildChart(data) {
     qTo.innerHTML   += `<option value="${q}">${q}</option>`;
   });
   qTo.value = allQuarters[allQuarters.length - 1];
+  document.getElementById('chartYMin').value =
+    definition.minimum === undefined ? '' : definition.minimum;
+  document.getElementById('chartYMax').value =
+    definition.maximum === undefined ? '' : definition.maximum;
   populateCommunitySelector();
   updateChartSelection();
 }
@@ -345,8 +419,11 @@ function updateChartAxes() {
 }
 
 function resetChartAxes() {
-  document.getElementById('chartYMin').value = '-100';
-  document.getElementById('chartYMax').value = '100';
+  const definition = communityTrendDefinition();
+  document.getElementById('chartYMin').value =
+    definition.minimum === undefined ? '' : definition.minimum;
+  document.getElementById('chartYMax').value =
+    definition.maximum === undefined ? '' : definition.maximum;
   if (perfChart) {
     const allQ = perfChart._allQuarters;
     document.getElementById('chartQFrom').value = allQ[0];
@@ -361,23 +438,3 @@ function clearChartCommunities() {
   updateChartSelection();
   if (document.getElementById('showCommunity').checked) loadCommunityLayer();
 }
-
-// ── Draggable popup ───────────────────────────────────────────────────────────
-(function() {
-  const popup = document.getElementById('perfPopup');
-  const handle = document.getElementById('perfDragHandle');
-  let dragging = false, ox = 0, oy = 0;
-  handle.addEventListener('mousedown', e => {
-    dragging = true;
-    const r = popup.getBoundingClientRect();
-    ox = e.clientX - r.left; oy = e.clientY - r.top;
-    popup.style.transform = 'none';
-  });
-  document.addEventListener('mousemove', e => {
-    if (!dragging) return;
-    popup.style.left = (e.clientX - ox) + 'px';
-    popup.style.top  = (e.clientY - oy) + 'px';
-  });
-  document.addEventListener('mouseup', () => dragging = false);
-})();
-

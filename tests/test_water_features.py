@@ -10,7 +10,7 @@ from src.pricemodel.water_features import add_water_proximity_features
 
 
 class WaterFeatureTest(unittest.TestCase):
-    def test_distance_is_to_polygon_boundary_and_threshold_is_inclusive(self):
+    def test_distance_is_to_polygon_boundary_and_proximity_decays(self):
         geometry = {
             "type": "FeatureCollection",
             "features": [{
@@ -43,7 +43,7 @@ class WaterFeatureTest(unittest.TestCase):
             np.exp(-result.loc[0, "distance_to_water_m"] / 100.0),
             places=7,
         )
-        self.assertEqual(result.loc[0, "is_waterfront"], 0.0)
+        self.assertNotIn("is_waterfront", result.columns)
 
 
 if __name__ == "__main__":

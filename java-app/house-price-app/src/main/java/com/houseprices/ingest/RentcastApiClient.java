@@ -129,6 +129,10 @@ public class RentcastApiClient {
             properties = List.of();
         }
 
+        // Persist the same stable, numeric ID as the CLI fetcher. The API's
+        // transient response ID is not suitable for cross-file de-duplication.
+        properties.forEach(RentcastUniqueId::addTo);
+
         LOG.infof("RentCast returned %d properties", properties.size());
         return properties;
     }

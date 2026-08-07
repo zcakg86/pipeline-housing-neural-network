@@ -18,11 +18,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-/** Calculates the static water features used during Python training. */
+/** Calculates distance-decayed water proximity from the exported geometry. */
 @ApplicationScoped
 public class WaterProximityService {
 
-    public static final double WATERFRONT_DISTANCE_METERS = 50.0;
     public static final double WATER_PROXIMITY_TAU_METERS = 100.0;
     private static final Logger LOG = Logger.getLogger(WaterProximityService.class);
     private static final double EARTH_RADIUS_METERS = 6_371_008.8;
@@ -32,7 +31,7 @@ public class WaterProximityService {
     private static final double LATITUDE_SCALE = EARTH_RADIUS_METERS * Math.PI / 180.0;
     private static final double BUCKET_SIZE_METERS = 2_000.0;
 
-    public record WaterFeatures(double distanceToWaterM, double isWaterfront) {}
+    public record WaterFeatures(double distanceToWaterM) {}
 
     public static double waterProximity(double distanceToWaterM) {
         return Math.exp(-Math.max(0.0, distanceToWaterM) / WATER_PROXIMITY_TAU_METERS);
@@ -86,9 +85,7 @@ public class WaterProximityService {
             double x = longitude * LONGITUDE_SCALE;
             double y = latitude * LATITUDE_SCALE;
             double distance = nearestDistance(x, y);
-            return new WaterFeatures(
-                distance, distance <= WATERFRONT_DISTANCE_METERS ? 1.0 : 0.0
-            );
+            return new WaterFeatures(distance);
         });
     }
 

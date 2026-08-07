@@ -12,12 +12,13 @@ import pandas as pd
 from scipy import sparse
 from sklearn.ensemble import RandomForestRegressor
 
+from .feature_contract import MARKET_FEATURES, PROPERTY_FEATURES, TIME_FEATURES
 from .local_market_features import LOCAL_MARKET_FEATURES
 
 
-PROPERTY_FEATURES = ["sqft", "sqft_lot", "beds"]
-TIME_FEATURES = ["time_trend"]
-MARKET_FEATURES = ["mortgage_rate", "unemployment_rate"]
+PROPERTY_FEATURES = list(PROPERTY_FEATURES)
+TIME_FEATURES = list(TIME_FEATURES)
+MARKET_FEATURES = list(MARKET_FEATURES)
 NUMERIC_FEATURES = PROPERTY_FEATURES + TIME_FEATURES + MARKET_FEATURES
 
 
@@ -64,15 +65,10 @@ class RandomForestPriceModel:
             shape=(len(values), width),
         )
 
-    @staticmethod
-    def _vocab_indices(values, vocab):
-        unknown = vocab["unknown"]
-        return np.asarray([vocab.get(int(value), unknown) for value in values], dtype=np.int64)
-
     def build_feature_matrix(self, prepared_data):
         """Create a sparse matrix from an already prepared ``dataset`` object."""
         frame = prepared_data.dataframe
-        required = set(NUMERIC_FEATURES + ["year", "week", "community_neighbors"])
+        required = set(NUMERIC_FEATURES + ["community_neighbors"])
         missing = sorted(required.difference(frame.columns))
         if missing:
             raise ValueError(f"Prepared dataframe is missing features: {missing}")
@@ -110,18 +106,13 @@ class RandomForestPriceModel:
             shape=(len(frame), community_width),
         )
 
-        year_indices = self._vocab_indices(frame["year"], prepared_data.year_vocab)
-        week_indices = self._vocab_indices(frame["week"], prepared_data.week_vocab)
-        years = self._one_hot(year_indices, prepared_data.year_length)
-        weeks = self._one_hot(week_indices, prepared_data.week_length)
-
         numeric = frame[NUMERIC_FEATURES].to_numpy(dtype=np.float32)
         local = np.asarray(local_features, dtype=np.float32).reshape(len(frame), -1)
         if not np.isfinite(numeric).all() or not np.isfinite(local).all():
             raise ValueError("Random Forest inputs contain NaN or infinite values")
 
         matrix = sparse.hstack(
-            [center, neighbors, years, weeks, sparse.csr_matrix(numeric), sparse.csr_matrix(local)],
+            [center, neighbors, sparse.csr_matrix(numeric), sparse.csr_matrix(local)],
             format="csr",
             dtype=np.float32,
         )
@@ -129,15 +120,12 @@ class RandomForestPriceModel:
             "encoding": {
                 "community_center": "one_hot",
                 "community_neighbors": "six-neighbor multi_hot_counts",
-                "year": "one_hot",
-                "week": "one_hot",
+                "annual_cycle": "continuous_sine_cosine",
             },
             "numeric_features": NUMERIC_FEATURES,
             "local_market_features": list(LOCAL_MARKET_FEATURES),
             "local_market_shape": [7, len(LOCAL_MARKET_FEATURES)],
             "community_width": community_width,
-            "year_width": int(prepared_data.year_length),
-            "week_width": int(prepared_data.week_length),
             "feature_count": int(matrix.shape[1]),
         }
         return matrix

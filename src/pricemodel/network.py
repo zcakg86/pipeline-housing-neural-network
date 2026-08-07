@@ -14,8 +14,8 @@ class EnhancedEmbeddingModel(nn.Module):
     """
     def __init__(self, embedding_dim, hidden_dim, property_dim,
                  continuous_time_dim, market_dim,
-                 community_embedding_length, 
-                 year_length, week_length, 
+                 community_embedding_length,
+                 community_embedding_dim=16,
                  dropout_rate=0.1,
                  estimate_uncertainty=False,   # kept for API compat, no longer gates uncertainty_layer
                  use_neighborhood_pooling=True,
@@ -25,19 +25,25 @@ class EnhancedEmbeddingModel(nn.Module):
         
         self.use_neighborhood_pooling = use_neighborhood_pooling
         self.local_feature_dim = int(local_feature_dim)
+        self.community_embedding_dim = int(community_embedding_dim)
         
         # --- Embedding Layers (Categorical) ---
         if use_neighborhood_pooling:
             self.community_embedding = H3CommunityEmbedding(
                 num_communities=int(community_embedding_length),
-                embedding_dim=embedding_dim,
+                embedding_dim=self.community_embedding_dim,
                 pooling_strategy=pooling_strategy
             )
         else:
-            self.community_embedding = nn.Embedding(int(community_embedding_length), embedding_dim)
-        
-        self.year_embedding = nn.Embedding(int(year_length), embedding_dim)
-        self.week_embedding = nn.Embedding(int(week_length), embedding_dim)
+            self.community_embedding = nn.Embedding(
+                int(community_embedding_length), self.community_embedding_dim
+            )
+        # Community identity is intentionally compact. Project it into the
+        # shared attention width only after lookup so the location table cannot
+        # use all 128 token dimensions as an unconstrained identity code.
+        self.community_projection = nn.Linear(
+            self.community_embedding_dim, embedding_dim
+        )
         
         # --- Feature Projection Layers ---
         self.property_feature_layer = nn.Linear(property_dim, embedding_dim)
@@ -88,7 +94,7 @@ class EnhancedEmbeddingModel(nn.Module):
         self.last_local_gate = None
         self.last_local_residual = None
 
-    def forward(self, community_indices, year, week, property_features, 
+    def forward(self, community_indices, property_features,
                 time_features, market_features, local_market_features=None,
                 return_uncertainty=False, return_components=False,
                 need_weights=False):
@@ -98,7 +104,6 @@ class EnhancedEmbeddingModel(nn.Module):
         Args:
             community_indices: If use_neighborhood_pooling=True, shape (batch, 7)
                              Otherwise, shape (batch,)
-            year, week: Shape (batch,)
             property_features, time_features, market_features: Shape (batch, feature_dim)
         """
         # --- Safety: Clamp indices to valid range ---
@@ -110,7 +115,12 @@ class EnhancedEmbeddingModel(nn.Module):
             )
             # Embed once, then share the cell representations between broad
             # community pooling and the fine-scale local residual encoder.
-            cell_community_embeddings = self.community_embedding.embedding(community_indices)
+            raw_cell_community_embeddings = self.community_embedding.embedding(
+                community_indices
+            )
+            cell_community_embeddings = self.community_projection(
+                raw_cell_community_embeddings
+            )
             community_embeddings = self.community_embedding.pool_embeddings(
                 cell_community_embeddings
             )
@@ -120,14 +130,9 @@ class EnhancedEmbeddingModel(nn.Module):
                 community_indices, 0, 
                 self.community_embedding.num_embeddings - 1
             )
-            community_embeddings = self.community_embedding(community_indices)
-        
-        year = torch.clamp(year, 0, self.year_embedding.num_embeddings - 1)
-        week = torch.clamp(week, 0, self.week_embedding.num_embeddings - 1)
-        
-        # --- Embed Categorical Inputs ---
-        year_embeddings = self.year_embedding(year)
-        week_embeddings = self.week_embedding(week)
+            community_embeddings = self.community_projection(
+                self.community_embedding(community_indices)
+            )
         
         # --- Process Continuous Features ---
         processed_property = self.relu(self.property_feature_layer(property_features))
@@ -135,11 +140,9 @@ class EnhancedEmbeddingModel(nn.Module):
         processed_market = self.relu(self.market_feature_layer(market_features))
         
         # --- Stack Sequence ---
-        # [community, year, week, property, time, market]
+        # [community, property, time, market]
         tokens = torch.stack([
-            community_embeddings, 
-            year_embeddings, 
-            week_embeddings, 
+            community_embeddings,
             processed_property,
             processed_time,
             processed_market

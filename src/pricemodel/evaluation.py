@@ -10,9 +10,7 @@ import os
 
 import numpy as np
 import torch
-from torch.utils.data import DataLoader, TensorDataset
-
-from .data_pipeline import vocab_replace_tensor
+from torch.utils.data import DataLoader
 
 
 def add_predictions_to_data(
@@ -30,15 +28,7 @@ def add_predictions_to_data(
     use a minimum support threshold and empirical shrinkage toward overall
     validation MAPE.
     """
-    year_tensor = vocab_replace_tensor(manager.tensors.tensors[1], manager.year_vocab)
-    week_tensor = vocab_replace_tensor(manager.tensors.tensors[2], manager.week_vocab)
-    
-    new_dataset = list(manager.tensors.tensors)
-    new_dataset[1] = year_tensor
-    new_dataset[2] = week_tensor
-    new_dataset = TensorDataset(*new_dataset)
-    
-    loader = DataLoader(new_dataset, batch_size=256)
+    loader = DataLoader(manager.tensors, batch_size=256)
     manager.predictor.eval()
     
     predictions  = []
@@ -53,21 +43,21 @@ def add_predictions_to_data(
         for batch in loader:
             batch = tuple(t.to(manager.predictor.device) for t in batch)
             if manager.local_feature_dim > 0:
-                community, year, week, property_feat, time_feat, market_feat, local_feat, target = batch
+                community, property_feat, time_feat, market_feat, local_feat, target = batch
             else:
-                community, year, week, property_feat, time_feat, market_feat, target = batch
+                community, property_feat, time_feat, market_feat, target = batch
                 local_feat = None
             
             if return_uncertainty:
                 # Uncertainty head is always built — available regardless of training loss
                 pred, log_var = manager.predictor.model(
-                    community, year, week, property_feat, time_feat, market_feat,
+                    community, property_feat, time_feat, market_feat,
                     local_feat, return_uncertainty=True, need_weights=True
                 )
                 uncertainties.extend(torch.exp(log_var / 2).cpu().numpy())
             else:
                 pred = manager.predictor.model(
-                    community, year, week, property_feat, time_feat, market_feat,
+                    community, property_feat, time_feat, market_feat,
                     local_feat, need_weights=True,
                 )
             
@@ -102,20 +92,16 @@ def add_predictions_to_data(
     manager.dataframe['target'] = np.exp(target_log_price)
     
     # Add CLS attention weights
-    # Tokens: [community, year, week, property, time, market]
+    # Tokens: [community, property, time, market]
     if len(cls_attentions) > 0:
         cls_attentions = np.array(cls_attentions)
         manager.dataframe['cls_attn_community'] = cls_attentions[:, 0]
-        manager.dataframe['cls_attn_year'] = cls_attentions[:, 1]
-        manager.dataframe['cls_attn_week'] = cls_attentions[:, 2]
-        manager.dataframe['cls_attn_property'] = cls_attentions[:, 3]
-        manager.dataframe['cls_attn_time'] = cls_attentions[:, 4]
-        manager.dataframe['cls_attn_market'] = cls_attentions[:, 5]
+        manager.dataframe['cls_attn_property'] = cls_attentions[:, 1]
+        manager.dataframe['cls_attn_time'] = cls_attentions[:, 2]
+        manager.dataframe['cls_attn_market'] = cls_attentions[:, 3]
         
         print(f"\nCLS Attention Weights (average across all predictions):")
         print(f"  Community: {manager.dataframe['cls_attn_community'].mean():.3f}")
-        print(f"  Year:      {manager.dataframe['cls_attn_year'].mean():.3f}")
-        print(f"  Week:      {manager.dataframe['cls_attn_week'].mean():.3f}")
         print(f"  Property:  {manager.dataframe['cls_attn_property'].mean():.3f}")
         print(f"  Time:      {manager.dataframe['cls_attn_time'].mean():.3f}")
         print(f"  Market:    {manager.dataframe['cls_attn_market'].mean():.3f}")

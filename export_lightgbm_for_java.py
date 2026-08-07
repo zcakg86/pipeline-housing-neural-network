@@ -19,6 +19,13 @@ from pricemodel.feature_contract import FEATURE_CONTRACT, write_feature_contract
 from pricemodel.lightgbm_model import LightGBMPriceModel
 
 
+# ONNX receives float32 features while LightGBM's native predictor evaluates
+# pandas' float64 values. A value close to a learned tree threshold can
+# therefore follow a neighboring leaf. Keep the accepted difference below
+# 0.1% in multiplicative price terms while allowing that expected rounding.
+MAX_ONNX_LOG_PRICE_DIFFERENCE = 1e-3
+
+
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-dir")
@@ -87,6 +94,7 @@ def export_lightgbm(args):
     pct_error = (predicted_price - actual_price) / actual_price * 100.0
 
     historical_path = Path(args.historical_predictions)
+    historical = None
     if args.update_historical_predictions:
         historical = pd.read_csv(historical_path)
         if len(historical) != len(prepared.dataframe):
@@ -104,9 +112,6 @@ def export_lightgbm(args):
         historical["lightgbm_predicted_log_price"] = predicted_log_price
         historical["lightgbm_predicted_price"] = predicted_price
         historical["lightgbm_pct_error"] = pct_error
-        historical_tmp = historical_path.with_suffix(historical_path.suffix + ".tmp")
-        historical.to_csv(historical_tmp, index=False)
-        os.replace(historical_tmp, historical_path)
 
     onnx_model = onnxmltools.convert_lightgbm(
         model,
@@ -127,18 +132,30 @@ def export_lightgbm(args):
         session.run(None, {"features": check_values})[0]
     ).reshape(-1)
     native_prediction = model.predict(check_frame)
+    if not (
+        np.all(np.isfinite(onnx_prediction))
+        and np.all(np.isfinite(native_prediction))
+    ):
+        raise ValueError("ONNX verification produced non-finite predictions")
     max_log_difference = float(
         np.max(np.abs(onnx_prediction - native_prediction))
     )
-    if max_log_difference > 1e-4:
+    max_price_difference_pct = float(np.expm1(max_log_difference) * 100.0)
+    if max_log_difference > MAX_ONNX_LOG_PRICE_DIFFERENCE:
         raise ValueError(
-            f"ONNX verification failed; max log-price difference {max_log_difference}"
+            "ONNX verification failed; max log-price difference "
+            f"{max_log_difference:.8f} "
+            f"({max_price_difference_pct:.4f}% in price) exceeds "
+            f"{MAX_ONNX_LOG_PRICE_DIFFERENCE:.4f}"
         )
 
     validation_predictions = pd.read_csv(model_dir / "validation_predictions.csv")
     validation_log_residual = np.abs(
         np.log(validation_predictions["sale_price"].to_numpy(dtype=np.float64))
         - np.log(validation_predictions["predicted_price"].to_numpy(dtype=np.float64))
+    )
+    conformal_log_residual_90 = float(
+        np.quantile(validation_log_residual, 0.90, method="higher")
     )
     conformal_log_residual_95 = float(
         np.quantile(validation_log_residual, 0.95, method="higher")
@@ -156,10 +173,17 @@ def export_lightgbm(args):
         "onnx_input": f"features (float[batch,{feature_count}])",
         "onnx_output": "variable (float[batch,1], log_price)",
         "max_verified_log_price_difference": max_log_difference,
+        "max_verified_price_difference_pct": max_price_difference_pct,
+        "verification_log_price_tolerance": MAX_ONNX_LOG_PRICE_DIFFERENCE,
         "uncertainty": {
             "method": "held_out_absolute_log_residual_conformal",
-            "coverage": 0.95,
             "calibration_sample_count": int(len(validation_predictions)),
+            "absolute_log_residual_quantiles": {
+                "0.90": conformal_log_residual_90,
+                "0.95": conformal_log_residual_95,
+            },
+            # Kept for compatibility with previously deployed Java artifacts.
+            "coverage": 0.95,
             "absolute_log_residual_quantile": conformal_log_residual_95,
         },
     }
@@ -175,12 +199,23 @@ def export_lightgbm(args):
     shutil.copy2("data/market_indicators/fred_indicators.csv", bundle_dir / "fred_indicators.csv")
     write_feature_contract(bundle_dir / "feature_contract.json")
     write_manifest(bundle_dir, sources={"lightgbm_model_dir": str(model_dir)})
+
+    # Do not replace the report CSV until model conversion, ONNX parity,
+    # feature-contract validation, and bundle construction have all succeeded.
+    if historical is not None:
+        historical_tmp = historical_path.with_suffix(historical_path.suffix + ".tmp")
+        historical.to_csv(historical_tmp, index=False)
+        os.replace(historical_tmp, historical_path)
     if args.deploy:
         atomic_deploy(bundle_dir)
 
     if args.update_historical_predictions:
         print(f"Updated {historical_path} with {len(prepared.dataframe):,} predictions")
-    print(f"Verified ONNX max log-price difference: {max_log_difference:.8f}")
+    print(
+        "Verified ONNX max difference: "
+        f"{max_log_difference:.8f} log-price "
+        f"({max_price_difference_pct:.4f}% in price)"
+    )
     print(f"Exported LightGBM artifacts to: {bundle_dir}")
     return bundle_dir
 

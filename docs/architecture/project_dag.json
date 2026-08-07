@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "purpose": "Machine-readable implementation context for the existing price models and the independent monthly H3 GNN baseline.",
+  "nodes": [
+    {"id": "sales_csv", "kind": "data", "path": "data/sales_2020_25.csv"},
+    {"id": "indicators", "kind": "data", "path": "data/market_indicators/fred_indicators.csv"},
+    {"id": "water", "kind": "data", "path": "data/osm/king_county_water.geojson"},
+    {"id": "dataset_builder", "kind": "class", "path": "src/pricemodel/data_pipeline.py", "symbol": "DatasetBuilder", "methods": ["_map_communities", "_add_market_indicators", "_prepare_data"]},
+    {"id": "local_tensor", "kind": "function", "path": "src/pricemodel/local_market_features.py", "symbol": "build_historical_local_features"},
+    {"id": "current_manager", "kind": "class", "path": "src/pricemodel/model_manager.py", "symbol": "ModelManager", "methods": ["processor", "split_data", "train_model"]},
+    {"id": "current_network", "kind": "class", "path": "src/pricemodel/network.py", "symbol": "EnhancedEmbeddingModel"},
+    {"id": "monthly_snapshots", "kind": "function", "path": "src/pricemodel/local_market_features.py", "symbol": "build_monthly_h3_market_snapshots"},
+    {"id": "gnn_data", "kind": "module", "path": "src/pricemodel/gnn_data.py", "symbols": ["prepare_gnn_sales_dataframe", "build_monthly_graph_data", "MonthlyGraphData"]},
+    {"id": "gnn_edges", "kind": "function", "path": "src/pricemodel/gnn_data.py", "symbol": "build_h3_edge_index"},
+    {"id": "gnn_network", "kind": "class", "path": "src/pricemodel/gnn_network.py", "symbol": "H3GraphPriceModel", "methods": ["encode_nodes", "forward"]},
+    {"id": "gnn_trainer", "kind": "class", "path": "src/pricemodel/gnn_trainer.py", "symbol": "GNNBaselineTrainer", "methods": ["split_chronologically", "fit", "save"]},
+    {"id": "gnn_export", "kind": "planned_module", "path": "export_gnn_for_java.py"},
+    {"id": "java_gnn_lookup", "kind": "planned_class", "path": "java-app/house-price-app/src/main/java/com/houseprices/model/GnnEmbeddingService.java"}
+  ],
+  "edges": [
+    {"from": "sales_csv", "to": "dataset_builder", "relation": "input"},
+    {"from": "indicators", "to": "dataset_builder", "relation": "backward_asof_input"},
+    {"from": "water", "to": "dataset_builder", "relation": "spatial_input"},
+    {"from": "dataset_builder", "to": "local_tensor", "relation": "prepared_sales"},
+    {"from": "local_tensor", "to": "current_manager", "relation": "seven_cell_sale_tensor"},
+    {"from": "current_manager", "to": "current_network", "relation": "trains"},
+    {"from": "sales_csv", "to": "gnn_data", "relation": "input"},
+    {"from": "indicators", "to": "gnn_data", "relation": "backward_asof_input"},
+    {"from": "water", "to": "gnn_data", "relation": "spatial_input"},
+    {"from": "gnn_data", "to": "monthly_snapshots", "relation": "chronological_sales"},
+    {"from": "gnn_data", "to": "gnn_edges", "relation": "observed_h3_cells"},
+    {"from": "monthly_snapshots", "to": "gnn_network", "relation": "monthly_node_state"},
+    {"from": "gnn_edges", "to": "gnn_network", "relation": "one_ring_topology"},
+    {"from": "gnn_network", "to": "gnn_trainer", "relation": "optimised_by"},
+    {"from": "gnn_trainer", "to": "gnn_export", "relation": "exports_checkpoint_and_monthly_embeddings"},
+    {"from": "gnn_export", "to": "java_gnn_lookup", "relation": "deployment_artifacts"}
+  ],
+  "constraints": [
+    "The GNN baseline has no community ID, community embedding, or seven-cell per-sale local tensor.",
+    "A monthly snapshot contains sales strictly before its calendar-month start.",
+    "Validation is chronological and scaler fitting uses only training-period data.",
+    "Java deployment will look up exported H3 embeddings; it will not run GraphSAGE online."
+  ]
+}

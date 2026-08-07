@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.houseprices.model.EmbeddingModel;
 import com.houseprices.model.LightGBMModel;
+import com.houseprices.model.GnnModel;
 import com.houseprices.model.MarketIndicatorService;
 import com.houseprices.model.ModelArtifacts;
 import com.houseprices.model.PredictionContext;
@@ -35,6 +36,7 @@ public class SyntheticPredictionService {
 
     @Inject EmbeddingModel neuralModel;
     @Inject LightGBMModel lightgbmModel;
+    @Inject GnnModel gnnModel;
     @Inject ModelArtifacts artifacts;
     @Inject WaterProximityService waterProximity;
     @Inject MarketIndicatorService marketIndicators;
@@ -109,9 +111,22 @@ public class SyntheticPredictionService {
         List<PredictionContext> contexts = contextFactory.prepareAll(inputs, true);
         EmbeddingModel.PredictionResult[] neural = neuralModel.predictPrepared(contexts);
         double[] lightgbm = lightgbmModel.predictPrepared(contexts);
+        double[] gnn = gnnModel.predictBatch(inputs.stream().map(input -> new GnnModel.Input(
+            input.h3Index(), input.saleDate(), input.sqft(), input.sqftLot(), input.beds(),
+            input.latitude(), input.longitude()
+        )).toList());
         double conformalLogResidual = lightgbmModel.getConformalLogResidual95();
+        double lightgbmLogResidual90 = lightgbmModel.getConformalLogResidual90();
         double lightgbmLowerFactor = Math.exp(-conformalLogResidual);
         double lightgbmUpperFactor = Math.exp(conformalLogResidual);
+        double lightgbmLower90Factor = Math.exp(-lightgbmLogResidual90);
+        double lightgbmUpper90Factor = Math.exp(lightgbmLogResidual90);
+        double gnnLogResidual90 = gnnModel.getConformalLogResidual90();
+        double gnnLogResidual95 = gnnModel.getConformalLogResidual95();
+        double gnnLower90Factor = Math.exp(-gnnLogResidual90);
+        double gnnUpper90Factor = Math.exp(gnnLogResidual90);
+        double gnnLower95Factor = Math.exp(-gnnLogResidual95);
+        double gnnUpper95Factor = Math.exp(gnnLogResidual95);
 
         List<Map<String, Object>> features = new ArrayList<>(cells.size());
         for (int i = 0; i < cells.size(); i++) {
@@ -119,6 +134,7 @@ public class SyntheticPredictionService {
             EmbeddingModel.PredictionResult neuralPrediction = neural[i];
             float[] attention = neuralPrediction.clsAttention();
             double neuralMargin = 1.96 * neuralPrediction.predictionStdPrice();
+            double neuralMargin90 = 1.644854 * neuralPrediction.predictionStdPrice();
 
             Map<String, Object> properties = new LinkedHashMap<>();
             properties.put("h3Index", cell.h3L8());
@@ -136,21 +152,27 @@ public class SyntheticPredictionService {
             properties.put(
                 "waterProximity", WaterProximityService.waterProximity(water.distanceToWaterM())
             );
-            properties.put("isWaterfront", water.isWaterfront() == 1.0);
             properties.put("neuralPredictedPrice", neuralPrediction.predictedPrice());
             properties.put(
                 "neuralLower95", Math.max(0.0, neuralPrediction.predictedPrice() - neuralMargin)
             );
             properties.put("neuralUpper95", neuralPrediction.predictedPrice() + neuralMargin);
+            properties.put("neuralLower90", Math.max(0.0, neuralPrediction.predictedPrice() - neuralMargin90));
+            properties.put("neuralUpper90", neuralPrediction.predictedPrice() + neuralMargin90);
             properties.put("lightgbmPredictedPrice", lightgbm[i]);
+            properties.put("gnnPredictedPrice", gnn[i]);
+            properties.put("lightgbmLower90", lightgbm[i] * lightgbmLower90Factor);
+            properties.put("lightgbmUpper90", lightgbm[i] * lightgbmUpper90Factor);
             properties.put("lightgbmLower95", lightgbm[i] * lightgbmLowerFactor);
             properties.put("lightgbmUpper95", lightgbm[i] * lightgbmUpperFactor);
+            properties.put("gnnLower90", gnn[i] * gnnLower90Factor);
+            properties.put("gnnUpper90", gnn[i] * gnnUpper90Factor);
+            properties.put("gnnLower95", gnn[i] * gnnLower95Factor);
+            properties.put("gnnUpper95", gnn[i] * gnnUpper95Factor);
             properties.put("attnCommunity", attention[0]);
-            properties.put("attnYear", attention[1]);
-            properties.put("attnWeek", attention[2]);
-            properties.put("attnProperty", attention[3]);
-            properties.put("attnTime", attention[4]);
-            properties.put("attnMarket", attention[5]);
+            properties.put("attnProperty", attention[1]);
+            properties.put("attnTime", attention[2]);
+            properties.put("attnMarket", attention[3]);
 
             features.add(Map.of(
                 "type", "Feature",
@@ -180,8 +202,14 @@ public class SyntheticPredictionService {
         return result;
     }
 
-    /** Exact LightGBM plus exact-group and sampled-feature neural contributions. */
+    /** Exact LightGBM, neural, and deployable GNN group contributions. */
     public Map<String, Object> explain(String h3Index, LocalDate saleDate) {
+        return explain(h3Index, saleDate, null, null);
+    }
+
+    /** Contributions at either the cell centroid or a user-adjusted coordinate. */
+    public Map<String, Object> explain(
+            String h3Index, LocalDate saleDate, Double latitude, Double longitude) {
         LocalDate predictionDate = saleDate == null ? LocalDate.now() : saleDate;
         if (predictionDate.isBefore(minimumPredictionDate())) {
             throw new IllegalArgumentException(
@@ -193,11 +221,15 @@ public class SyntheticPredictionService {
         if (cell == null) {
             throw new IllegalArgumentException("Unknown synthetic H3 cell: " + h3Index);
         }
+        double predictionLat = validCoordinate(latitude, -90.0, 90.0)
+            ? latitude : cell.lat();
+        double predictionLng = validCoordinate(longitude, -180.0, 180.0)
+            ? longitude : cell.lng();
         MarketIndicatorService.MarketIndicators market =
             marketIndicators.lookup(predictionDate);
         EmbeddingModel.BatchInput input = new EmbeddingModel.BatchInput(
             cell.h3L8(), predictionDate, SQFT, SQFT_LOT, BEDS,
-            cell.lat(), cell.lng(),
+            predictionLat, predictionLng,
             market.mortgageRate(), market.unemploymentRate()
         );
         PredictionContext context = contextFactory.prepare(input, true);
@@ -205,15 +237,107 @@ public class SyntheticPredictionService {
             lightgbmModel.explainPrepared(context);
         EmbeddingModel.ShapleyExplanation neuralExplanation =
             neuralModel.explainPrepared(context);
+        GnnModel.ShapleyExplanation gnnExplanation = gnnModel.explain(new GnnModel.Input(
+            cell.h3L8(), predictionDate, SQFT, SQFT_LOT, BEDS,
+            predictionLat, predictionLng
+        ));
         return Map.of(
             "h3Index", h3Index,
+            "lat", predictionLat,
+            "lng", predictionLng,
             "saleDate", predictionDate.toString(),
             "marketIndicatorDate", market.effectiveDate().toString(),
             "mortgageRate", market.mortgageRate(),
             "unemploymentRate", market.unemploymentRate(),
             "explanation", explanation,
-            "neuralExplanation", neuralExplanation
+            "neuralExplanation", neuralExplanation,
+            "gnnExplanation", gnnExplanation
         );
+    }
+
+    /** Recalculate one synthetic observation after its map marker is moved. */
+    public Map<String, Object> predictPoint(
+            String h3Index, LocalDate saleDate, Double latitude, Double longitude) {
+        LocalDate predictionDate = saleDate == null ? LocalDate.now() : saleDate;
+        if (predictionDate.isBefore(minimumPredictionDate())) {
+            throw new IllegalArgumentException(
+                "Synthetic prediction date " + predictionDate +
+                " must be on or after " + minimumPredictionDate()
+            );
+        }
+        GridCell cell = cellsByH3.get(h3Index);
+        if (cell == null) {
+            throw new IllegalArgumentException("Unknown synthetic H3 cell: " + h3Index);
+        }
+        if (!validCoordinate(latitude, -90.0, 90.0)
+                || !validCoordinate(longitude, -180.0, 180.0)) {
+            throw new IllegalArgumentException("Valid latitude and longitude are required");
+        }
+        MarketIndicatorService.MarketIndicators market =
+            marketIndicators.lookup(predictionDate);
+        EmbeddingModel.BatchInput input = new EmbeddingModel.BatchInput(
+            cell.h3L8(), predictionDate, SQFT, SQFT_LOT, BEDS,
+            latitude, longitude, market.mortgageRate(), market.unemploymentRate()
+        );
+        PredictionContext context = contextFactory.prepare(input, true);
+        EmbeddingModel.PredictionResult neural =
+            neuralModel.predictPrepared(List.of(context))[0];
+        double lightgbm = lightgbmModel.predictPrepared(List.of(context))[0];
+        double gnn = gnnModel.predict(
+            cell.h3L8(), predictionDate, SQFT, SQFT_LOT, BEDS, latitude, longitude
+        );
+        double neuralMargin = 1.96 * neural.predictionStdPrice();
+        double neuralMargin90 = 1.644854 * neural.predictionStdPrice();
+        double lightgbmMargin = lightgbmModel.getConformalLogResidual95();
+        double lightgbmMargin90 = lightgbmModel.getConformalLogResidual90();
+        double gnnMargin90 = gnnModel.getConformalLogResidual90();
+        double gnnMargin95 = gnnModel.getConformalLogResidual95();
+        WaterProximityService.WaterFeatures water =
+            waterProximity.lookup(latitude, longitude);
+
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("h3Index", h3Index);
+        result.put("community", artifacts.lookupCommunity(h3Index));
+        result.put("lat", latitude);
+        result.put("lng", longitude);
+        result.put("centerLat", cell.lat());
+        result.put("centerLng", cell.lng());
+        result.put("saleDate", predictionDate.toString());
+        result.put("sqft", SQFT);
+        result.put("sqftLot", SQFT_LOT);
+        result.put("beds", BEDS);
+        result.put("distanceToWaterM", water.distanceToWaterM());
+        result.put(
+            "waterProximity", WaterProximityService.waterProximity(water.distanceToWaterM())
+        );
+        result.put("neuralPredictedPrice", neural.predictedPrice());
+        result.put("neuralLower95", Math.max(0.0, neural.predictedPrice() - neuralMargin));
+        result.put("neuralUpper95", neural.predictedPrice() + neuralMargin);
+        result.put("neuralLower90", Math.max(0.0, neural.predictedPrice() - neuralMargin90));
+        result.put("neuralUpper90", neural.predictedPrice() + neuralMargin90);
+        result.put("lightgbmPredictedPrice", lightgbm);
+        result.put("gnnPredictedPrice", gnn);
+        result.put("lightgbmLower90", lightgbm * Math.exp(-lightgbmMargin90));
+        result.put("lightgbmUpper90", lightgbm * Math.exp(lightgbmMargin90));
+        result.put("lightgbmLower95", lightgbm * Math.exp(-lightgbmMargin));
+        result.put("lightgbmUpper95", lightgbm * Math.exp(lightgbmMargin));
+        result.put("gnnLower90", gnn * Math.exp(-gnnMargin90));
+        result.put("gnnUpper90", gnn * Math.exp(gnnMargin90));
+        result.put("gnnLower95", gnn * Math.exp(-gnnMargin95));
+        result.put("gnnUpper95", gnn * Math.exp(gnnMargin95));
+        result.put("attnCommunity", neural.clsAttention()[0]);
+        result.put("attnProperty", neural.clsAttention()[1]);
+        result.put("attnTime", neural.clsAttention()[2]);
+        result.put("attnMarket", neural.clsAttention()[3]);
+        result.put("marketIndicatorDate", market.effectiveDate().toString());
+        result.put("mortgageRate", market.mortgageRate());
+        result.put("unemploymentRate", market.unemploymentRate());
+        return result;
+    }
+
+    private static boolean validCoordinate(Double value, double minimum, double maximum) {
+        return value != null && Double.isFinite(value)
+            && value >= minimum && value <= maximum;
     }
 
     public LocalDate minimumPredictionDate() {

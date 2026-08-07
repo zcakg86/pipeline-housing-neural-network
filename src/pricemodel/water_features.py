@@ -13,7 +13,6 @@ from shapely.ops import transform
 from shapely.strtree import STRtree
 
 
-WATERFRONT_DISTANCE_METERS = 50.0
 WATER_PROXIMITY_TAU_METERS = 100.0
 DEFAULT_WATER_PATH = Path("data/osm/king_county_water.geojson")
 DEFAULT_CACHE_DIR = Path("data/cache/water_features")
@@ -60,7 +59,6 @@ def _cache_key(frame, water_path: Path) -> str:
 def add_water_proximity_features(
     frame,
     water_path=DEFAULT_WATER_PATH,
-    waterfront_distance_m=WATERFRONT_DISTANCE_METERS,
     cache_dir=DEFAULT_CACHE_DIR,
 ):
     """Return distance diagnostics plus bounded model-facing water features.
@@ -94,7 +92,6 @@ def add_water_proximity_features(
                 result["water_proximity"] = np.exp(
                     -distances / WATER_PROXIMITY_TAU_METERS
                 ).astype(np.float32)
-                result["is_waterfront"] = (distances <= waterfront_distance_m).astype(np.float32)
                 return result
 
     longitude = result["lng"].to_numpy(dtype=np.float64)
@@ -113,7 +110,6 @@ def add_water_proximity_features(
     result["water_proximity"] = np.exp(
         -distances / WATER_PROXIMITY_TAU_METERS
     ).astype(np.float32)
-    result["is_waterfront"] = (distances <= waterfront_distance_m).astype(np.float32)
     if cache_path is not None:
         np.savez_compressed(cache_path, distance_to_water_m=distances)
     return result

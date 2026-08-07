@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-03T17:00:47.539454+00:00",
+  "sources": {
+    "neural_model_dir": "latest",
+    "lightgbm_model_dir": "latest",
+    "gnn_model_dir": "outputs/gnn/20260803_113037"
+  },
+  "files": {
+    "community_map.json": {
+      "sha256": "665b9a30772f107c3863419add5977c2783e2b88be5631863cc4e60540010321",
+      "bytes": 81456
+    },
+    "feature_contract.json": {
+      "sha256": "b900d1d6e4115511e1aea26e6800c7565c51b81c34268beab76c9eb4225f5635",
+      "bytes": 3640
+    },
+    "fred_indicators.csv": {
+      "sha256": "db082e3758b73f06616e32dd67ebb9ac09a96568e1b532206e2975559a3b5908",
+      "bytes": 54373
+    },
+    "gnn_metadata.json": {
+      "sha256": "ed74a85f66932fd422e1202e81fc66381e8007fdabb2a851e1326eb20a5b46ad",
+      "bytes": 2133
+    },
+    "gnn_monthly_embeddings.bin.gz": {
+      "sha256": "82a0c988c52fedab69b35bc9ea36353c5c58ca476af1e2d75e4a7a6c9673e07e",
+      "bytes": 18251198
+    },
+    "gnn_price_head.onnx": {
+      "sha256": "4c46a724af429f4f3ce8391d4ac17e8bdfacc0fbfb0df530f3120d6902cc7de0",
+      "bytes": 56150
+    },
+    "gnn_scalers.json": {
+      "sha256": "be520476dd750c78ae3517135f9b78694822786b4410b3a6b9de30d6b0ea0316",
+      "bytes": 1078
+    },
+    "h3_l8_neighbor_cells.json": {
+      "sha256": "5c60df24794bb9a3787317d2b415e5ff77b46d67b45ce445a80f68bf41e89e20",
+      "bytes": 574718
+    },
+    "h3_l8_neighbor_communities.json": {
+      "sha256": "fe3548acc4da7c23a8489e9b573e84a0644bc3a051ff2d2043295348a67bfdcf",
+      "bytes": 268639
+    },
+    "king_county_water.geojson": {
+      "sha256": "634a024dbb390f6e502d678aebe3488f60908d9313f797c08d3dab788a4f3c8c",
+      "bytes": 4630203
+    },
+    "lightgbm.onnx": {
+      "sha256": "0dd15d5968928a86c259fa685581cd122d93252586d30eaa3fe9597c1638e76b",
+      "bytes": 15761910
+    },
+    "lightgbm_metadata.json": {
+      "sha256": "fd15a8c0f9d360476fda80289896a99dfb060909353b8739ce796b32737b1a44",
+      "bytes": 2826
+    },
+    "lightgbm_model.txt": {
+      "sha256": "746e0309e78767ea72ac030b691dd8a72500ed2d4312ef5b3c567374e02e3d0c",
+      "bytes": 3683023
+    },
+    "local_market_snapshot.json": {
+      "sha256": "77f2c424d5214aed48b1a6896da3802497edf1c67e83bbcf30d4037b31d8c80c",
+      "bytes": 7307231
+    },
+    "model.onnx": {
+      "sha256": "922f1c512940e5740d9947e8eba8ba35d038acca713fc15f9c7f8d8965901bc3",
+      "bytes": 999708
+    },
+    "model_metadata.json": {
+      "sha256": "3a4b9370ef5dd817606c7d46ad6ecde9b3ac2671e71a10e18459f6b348651110",
+      "bytes": 870
+    },
+    "scalers.json": {
+      "sha256": "ffdc5683b50a673a78a6f818dcee90f9d83d5b4d556ce9292747e5011d451e16",
+      "bytes": 1394
+    },
+    "synthetic_h3_l8_grid.json": {
+      "sha256": "13aa382b6fd2af0c9a36ea497ad851786fd520d556208ddb136acb1453869699",
+      "bytes": 1094767
+    }
+  }
+}

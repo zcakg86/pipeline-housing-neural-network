@@ -1,5 +1,66 @@
 // Shared HTTP boundary: cancellation, filter serialization, and stale-request safety.
 const layerAbortControllers = new Map();
+const loadedLiveSources = new Set();
+const activeMapEvents = new Map();
+let interactionSequence = 0;
+
+function beginMapEvent(key, message) {
+  activeMapEvents.set(key, message);
+  const progress = document.getElementById('mapProgress');
+  progress.style.display = 'block';
+  progress.setAttribute('aria-hidden', 'false');
+  document.getElementById('mapProgressText').textContent = message;
+}
+
+function completeMapEvent(key, message = '') {
+  activeMapEvents.delete(key);
+  const progress = document.getElementById('mapProgress');
+  if (activeMapEvents.size) {
+    document.getElementById('mapProgressText').textContent = [...activeMapEvents.values()].at(-1);
+    return;
+  }
+  if (message) document.getElementById('mapProgressText').textContent = message;
+  setTimeout(() => {
+    if (!activeMapEvents.size) {
+      progress.style.display = 'none';
+      progress.setAttribute('aria-hidden', 'true');
+    }
+  }, message ? 900 : 0);
+}
+
+/** Show and persist a concise user action without blocking the map interaction. */
+function reportMapInteraction(action, detail = '') {
+  const message = detail ? `${action}: ${detail}` : action;
+  console.info(`[House Price Map] ${message}`);
+  fetch('/api/events', {
+    method: 'POST', keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, detail })
+  }).catch(() => {});
+  const key = `interaction-${++interactionSequence}`;
+  beginMapEvent(key, message);
+  setTimeout(() => completeMapEvent(key), 1100);
+}
+
+function elementInteractionDetail(element) {
+  if (!element) return 'map';
+  const label = element.labels?.[0]?.textContent?.trim()
+    || element.getAttribute('aria-label') || element.textContent?.trim() || element.id || element.tagName;
+  return label.replace(/\s+/g, ' ').slice(0, 120);
+}
+
+// Controls, popup buttons, and map interactions all produce an operational
+// event. Slider input is logged on `change`, not on every drag frame.
+document.addEventListener('click', event => {
+  const target = event.target.closest('button, input[type=checkbox], select, .leaflet-interactive');
+  if (target) reportMapInteraction('click', elementInteractionDetail(target));
+}, true);
+document.addEventListener('change', event => {
+  const target = event.target;
+  if (target.matches('select, input[type=range], input[type=date], input[type=checkbox]')) {
+    reportMapInteraction('change', `${elementInteractionDetail(target)} = ${target.value}`);
+  }
+}, true);
 async function fetchLayerJson(key, url) {
   const previous = layerAbortControllers.get(key);
   if (previous) previous.abort();
@@ -79,7 +140,9 @@ async function loadHomeTypes() {
   const d = await res.json();
   const fill = (id, types) => {
     const sel = document.getElementById(id);
+    const existing = new Set([...sel.options].map(option => option.value));
     types.forEach(t => {
+      if (existing.has(t)) return;
       const opt = document.createElement('option');
       opt.value = t; opt.textContent = t.replace(/_/g,' ');
       sel.appendChild(opt);
@@ -100,6 +163,9 @@ async function fetchApi(source) {
     return;
   }
   el.textContent = `Fetching ${source}... (billed call)`;
+  reportMapInteraction(`${source} API fetch requested`, 'saving response and ingesting changed records');
+  const progressKey = `api-fetch-${source}`;
+  beginMapEvent(progressKey, `Fetching ${source} API, saving its response, and ingesting records…`);
   try {
     const res = await fetch(`/api/fetch/${source}?confirm=true`, { method: 'POST' });
     const data = await res.json();
@@ -107,9 +173,13 @@ async function fetchApi(source) {
       el.textContent = `✓ ${source}: ${data.fetched} records. Next in ${data.nextAllowedIn}`;
       pointExplanationCache.clear();
       loadHomeTypes(); loadSales(); loadZillow(); loadRentcast(); loadStats();
+      completeMapEvent(progressKey, `${source} API fetch and ingestion complete`);
     } else {
       el.textContent = `✗ ${data.message}`;
+      completeMapEvent(progressKey);
     }
-  } catch (e) { el.textContent = `✗ ${e.message}`; }
+  } catch (e) {
+    completeMapEvent(progressKey);
+    el.textContent = `✗ ${e.message}`;
+  }
 }
-

@@ -11,10 +11,33 @@ let rentcastLayer = L.layerGroup();
 let communityLayer = L.layerGroup();
 let syntheticLayer = L.layerGroup();
 let waterLayer = L.layerGroup();
+let railLayer = L.layerGroup();
+let busLayer = L.layerGroup();
+let majorRoadLayer = L.layerGroup();
+let transportFeatureLayer = L.layerGroup();
 let lightgbmExplanationCache = new Map();
 let pointExplanationCache = new Map();
 const syntheticRenderer = L.canvas({ padding: 0.5 });
 const waterRenderer = L.canvas({ padding: 0.5 });
+map.createPane('majorRoadPane');
+map.getPane('majorRoadPane').style.zIndex = 420;
+map.createPane('railStationPane');
+map.getPane('railStationPane').style.zIndex = 430;
+map.createPane('busStationPane');
+map.getPane('busStationPane').style.zIndex = 431;
+map.createPane('railRoutePane');
+map.getPane('railRoutePane').style.zIndex = 440;
+map.createPane('busRoutePane');
+map.getPane('busRoutePane').style.zIndex = 441;
+const majorRoadRenderer = L.canvas({
+  padding: 0.5, pane: 'majorRoadPane', tolerance: 7
+});
+const railStationRenderer = L.canvas({
+  padding: 0.5, pane: 'railStationPane', tolerance: 5
+});
+const busStationRenderer = L.canvas({
+  padding: 0.5, pane: 'busStationPane', tolerance: 5
+});
 
 // ── Colormaps ─────────────────────────────────────────────────────────────────
 const COLORMAPS = {
@@ -104,7 +127,10 @@ function getColorFn(variable, values, anchors) {
   if (variable === 'pct_error') return v => errorColor(v, anchors);
   const lo = pct(values, 5), hi = pct(values, 95), range = hi - lo || 1;
   // Attention weights and uncertainty use sequential palettes
-  const palette = (variable === 'sqft' || variable === 'pred_std' || variable === 'pred_cv_pct')
+  const palette = (
+    variable === 'sqft' || variable === 'sqft_lot' ||
+    variable === 'pred_std' || variable === 'pred_cv_pct'
+  )
     ? COLORMAPS.Blues
     : COLORMAPS.YlOrRd;
   return v => interpolate(Math.max(0, Math.min(1, (v - lo) / range)), palette);
@@ -114,7 +140,23 @@ function getColorFn(variable, values, anchors) {
 let legendControl = null;
 let communityLegendControl = null;
 let waterLegendControl = null;
+let transportFeatureLegendControl = null;
 let communityColorMap = new Map();
+
+function displayedModel() {
+  return document.getElementById('DisplayedModel').value;
+}
+
+function synchronizeMapVariableOptions() {
+  const model = displayedModel();
+  const variable = document.getElementById('variable');
+  [...variable.options].forEach(option => {
+    const unavailable = option.dataset.model && option.dataset.model !== model;
+    option.disabled = unavailable;
+    option.hidden = unavailable;
+  });
+  if (variable.selectedOptions[0]?.disabled) variable.value = 'predicted_price';
+}
 
 function ptKey(pt) {
   return `${pt[0].toFixed(6)},${pt[1].toFixed(6)}`;
@@ -160,4 +202,3 @@ function buildCommunityAdjacency(features) {
 
   return adjacency;
 }
-

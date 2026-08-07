@@ -1,7 +1,11 @@
 package com.houseprices.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +17,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class EmbeddingModelShapleyTest {
 
     @Test
-    void exactGroupEffectsReconstructTheNeuralPrediction() {
+    void exactGroupEffectsReconstructTheNeuralPrediction() throws Exception {
+        try (InputStream input = getClass().getClassLoader()
+                .getResourceAsStream("model-artifacts/model_metadata.json")) {
+            JsonNode metadata = new ObjectMapper().readTree(input);
+            Assumptions.assumeTrue(
+                metadata.path("time_features").size() == 3,
+                "Generated ONNX artifact has not yet been retrained with cyclic time"
+            );
+        }
         ModelArtifacts artifacts = new ModelArtifacts();
         artifacts.load();
         WaterProximityService water = new WaterProximityService();
@@ -38,10 +50,10 @@ class EmbeddingModelShapleyTest {
         );
         EmbeddingModel.ShapleyExplanation explanation = model.explain(input, true);
 
-        assertEquals(128, explanation.evaluatedCoalitions());
+        assertEquals(32, explanation.evaluatedCoalitions());
         assertEquals(512, explanation.sampledFeatureCoalitions());
-        assertEquals(7, explanation.groups().size());
-        assertEquals(52, explanation.features().size());
+        assertEquals(5, explanation.groups().size());
+        assertEquals(51, explanation.features().size());
         double reconstructed = explanation.referenceLogPrice() + explanation.groups().stream()
             .mapToDouble(EmbeddingModel.ShapleyGroupEffect::logContribution)
             .sum();

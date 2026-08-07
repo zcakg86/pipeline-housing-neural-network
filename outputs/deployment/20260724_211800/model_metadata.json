@@ -1,0 +1,37 @@
+{
+  "model_version": "20260724_141444",
+  "embedding_dim": 128,
+  "community_embedding_dim": 16,
+  "hidden_dim": 256,
+  "property_dim": 4,
+  "continuous_time_dim": 3,
+  "market_dim": 2,
+  "local_feature_dim": 5,
+  "n_communities": 278,
+  "use_neighborhood_pooling": true,
+  "pooling_strategy": "center_weighted",
+  "reference_date": "2020-01-02T00:00:00",
+  "property_features": [
+    "sqft",
+    "sqft_lot",
+    "beds",
+    "water_proximity"
+  ],
+  "time_features": [
+    "time_trend",
+    "annual_sin",
+    "annual_cos"
+  ],
+  "market_features": [
+    "mortgage_rate",
+    "unemployment_rate"
+  ],
+  "local_market_features": [
+    "local_mean_log_price",
+    "local_log_price_std",
+    "local_log1p_sales_count",
+    "local_recency_years",
+    "local_price_trend"
+  ],
+  "max_verified_log_price_difference": 2.682209014892578e-07
+}

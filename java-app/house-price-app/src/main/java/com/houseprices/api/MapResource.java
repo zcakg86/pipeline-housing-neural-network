@@ -2,12 +2,17 @@ package com.houseprices.api;
 
 import com.houseprices.ingest.PropertyRecord;
 import com.houseprices.service.H3AggregationService;
+import com.houseprices.service.LiveSourceLoader;
 import com.houseprices.service.PropertyRequestFilter;
 import com.houseprices.service.PropertyStore;
+import com.houseprices.service.PropertyTimeSeriesService;
 import com.houseprices.service.SyntheticPredictionService;
+import com.houseprices.service.TransportFeatureService;
+import com.houseprices.model.RentcastLocalMarketService;
 import com.houseprices.model.WaterProximityService;
 import com.houseprices.model.EmbeddingModel;
 import com.houseprices.model.LightGBMModel;
+import com.houseprices.model.GnnModel;
 import com.houseprices.model.MarketIndicatorService;
 import com.houseprices.model.ModelArtifacts;
 import com.houseprices.model.PredictionContext;
@@ -17,6 +22,7 @@ import com.uber.h3core.H3Core;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.logging.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +34,7 @@ import java.io.IOException;
 @Produces(MediaType.APPLICATION_JSON)
 public class MapResource {
 
+    private static final Logger LOG = Logger.getLogger(MapResource.class);
     private static final int DEFAULT_POINT_LIMIT = 5_000;
     private static final int MAX_POINT_LIMIT = 20_000;
     private static final int RAW_POINT_MIN_ZOOM = 13;
@@ -44,9 +51,33 @@ public class MapResource {
     @Inject WaterProximityService waterProximity;
     @Inject EmbeddingModel neuralModel;
     @Inject LightGBMModel lightgbmModel;
+    @Inject GnnModel gnnModel;
     @Inject MarketIndicatorService marketIndicators;
     @Inject ModelArtifacts modelArtifacts;
     @Inject PredictionContextFactory contextFactory;
+    @Inject PropertyTimeSeriesService propertyTimeSeries;
+    @Inject TransportFeatureService transportFeatures;
+    @Inject RentcastLocalMarketService rentcastLocalMarket;
+    @Inject LiveSourceLoader liveSources;
+
+    /** Receives concise browser interaction events for the operational log. */
+    @POST
+    @Path("/events")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Map<String, String> logUiEvent(Map<String, Object> event) {
+        String action = String.valueOf(event.getOrDefault("action", "unknown"));
+        String detail = String.valueOf(event.getOrDefault("detail", ""));
+        LOG.infof("Map UI event: %s — %s", action.substring(0, Math.min(action.length(), 120)),
+            detail.substring(0, Math.min(detail.length(), 240)));
+        return Map.of("status", "logged");
+    }
+
+    /** Static OSM-derived H3 accessibility fields for geographic inspection. */
+    @GET
+    @Path("/transport-features")
+    public Map<String, Object> transportFeatures() {
+        return transportFeatures.featureCollection();
+    }
 
     /** File-backed H3 L9 synthetic properties, recalculated for the requested date. */
     @GET
@@ -54,9 +85,7 @@ public class MapResource {
     public Map<String, Object> syntheticLayer(
             @QueryParam("saleDate") @DefaultValue("") String saleDate) {
         try {
-            java.time.LocalDate date = saleDate == null || saleDate.isBlank()
-                ? java.time.LocalDate.now()
-                : java.time.LocalDate.parse(saleDate);
+            java.time.LocalDate date = parsePredictionDate(saleDate);
             return syntheticPredictions.predict(date);
         } catch (IllegalArgumentException exception) {
             throw new BadRequestException(exception.getMessage());
@@ -79,21 +108,58 @@ public class MapResource {
     @Path("/synthetic/explanation")
     public Map<String, Object> syntheticExplanation(
             @QueryParam("h3Index") @DefaultValue("") String h3Index,
-            @QueryParam("saleDate") @DefaultValue("") String saleDate) {
+            @QueryParam("saleDate") @DefaultValue("") String saleDate,
+            @QueryParam("lat") Double latitude,
+            @QueryParam("lng") Double longitude) {
         if (h3Index == null || h3Index.isBlank()) {
             throw new BadRequestException("h3Index is required");
         }
         try {
-            java.time.LocalDate date = saleDate == null || saleDate.isBlank()
-                ? java.time.LocalDate.now()
-                : java.time.LocalDate.parse(saleDate);
-            return syntheticPredictions.explain(h3Index, date);
+            java.time.LocalDate date = parsePredictionDate(saleDate);
+            return syntheticPredictions.explain(
+                h3Index, date, latitude, longitude
+            );
         } catch (IllegalArgumentException exception) {
             throw new BadRequestException(exception.getMessage());
         }
     }
 
-    /** Feature contributions for one stored Zillow, RentCast, or historical-sale point. */
+    /** Fast prediction for one synthetic cell at user-adjusted coordinates. */
+    @GET
+    @Path("/synthetic/point")
+    public Map<String, Object> syntheticPoint(
+            @QueryParam("h3Index") @DefaultValue("") String h3Index,
+            @QueryParam("saleDate") @DefaultValue("") String saleDate,
+            @QueryParam("lat") Double latitude,
+            @QueryParam("lng") Double longitude) {
+        if (h3Index == null || h3Index.isBlank()) {
+            throw new BadRequestException("h3Index is required");
+        }
+        try {
+            return syntheticPredictions.predictPoint(
+                h3Index, parsePredictionDate(saleDate), latitude, longitude
+            );
+        } catch (IllegalArgumentException exception) {
+            throw new BadRequestException(exception.getMessage());
+        }
+    }
+
+    private static java.time.LocalDate parsePredictionDate(String value) {
+        if (value == null || value.isBlank()) return java.time.LocalDate.now();
+        try {
+            return java.time.LocalDate.parse(value);
+        } catch (java.time.format.DateTimeParseException exception) {
+            throw new IllegalArgumentException(
+                "saleDate must use ISO format YYYY-MM-DD", exception
+            );
+        }
+    }
+
+    /**
+     * Feature contributions for one stored Zillow, RentCast, or historical-sale point.
+     * LightGBM and neural results are feature-level; GNN results are exact effects
+     * for its deployed graph/property/time/economic input groups.
+     */
     @GET
     @Path("/points/explanation")
     public Map<String, Object> pointExplanation(
@@ -125,7 +191,9 @@ public class MapResource {
         );
         java.time.LocalDate latestSnapshotSale = modelArtifacts.getLocalMarketLatestSaleDate();
         boolean snapshotLookAhead = latestSnapshotSale != null && !date.isAfter(latestSnapshotSale);
-        PredictionContext context = contextFactory.prepare(input, snapshotLookAhead);
+        PredictionContext context = "rentcast".equals(source)
+            ? contextFactory.prepareRentcast(input)
+            : contextFactory.prepare(input, snapshotLookAhead);
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("source", source);
@@ -138,10 +206,38 @@ public class MapResource {
         result.put("marketIndicatorDate", indicatorDate);
         result.put("storedNeuralPrediction", record.predictedPrice());
         result.put("storedLightgbmPrediction", record.lightgbmPredictedPrice());
+        result.put("storedGnnPrediction", record.gnnPredictedPrice());
         result.put("historicalSnapshotReconstruction", snapshotLookAhead);
+        if ("rentcast".equals(source)) {
+            result.put("localMarketPredictionIssue",
+                rentcastLocalMarket.hasLookAheadIssue(date) ? "rolling_snapshot_look_ahead" : "");
+            result.put("rentcastLocalMarketLatestSaleDate",
+                rentcastLocalMarket.latestSaleDate().toString());
+        }
         result.put("explanation", lightgbmModel.explainPrepared(context));
         result.put("neuralExplanation", neuralModel.explainPrepared(context));
+        result.put("gnnExplanation", gnnModel.explain(new GnnModel.Input(
+            record.h3Index(), date, record.sqft(), record.sqftLot(), record.beds(),
+            record.lat(), record.lng()
+        )));
         return result;
+    }
+
+    /** Monthly counterfactual value history for one stored map observation. */
+    @GET
+    @Path("/points/time-series")
+    public Map<String, Object> pointTimeSeries(
+            @QueryParam("source") @DefaultValue("") String source,
+            @QueryParam("id") @DefaultValue("") String id) {
+        if (!Set.of("zillow", "rentcast", "sales").contains(source)) {
+            throw new BadRequestException("source must be zillow, rentcast, or sales");
+        }
+        if (id == null || id.isBlank()) throw new BadRequestException("id is required");
+        try {
+            return propertyTimeSeries.predict(source, id);
+        } catch (IllegalArgumentException exception) {
+            throw new NotFoundException(exception.getMessage());
+        }
     }
 
     /**
@@ -160,12 +256,15 @@ public class MapResource {
             @QueryParam("homeType")  @DefaultValue("all")      String homeType,
             @QueryParam("dateFrom")  @DefaultValue("")         String dateFrom,
             @QueryParam("dateTo")    @DefaultValue("")         String dateTo,
+            @QueryParam("model")     @DefaultValue("lightgbm") String model,
             @QueryParam("west") Double west,
             @QueryParam("south") Double south,
             @QueryParam("east") Double east,
             @QueryParam("north") Double north,
             @QueryParam("zoom") @DefaultValue("12") int zoom,
             @QueryParam("limit") @DefaultValue("5000") int limit) {
+
+        if (!"sales".equals(source)) liveSources.ensureLoaded("rentcast");
 
         PropertyRequestFilter filter = requestFilter(
             homeType, dateFrom, dateTo, minError, maxError, west, south, east, north
@@ -179,7 +278,7 @@ public class MapResource {
         List<PropertyRecord> matches = base.stream()
             .filter(PropertyRecord::hasSalePrice)
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
-            .filter(r -> filter.includes(r, r.pctError()))
+            .filter(r -> filter.includes(r, selectedError(r, model)))
             .toList();
         if (zoom < RAW_POINT_MIN_ZOOM) {
             List<Map<String, Object>> features = detailedPointClusters(matches, zoom);
@@ -203,23 +302,26 @@ public class MapResource {
                 props.put("pctError",            r.pctError());
                 props.put("lightgbmPredictedPrice", r.lightgbmPredictedPrice());
                 props.put("lightgbmPctError", r.lightgbmPctError());
+                props.put("gnnPredictedPrice", r.gnnPredictedPrice());
+                props.put("gnnPctError", r.gnnPctError());
                 props.put("predictionStdPrice",  r.predictionStdPrice());
                 props.put("predictionCvPct",     r.predictionCvPct());
                 props.put("sqft",                r.sqft());
+                props.put("sqftLot",             r.sqftLot());
                 props.put("beds",                r.beds());
                 props.put("baths",               r.baths());
                 props.put("homeType",            r.homeType());
                 props.put("saleDate",            r.saleDate() != null ? r.saleDate().toString() : "");
+                putRentcastPredictionStatus(props, r);
                 putWaterFeatures(props, r);
+                putPredictionIntervals(props, r);
                 // CLS attention weights (null-safe)
                 float[] a = r.clsAttention();
-                if (a != null && a.length == 6) {
+                if (a != null && a.length == 4) {
                     props.put("attnCommunity", a[0]);
-                    props.put("attnYear",      a[1]);
-                    props.put("attnWeek",      a[2]);
-                    props.put("attnProperty",  a[3]);
-                    props.put("attnTime",      a[4]);
-                    props.put("attnMarket",    a[5]);
+                    props.put("attnProperty",  a[1]);
+                    props.put("attnTime",      a[2]);
+                    props.put("attnMarket",    a[3]);
                 }
                 return Map.of("type", "Feature", "geometry", geom, "properties", props);
             })
@@ -237,6 +339,7 @@ public class MapResource {
             @QueryParam("minSqft")    @DefaultValue("0")     double minSqft,
             @QueryParam("maxSqft")    @DefaultValue("10000") double maxSqft,
             @QueryParam("homeType")   @DefaultValue("all")   String homeType,
+            @QueryParam("model")      @DefaultValue("lightgbm") String model,
             @QueryParam("west") Double west,
             @QueryParam("south") Double south,
             @QueryParam("east") Double east,
@@ -244,12 +347,14 @@ public class MapResource {
             @QueryParam("zoom") @DefaultValue("12") int zoom,
             @QueryParam("limit") @DefaultValue("5000") int limit) {
 
+        liveSources.ensureLoaded("zillow");
+
         PropertyRequestFilter filter = requestFilter(
             homeType, "", "", minError, maxError, west, south, east, north
         );
         List<PropertyRecord> matches = store.snapshot().zillow().stream()
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
-            .filter(r -> filter.includes(r, r.pctError()))
+            .filter(r -> filter.includes(r, selectedError(r, model)))
             .toList();
         if (zoom < RAW_POINT_MIN_ZOOM) {
             List<Map<String, Object>> features = detailedPointClusters(matches, zoom);
@@ -273,9 +378,12 @@ public class MapResource {
                 props.put("pctError",            r.pctError());
                 props.put("lightgbmPredictedPrice", r.lightgbmPredictedPrice());
                 props.put("lightgbmPctError", r.lightgbmPctError());
+                props.put("gnnPredictedPrice", r.gnnPredictedPrice());
+                props.put("gnnPctError", r.gnnPctError());
                 props.put("predictionStdPrice",  r.predictionStdPrice());
                 props.put("predictionCvPct",     r.predictionCvPct());
                 props.put("sqft",                r.sqft());
+                props.put("sqftLot",             r.sqftLot());
                 props.put("beds",                r.beds());
                 props.put("baths",               r.baths());
                 props.put("homeType",            r.homeType());
@@ -283,14 +391,13 @@ public class MapResource {
                 props.put("saleDate",            r.saleDate() != null ? r.saleDate().toString() : "");
                 props.put("predictionDate",      r.saleDate() != null ? r.saleDate().toString() : "");
                 putWaterFeatures(props, r);
+                putPredictionIntervals(props, r);
                 float[] a = r.clsAttention();
-                if (a != null && a.length == 6) {
+                if (a != null && a.length == 4) {
                     props.put("attnCommunity", a[0]);
-                    props.put("attnYear",      a[1]);
-                    props.put("attnWeek",      a[2]);
-                    props.put("attnProperty",  a[3]);
-                    props.put("attnTime",      a[4]);
-                    props.put("attnMarket",    a[5]);
+                    props.put("attnProperty",  a[1]);
+                    props.put("attnTime",      a[2]);
+                    props.put("attnMarket",    a[3]);
                 }
                 return Map.of("type", "Feature", "geometry", geom, "properties", props);
             })
@@ -310,6 +417,8 @@ public class MapResource {
             @QueryParam("dateTo")    @DefaultValue("")          String dateTo,
             @QueryParam("minError")  @DefaultValue("-500")      double minError,
             @QueryParam("maxError")  @DefaultValue("500")       double maxError) {
+
+        liveSources.ensureLoaded("sales");
 
         String effectiveModel = "predicted_price_lightgbm".equals(variable)
             ? "lightgbm"
@@ -436,14 +545,17 @@ public class MapResource {
         int zestimateCount;
         double neuralPrediction;
         double treePrediction;
+        double gnnPrediction;
         double neuralError;
         double treeError;
+        double gnnError;
         double predictionStd;
         double predictionCv;
         double sqft;
+        double sqftLot;
         double beds;
         double baths;
-        final double[] attention = new double[6];
+        final double[] attention = new double[4];
 
         void add(PropertyRecord record) {
             count++;
@@ -456,17 +568,20 @@ public class MapResource {
             }
             neuralPrediction += record.predictedPrice();
             treePrediction += record.lightgbmPredictedPrice();
+            gnnPrediction += record.gnnPredictedPrice();
             neuralError += record.pctError();
             treeError += record.lightgbmPctError();
+            gnnError += record.gnnPctError();
             predictionStd += record.predictionStdPrice();
             predictionCv += record.predictionCvPct();
             sqft += record.sqft();
+            sqftLot += record.sqftLot();
             beds += record.beds();
             baths += record.baths();
             float[] weights = record.clsAttention();
-            if (weights != null && weights.length == 6) {
+            if (weights != null && weights.length == 4) {
                 attentionCount++;
-                for (int index = 0; index < 6; index++) attention[index] += weights[index];
+                for (int index = 0; index < 4; index++) attention[index] += weights[index];
             }
         }
 
@@ -482,26 +597,30 @@ public class MapResource {
             result.put("zestimate", zestimateCount > 0 ? zestimate / zestimateCount : 0.0);
             result.put("predictedPrice", neuralPrediction / divisor);
             result.put("lightgbmPredictedPrice", treePrediction / divisor);
+            result.put("gnnPredictedPrice", gnnPrediction / divisor);
             result.put("pctError", neuralError / divisor);
             result.put("lightgbmPctError", treeError / divisor);
+            result.put("gnnPctError", gnnError / divisor);
             result.put("predictionStdPrice", predictionStd / divisor);
             result.put("predictionCvPct", predictionCv / divisor);
             result.put("sqft", sqft / divisor);
+            result.put("sqftLot", sqftLot / divisor);
             result.put("beds", beds / divisor);
             result.put("baths", baths / divisor);
             result.put("attnCommunity", attention[0] / attentionDivisor);
-            result.put("attnYear", attention[1] / attentionDivisor);
-            result.put("attnWeek", attention[2] / attentionDivisor);
-            result.put("attnProperty", attention[3] / attentionDivisor);
-            result.put("attnTime", attention[4] / attentionDivisor);
-            result.put("attnMarket", attention[5] / attentionDivisor);
+            result.put("attnProperty", attention[1] / attentionDivisor);
+            result.put("attnTime", attention[2] / attentionDivisor);
+            result.put("attnMarket", attention[3] / attentionDivisor);
             return result;
         }
     }
 
     private double selectedError(PropertyRecord record, String model) {
-        return "lightgbm".equalsIgnoreCase(model)
-            ? record.lightgbmPctError() : record.pctError();
+        return switch (model.toLowerCase(Locale.ROOT)) {
+            case "lightgbm" -> record.lightgbmPctError();
+            case "gnn" -> record.gnnPctError();
+            default -> record.pctError();
+        };
     }
 
     private void putWaterFeatures(Map<String, Object> properties, PropertyRecord record) {
@@ -512,7 +631,39 @@ public class MapResource {
         properties.put(
             "waterProximity", WaterProximityService.waterProximity(water.distanceToWaterM())
         );
-        properties.put("isWaterfront", water.isWaterfront() == 1.0);
+    }
+
+    /** Add comparable nominal 90% and 95% intervals for all displayed models. */
+    private void putPredictionIntervals(Map<String, Object> properties, PropertyRecord record) {
+        double neural90 = 1.644854 * record.predictionStdPrice();
+        double neural95 = 1.959964 * record.predictionStdPrice();
+        properties.put("neuralLower90", Math.max(0.0, record.predictedPrice() - neural90));
+        properties.put("neuralUpper90", record.predictedPrice() + neural90);
+        properties.put("neuralLower95", Math.max(0.0, record.predictedPrice() - neural95));
+        properties.put("neuralUpper95", record.predictedPrice() + neural95);
+        putConformalInterval(properties, "lightgbm", record.lightgbmPredictedPrice(),
+            lightgbmModel.getConformalLogResidual90(), lightgbmModel.getConformalLogResidual95());
+        putConformalInterval(properties, "gnn", record.gnnPredictedPrice(),
+            gnnModel.getConformalLogResidual90(), gnnModel.getConformalLogResidual95());
+    }
+
+    private static void putConformalInterval(
+            Map<String, Object> properties, String model, double prediction,
+            double logResidual90, double logResidual95) {
+        properties.put(model + "Lower90", prediction * Math.exp(-logResidual90));
+        properties.put(model + "Upper90", prediction * Math.exp(logResidual90));
+        properties.put(model + "Lower95", prediction * Math.exp(-logResidual95));
+        properties.put(model + "Upper95", prediction * Math.exp(logResidual95));
+    }
+
+    /** Annotate displayed RentCast records when the rolling snapshot post-dates their sale. */
+    private void putRentcastPredictionStatus(Map<String, Object> properties, PropertyRecord record) {
+        if (!"rentcast".equals(record.source())) return;
+        boolean lookAhead = rentcastLocalMarket.hasLookAheadIssue(record.saleDate());
+        properties.put("localMarketPredictionIssue",
+            lookAhead ? "rolling_snapshot_look_ahead" : "");
+        properties.put("rentcastLocalMarketLatestSaleDate",
+            rentcastLocalMarket.latestSaleDate().toString());
     }
 
     /** Quarterly neural and LightGBM errors for every mapped community. */
@@ -520,6 +671,8 @@ public class MapResource {
     @Path("/performance")
     public Map<String, Object> performance(
             @QueryParam("topN") @DefaultValue("10") int topN) {
+
+        liveSources.ensureLoaded("sales");
 
         List<PropertyRecord> sales = store.getSalesRecords().stream()
             .filter(PropertyRecord::hasSalePrice)
@@ -567,18 +720,35 @@ public class MapResource {
                 List<PropertyRecord> records = e.getValue();
                 double neuralMean = records.stream().mapToDouble(PropertyRecord::pctError).average().orElse(0);
                 double lightgbmMean = records.stream().mapToDouble(PropertyRecord::lightgbmPctError).average().orElse(0);
+                double gnnMean = records.stream().mapToDouble(PropertyRecord::gnnPctError).average().orElse(0);
                 double neuralStd = Math.sqrt(records.stream()
                     .mapToDouble(r -> Math.pow(r.pctError() - neuralMean, 2)).average().orElse(0));
                 double lightgbmStd = Math.sqrt(records.stream()
                     .mapToDouble(r -> Math.pow(r.lightgbmPctError() - lightgbmMean, 2)).average().orElse(0));
-                points.add(Map.of(
-                    "quarter", e.getKey(),
-                    "neuralMean", neuralMean,
-                    "neuralStd", neuralStd,
-                    "lightgbmMean", lightgbmMean,
-                    "lightgbmStd", lightgbmStd,
-                    "count", records.size()
-                ));
+                Map<String, Object> point = new LinkedHashMap<>();
+                point.put("quarter", e.getKey());
+                point.put("neuralMean", neuralMean);
+                point.put("neuralStd", neuralStd);
+                point.put("lightgbmMean", lightgbmMean);
+                point.put("lightgbmStd", lightgbmStd);
+                point.put("gnnMean", gnnMean);
+                point.put("gnnStd", Math.sqrt(records.stream().mapToDouble(r -> Math.pow(r.gnnPctError() - gnnMean, 2)).average().orElse(0)));
+                point.put("neuralMape", records.stream()
+                    .mapToDouble(r -> Math.abs(r.pctError())).average().orElse(0));
+                point.put("lightgbmMape", records.stream()
+                    .mapToDouble(r -> Math.abs(r.lightgbmPctError())).average().orElse(0));
+                point.put("gnnMape", records.stream()
+                    .mapToDouble(r -> Math.abs(r.gnnPctError())).average().orElse(0));
+                point.put("actualMean", records.stream()
+                    .mapToDouble(PropertyRecord::salePrice).average().orElse(0));
+                point.put("neuralPredictedMean", records.stream()
+                    .mapToDouble(PropertyRecord::predictedPrice).average().orElse(0));
+                point.put("lightgbmPredictedMean", records.stream()
+                    .mapToDouble(PropertyRecord::lightgbmPredictedPrice).average().orElse(0));
+                point.put("gnnPredictedMean", records.stream()
+                    .mapToDouble(PropertyRecord::gnnPredictedPrice).average().orElse(0));
+                point.put("count", records.size());
+                points.add(point);
             }
             series.add(Map.of(
                 "community", community,
@@ -600,6 +770,7 @@ public class MapResource {
     @GET
     @Path("/sales/community")
     public Map<String, Object> communityLayer() {
+        liveSources.ensureLoaded("sales");
         List<PropertyRecord> sales = store.snapshot().completedSales();
         // Collect unique H3 L9 → community from sales records
         Map<String, String> h3ToCommunity = sales.stream()
@@ -613,7 +784,7 @@ public class MapResource {
         Map<String, double[]> communityStats = new HashMap<>();
         for (PropertyRecord r : sales) {
             if (r.h3Index() == null || r.community() == null || r.community().isBlank()) continue;
-            double[] stats = communityStats.computeIfAbsent(r.community(), k -> new double[8]);
+            double[] stats = communityStats.computeIfAbsent(r.community(), k -> new double[9]);
             stats[0] += 1;                       // count
             stats[1] += r.salePrice();
             stats[2] += r.predictedPrice();
@@ -622,6 +793,7 @@ public class MapResource {
             stats[5] += r.predictionStdPrice();
             stats[6] += r.lightgbmPredictedPrice();
             stats[7] += r.lightgbmPctError();
+            stats[8] += r.sqftLot();
         }
 
         List<Map<String, Object>> features = new ArrayList<>();
@@ -631,7 +803,7 @@ public class MapResource {
                 String community = entry.getValue();
                 List<double[]> coords = aggregation.boundaryFor(hexId);
 
-                double[] stats = communityStats.getOrDefault(community, new double[8]);
+                double[] stats = communityStats.getOrDefault(community, new double[9]);
                 long salesCount = (long) stats[0];
                 double meanSalePrice = salesCount > 0 ? stats[1] / salesCount : 0;
                 double meanNeuralPredictedPrice = salesCount > 0 ? stats[2] / salesCount : 0;
@@ -640,6 +812,7 @@ public class MapResource {
                 double meanPredStd = salesCount > 0 ? stats[5] / salesCount : 0;
                 double meanLightgbmPredictedPrice = salesCount > 0 ? stats[6] / salesCount : 0;
                 double avgLightgbmPctError = salesCount > 0 ? stats[7] / salesCount : 0;
+                double meanSqftLot = salesCount > 0 ? stats[8] / salesCount : 0;
 
                 Map<String, Object> properties = new LinkedHashMap<>();
                 properties.put("community", community);
@@ -651,6 +824,7 @@ public class MapResource {
                 properties.put("avgNeuralPctError", avgNeuralPctError);
                 properties.put("avgLightgbmPctError", avgLightgbmPctError);
                 properties.put("meanSqft", meanSqft);
+                properties.put("meanSqftLot", meanSqftLot);
                 properties.put("meanPredStd", meanPredStd);
 
                 features.add(Map.of(

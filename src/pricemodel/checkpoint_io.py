@@ -120,15 +120,18 @@ def save_model(manager):
         raise ValueError("Cannot save a model with an ambiguous property feature contract")
 
     checkpoint = {
+        'architecture_version': 4,
         'model_state_dict': manager.predictor.model.state_dict(),
         'optimizer_state_dict': manager.predictor.optimizer.state_dict(),
         'scheduler_state_dict': manager.predictor.scheduler.state_dict(),
         'results': manager.results,
         'embedding_dim': manager.embedding_dim,
+        'community_embedding_dim': manager.community_embedding_dim,
         'hidden_dim': manager.hidden_dim,
         'property_dim': manager.property_dim,
         'property_feature_names': property_feature_names,
         'continuous_time_dim': manager.continuous_time_dim,
+        'time_feature_names': list(manager._TIME_FEATURES),
         'market_dim': manager.market_dim,
         'n_communities': manager.n_communities,
         'community_embedding_length': (
@@ -140,8 +143,6 @@ def save_model(manager):
         'local_feature_names': manager._LOCAL_FEATURES,
         'dropout_rate': manager.dropout_rate,
         'epochs': manager.epochs,
-        'year_length': manager.year_length,
-        'week_length': manager.week_length,
         'learning_rate': manager.learning_rate,
         'pooling_strategy': manager.pooling_strategy,
         'use_neighborhood_pooling': manager.use_neighborhood_pooling,
@@ -159,10 +160,6 @@ def save_model(manager):
         'reference_date': manager.reference_date.isoformat() if manager.reference_date else None
     }
     _atomic_torch_save(checkpoint, Path(manager.directory) / "model.pth")
-    
-    # Save vocabularies
-    _atomic_json_dump(manager.year_vocab, Path(manager.directory) / "year_vocab.json")
-    _atomic_json_dump(manager.week_vocab, Path(manager.directory) / "week_vocab.json")
     
     save_results(manager)
 
@@ -193,9 +190,16 @@ def load_model(manager, directory):
     
     # Load checkpoint
     ckpt = torch.load(directory / "model.pth", map_location=manager.device)
+    if ckpt.get('architecture_version') != 4:
+        raise ValueError(
+            "This checkpoint predates the current compact-community and "
+            "water-proximity-only architecture. "
+            "Retrain with the current feature and model contract."
+        )
     
     # Restore architecture params
     manager.embedding_dim = ckpt['embedding_dim']
+    manager.community_embedding_dim = ckpt['community_embedding_dim']
     manager.hidden_dim = ckpt['hidden_dim']
     manager.property_dim = ckpt['property_dim']
     manager._PROPERTY_FEATURES = ckpt.get(
@@ -206,10 +210,15 @@ def load_model(manager, directory):
             "Checkpoint property_dim does not match property_feature_names"
         )
     manager.continuous_time_dim = ckpt['continuous_time_dim']
+    manager._TIME_FEATURES = ckpt.get(
+        'time_feature_names', ['time_trend', 'annual_sin', 'annual_cos']
+    )
+    if manager.continuous_time_dim != len(manager._TIME_FEATURES):
+        raise ValueError(
+            "Checkpoint continuous_time_dim does not match time_feature_names"
+        )
     manager.market_dim = ckpt['market_dim']
     manager.n_communities = ckpt['n_communities']
-    manager.year_length = ckpt['year_length']
-    manager.week_length = ckpt['week_length']
     manager.learning_rate = ckpt['learning_rate']
     manager.pooling_strategy = ckpt.get('pooling_strategy', 'mean')
     valid_pooling_strategies = {'mean', 'center_weighted', 'learnable'}
@@ -252,7 +261,8 @@ def load_model(manager, directory):
     manager.predictor = PriceTrainer(
         manager.device, manager.embedding_dim, manager.hidden_dim,
         manager.property_dim, manager.continuous_time_dim, manager.market_dim,
-        community_embedding_length, manager.year_length, manager.week_length,
+        community_embedding_length,
+        manager.community_embedding_dim,
         manager.learning_rate,
         epochs=ckpt.get('epochs', 1),
         len_train_loader=1,
@@ -306,24 +316,6 @@ def load_model(manager, directory):
     if neighbor_cells_path.exists():
         with open(neighbor_cells_path, 'r') as f:
             manager.neighbor_cells_map = json.load(f)
-    
-    # Load vocabularies
-    with open(directory / "year_vocab.json", "r") as f:
-        raw_year_vocab = json.load(f)
-    with open(directory / "week_vocab.json", "r") as f:
-        raw_week_vocab = json.load(f)
-
-    # JSON object keys are always strings, while vocab_replace_tensor()
-    # receives integer tensor values. Restore numeric keys so standalone
-    # checkpoint inference uses the exact mapping used during training.
-    def _restore_vocab_key_types(raw_vocab):
-        return {
-            ('unknown' if key == 'unknown' else int(key)): int(value)
-            for key, value in raw_vocab.items()
-        }
-
-    manager.year_vocab = _restore_vocab_key_types(raw_year_vocab)
-    manager.week_vocab = _restore_vocab_key_types(raw_week_vocab)
     
     # Load results
     manager.results = ckpt.get("results", {})

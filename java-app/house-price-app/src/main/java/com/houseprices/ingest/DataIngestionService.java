@@ -2,6 +2,7 @@ package com.houseprices.ingest;
 
 import com.houseprices.model.EmbeddingModel;
 import com.houseprices.model.LightGBMModel;
+import com.houseprices.model.GnnModel;
 import com.houseprices.model.PredictionContext;
 import com.houseprices.model.PredictionContextFactory;
 import com.houseprices.service.PropertyStore;
@@ -34,6 +35,7 @@ public class DataIngestionService {
 
     @Inject EmbeddingModel    model;
     @Inject LightGBMModel     lightgbm;
+    @Inject GnnModel          gnn;
     @Inject com.houseprices.model.ModelArtifacts artifacts;
     @Inject PredictionContextFactory contextFactory;
     @Inject PropertyStore store;
@@ -48,6 +50,7 @@ public class DataIngestionService {
     // ── Sales history CSV (data/sales_2020_25.csv format) ────────────────────
 
     public List<PropertyRecord> ingestSalesCsv(File file) throws IOException {
+        long started = System.nanoTime();
         LOG.infof("Ingesting sales CSV: %s", file.getName());
         List<PropertyRecord> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -88,9 +91,7 @@ public class DataIngestionService {
                         if (baths == 0) baths = 2;
                     }
                     // Unique ID
-                    String id = buildUniqueRecordId(
-                        "sales", col(cols, idx, "id"), lineNum, lat, lng
-                    );
+                    String id = buildUniqueRecordId(saleDate, lineNum);
                     // Resolve community from H3 L8 index
                     String community = artifacts.lookupCommunity(h3Index);
 
@@ -155,7 +156,7 @@ public class DataIngestionService {
                         col(cols, idx, "home_type"),
                         saleDate, salePrice, 0.0, null,
                         predicted, pctError,
-                        lightgbmPredicted, lightgbmPctError,
+                        lightgbmPredicted, lightgbmPctError, 0.0, 0.0,
                         predictionStdPrice, predictionCvPct, clsAttention
                     ));
                 } catch (Exception e) {
@@ -163,6 +164,12 @@ public class DataIngestionService {
                 }
             }
         }
+        long gnnStarted = System.nanoTime();
+        records = withGnnPredictions(records);
+        long gnnElapsed = System.nanoTime() - gnnStarted;
+        LOG.infof("Historical sales ingestion: %,d records — CSV parse %.1f ms, GNN %.1f ms, total %.1f ms",
+            records.size(), (gnnStarted - started) / 1_000_000.0,
+            gnnElapsed / 1_000_000.0, (System.nanoTime() - started) / 1_000_000.0);
         LOG.infof("Ingested %d sales records from %s", records.size(), file.getName());
         return records;
     }
@@ -171,16 +178,27 @@ public class DataIngestionService {
 
     @SuppressWarnings("unchecked")
     public List<PropertyRecord> ingestRentcastJson(File file) throws IOException {
-        LOG.infof("Ingesting Rentcast JSON: %s", file.getName());
-        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-        Map<String, Object> root = mapper.readValue(file,
-            mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
-        List<Map<String, Object>> properties = (List<Map<String, Object>>) root.get("properties");
-        if (properties == null) return List.of();
+        return ingestRentcastJsonFiles(List.of(file));
+    }
 
+    /** Parse all saved RentCast responses, then score the de-duplicated source in one batch. */
+    @SuppressWarnings("unchecked")
+    public List<PropertyRecord> ingestRentcastJsonFiles(List<File> files) throws IOException {
+        LOG.infof("Ingesting %d RentCast JSON file(s) as one batch", files.size());
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         List<PendingProperty> pending = new ArrayList<>();
-        for (Map<String, Object> p : properties) {
+        for (File file : files) {
+            List<Map<String, Object>> properties;
             try {
+                Map<String, Object> root = mapper.readValue(file,
+                    mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+                properties = (List<Map<String, Object>>) root.get("properties");
+            } catch (IOException exception) {
+                LOG.warnf("Skipping unreadable RentCast JSON %s: %s", file.getName(), exception.getMessage());
+                continue;
+            }
+            if (properties == null) continue;
+            for (Map<String, Object> p : properties) try {
                 double lat = toDouble(p.get("latitude"));
                 double lng = toDouble(p.get("longitude"));
                 String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
@@ -192,8 +210,13 @@ public class DataIngestionService {
                 int beds       = (int) toDoubleOrDefault(p.get("bedrooms"), 0);
                 double baths   = toDoubleOrDefault(p.get("bathrooms"), 0);
                 String address = stringValue(p.get("formattedAddress"));
-                String id = stringValue(p.get("id"));
-                if (id.isBlank()) id = address + "|" + saleDate;
+                // RentCast JSON is written with a decimal integer uniqueId.
+                // Keep its exact decimal representation as the internal map
+                // key: a Java int/long cannot hold all assessor-derived IDs.
+                String id = RentcastUniqueId.storeKey(p.get(RentcastUniqueId.JSON_FIELD));
+                if (id.isBlank()) {
+                    throw new IllegalArgumentException("RentCast record is missing numeric uniqueId");
+                }
                 pending.add(new PendingProperty(
                     id, address, "rentcast", lat, lng, h3Index,
                     artifacts.lookupCommunity(h3Index), sqft, sqftLot, beds, baths,
@@ -204,8 +227,8 @@ public class DataIngestionService {
             }
         }
         List<PropertyRecord> records = predictChanged(pending);
-        LOG.infof("Ingested %d changed RentCast records from %s (%d parsed)",
-            records.size(), file.getName(), pending.size());
+        LOG.infof("Ingested %d changed RentCast records (%d parsed from %d file(s))",
+            records.size(), pending.size(), files.size());
         return records;
     }
 
@@ -213,25 +236,40 @@ public class DataIngestionService {
 
     @SuppressWarnings("unchecked")
     public List<PropertyRecord> ingestZillowJson(File file) throws IOException {
-        LOG.infof("Ingesting Zillow JSON: %s", file.getName());
-        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-        Map<String, Object> root = mapper.readValue(file,
-            mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
-        List<Map<String, Object>> properties = (List<Map<String, Object>>) root.get("properties");
-        if (properties == null) return List.of();
+        return ingestZillowJsonFiles(List.of(file));
+    }
 
-        LocalDate observationDate = jsonObservationDate(root, file);
+    /** Parse all saved Zillow responses, then score the de-duplicated source in one batch. */
+    @SuppressWarnings("unchecked")
+    public List<PropertyRecord> ingestZillowJsonFiles(List<File> files) throws IOException {
+        LOG.infof("Ingesting %d Zillow JSON file(s) as one batch", files.size());
+        long started = System.nanoTime();
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         List<PendingProperty> pending = new ArrayList<>();
-        for (Map<String, Object> p : properties) {
+        for (File file : files) {
+            Map<String, Object> root;
+            List<Map<String, Object>> properties;
             try {
+                root = mapper.readValue(file,
+                    mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+                properties = (List<Map<String, Object>>) root.get("properties");
+            } catch (IOException exception) {
+                LOG.warnf("Skipping unreadable Zillow JSON %s: %s", file.getName(), exception.getMessage());
+                continue;
+            }
+            if (properties == null) continue;
+            LocalDate observationDate = jsonObservationDate(root, file);
+            for (Map<String, Object> p : properties) try {
                 pending.add(zillowMapToPending(p, observationDate));
             } catch (Exception e) {
                 LOG.debugf("Skipping malformed Zillow entry: %s", e.getMessage());
             }
         }
+        long parsedAt = System.nanoTime();
         List<PropertyRecord> records = predictChanged(pending);
-        LOG.infof("Ingested %d changed Zillow listings from %s (%d parsed)",
-            records.size(), file.getName(), pending.size());
+        LOG.infof("Ingested %d changed Zillow listings (%d parsed from %d file(s)) — parse %.1f ms, prediction pipeline %.1f ms, total %.1f ms",
+            records.size(), pending.size(), files.size(), (parsedAt - started) / 1_000_000.0,
+            (System.nanoTime() - parsedAt) / 1_000_000.0, (System.nanoTime() - started) / 1_000_000.0);
         return records;
     }
 
@@ -247,10 +285,7 @@ public class DataIngestionService {
         for (PendingProperty value : parsed) {
             unique.put(value.source() + "\u0000" + value.id(), value);
         }
-        LocalDate latestSnapshotSale = artifacts.getLocalMarketLatestSaleDate();
         List<PendingProperty> changed = unique.values().stream()
-            .filter(value -> latestSnapshotSale == null
-                || value.saleDate().isAfter(latestSnapshotSale))
             .filter(value -> store.findBySourceAndId(value.source(), value.id())
                 .map(existing -> !sameModelInputs(existing, value))
                 .orElse(true))
@@ -263,9 +298,28 @@ public class DataIngestionService {
                 value.beds(), value.lat(), value.lng()
             ))
             .toList();
-        List<PredictionContext> contexts = contextFactory.prepareAll(inputs, false);
+        boolean rentcast = !changed.isEmpty() && "rentcast".equals(changed.getFirst().source());
+        long contextStarted = System.nanoTime();
+        List<PredictionContext> contexts = rentcast
+            ? contextFactory.prepareRentcastAll(inputs)
+            : contextFactory.prepareAll(inputs, false);
+        long contextElapsed = System.nanoTime() - contextStarted;
+        long neuralStarted = System.nanoTime();
         EmbeddingModel.PredictionResult[] neural = model.predictPrepared(contexts);
+        long neuralElapsed = System.nanoTime() - neuralStarted;
+        long lightgbmStarted = System.nanoTime();
         double[] tree = lightgbm.predictPrepared(contexts);
+        long lightgbmElapsed = System.nanoTime() - lightgbmStarted;
+        long gnnStarted = System.nanoTime();
+        double[] gnnPredictions = gnn.predictBatch(changed.stream().map(value -> new GnnModel.Input(
+            value.h3Index(), value.saleDate(), value.sqft(), value.sqftLot(), value.beds(),
+            value.lat(), value.lng()
+        )).toList());
+        long gnnElapsed = System.nanoTime() - gnnStarted;
+        LOG.infof("Model prediction batch: %,d %s record(s) — context %.1f ms, neural %.1f ms, LightGBM %.1f ms, GNN %.1f ms",
+            changed.size(), changed.getFirst().source(), contextElapsed / 1_000_000.0, neuralElapsed / 1_000_000.0,
+            lightgbmElapsed / 1_000_000.0, gnnElapsed / 1_000_000.0);
+        long recordBuildStarted = System.nanoTime();
         List<PropertyRecord> records = new ArrayList<>(changed.size());
         for (int index = 0; index < changed.size(); index++) {
             PendingProperty value = changed.get(index);
@@ -276,16 +330,45 @@ public class DataIngestionService {
             double treeError = value.salePrice() > 0
                 ? 100.0 * (tree[index] - value.salePrice()) / value.salePrice()
                 : 0.0;
+            double gnnError = value.salePrice() > 0
+                ? 100.0 * (gnnPredictions[index] - value.salePrice()) / value.salePrice()
+                : 0.0;
             records.add(new PropertyRecord(
                 value.id(), value.address(), value.source(), value.lat(), value.lng(),
                 value.h3Index(), value.community(), value.sqft(), value.sqftLot(),
                 value.beds(), value.baths(), value.homeType(), value.saleDate(),
                 value.salePrice(), value.zestimate(), value.listingUrl(), prediction.predictedPrice(),
-                neuralError, tree[index], treeError, prediction.predictionStdPrice(),
+                neuralError, tree[index], treeError, gnnPredictions[index], gnnError, prediction.predictionStdPrice(),
                 prediction.predictionCvPct(), prediction.clsAttention()
             ));
         }
+        LOG.infof("Prediction record assembly: %,d %s record(s) — %.1f ms",
+            records.size(), changed.getFirst().source(),
+            (System.nanoTime() - recordBuildStarted) / 1_000_000.0);
         return records;
+    }
+
+    /** Score parsed historical rows in one lightweight GNN-head batch sequence. */
+    private List<PropertyRecord> withGnnPredictions(List<PropertyRecord> records) {
+        double[] predictions = gnn.predictBatch(records.stream().map(record -> new GnnModel.Input(
+            record.h3Index(), record.saleDate(), record.sqft(), record.sqftLot(), record.beds(),
+            record.lat(), record.lng()
+        )).toList());
+        List<PropertyRecord> result = new ArrayList<>(records.size());
+        for (int index = 0; index < records.size(); index++) {
+            PropertyRecord record = records.get(index);
+            double error = record.salePrice() > 0
+                ? 100.0 * (predictions[index] - record.salePrice()) / record.salePrice() : 0.0;
+            result.add(new PropertyRecord(
+                record.id(), record.address(), record.source(), record.lat(), record.lng(),
+                record.h3Index(), record.community(), record.sqft(), record.sqftLot(), record.beds(),
+                record.baths(), record.homeType(), record.saleDate(), record.salePrice(), record.zestimate(),
+                record.listingUrl(), record.predictedPrice(), record.pctError(),
+                record.lightgbmPredictedPrice(), record.lightgbmPctError(), predictions[index], error,
+                record.predictionStdPrice(), record.predictionCvPct(), record.clsAttention()
+            ));
+        }
+        return result;
     }
 
     private boolean sameModelInputs(PropertyRecord existing, PendingProperty value) {
@@ -397,8 +480,8 @@ public class DataIngestionService {
 
     private float[] parseAttention(String[] cols, Map<String, Integer> idx) {
         String[] names = {
-            "cls_attn_community", "cls_attn_year", "cls_attn_week",
-            "cls_attn_property", "cls_attn_time", "cls_attn_market"
+            "cls_attn_community", "cls_attn_property",
+            "cls_attn_time", "cls_attn_market"
         };
         float[] attention = new float[names.length];
         for (int i = 0; i < names.length; i++) {
@@ -443,13 +526,14 @@ public class DataIngestionService {
         return tokens.toArray(new String[0]);
     }
 
-    static String buildUniqueRecordId(
-        String source, String preferredId, int rowNumber, double lat, double lng
-    ) {
-        String stablePart = preferredId == null || preferredId.isBlank()
-            ? String.format(java.util.Locale.ROOT, "%.5f_%.5f", lat, lng)
-            : preferredId.trim();
-        return source + "_" + stablePart + "_" + rowNumber;
+    /**
+     * Return the deterministic historical-sales identifier: numeric sale date
+     * followed by the CSV row number. The internal store uses a String key so
+     * the decimal value is never rounded by a JavaScript or floating type.
+     */
+    static String buildUniqueRecordId(LocalDate saleDate, int rowNumber) {
+        String saleDateDigits = saleDate.toString().replaceAll("\\D", "");
+        return new java.math.BigInteger(saleDateDigits + rowNumber).toString();
     }
 
     private LocalDate parseDateOrDefault(Object o) {

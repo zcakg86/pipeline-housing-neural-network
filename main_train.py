@@ -77,7 +77,6 @@ def main(config=None):
     print(f"   Device: {manager.device}")
     print(f"   Neighborhood pooling: {manager.use_neighborhood_pooling}")
     print(f"   Communities: {manager.n_communities}")
-    print(f"   Year vocab size: {manager.year_length}")
 
     # Split data
     print("\n5. Splitting data chronologically (70/30 train/val)...")
@@ -91,18 +90,22 @@ def main(config=None):
     # Train model
     print("\n6. Training model...")
     print("   Architecture:")
-    print(f"   - Embedding dim: {config.embedding_dim}")
+    print(f"   - Attention/token dim: {config.embedding_dim}")
+    print(f"   - Community embedding dim: {config.community_embedding_dim}")
     print(f"   - Hidden dim: {config.hidden_dim}")
-    print("   - Continuous time: time_trend only (dim=1)")
+    print("   - Continuous time: time_trend + annual_sin + annual_cos (dim=3)")
     print(f"   - Dropout: {config.dropout_rate}")
     print(f"   - Learning rate: {config.learning_rate}")
     print(f"   - Mean stage: up to {config.epochs} MSE epochs "
           f"(patience={config.patience}; best epoch restored)")
     print(f"   - Uncertainty stage: up to {config.uncertainty_calibration_epochs} "
           f"NLL epochs (patience={config.uncertainty_patience}; price weights frozen)")
-    print("   - Scheduler: ReduceLROnPlateau (factor=0.5, patience=3)")
-    print("   - Global auxiliary weight: 0.5")
-    print("   - Local residual penalty: 0.01")
+    print("   - Scheduler: ReduceLROnPlateau "
+          f"(factor={config.lr_plateau_factor}, "
+          f"patience={config.lr_plateau_patience}, "
+          f"min LR={config.min_learning_rate:g})")
+    print(f"   - Global auxiliary weight: {config.global_aux_weight}")
+    print(f"   - Local residual penalty: {config.residual_penalty}")
     print("   - Training: MSE price fitting, then frozen-head NLL calibration")
 
     manager.results['training_config'] = config.as_dict()
@@ -200,6 +203,7 @@ def main(config=None):
         'median_ape': f"{median_ape:.2f}%",
         'rmse': f"${rmse:,.0f}",
         'embedding_dim': manager.embedding_dim,
+        'community_embedding_dim': manager.community_embedding_dim,
         'hidden_dim': manager.hidden_dim,
         'epochs_trained': len(manager.results['train_losses']),
         'best_epoch': manager.results['best_epoch'],

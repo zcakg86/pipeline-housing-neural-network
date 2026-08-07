@@ -3,6 +3,7 @@
 let syntheticRequestId = 0;
 let syntheticDates = [localIsoDate(new Date())];
 let syntheticDateDebounce = null;
+let syntheticCoordinateMarker = null;
 
 function localIsoDate(date) {
   const year = date.getFullYear();
@@ -46,89 +47,110 @@ syntheticDateControl.onAdd = () => {
 syntheticDateControl.addTo(map);
 
 async function initializeSyntheticDateControl() {
-  const response = await fetch('/api/synthetic/meta');
-  const metadata = await response.json();
-  syntheticDates = [metadata.defaultSaleDate];
-  let cursor = new Date(`${metadata.defaultSaleDate}T12:00:00`);
-  while (syntheticDates[syntheticDates.length - 1] !== metadata.minimumSaleDate) {
-    cursor = subtractOneMonth(cursor);
-    const candidate = localIsoDate(cursor);
-    if (candidate <= metadata.minimumSaleDate) {
-      syntheticDates.push(metadata.minimumSaleDate);
-    } else {
-      syntheticDates.push(candidate);
+  const status = document.getElementById('syntheticDateStatus');
+  try {
+    const response = await fetch('/api/synthetic/meta');
+    if (!response.ok) throw new Error(await response.text());
+    const metadata = await response.json();
+    const isoDate = /^\d{4}-\d{2}-\d{2}$/;
+    if (!isoDate.test(metadata.defaultSaleDate) ||
+        !isoDate.test(metadata.minimumSaleDate)) {
+      throw new Error('Synthetic metadata did not contain valid dates');
     }
+    syntheticDates = [metadata.defaultSaleDate];
+    let cursor = new Date(`${metadata.defaultSaleDate}T12:00:00`);
+    while (syntheticDates[syntheticDates.length - 1] !== metadata.minimumSaleDate) {
+      cursor = subtractOneMonth(cursor);
+      const candidate = localIsoDate(cursor);
+      if (candidate <= metadata.minimumSaleDate) {
+        syntheticDates.push(metadata.minimumSaleDate);
+      } else {
+        syntheticDates.push(candidate);
+      }
+    }
+    const slider = document.getElementById('syntheticDateSlider');
+    const maximumMonths = syntheticDates.length - 1;
+    slider.max = maximumMonths;
+    slider.disabled = maximumMonths === 0;
+    const datalist = document.getElementById('syntheticMonthTicks');
+    datalist.innerHTML = syntheticDates.map((date, index) =>
+      `<option value="${index}" label="${date.slice(0, 7)}"></option>`
+    ).join('');
+    const yearTicks = document.getElementById('syntheticYearTicks');
+    const renderedYears = new Set();
+    yearTicks.innerHTML = syntheticDates.map((date, index) => {
+      const year = date.slice(0, 4);
+      if (date.slice(5, 7) !== '01' || renderedYears.has(year)) return '';
+      renderedYears.add(year);
+      const left = maximumMonths ? index / maximumMonths * 100 : 0;
+      return `<span style="left:${left}%">${year}</span>`;
+    }).join('');
+    status.textContent = `${metadata.count.toLocaleString()} cells · monthly steps`;
+    slider.addEventListener('input', () => {
+      document.getElementById('syntheticDateLabel').textContent =
+        syntheticDateForOffset(slider.value);
+      clearTimeout(syntheticDateDebounce);
+      if (document.getElementById('showSynthetic').checked) {
+        syntheticDateDebounce = setTimeout(loadSynthetic, 300);
+      }
+    });
+  } catch (error) {
+    status.textContent = `Synthetic dates unavailable: ${error.message}`;
   }
-  const slider = document.getElementById('syntheticDateSlider');
-  const maximumMonths = syntheticDates.length - 1;
-  slider.max = maximumMonths;
-  slider.disabled = maximumMonths === 0;
-  const datalist = document.getElementById('syntheticMonthTicks');
-  datalist.innerHTML = syntheticDates.map((date, index) =>
-    `<option value="${index}" label="${date.slice(0, 7)}"></option>`
-  ).join('');
-  const yearTicks = document.getElementById('syntheticYearTicks');
-  const renderedYears = new Set();
-  yearTicks.innerHTML = syntheticDates.map((date, index) => {
-    const year = date.slice(0, 4);
-    if (date.slice(5, 7) !== '01' || renderedYears.has(year)) return '';
-    renderedYears.add(year);
-    const left = maximumMonths ? index / maximumMonths * 100 : 0;
-    return `<span style="left:${left}%">${year}</span>`;
-  }).join('');
-  document.getElementById('syntheticDateStatus').textContent =
-    `${metadata.count.toLocaleString()} cells · monthly steps`;
-  slider.addEventListener('input', () => {
-    document.getElementById('syntheticDateLabel').textContent =
-      syntheticDateForOffset(slider.value);
-    clearTimeout(syntheticDateDebounce);
-    if (document.getElementById('showSynthetic').checked) {
-      syntheticDateDebounce = setTimeout(loadSynthetic, 300);
-    }
-  });
 }
 
-function syntheticVariableValue(properties, variable) {
+function syntheticVariableValue(properties, variable, model = displayedModel()) {
   switch (variable) {
-    case 'predicted_price_lightgbm': return properties.lightgbmPredictedPrice;
+    case 'predicted_price': return model === 'lightgbm'
+      ? properties.lightgbmPredictedPrice
+      : model === 'gnn' ? properties.gnnPredictedPrice : properties.neuralPredictedPrice;
     case 'sqft': return properties.sqft;
+    case 'sqft_lot': return properties.sqftLot;
     case 'pred_std': return (properties.neuralUpper95 - properties.neuralLower95) / 3.92;
     case 'pred_cv_pct': return (
       (properties.neuralUpper95 - properties.neuralLower95) /
       properties.neuralPredictedPrice * 100
     );
     case 'attn_community': return properties.attnCommunity;
-    case 'attn_year': return properties.attnYear;
-    case 'attn_week': return properties.attnWeek;
     case 'attn_property': return properties.attnProperty;
     case 'attn_time': return properties.attnTime;
     case 'attn_market': return properties.attnMarket;
-    default: return properties.neuralPredictedPrice;
+    default: return model === 'gnn' ? properties.gnnPredictedPrice : properties.neuralPredictedPrice;
   }
 }
 
 async function loadSynthetic() {
   const requestId = ++syntheticRequestId;
   syntheticLayer.clearLayers();
+  syntheticCoordinateMarker = null;
   const visible = document.getElementById('showSynthetic').checked;
   setLayerGroupVisible(syntheticLayer, visible);
   if (!visible) return;
 
   const slider = document.getElementById('syntheticDateSlider');
-  const saleDate = syntheticDateForOffset(slider.value);
+  const candidateDate = syntheticDateForOffset(slider.value);
+  const saleDate = /^\d{4}-\d{2}-\d{2}$/.test(candidateDate)
+    ? candidateDate : localIsoDate(new Date());
   const status = document.getElementById('syntheticDateStatus');
   status.textContent = `Calculating predictions for ${saleDate}…`;
+  const progressKey = `synthetic-${requestId}`;
+  beginMapEvent(progressKey, `Calculating synthetic predictions for ${saleDate}…`);
   try {
-    const response = await fetch(`/api/synthetic?saleDate=${saleDate}`);
+    const query = new URLSearchParams({ saleDate });
+    const response = await fetch(`/api/synthetic?${query}`);
     if (!response.ok) throw new Error(await response.text());
     const geojson = await response.json();
-    if (requestId !== syntheticRequestId) return;
+    if (requestId !== syntheticRequestId) {
+      completeMapEvent(progressKey);
+      return;
+    }
 
     const requestedVariable = document.getElementById('variable').value;
     const variable = ['pct_error', 'sale_price', 'num_sales'].includes(requestedVariable)
-      ? 'predicted_price_neural' : requestedVariable;
+      ? 'predicted_price' : requestedVariable;
+    const model = displayedModel();
     const values = geojson.features.map(feature =>
-      syntheticVariableValue(feature.properties, variable)
+      syntheticVariableValue(feature.properties, variable, model)
     );
     const colorFn = getColorFn(variable, values, null);
     const money = value => `$${Math.round(value).toLocaleString()}`;
@@ -138,7 +160,6 @@ async function loadSynthetic() {
       .replace(/\b\w/g, character => character.toUpperCase());
     const featureValue = contribution => {
       const value = Number(contribution.value);
-      if (contribution.feature === 'is_waterfront') return value >= 0.5 ? 'Yes' : 'No';
       if (contribution.feature === 'distance_to_water_m') {
         return value < 1000 ? `${Math.round(value)} m` : `${(value / 1000).toFixed(2)} km`;
       }
@@ -147,8 +168,7 @@ async function loadSynthetic() {
         return `${value.toFixed(2)}%`;
       }
       if (['sqft', 'sqft_lot', 'beds'].includes(contribution.feature) ||
-          contribution.feature.startsWith('community_') ||
-          ['year', 'week'].includes(contribution.feature)) {
+          contribution.feature.startsWith('community_')) {
         return Math.round(value).toLocaleString();
       }
       return value.toFixed(3);
@@ -204,12 +224,10 @@ async function loadSynthetic() {
     };
     const neuralGroupForFeature = feature => {
       if (feature.startsWith('community_')) return 'Community';
-      if (feature === 'year') return 'Year';
-      if (feature === 'week') return 'Week';
-      if (['sqft', 'sqft_lot', 'beds', 'distance_to_water_m', 'water_proximity', 'is_waterfront'].includes(feature)) {
+      if (['sqft', 'sqft_lot', 'beds', 'distance_to_water_m', 'water_proximity'].includes(feature)) {
         return 'Property';
       }
-      if (feature === 'time_trend') return 'Time';
+      if (['time_trend', 'annual_sin', 'annual_cos'].includes(feature)) return 'Time';
       if (['mortgage_rate', 'unemployment_rate'].includes(feature)) return 'Economics';
       if (feature.startsWith('center_local_') || feature.startsWith('neighbor_')) {
         return 'Local market';
@@ -225,10 +243,12 @@ async function loadSynthetic() {
       return fullModelExplanationHtml(p, payload);
     };
     const loadExplanation = async p => {
-      const cacheKey = `${p.saleDate}|${p.h3Index}`;
+      const cacheKey = `${p.saleDate}|${p.h3Index}|${p.lat}|${p.lng}`;
       let explanation = lightgbmExplanationCache.get(cacheKey);
       if (!explanation) {
-        const query = new URLSearchParams({ saleDate: p.saleDate, h3Index: p.h3Index });
+        const query = new URLSearchParams({
+          saleDate: p.saleDate, h3Index: p.h3Index, lat: p.lat, lng: p.lng
+        });
         const response = await fetch(`/api/synthetic/explanation?${query}`);
         if (!response.ok) throw new Error(await response.text());
         explanation = await response.json();
@@ -242,20 +262,92 @@ async function loadSynthetic() {
     const tooltipHtml = p =>
       `<div class="synthetic-tooltip"><b>Synthetic H3 L8</b>: ${p.h3Index}<br>` +
       `Sale date: ${p.saleDate}<br>` +
-      `Sqft: ${p.sqft.toLocaleString()} | Lot: ${p.sqftLot.toLocaleString()} | Beds: ${p.beds}<br>` +
+      `Sqft: ${p.sqft.toLocaleString()} | Lot Sqft: ${p.sqftLot.toLocaleString()} | Beds: ${p.beds}<br>` +
       waterFeatureRows(p) + `<br>` +
       `<b>Neural: ${money(p.neuralPredictedPrice)}</b><br>` +
+      `&nbsp;90% CI: ${money(p.neuralLower90)} – ${money(p.neuralUpper90)}<br>` +
       `&nbsp;95% CI: ${money(p.neuralLower95)} – ${money(p.neuralUpper95)}<br><br>` +
+      `<b>Spatial GNN: ${money(p.gnnPredictedPrice)}</b><br>` +
+      `&nbsp;90% conformal CI: ${money(p.gnnLower90)} – ${money(p.gnnUpper90)}<br>` +
+      `&nbsp;95% conformal CI: ${money(p.gnnLower95)} – ${money(p.gnnUpper95)}<br><br>` +
       `<b>LightGBM: ${money(p.lightgbmPredictedPrice)}</b><br>` +
+      `&nbsp;90% conformal CI: ${money(p.lightgbmLower90)} – ${money(p.lightgbmUpper90)}<br>` +
       `&nbsp;95% conformal CI: ${money(p.lightgbmLower95)} – ${money(p.lightgbmUpper95)}<br><br>` +
-      `<span class="shap-value">Click the cell for full model feature effects.</span><br>` +
-      `<br><b>CLS Attention:</b><br>` +
-      attentionRow('&nbsp; Community', p.attnCommunity) +
-      attentionRow('&nbsp; Year', p.attnYear) +
-      attentionRow('&nbsp; Week', p.attnWeek) +
-      attentionRow('&nbsp; Property', p.attnProperty) +
-      attentionRow('&nbsp; Time', p.attnTime) +
-      attentionRow('&nbsp; Market', p.attnMarket) + `</div>`;
+      `<span class="shap-value">Click the cell for full model feature effects.</span></div>`;
+
+    const recalculateMovedPoint = async (p, polygonLayer, latlng, marker) => {
+      const progressKey = `synthetic-marker-${p.h3Index}`;
+      reportMapInteraction(
+        'synthetic marker moved', `${p.h3Index} → ${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`
+      );
+      beginMapEvent(progressKey, 'Recalculating synthetic prediction at adjusted coordinates…');
+      marker.bindTooltip('Recalculating at adjusted coordinates…').openTooltip();
+      const query = new URLSearchParams({
+        h3Index: p.h3Index,
+        saleDate: p.saleDate,
+        lat: latlng.lat,
+        lng: latlng.lng
+      });
+      try {
+        const response = await fetch(`/api/synthetic/point?${query}`);
+        if (!response.ok) throw new Error(await response.text());
+        Object.assign(p, await response.json());
+        polygonLayer.setTooltipContent(tooltipHtml(p));
+        polygonLayer.setStyle({ fillColor: colorFn(syntheticVariableValue(p, variable, model)) });
+        marker.bindTooltip(
+          `Adjusted coordinate<br>${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}<br>` +
+          `Drag to recalculate · double-click to reset`, { direction: 'top' }
+        ).openTooltip();
+        completeMapEvent(progressKey, 'Adjusted synthetic prediction ready');
+      } catch (error) {
+        completeMapEvent(progressKey);
+        throw error;
+      }
+    };
+
+    const activateCoordinateMarker = (p, polygonLayer) => {
+      if (syntheticCoordinateMarker) syntheticLayer.removeLayer(syntheticCoordinateMarker);
+      if (!Number.isFinite(Number(p.centerLat))) {
+        p.centerLat = Number(p.lat);
+        p.centerLng = Number(p.lng);
+      }
+      const icon = L.divIcon({
+        className: '',
+        html: '<div class="synthetic-coordinate-icon"></div>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
+      syntheticCoordinateMarker = L.marker([p.lat, p.lng], {
+        draggable: true,
+        icon,
+        keyboard: true,
+        title: 'Drag to adjust synthetic property coordinates'
+      }).addTo(syntheticLayer);
+      syntheticCoordinateMarker.bindTooltip(
+        `Cell center<br>${Number(p.lat).toFixed(5)}, ${Number(p.lng).toFixed(5)}<br>` +
+        `Drag to recalculate · double-click to reset`,
+        { direction: 'top' }
+      ).openTooltip();
+      syntheticCoordinateMarker.on('dragend', async event => {
+        try {
+          await recalculateMovedPoint(
+            p, polygonLayer, event.target.getLatLng(), event.target
+          );
+        } catch (error) {
+          event.target.bindTooltip(`Prediction failed: ${error.message}`).openTooltip();
+        }
+      });
+      syntheticCoordinateMarker.on('dblclick', async event => {
+        if (event.originalEvent) L.DomEvent.stop(event.originalEvent);
+        const center = L.latLng(p.centerLat, p.centerLng);
+        event.target.setLatLng(center);
+        try {
+          await recalculateMovedPoint(p, polygonLayer, center, event.target);
+        } catch (error) {
+          event.target.bindTooltip(`Reset failed: ${error.message}`).openTooltip();
+        }
+      });
+    };
 
     await ensureCommunityColorMap();
     if (requestId !== syntheticRequestId) return;
@@ -263,7 +355,7 @@ async function loadSynthetic() {
     L.geoJSON(geojson, {
       renderer: syntheticRenderer,
       style: feature => ({
-        fillColor: colorFn(syntheticVariableValue(feature.properties, variable)),
+        fillColor: colorFn(syntheticVariableValue(feature.properties, variable, model)),
         fillOpacity: 0.42,
         color: communityColorMap.get(String(feature.properties.community)) || '#888',
         opacity: 1,
@@ -278,16 +370,22 @@ async function loadSynthetic() {
           { sticky: true, className: 'synthetic-tooltip-container' }
         );
         layer.on('click', async () => {
+          reportMapInteraction('synthetic cell selected', p.h3Index);
+          activateCoordinateMarker(p, layer);
           const popup = document.getElementById('featurePopup');
           const title = document.getElementById('featurePopupTitle');
           const body = document.getElementById('featurePopupBody');
           title.textContent = `All model features — ${p.h3Index}`;
-          body.innerHTML = '<span class="shap-value">Calculating 128 exact group and 512 sampled feature coalitions…</span>';
+          body.innerHTML = '<span class="shap-value">Calculating TreeSHAP, neural feature Shapley, and 1,024 exact Spatial GNN feature coalitions…</span>';
           popup.style.visibility = 'visible';
+          const progressKey = `synthetic-explanation-${p.h3Index}`;
+          beginMapEvent(progressKey, 'Calculating feature contributions…');
           try {
             const explanation = await loadExplanation(p);
             body.innerHTML = detailedExplanationHtml(p, explanation);
+            completeMapEvent(progressKey, 'Feature contributions ready');
           } catch (error) {
+            completeMapEvent(progressKey);
             body.innerHTML = `<span class="shap-negative">Feature explanation failed: ` +
               `${escapeHtml(error.message)}</span>`;
           }
@@ -301,9 +399,10 @@ async function loadSynthetic() {
       ` · Mortgage ${Number(geojson.mortgageRate).toFixed(2)}%` +
       ` · Unemployment ${Number(geojson.unemploymentRate).toFixed(1)}%` +
       indicatorDateNote;
+    completeMapEvent(progressKey, `Synthetic predictions ready for ${saleDate}`);
   } catch (error) {
+    completeMapEvent(progressKey);
     if (requestId !== syntheticRequestId) return;
     status.textContent = `Prediction failed: ${error.message}`;
   }
 }
-

@@ -1,6 +1,6 @@
 # Makefile for House Price Model + Java App
 
-.PHONY: help test train train-lightgbm export export-lightgbm retrain-deploy java-setup java-dev java-build java-run java-kill \
+.PHONY: help test train train-gnn train-lightgbm export export-gnn export-lightgbm retrain-deploy osm-transport transport-features java-setup java-dev java-build java-run java-kill \
         rentcast-fetch rentcast-status clean
 
 JAVA_APP_DIR = java-app/house-price-app
@@ -26,8 +26,10 @@ help:
 	@echo ""
 	@echo "  Model training (Python):"
 	@echo "    make train          Train the model (local Python)"
+	@echo "    make train-gnn      Train the independent monthly H3 GraphSAGE baseline"
 	@echo "    make train-lightgbm Train LightGBM with the same prepared features"
 	@echo "    make export         Export trained model to ONNX for Java"
+	@echo "    make export-gnn     Export latest monthly H3 GNN for Java"
 	@echo "    make export-lightgbm Export latest LightGBM model for Java"
 	@echo "    make retrain-deploy Retrain and deploy both water-aware models"
 	@echo ""
@@ -42,6 +44,8 @@ help:
 	@echo ""
 	@echo "  Utilities:"
 	@echo "    make test           Run Python and Java tests"
+	@echo "    make osm-transport  Rebuild OSM transport map layers and H3 accessibility fields"
+	@echo "    make transport-features Rebuild H3 transport accessibility fields from current OSM layers"
 	@echo "    make clean          Remove build artifacts"
 	@echo ""
 
@@ -61,6 +65,10 @@ train:
 	@echo "Training model..."
 	$(PYTHON_ENV) python3 main_train.py --seed=$(TRAIN_SEED)
 
+train-gnn:
+	@echo "Training standalone monthly H3 GraphSAGE baseline..."
+	$(PYTHON_ENV) python3 main_train_gnn.py --seed=$(TRAIN_SEED)
+
 train-lightgbm:
 	@echo "Training LightGBM model..."
 	$(PYTHON_ENV) python3 main_lightgbm.py
@@ -70,6 +78,10 @@ export:
 	$(PYTHON_ENV) python3 export_model_for_java.py
 	@echo "Staged a versioned neural bundle under outputs/deployment/."
 
+export-gnn:
+	@echo "Exporting latest GNN model for Java..."
+	$(PYTHON_ENV) python3 export_gnn_for_java.py --model-dir=$$(ls -dt outputs/gnn/* | head -1)
+
 export-lightgbm:
 	@echo "Exporting latest LightGBM model to ONNX..."
 	$(PYTHON_ENV) python3 export_lightgbm_for_java.py
@@ -77,6 +89,13 @@ export-lightgbm:
 retrain-deploy: train train-lightgbm
 	$(PYTHON_ENV) python3 deploy_models_for_java.py
 	@echo "Both water-aware models are retrained and deployed to Java resources."
+
+osm-transport:
+	python3 scripts/extract_osm_transport.py
+	python3 scripts/build_transport_features.py
+
+transport-features:
+	python3 scripts/build_transport_features.py
 
 # ── Java app ──────────────────────────────────────────────────────────────────
 java-setup:

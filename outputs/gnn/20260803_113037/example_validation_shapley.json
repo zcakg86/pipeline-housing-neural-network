@@ -1,0 +1,278 @@
+{
+  "reference_log_price": 13.783478228014495,
+  "reference_price": 968475.2708161867,
+  "predicted_log_price": 12.99525485293478,
+  "predicted_price": 440319.0483143919,
+  "evaluated_group_coalitions": 32,
+  "sampled_feature_coalitions": 512,
+  "reference": "training means for property, time, economics, and every causal graph-state field",
+  "groups": [
+    {
+      "group": "Property",
+      "log_contribution": 0.02247704714450572,
+      "price_effect_pct": 2.273155928534948
+    },
+    {
+      "group": "Time",
+      "log_contribution": 0.11268894686084793,
+      "price_effect_pct": 11.928372207999688
+    },
+    {
+      "group": "Economics",
+      "log_contribution": -0.04517649782015531,
+      "price_effect_pct": -4.417123474902513
+    },
+    {
+      "group": "Cell market",
+      "log_contribution": -0.30247600692827403,
+      "price_effect_pct": -26.101378140441195
+    },
+    {
+      "group": "Spatial market",
+      "log_contribution": -0.5757368643366387,
+      "price_effect_pct": -43.77096156147726
+    }
+  ],
+  "features": [
+    {
+      "feature": "sqft",
+      "group": "Property",
+      "value": 1260.0,
+      "affected_cell_count": 1,
+      "log_contribution": -0.2044780001631021,
+      "price_effect_pct": -18.492732681386446,
+      "sampling_std_error_log": 0.006635389111972844,
+      "sampling_std_error_pct": 0.5408324341125884
+    },
+    {
+      "feature": "sqft_lot",
+      "group": "Property",
+      "value": 11730.0,
+      "affected_cell_count": 1,
+      "log_contribution": -0.011136796275125963,
+      "price_effect_pct": -1.1075011732813052,
+      "sampling_std_error_log": 0.0057636559846796515,
+      "sampling_std_error_pct": 0.5699823427025427
+    },
+    {
+      "feature": "beds",
+      "group": "Property",
+      "value": 3.0,
+      "affected_cell_count": 1,
+      "log_contribution": -0.000441956336813577,
+      "price_effect_pct": -0.04418586884977126,
+      "sampling_std_error_log": 0.005374438641660785,
+      "sampling_std_error_pct": 0.5372063899251169
+    },
+    {
+      "feature": "water_proximity",
+      "group": "Property",
+      "value": 0.8572258,
+      "affected_cell_count": 1,
+      "log_contribution": 0.23853379991954735,
+      "price_effect_pct": 26.938661047662833,
+      "sampling_std_error_log": 0.007495388397673846,
+      "sampling_std_error_pct": 0.9514545672329049
+    },
+    {
+      "feature": "time_trend",
+      "group": "Time",
+      "value": 3.679671457905544,
+      "affected_cell_count": 1,
+      "log_contribution": 0.11381956306074281,
+      "price_effect_pct": 12.054991804441318,
+      "sampling_std_error_log": 0.006633630667381134,
+      "sampling_std_error_pct": 0.7433314300670836
+    },
+    {
+      "feature": "annual_sin",
+      "group": "Time",
+      "value": -0.9106046300942162,
+      "affected_cell_count": 1,
+      "log_contribution": -0.014674836432074723,
+      "price_effect_pct": -1.456768579959945,
+      "sampling_std_error_log": 0.0050519019691894745,
+      "sampling_std_error_pct": 0.4978307448611945
+    },
+    {
+      "feature": "annual_cos",
+      "group": "Time",
+      "value": -0.4132786077829044,
+      "affected_cell_count": 1,
+      "log_contribution": 0.013544220232179839,
+      "price_effect_pct": 1.363635869430112,
+      "sampling_std_error_log": 0.005442453370637128,
+      "sampling_std_error_pct": 0.5516668616976145
+    },
+    {
+      "feature": "mortgage_rate",
+      "group": "Economics",
+      "value": 7.12,
+      "affected_cell_count": 1,
+      "log_contribution": -0.07159733569259275,
+      "price_effect_pct": -6.909433716252254,
+      "sampling_std_error_log": 0.005419372627922171,
+      "sampling_std_error_pct": 0.504492466835917
+    },
+    {
+      "feature": "unemployment_rate",
+      "group": "Economics",
+      "value": 3.7,
+      "affected_cell_count": 1,
+      "log_contribution": 0.026420837872437434,
+      "price_effect_pct": 2.677296251215158,
+      "sampling_std_error_log": 0.004922845461106018,
+      "sampling_std_error_pct": 0.5054644618089325
+    },
+    {
+      "feature": "cell_local_decayed_log_price_premium",
+      "group": "Cell market",
+      "value": -0.4383751153945923,
+      "affected_cell_count": 1,
+      "log_contribution": -0.271299840573706,
+      "price_effect_pct": -23.76121326848827,
+      "sampling_std_error_log": 0.005961626439927437,
+      "sampling_std_error_pct": 0.4545071667265694
+    },
+    {
+      "feature": "cell_local_decayed_log_price_std",
+      "group": "Cell market",
+      "value": 0.3511168658733368,
+      "affected_cell_count": 1,
+      "log_contribution": -0.004207093201118493,
+      "price_effect_pct": -0.4198255782142562,
+      "sampling_std_error_log": 0.005534638884233191,
+      "sampling_std_error_pct": 0.5511403054535388
+    },
+    {
+      "feature": "cell_local_log1p_decayed_sales_count",
+      "group": "Cell market",
+      "value": 1.0677380561828613,
+      "affected_cell_count": 1,
+      "log_contribution": -0.01098664321038312,
+      "price_effect_pct": -1.0926510466342823,
+      "sampling_std_error_log": 0.008294837282625724,
+      "sampling_std_error_pct": 0.8204203656240503
+    },
+    {
+      "feature": "cell_local_recency_years",
+      "group": "Cell market",
+      "value": 0.5037645697593689,
+      "affected_cell_count": 1,
+      "log_contribution": -0.010491359611253859,
+      "price_effect_pct": -1.0436517255859354,
+      "sampling_std_error_log": 0.008295299362121467,
+      "sampling_std_error_pct": 0.8208725327186167
+    },
+    {
+      "feature": "cell_local_relative_price_trend",
+      "group": "Cell market",
+      "value": 0.0,
+      "affected_cell_count": 1,
+      "log_contribution": -0.0054910703318125425,
+      "price_effect_pct": -0.5476021961603653,
+      "sampling_std_error_log": 0.009884625590516347,
+      "sampling_std_error_pct": 0.9830497163700451
+    },
+    {
+      "feature": "one_ring_local_decayed_log_price_premium",
+      "group": "Spatial market",
+      "value": -0.5278815031051636,
+      "affected_cell_count": 4,
+      "log_contribution": -0.43830485101030914,
+      "price_effect_pct": -35.487091537623705,
+      "sampling_std_error_log": 0.007707582329897374,
+      "sampling_std_error_pct": 0.49723855331489836
+    },
+    {
+      "feature": "one_ring_local_decayed_log_price_std",
+      "group": "Spatial market",
+      "value": 0.21035635471343994,
+      "affected_cell_count": 4,
+      "log_contribution": -0.07978464880403209,
+      "price_effect_pct": -7.668483799733034,
+      "sampling_std_error_log": 0.008826775635450203,
+      "sampling_std_error_pct": 0.8149895775806921
+    },
+    {
+      "feature": "one_ring_local_log1p_decayed_sales_count",
+      "group": "Spatial market",
+      "value": 2.334073066711426,
+      "affected_cell_count": 4,
+      "log_contribution": 0.060068156259265613,
+      "price_effect_pct": 6.190891981864144,
+      "sampling_std_error_log": 0.007688325134531006,
+      "sampling_std_error_pct": 0.8164301038824333
+    },
+    {
+      "feature": "one_ring_local_recency_years",
+      "group": "Spatial market",
+      "value": 0.4004106819629669,
+      "affected_cell_count": 4,
+      "log_contribution": 0.010168641203322233,
+      "price_effect_pct": 1.0220517523408756,
+      "sampling_std_error_log": 0.007253915061343878,
+      "sampling_std_error_pct": 0.7328053827341663
+    },
+    {
+      "feature": "one_ring_local_relative_price_trend",
+      "group": "Spatial market",
+      "value": 0.06965934485197067,
+      "affected_cell_count": 4,
+      "log_contribution": 5.870855248546529e-05,
+      "price_effect_pct": 0.005871027586625832,
+      "sampling_std_error_log": 0.005509740689881118,
+      "sampling_std_error_pct": 0.5510064168276972
+    },
+    {
+      "feature": "two_ring_local_decayed_log_price_premium",
+      "group": "Spatial market",
+      "value": -0.597823977470398,
+      "affected_cell_count": 9,
+      "log_contribution": -0.1719495606328875,
+      "price_effect_pct": -15.797835686381342,
+      "sampling_std_error_log": 0.006325302308745877,
+      "sampling_std_error_pct": 0.5326041443343317
+    },
+    {
+      "feature": "two_ring_local_decayed_log_price_std",
+      "group": "Spatial market",
+      "value": 0.22583214938640594,
+      "affected_cell_count": 9,
+      "log_contribution": -0.013418773924421914,
+      "price_effect_pct": -1.3329143535488355,
+      "sampling_std_error_log": 0.006899533966501851,
+      "sampling_std_error_pct": 0.680756908793437
+    },
+    {
+      "feature": "two_ring_local_log1p_decayed_sales_count",
+      "group": "Spatial market",
+      "value": 2.7504851818084717,
+      "affected_cell_count": 9,
+      "log_contribution": 0.02202467325612184,
+      "price_effect_pct": 2.2269006864309446,
+      "sampling_std_error_log": 0.007632571584241145,
+      "sampling_std_error_pct": 0.7802541373242944
+    },
+    {
+      "feature": "two_ring_local_recency_years",
+      "group": "Spatial market",
+      "value": 0.46513044834136963,
+      "affected_cell_count": 9,
+      "log_contribution": 0.02183387346409021,
+      "price_effect_pct": 2.2073976756842995,
+      "sampling_std_error_log": 0.006323358682292512,
+      "sampling_std_error_pct": 0.6462940354870619
+    },
+    {
+      "feature": "two_ring_local_relative_price_trend",
+      "group": "Spatial market",
+      "value": -0.01808721199631691,
+      "affected_cell_count": 9,
+      "log_contribution": 0.013566917299726634,
+      "price_effect_pct": 1.3659365528295138,
+      "sampling_std_error_log": 0.006914692888446452,
+      "sampling_std_error_pct": 0.7009143206125645
+    }
+  ]
+}

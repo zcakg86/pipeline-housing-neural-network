@@ -7,8 +7,8 @@ import java.time.LocalDate;
  *
  * New inference fields (populated after ONNX inference):
  *   predictionStdPrice  — prediction standard deviation in $ (from uncertainty head)
- *   clsAttention        — 6-element CLS attention weights over tokens:
- *                         [community, year, week, property, time, market]
+ *   clsAttention        — four CLS attention weights over
+ *                         [community, property, time, market]
  */
 public record PropertyRecord(
     // Identity
@@ -40,11 +40,13 @@ public record PropertyRecord(
     double    pctError,          // 0 if salePrice unknown
     double    lightgbmPredictedPrice,
     double    lightgbmPctError,  // 0 if salePrice unknown
+    double    gnnPredictedPrice,
+    double    gnnPctError,       // 0 if salePrice unknown
 
     // Uncertainty and attention (populated after inference)
     double    predictionStdPrice, // std dev of prediction in $ (0 if unavailable)
     double    predictionCvPct,    // 95% CI width as % of predicted price (0 if unavailable)
-    float[]   clsAttention        // [community, year, week, property, time, market], null if unavailable
+    float[]   clsAttention        // [community, property, time, market], null if unavailable
 ) {
     /** Convenience: does this record have an actual sale price to compare against? */
     public boolean hasSalePrice() { return salePrice > 0; }

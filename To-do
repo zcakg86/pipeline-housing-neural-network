@@ -1,0 +1,17 @@
+Create knowledge graph of pipeline with DAG.
+Sent
+Start thinking about graph representation. For a spatial gnn
+I want to create these features:
+Distance from motorway link (that connects to non-motorway way)
+Bus stop density? A density-centrality combo feature?
+Distance from light rail station?
+Remove is_waterfront (keep water proximity) from models, export, java app.
+For a property - add pop up to show time series graph of the predicted value at 1 month intervals, highlighting the actual sale date/initial date prediction. 
+For the commmunity layer performance chart pop up, make it possible to change variable, and toggle between models. Call it 'Community level trends'. Also add functionality to change the window size with a corner drag.
+For the feature contribution pop up window, make it possible to move it around the screen like the performance chart already does, and to change the window size with a corner drag.
+Synthetic layer, add point to centre of cell. Allow the point to be dragged for change the coordinates. Double click on it to reset to centre. 
+Variable chosen in 'Map color' drop down box should always correspond to the model selected in the 'Displayed Model' drop down, for all of zillow, sales and synthetic layers. I changed the id here so there may be a corresponding variable that needs changing somewhere   /<label>Displayed Model</label>
+  <select id="DisplayedModel">
+    <option value="lightgbm" selected>LightGBM</option>
+    <option value="neural">Neural Network</option>
+  </select>

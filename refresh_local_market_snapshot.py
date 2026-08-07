@@ -1,9 +1,11 @@
-"""Refresh Java local-market artifacts from historical and RentCast sales.
+"""Refresh separate historical and rolling-RentCast Java market artifacts.
 
 The trained ONNX model and scalers are intentionally untouched. The command
 maintains a deduplicated RentCast transaction ledger, rebuilds local H3 market
-statistics using sales strictly before ``--as-of``, and installs the refreshed
-snapshot/topology JSON files into the Java artifact directories.
+statistics using sales strictly before ``--as-of``, and installs two snapshots:
+the historical-only model snapshot and a mixed-source RentCast snapshot that
+lags the newest observed sale by three months. The newest three months can
+therefore be scored without future local-sale context.
 """
 
 import argparse
@@ -19,7 +21,7 @@ import numpy as np
 import pandas as pd
 
 from pricemodel.h3_neighbor_mapper import ordered_k_ring
-from pricemodel.local_market_features import build_historical_local_features
+from pricemodel.local_market_features import LOCAL_MARKET_FEATURES, build_historical_local_features
 
 
 ROOT = Path(__file__).resolve().parent
@@ -34,6 +36,7 @@ DEFAULT_DEPLOY_DIRS = [
 LEDGER_COLUMNS = [
     "source_id", "sale_date", "sale_price", "lat", "lng", "source_file",
 ]
+RENTCAST_MARKET_SAFETY_LAG_DAYS = 92
 
 
 def _atomic_json(path: Path, value) -> None:
@@ -211,6 +214,44 @@ def _build_topology(sales: pd.DataFrame, community_map_path: Path, data_dir: Pat
     return neighbor_cells, neighbor_communities
 
 
+def _validate_deploy_feature_contracts(deploy_dirs: list[Path]) -> None:
+    """Refuse to pair a new snapshot schema with an older deployed model.
+
+    A local-market snapshot and its neural/LightGBM feature contract are one
+    unit: copying only the new snapshot into an old model artifact directory
+    would silently change the meaning of five model inputs.
+    """
+    for deploy_dir in deploy_dirs:
+        contract_path = deploy_dir / "feature_contract.json"
+        if not contract_path.exists():
+            continue
+        with open(contract_path, "r") as source:
+            contract = json.load(source)
+        actual = contract.get("groups", {}).get("local_market")
+        if actual is not None and actual != LOCAL_MARKET_FEATURES:
+            raise ValueError(
+                f"{contract_path} uses an older local-market feature contract. "
+                "Retrain and export both models before refreshing this snapshot."
+            )
+
+
+def _market_snapshot(sales: pd.DataFrame, neighbor_cells: dict[str, list[str]]):
+    """Build one deployable local-market snapshot from already-filtered sales."""
+    if sales.empty:
+        raise ValueError("Cannot build a local-market snapshot without sales")
+    prepared = sales.copy()
+    prepared["h3_neighbor_cells"] = prepared["h3_08"].map(neighbor_cells)
+    prepared["log_price"] = np.log(prepared["sale_price"].to_numpy(dtype=np.float64))
+    prepared = prepared.sort_values("sale_date", kind="stable").reset_index(drop=True)
+    state_as_of = prepared["sale_date"].iloc[-1] + pd.Timedelta(days=1)
+    _, snapshot = build_historical_local_features(
+        prepared,
+        snapshot_as_of_date=state_as_of,
+        cache_dir=None,
+    )
+    return snapshot
+
+
 def refresh_snapshot(
     historical_path: Path,
     rentcast_paths: list[Path],
@@ -249,57 +290,92 @@ def refresh_snapshot(
         h3.latlng_to_cell(float(lat), float(lng), 8)
         for lat, lng in zip(combined["lat"], combined["lng"])
     ]
-    neighbor_cells, neighbor_communities = _build_topology(
+    historical_only = historical.loc[historical["sale_date"] < as_of].copy()
+    if historical_only.empty:
+        raise ValueError("No valid historical sales exist before the snapshot cutoff")
+    historical_only["h3_08"] = [
+        h3.latlng_to_cell(float(lat), float(lng), 8)
+        for lat, lng in zip(historical_only["lat"], historical_only["lng"])
+    ]
+    historical_neighbor_cells, historical_neighbor_communities = _build_topology(
+        historical_only,
+        data_dir / "community_map.json",
+        data_dir,
+    )
+    rentcast_neighbor_cells, _ = _build_topology(
         combined,
         data_dir / "community_map.json",
         data_dir,
     )
-    combined["h3_neighbor_cells"] = combined["h3_08"].map(neighbor_cells)
-    combined["log_price"] = np.log(combined["sale_price"].to_numpy(dtype=np.float64))
-    combined = combined.sort_values("sale_date", kind="stable").reset_index(drop=True)
-    # The deployable state begins immediately after its newest included sale.
-    # Java can then causally score any later transaction while dynamically
-    # aging recency and the rolling trend to that transaction's date.
-    state_as_of = combined["sale_date"].iloc[-1] + pd.Timedelta(days=1)
-
-    _, snapshot = build_historical_local_features(
-        combined,
-        snapshot_as_of_date=state_as_of,
-        cache_dir=None,
-    )
-    snapshot["refresh"] = {
+    historical_snapshot = _market_snapshot(historical_only, historical_neighbor_cells)
+    historical_snapshot["refresh"] = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "snapshot_kind": "historical_only",
         "input_cutoff_date": as_of.date().isoformat(),
         "historical_file": str(historical_path),
         "historical_file_sha256": _sha256(historical_path),
         "historical_valid_rows": len(historical),
         "rentcast_ledger_rows": len(ledger),
         "combined_rows_before_cross_source_deduplication": combined_before_dedup,
-        "combined_rows_in_snapshot": len(combined),
+        "historical_rows_in_snapshot": len(historical_only),
         "excluded_on_or_after_as_of_date": future_or_same_day,
         "rentcast_input_files": [str(path) for path in rentcast_paths],
     }
 
+    latest_observed_sale = combined["sale_date"].max()
+    rentcast_safe_cutoff = latest_observed_sale - pd.Timedelta(
+        days=RENTCAST_MARKET_SAFETY_LAG_DAYS
+    )
+    # The strict cutoff is deliberate: a sale on/after this date belongs to
+    # the held-out recent period and is never allowed into its own context.
+    rentcast_snapshot_sales = combined.loc[
+        combined["sale_date"] < rentcast_safe_cutoff
+    ].copy()
+    if rentcast_snapshot_sales.empty:
+        raise ValueError("No mixed-source sales exist before the RentCast safety cutoff")
+    rentcast_snapshot = _market_snapshot(rentcast_snapshot_sales, rentcast_neighbor_cells)
+    rentcast_snapshot["refresh"] = {
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "snapshot_kind": "rentcast_lagged_mixed_source",
+        "input_cutoff_date": as_of.date().isoformat(),
+        "latest_observed_sale_date": latest_observed_sale.date().isoformat(),
+        "safety_cutoff_date": rentcast_safe_cutoff.date().isoformat(),
+        "safety_lag_days": RENTCAST_MARKET_SAFETY_LAG_DAYS,
+        "historical_file": str(historical_path),
+        "historical_file_sha256": _sha256(historical_path),
+        "historical_valid_rows": len(historical),
+        "rentcast_ledger_rows": len(ledger),
+        "mixed_source_rows_in_snapshot": len(rentcast_snapshot_sales),
+        "rentcast_input_files": [str(path) for path in rentcast_paths],
+    }
+
     summary = {
-        "as_of_date": snapshot["as_of_date"],
-        "latest_sale_date": snapshot["latest_sale_date"],
+        "historical_as_of_date": historical_snapshot["as_of_date"],
+        "historical_latest_sale_date": historical_snapshot["latest_sale_date"],
+        "rentcast_as_of_date": rentcast_snapshot["as_of_date"],
+        "rentcast_latest_sale_date": rentcast_snapshot["latest_sale_date"],
         "input_cutoff_date": as_of.date().isoformat(),
         "historical_rows": len(historical),
         "new_rentcast_rows_read": len(new_rentcast),
         "rentcast_ledger_rows": len(ledger),
-        "snapshot_sales": len(combined),
-        "snapshot_cells": len(snapshot["cells"]),
+        "historical_snapshot_sales": len(historical_only),
+        "historical_snapshot_cells": len(historical_snapshot["cells"]),
+        "rentcast_snapshot_sales": len(rentcast_snapshot_sales),
+        "rentcast_market_cells": len(rentcast_snapshot["cells"]),
         "cross_source_duplicates_removed": combined_before_dedup - len(combined) - future_or_same_day,
         "excluded_on_or_after_as_of_date": future_or_same_day,
     }
     if dry_run:
         return summary
 
+    _validate_deploy_feature_contracts(deploy_dirs)
     _atomic_csv(ledger_path, ledger[LEDGER_COLUMNS].sort_values("sale_date"))
     canonical_artifacts = {
-        "local_market_snapshot.json": snapshot,
-        "h3_l8_neighbor_cells.json": neighbor_cells,
-        "h3_l8_neighbor_communities.json": neighbor_communities,
+        "local_market_snapshot.json": historical_snapshot,
+        "h3_l8_neighbor_cells.json": historical_neighbor_cells,
+        "h3_l8_neighbor_communities.json": historical_neighbor_communities,
+        "rentcast_local_market_snapshot.json": rentcast_snapshot,
+        "rentcast_h3_l8_neighbor_cells.json": rentcast_neighbor_cells,
     }
     for name, value in canonical_artifacts.items():
         _atomic_json(data_dir / name, value)

@@ -19,14 +19,20 @@ CANONICAL_JAVA_ARTIFACT_DIR = Path(
 )
 REQUIRED_NEURAL_ARTIFACTS = {
     "model.onnx", "model_metadata.json", "scalers.json",
-    "year_vocab.json", "week_vocab.json", "community_map.json",
+    "community_map.json",
     "h3_l8_neighbor_communities.json", "h3_l8_neighbor_cells.json",
-    "local_market_snapshot.json", "feature_contract.json",
+    "local_market_snapshot.json", "synthetic_h3_l8_grid.json",
+    "feature_contract.json",
 }
 REQUIRED_LIGHTGBM_ARTIFACTS = {
     "lightgbm.onnx", "lightgbm_metadata.json", "lightgbm_model.txt",
     "feature_contract.json",
 }
+REQUIRED_GNN_ARTIFACTS = {
+    "gnn_price_head.onnx", "gnn_monthly_embeddings.bin.gz",
+    "gnn_scalers.json", "gnn_metadata.json",
+}
+RETIRED_ARTIFACTS = {"year_vocab.json", "week_vocab.json"}
 
 
 def create_staging_directory(root="outputs/deployment", version=None, *, seed=True):
@@ -70,7 +76,8 @@ def write_manifest(bundle_dir, *, sources=None):
     return manifest
 
 
-def validate_bundle(bundle_dir, *, require_neural=True, require_lightgbm=True):
+def validate_bundle(bundle_dir, *, require_neural=True, require_lightgbm=True,
+                    require_gnn=True):
     """Reject incomplete bundles before they can replace Java resources."""
     bundle_dir = Path(bundle_dir)
     required = {"king_county_water.geojson", "fred_indicators.csv"}
@@ -78,9 +85,17 @@ def validate_bundle(bundle_dir, *, require_neural=True, require_lightgbm=True):
         required |= REQUIRED_NEURAL_ARTIFACTS
     if require_lightgbm:
         required |= REQUIRED_LIGHTGBM_ARTIFACTS
+    if require_gnn:
+        required |= REQUIRED_GNN_ARTIFACTS
     missing = sorted(name for name in required if not (bundle_dir / name).is_file())
     if missing:
         raise FileNotFoundError("Incomplete deployment bundle; missing: " + ", ".join(missing))
+    retired = sorted(name for name in RETIRED_ARTIFACTS if (bundle_dir / name).exists())
+    if retired:
+        raise ValueError(
+            "Deployment bundle contains retired categorical-time artifacts: "
+            + ", ".join(retired)
+        )
     return required
 
 

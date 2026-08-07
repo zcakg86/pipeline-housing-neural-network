@@ -2,6 +2,13 @@
 
 A Quarkus application that loads property data, runs ONNX inference, and serves an interactive Leaflet.js map. This guide explains every source file, what it does, and how the components connect.
 
+The map also serves optional static OSM overlays from
+`src/main/resources/META-INF/resources/data/`: natural water, rail/light-rail
+stations and routes, bus stops/stations and routes, and categorized major
+roads. These GeoJSON files are fetched only when their corresponding map
+checkbox is enabled. Rebuild the transport files from the repository root with
+`make osm-transport`.
+
 ---
 
 ## Architecture overview
@@ -40,6 +47,8 @@ A Quarkus application that loads property data, runs ONNX inference, and serves 
                          ┌──────────▼───────────────────────┐
                          │  model/                           │
                          │  ├── EmbeddingModel   (ONNX)     │
+                         │  ├── LightGBMModel    (ONNX)     │
+                         │  ├── GnnModel         (ONNX)     │
                          │  └── ModelArtifacts  (loaders)   │
                          └──────────────────────────────────┘
                          ┌──────────────────────────────────┐
@@ -64,8 +73,6 @@ Loads all static model files from `src/main/resources/model-artifacts/` at start
 | File | Contents |
 |---|---|
 | `scalers.json` | Mean and std dev for every scaled feature |
-| `year_vocab.json` | Calendar year → embedding row index |
-| `week_vocab.json` | ISO week number → embedding row index |
 | `community_map.json` | H3 L8 hex → integer community ID |
 | `h3_l9_neighbor_communities.json` | H3 hex → `int[7]` community indices (center + 6 neighbours) |
 | `model_metadata.json` | Architecture dimensions, reference date, `n_communities` |
@@ -74,29 +81,27 @@ Key public methods:
 - `scaleFeature(feature, value)` — `(value - mean) / scale`
 - `inverseScaleLogPrice(scaled)` — recovers unscaled log price
 - `getLogPriceScale()` — the log_price scaler std dev (used for uncertainty conversion)
-- `lookupYear(year)` / `lookupWeek(week)` — vocab lookup with unknown fallback
 - `lookupH3Neighbors(h3Index)` — returns `int[7]` neighbour community indices
 - `lookupCommunity(h3Index)` — community ID string for display
 
 #### `EmbeddingModel.java`
 Wraps the ONNX session. Handles all feature engineering and inference.
 
-The exported ONNX model has **6 inputs and 3 outputs**:
+The exported ONNX model has **5 inputs and 3 outputs**:
 
 | Input | Shape | Description |
 |---|---|---|
 | `community_indices` | `[1, 7]` long | Center + 6 neighbour community indices |
-| `year` | `[1]` long | Vocab-mapped year index |
-| `week` | `[1]` long | Vocab-mapped ISO week index |
-| `property_features` | `[1, 3]` float | Scaled sqft, sqft_lot, beds |
-| `time_features` | `[1, 1]` float | Scaled time_trend |
+| `property_features` | `[1, 4]` float | Scaled sqft, lot size, beds, and water proximity |
+| `time_features` | `[1, 3]` float | Scaled time_trend, annual_sin, annual_cos |
 | `market_features` | `[1, 2]` float | Scaled mortgage_rate, unemployment_rate |
+| `local_market_features` | `[1, 7, 5]` float | Causal center-and-neighbor market summaries |
 
 | Output | Shape | Description |
 |---|---|---|
 | `log_price_scaled` | `[1, 1]` | Scaled log price |
 | `log_var_scaled` | `[1, 1]` | Log variance from uncertainty head |
-| `cls_attention` | `[1, 6]` | CLS token attention weights over 6 input tokens |
+| `cls_attention` | `[1, 4]` | CLS attention over community, property, time, market |
 
 `predict()` returns a `PredictionResult` record:
 ```java
@@ -104,11 +109,30 @@ record PredictionResult(
     double  predictedPrice,      // $ price
     double  predictionStdPrice,  // $ std dev (delta method: price × std_log_price)
     double  predictionCvPct,     // 95% CI width as % of price (3.92 × std_log_price × 100)
-    float[] clsAttention         // [community, year, week, property, time, market]
+    float[] clsAttention         // [community, property, time, market]
 )
 ```
 
 **Note on uncertainty calibration:** `predictionStdPrice` and `predictionCvPct` are only meaningful if the model was trained with `estimate_uncertainty=True` (NLL loss). With MSE-only training the uncertainty head exists but produces uncalibrated values. Retrain with NLL to get reliable confidence intervals.
+
+#### `GnnModel.java`
+Loads the independently trained monthly H3 GraphSAGE deployment. Python exports
+the GraphSAGE **price head** as `gnn_price_head.onnx` and precomputes the dated
+embedding for every H3 cell/month in `gnn_monthly_embeddings.bin.gz`. Java loads
+that table once at startup and combines the selected cell-month embedding with:
+
+| Input | Shape | Description |
+|---|---|---|
+| `gnn_embedding` | `[batch, 32]` | Precomputed two-layer GraphSAGE H3 representation |
+| `property_features` | `[batch, 4]` | Scaled sqft, lot size, beds, water proximity |
+| `time_features` | `[batch, 3]` | Scaled time trend, annual sine, annual cosine |
+| `market_features` | `[batch, 2]` | Scaled mortgage and unemployment rates |
+
+This avoids graph reconstruction and message passing during map loading or
+individual predictions. Dates after the final exported month use its latest
+causal embedding: this is leakage-safe but increasingly stale until retraining
+and redeployment. An unknown H3 cell receives the model’s zero-embedding
+fallback.
 
 ---
 
@@ -123,12 +147,13 @@ Key fields:
 - **Property**: `sqft`, `sqftLot`, `beds`, `baths`, `homeType`
 - **Transaction/listing**: `saleDate` (prediction observation date for Zillow),
   `salePrice` (list price for Zillow), `zestimate` (0 when unavailable), `listingUrl`
-- **Predictions**: `predictedPrice`, `pctError`
+- **Predictions**: `predictedPrice`, `pctError`, `lightgbmPredictedPrice`,
+  `lightgbmPctError`, `gnnPredictedPrice`, `gnnPctError`
 - **Uncertainty**: `predictionStdPrice`, `predictionCvPct`
-- **Attention**: `clsAttention[6]` — CLS attention over [community, year, week, property, time, market]
+- **Attention**: `clsAttention[4]` — CLS attention over [community, property, time, market]
 
 #### `DataIngestionService.java`
-Parses the historical CSV and canonical API-response JSON into `PropertyRecord` lists. JSON rows are normalized and compared with `PropertyStore`; unchanged `(source, id)` records skip inference, while new or changed rows are sent through one shared preparation pass and batched neural/LightGBM inference.
+Parses the historical CSV and canonical API-response JSON into `PropertyRecord` lists. JSON rows are normalized and compared with `PropertyStore`; unchanged `(source, id)` records skip inference, while new or changed rows are sent through one shared preparation pass and batched neural, LightGBM, and GNN inference.
 
 | Method | Source |
 |---|---|
@@ -174,7 +199,8 @@ Groups filtered `PropertyRecord`s by `h3Index` and computes per-hex statistics.
 Loads the packaged `synthetic_h3_l8_grid.json` once and uses batched ONNX
 inference to predict the fixed 2,000 sqft, 4,000 sqft lot, 3-bed property in
 every historical H3 level-8 cell. Results are cached for the three most recently
-selected dates. Neural intervals come from the uncertainty head; LightGBM uses
+selected dates. It returns neural, LightGBM, and Spatial GNN predictions.
+Neural intervals come from the uncertainty head; LightGBM uses
 a 95% conformal interval calibrated on its chronological holdout.
 The synthetic date slider runs monthly from today back to `2020-01-01`. This
 demonstration endpoint intentionally reuses the current market snapshot for
@@ -193,10 +219,10 @@ look-forward guard.
 | `GET /api/zillow` | Viewport-bounded GeoJSON — clustered at low zoom, detailed listings at high zoom | Zillow layer |
 | `GET /api/sales/h3` | GeoJSON polygons — H3 hex grid | H3 sales layer |
 | `GET /api/sales/community` | GeoJSON polygons — hexes by community | Community layer |
-| `GET /api/synthetic?saleDate=YYYY-MM-DD` | GeoJSON H3 L8 polygons with both predictions, intervals, and attention | Synthetic layer |
+| `GET /api/synthetic?saleDate=YYYY-MM-DD` | GeoJSON H3 L8 polygons with neural, LightGBM, and GNN predictions, intervals, and attention | Synthetic layer |
 | `GET /api/synthetic/meta` | Grid count and demonstration slider date bounds | Synthetic date control |
-| `GET /api/synthetic/explanation?h3Index=...&saleDate=YYYY-MM-DD` | All exact LightGBM TreeSHAP effects, exact seven-group neural effects (128 coalitions), and feature-level neural KernelSHAP estimates (512 sampled coalitions) | Click-open synthetic feature panel |
-| `GET /api/points/explanation?source=...&id=...` | The same two-model feature explanation for a stored Zillow, RentCast, or historical-sale point | Point-popup contribution button |
+| `GET /api/synthetic/explanation?h3Index=...&saleDate=...` | Exact LightGBM TreeSHAP, neural group/feature Shapley, and 1,024-coalition GNN feature Shapley effects | Click-open synthetic feature panel |
+| `GET /api/points/explanation?source=...&id=...` | The same three-model explanation for a stored Zillow, RentCast, or historical-sale point | Point-popup contribution button |
 | `GET /api/performance` | JSON — quarterly error stats by community | Performance chart |
 | `GET /api/home-types` | JSON — distinct home type strings | Property type dropdowns |
 | `GET /api/stats` | JSON — summary counts and averages | Sidebar stats |
@@ -210,6 +236,12 @@ points inside the viewport, capped at 20,000, together with `matched`, `returned
 `truncated`, and `clustered` response metadata.
 
 Neural feature effects are projected onto their corresponding exact group totals, so they sum back to the neural prediction. The response also reports an approximate sampling standard error for each feature. Historical sales dated on or before the exported local-market snapshot cannot be reconstructed exactly in Java; their explanation response is explicitly marked as a current-snapshot demonstration and may differ from the row-specific prediction stored in the training CSV.
+
+GNN effects are exact Shapley values for its price-head inputs: the dated
+spatial H3 embedding, each property field, each time field, and each economic
+field. The frozen GraphSAGE embedding remains one spatial effect because the
+Java bundle deliberately does not contain the historical node snapshots or
+graph-convolution layers needed to attribute its internal market fields.
 
 Synthetic LightGBM explanations are calculated on demand so the main GeoJSON
 response stays compact. ONNX remains the price-prediction runtime; the bundled
@@ -312,10 +344,12 @@ Exported from the Python pipeline by `export_model_for_java.py`:
 |---|---|
 | `model.onnx` | PyTorch model with 3 outputs: price, log_var, cls_attention |
 | `scalers.json` | Feature scaler parameters |
-| `year_vocab.json` / `week_vocab.json` | Embedding index lookups |
 | `community_map.json` | H3 hex → community ID |
 | `h3_l9_neighbor_communities.json` | H3 hex → 7 community neighbour indices |
 | `model_metadata.json` | Architecture dimensions, reference date, n_communities |
+| `gnn_price_head.onnx` | GraphSAGE price head after precomputed spatial encoding |
+| `gnn_monthly_embeddings.bin.gz` | Dated H3 cell embeddings, loaded once at startup |
+| `gnn_scalers.json` / `gnn_metadata.json` | GNN input scaling and monthly snapshot metadata |
 
 #### `META-INF/resources/index.html`
 The entire frontend in a single file.
@@ -386,28 +420,30 @@ Both layers:
 
 ## Retraining and re-exporting
 
-After retraining both Python models, deploy one consistent bundle from the
+After retraining the Python models, deploy one consistent bundle from the
 repository root:
 ```bash
 PYTHONPATH=src python3 deploy_models_for_java.py
 ```
-This exports both models into a versioned `outputs/deployment/<timestamp>`
+This exports neural, LightGBM, and GNN artifacts into a versioned `outputs/deployment/<timestamp>`
 directory, verifies native/ONNX parity and feature ordering, writes
 `manifest.json` with artifact hashes, and atomically replaces the sole canonical
-deployment at `src/main/resources/model-artifacts/`. Restart the app afterward.
+deployment at `src/main/resources/model-artifacts/`. It also refreshes the
+row-causal LightGBM columns in the historical prediction CSV used by the map.
+Restart the app afterward.
 
-To refresh the Java LightGBM model and historical predictions, run from the
-repository root:
+To stage only the latest Java LightGBM artifacts, run from the repository root:
 
 ```bash
 PYTHONPATH=src python3 export_lightgbm_for_java.py
 ```
 
 This verifies the exported ONNX predictions against the trained Joblib model,
-stages `lightgbm.onnx`, `lightgbm_metadata.json`, and `lightgbm_model.txt`, and
-atomically updates the historical prediction CSV. It does not change the live
-Java bundle unless `--deploy` is supplied; the combined deploy command above is
-preferred because it prevents mixed neural/LightGBM versions.
+and stages `lightgbm.onnx`, `lightgbm_metadata.json`, and
+`lightgbm_model.txt`. Add `--update-historical-predictions` to refresh the map
+CSV as well. It does not change the live Java bundle unless `--deploy` is
+supplied; the combined deploy command above is preferred because it prevents
+mixed neural/LightGBM versions.
 
 To regenerate the packaged synthetic grid after the historical H3 coverage
 changes, run:

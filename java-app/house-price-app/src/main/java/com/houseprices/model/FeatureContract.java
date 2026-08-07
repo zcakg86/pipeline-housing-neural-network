@@ -17,7 +17,9 @@ import java.util.List;
 @ApplicationScoped
 public class FeatureContract {
 
-    public static final int SUPPORTED_VERSION = 1;
+    /** Latest contract version; version 3 remains valid for legacy bundles. */
+    public static final int SUPPORTED_VERSION = 4;
+    private static final int LEGACY_SUPPORTED_VERSION = 3;
     public static final double DEFAULT_MORTGAGE_RATE = 6.5;
     public static final double DEFAULT_UNEMPLOYMENT_RATE = 4.0;
 
@@ -39,7 +41,7 @@ public class FeatureContract {
             }
             JsonNode root = new ObjectMapper().readTree(input);
             int version = root.path("version").asInt(-1);
-            if (version != SUPPORTED_VERSION) {
+            if (version != LEGACY_SUPPORTED_VERSION && version != SUPPORTED_VERSION) {
                 throw new IllegalStateException(
                     "Unsupported feature contract version: " + version
                 );
@@ -78,7 +80,7 @@ public class FeatureContract {
         requireWidth(inputs, "market_features", 1, marketFeatures.size());
         requireWidth(inputs, "local_market_features", 1, neighborCount);
         requireWidth(inputs, "local_market_features", 2, localMarketFeatures.size());
-        int expectedLightgbm = neighborCount + 2 + propertyFeatures.size()
+        int expectedLightgbm = neighborCount + propertyFeatures.size()
             + timeFeatures.size() + marketFeatures.size()
             + neighborCount * localMarketFeatures.size();
         if (lightgbmFeatureNames.size() != expectedLightgbm) {

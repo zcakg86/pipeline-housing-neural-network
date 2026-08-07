@@ -31,8 +31,6 @@ class DatasetBuilder:
     def __init__(self):
         self.length = None
         self.n_communities = None   # set by _map_communities(); unknown index = n_communities
-        self.year_length = None
-        self.week_length = None
         self.scalers = {}
         self.indices = []
         self.timestamp = None
@@ -40,8 +38,6 @@ class DatasetBuilder:
         self.community_array = np.empty(0)
         self.community_feature_dim = None
         self.community_indices = torch.empty(0)
-        self.year_indices = torch.empty(0)
-        self.week_indices = torch.empty(0)
         self.property_features = torch.empty(0)
         self.continuous_time_features = torch.empty(0)
         self.market_features = torch.empty(0)
@@ -248,38 +244,33 @@ class DatasetBuilder:
         )
         print(
             "Water proximity features: "
-            f"{int(df['is_waterfront'].sum()):,}/{len(df):,} sales within 50 m"
+            f"{int((df['distance_to_water_m'] <= 500).sum()):,}/{len(df):,} "
+            "sales within 500 m"
         )
 
         # Store reference date for continuous time features
         if self.reference_date is None:
             self.reference_date = df['sale_date'].min()
 
-        # Core model features only. Presentation/report columns are derived by
-        # their consumers rather than retained in the training contract.
-        df['year']           = df['sale_date'].dt.isocalendar().year
-        df['week']           = df['sale_date'].dt.isocalendar().week
-        df['log_price']      = np.log(df['sale_price'])
+        # Core model features only. Dates are represented continuously so the
+        # model sees adjacent dates as adjacent and December joins smoothly to
+        # January instead of learning unrelated categorical year/week vectors.
+        df['log_price'] = np.log(df['sale_price'])
 
         # --- Continuous Time Features ---
-        df['time_trend']  = (df['sale_date'] - self.reference_date).dt.days / 365.25
-
-        # --- Year Vocabulary ---
-        min_year = int(df['year'].min())
-        max_year = int(df['year'].max())
-        year_range = range(min_year, max_year + 1)
-        self.year_vocab = {int(y): idx for idx, y in enumerate(year_range)}
-        self.year_vocab["unknown"] = len(self.year_vocab)
-        print(f"Year vocabulary: {min_year} to {max_year} (+ unknown)")
-
-        # --- Week Vocabulary (weeks 1–53 + unknown) ---
-        self.week_vocab = {value: index for index, value in enumerate(range(1, 54))}
-        self.week_vocab["unknown"] = len(self.week_vocab)
+        df['time_trend'] = (
+            (df['sale_date'] - self.reference_date).dt.days / 365.25
+        )
+        day_index = df['sale_date'].dt.dayofyear.to_numpy(dtype=np.float64) - 1.0
+        days_in_year = np.where(
+            df['sale_date'].dt.is_leap_year.to_numpy(), 366.0, 365.0
+        )
+        annual_phase = 2.0 * np.pi * day_index / days_in_year
+        df['annual_sin'] = np.sin(annual_phase)
+        df['annual_cos'] = np.cos(annual_phase)
 
         # --- Dataset Dimensions ---
-        self.length      = df.shape[0]
-        self.year_length = len(self.year_vocab)       # all years + unknown
-        self.week_length = len(self.week_vocab)       # weeks 1-53 + unknown
+        self.length = df.shape[0]
 
         self.dataframe = df.reset_index(drop=True)
 

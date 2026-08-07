@@ -1,6 +1,7 @@
 package com.houseprices.cli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.houseprices.ingest.RentcastUniqueId;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -235,6 +236,16 @@ public class RentcastFetcher {
                     metadata.put("rawResponseBody", response.body());
                 }
 
+                // Add the canonical numeric ID before either the page or the
+                // aggregate is written. This matches the in-app API client.
+                for (Object property : page) {
+                    if (property instanceof Map<?, ?> rawProperty) {
+                        @SuppressWarnings("unchecked")
+                        Map<String, Object> propertyMap = (Map<String, Object>) rawProperty;
+                        RentcastUniqueId.addTo(propertyMap);
+                    }
+                }
+
                 writeEnvelopeAtomically(mapper, outDir, pageFile, metadata, page);
                 System.out.printf(
                     "  Saved response immediately: HTTP %d, %d properties → %s%n",
@@ -248,8 +259,8 @@ public class RentcastFetcher {
                 int newIds = 0;
                 for (Object property : page) {
                     if (property instanceof Map<?, ?> record) {
-                        Object id = record.get("id");
-                        if (id != null && seenIds.add(String.valueOf(id))) newIds++;
+                        String id = RentcastUniqueId.storeKey(record.get(RentcastUniqueId.JSON_FIELD));
+                        if (!id.isBlank() && seenIds.add(id)) newIds++;
                     }
                 }
                 if (!seenIds.isEmpty() && newIds == 0) {

@@ -6,9 +6,16 @@ function waterFeatureRows(properties) {
   const formattedDistance = distance < 1000
     ? `${Math.round(distance).toLocaleString()} m`
     : `${(distance / 1000).toFixed(2)} km`;
-  return `<b>Waterfront (≤50 m):</b> ${properties.isWaterfront ? 'Yes' : 'No'}<br>` +
-    `Nearest water boundary: ${formattedDistance}<br>` +
+  return `Nearest water boundary: ${formattedDistance}<br>` +
     `Water proximity (τ=100 m): ${Math.exp(-distance / 100).toFixed(4)}<br>`;
+}
+
+function modelIntervalRows(properties, model) {
+  const money = value => `$${Math.round(Number(value)).toLocaleString()}`;
+  const prefix = model === 'neural' ? 'neural' : model === 'lightgbm' ? 'lightgbm' : 'gnn';
+  const title = model === 'neural' ? '' : 'conformal ';
+  return `&nbsp;90% ${title}CI: ${money(properties[`${prefix}Lower90`])} – ${money(properties[`${prefix}Upper90`])}<br>` +
+    `&nbsp;95% ${title}CI: ${money(properties[`${prefix}Lower95`])} – ${money(properties[`${prefix}Upper95`])}<br>`;
 }
 
 async function loadRentcast() {
@@ -18,6 +25,7 @@ async function loadRentcast() {
   if (!visible) { abortLayerRequest('rentcast'); return; }
 
   const variable  = document.getElementById('variable').value;
+  const model = displayedModel();
   const {min: minErr, max: maxErr} = getErrorRange();
   const minSqft   = document.getElementById('minSqft').value;
   const maxSqft   = document.getElementById('maxSqft').value;
@@ -25,18 +33,33 @@ async function loadRentcast() {
   const dateFrom  = document.getElementById('dateFrom').value;
   const dateTo    = document.getElementById('dateTo').value;
   const source    = document.getElementById('salesPointSource').value;
+  const firstLoad = source !== 'sales' && !loadedLiveSources.has('rentcast');
 
-  const gj = await fetchLayerJson('rentcast',
-    `/api/rentcast?source=${source}&minError=${minErr}&maxError=${maxErr}` +
-    `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}` +
-    `&dateFrom=${dateFrom}&dateTo=${dateTo}&${mapViewportQuery()}`
-  );
+  if (firstLoad) {
+    beginMapEvent('rentcast-load', 'Loading saved RentCast records and computing predictions…');
+  }
+
+  let gj;
+  try {
+    gj = await fetchLayerJson('rentcast',
+      `/api/rentcast?source=${source}&minError=${minErr}&maxError=${maxErr}` +
+      `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}` +
+      `&dateFrom=${dateFrom}&dateTo=${dateTo}&model=${model}&${mapViewportQuery()}`
+    );
+  } finally {
+    if (firstLoad) completeMapEvent('rentcast-load', gj ? 'RentCast layer ready' : '');
+  }
   if (!gj) return;
+  if (!loadedLiveSources.has('rentcast')) {
+    loadedLiveSources.add('rentcast');
+    loadHomeTypes();
+    loadStats();
+  }
   reportPointResponse('Sales points', gj);
   if (!gj.features || gj.features.length === 0) return;
 
   // Compute colour function from the loaded data (same approach as H3 layer)
-  const values  = gj.features.map(f => pointVariableValue(f.properties, variable));
+  const values  = gj.features.map(f => pointVariableValue(f.properties, variable, model));
   const anchors = variable === 'pct_error' ? computeErrorAnchors(values) : null;
   const colorFn = getColorFn(variable, values, anchors);
 
@@ -44,7 +67,7 @@ async function loadRentcast() {
     pointToLayer: (f, latlng) => L.circleMarker(latlng, {
       radius:      f.properties.cluster
         ? Math.min(15, 5 + Math.log1p(f.properties.count || 1) * 1.5) : 6,
-      fillColor:   colorFn(pointVariableValue(f.properties, variable)),
+      fillColor:   colorFn(pointVariableValue(f.properties, variable, model)),
       fillOpacity: 0.85,
       color:       '#00cc66',
       weight:      1.5
@@ -57,35 +80,39 @@ async function loadRentcast() {
           `Average sale: $${Math.round(p.salePrice || 0).toLocaleString()}<br>` +
           `Average neural: $${Math.round(p.predictedPrice || 0).toLocaleString()}<br>` +
           `Average LightGBM: $${Math.round(p.lightgbmPredictedPrice || 0).toLocaleString()}<br>` +
-          `Zoom in to inspect individual sales.`
+          `Average Lot Sqft: ${Math.round(p.sqftLot || 0).toLocaleString()}<br>` +
+          `Zoom in to inspect individual sales.`,
+          { autoPan: false }
         );
         return;
       }
-      const attnRow = (label, val) =>
-        (val != null && val !== undefined) ? `${label}: ${(val*100).toFixed(1)}%<br>` : '';
       const srcLabel = p.source === 'sales' ? 'Historical Sale' : 'RentCast Sale';
+      const localMarketWarning = p.localMarketPredictionIssue === 'rolling_snapshot_look_ahead'
+        ? `<div class="local-market-warning">⚠ Local market context includes completed sales through ` +
+          `${escapeHtml(p.rentcastLocalMarketLatestSaleDate || 'the snapshot date')}, after this sale. ` +
+          `Prediction is displayed for comparison, not a causal day-of-sale estimate.</div>`
+        : '';
       layer.bindPopup(
         `<b>${p.address || srcLabel}</b><br>` +
         `<i style="color:#00cc66">${srcLabel}</i><br>` +
         (p.saleDate ? `Sold: ${p.saleDate}<br>` : '') +
         `Sale Price: $${Math.round(p.salePrice).toLocaleString()}<br>` +
-        `<b>Neural:</b> $${Math.round(p.predictedPrice).toLocaleString()} (${p.pctError.toFixed(1)}%)<br>` +
-        `<b>LightGBM:</b> $${Math.round(p.lightgbmPredictedPrice).toLocaleString()} (${p.lightgbmPctError.toFixed(1)}%)<br>` +
-        `95% CI: ±$${Math.round((p.predictionStdPrice ?? 0) * 1.96).toLocaleString()} (±${((p.predictionCvPct ?? 0) / 2).toFixed(1)}% of price)<br>` +
+        `<b>Neural:</b> $${Math.round(p.predictedPrice).toLocaleString()} (${p.pctError.toFixed(1)}%)<br>` + modelIntervalRows(p, 'neural') +
+        `<b>LightGBM:</b> $${Math.round(p.lightgbmPredictedPrice).toLocaleString()} (${p.lightgbmPctError.toFixed(1)}%)<br>` + modelIntervalRows(p, 'lightgbm') +
+        `<b>Spatial GNN:</b> $${Math.round(p.gnnPredictedPrice || 0).toLocaleString()} (${(p.gnnPctError || 0).toFixed(1)}%)<br>` + modelIntervalRows(p, 'gnn') +
         `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
+        `Lot Sqft: ${Math.round(p.sqftLot || 0).toLocaleString()}<br>` +
         waterFeatureRows(p) +
-        `<b>CLS Attention:</b><br>` +
-        attnRow('&nbsp; Community', p.attnCommunity) +
-        attnRow('&nbsp; Year',      p.attnYear) +
-        attnRow('&nbsp; Week',      p.attnWeek) +
-        attnRow('&nbsp; Property',  p.attnProperty) +
-        attnRow('&nbsp; Time',      p.attnTime) +
-        attnRow('&nbsp; Market',    p.attnMarket) +
-        `<button class="feature-explanation-button" type="button">Show feature contributions</button>`
+        localMarketWarning +
+        `<button class="feature-explanation-button" type="button">Show feature contributions</button>` +
+        `<button class="property-time-series-button" type="button">Show predicted value history</button>`,
+        { autoPan: false }
       );
       attachPointExplanationButton(layer, p);
     }
   }).addTo(rentcastLayer);
+  // Detailed sales use the same active map-colour scale as the H3 layer.
+  buildLegend(variable, values, anchors);
 }
 
 // ── Zillow layer ──────────────────────────────────────────────────────────────
@@ -96,21 +123,37 @@ async function loadZillow() {
   if (!visible) { abortLayerRequest('zillow'); return; }
 
   const variable  = document.getElementById('variable').value;
+  const model = displayedModel();
   const {min: minErr, max: maxErr} = getErrorRange();
   const minSqft   = document.getElementById('minSqft').value;
   const maxSqft   = document.getElementById('maxSqft').value;
   const homeType  = document.getElementById('zillowType').value;
+  const firstLoad = !loadedLiveSources.has('zillow');
 
-  const gj = await fetchLayerJson('zillow',
-    `/api/zillow?minError=${minErr}&maxError=${maxErr}` +
-    `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}` +
-    `&${mapViewportQuery()}`
-  );
+  if (firstLoad) {
+    beginMapEvent('zillow-load', 'Loading saved Zillow listings and computing predictions…');
+  }
+
+  let gj;
+  try {
+    gj = await fetchLayerJson('zillow',
+      `/api/zillow?minError=${minErr}&maxError=${maxErr}` +
+      `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}&model=${model}` +
+      `&${mapViewportQuery()}`
+    );
+  } finally {
+    if (firstLoad) completeMapEvent('zillow-load', gj ? 'Zillow layer ready' : '');
+  }
   if (!gj) return;
+  if (!loadedLiveSources.has('zillow')) {
+    loadedLiveSources.add('zillow');
+    loadHomeTypes();
+    loadStats();
+  }
   reportPointResponse('Zillow', gj);
   if (!gj.features || !gj.features.length) return;
 
-  const values  = gj.features.map(f => pointVariableValue(f.properties, variable));
+  const values  = gj.features.map(f => pointVariableValue(f.properties, variable, model));
   const anchors = variable === 'pct_error' ? computeErrorAnchors(values) : null;
   const colorFn = getColorFn(variable, values, anchors);
 
@@ -118,7 +161,7 @@ async function loadZillow() {
     pointToLayer: (f, latlng) => L.circleMarker(latlng, {
       radius:      f.properties.cluster
         ? Math.min(15, 5 + Math.log1p(f.properties.count || 1) * 1.5) : 7,
-      fillColor:   colorFn(pointVariableValue(f.properties, variable)),
+      fillColor:   colorFn(pointVariableValue(f.properties, variable, model)),
       fillOpacity: 0.85,
       color:       '#3399ff',
       weight:      1.5
@@ -132,12 +175,12 @@ async function loadZillow() {
           (p.zestimate > 0 ? `Average Zestimate: $${Math.round(p.zestimate).toLocaleString()}<br>` : '') +
           `Average neural: $${Math.round(p.predictedPrice || 0).toLocaleString()}<br>` +
           `Average LightGBM: $${Math.round(p.lightgbmPredictedPrice || 0).toLocaleString()}<br>` +
-          `Zoom in to inspect individual listings.`
+          `Average Lot Sqft: ${Math.round(p.sqftLot || 0).toLocaleString()}<br>` +
+          `Zoom in to inspect individual listings.`,
+          { autoPan: false }
         );
         return;
       }
-      const attnRow = (label, val) =>
-        (val != null && val !== undefined) ? `${label}: ${(val*100).toFixed(1)}%<br>` : '';
       layer.bindPopup(
         `<b>Predicted at: ${p.predictionDate || p.saleDate || 'Unknown'}</b><br>` +
         `<b>${p.address}</b><br>` +
@@ -146,24 +189,21 @@ async function loadZillow() {
         (p.zestimate > 0
           ? `Zestimate: $${Math.round(p.zestimate).toLocaleString()}<br>`
           : `Zestimate: Not available<br>`) +
-        `<b>Neural:</b> $${Math.round(p.predictedPrice).toLocaleString()} (${p.pctError.toFixed(1)}%)<br>` +
-        `<b>LightGBM:</b> $${Math.round(p.lightgbmPredictedPrice).toLocaleString()} (${p.lightgbmPctError.toFixed(1)}%)<br>` +
-        `95% CI: ±$${Math.round((p.predictionStdPrice ?? 0) * 1.96).toLocaleString()} (±${((p.predictionCvPct ?? 0) / 2).toFixed(1)}% of price)<br>` +
+        `<b>Neural:</b> $${Math.round(p.predictedPrice).toLocaleString()} (${p.pctError.toFixed(1)}%)<br>` + modelIntervalRows(p, 'neural') +
+        `<b>LightGBM:</b> $${Math.round(p.lightgbmPredictedPrice).toLocaleString()} (${p.lightgbmPctError.toFixed(1)}%)<br>` + modelIntervalRows(p, 'lightgbm') +
+        `<b>Spatial GNN:</b> $${Math.round(p.gnnPredictedPrice || 0).toLocaleString()} (${(p.gnnPctError || 0).toFixed(1)}%)<br>` + modelIntervalRows(p, 'gnn') +
         `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
+        `Lot Sqft: ${Math.round(p.sqftLot || 0).toLocaleString()}<br>` +
         waterFeatureRows(p) +
         `Type: ${p.homeType}<br>` +
-        `<b>CLS Attention:</b><br>` +
-        attnRow('&nbsp; Community', p.attnCommunity) +
-        attnRow('&nbsp; Year',      p.attnYear) +
-        attnRow('&nbsp; Week',      p.attnWeek) +
-        attnRow('&nbsp; Property',  p.attnProperty) +
-        attnRow('&nbsp; Time',      p.attnTime) +
-        attnRow('&nbsp; Market',    p.attnMarket) +
         (p.url ? `<a href="${p.url}" target="_blank">View Listing</a><br>` : '') +
-        `<button class="feature-explanation-button" type="button">Show feature contributions</button>`
+        `<button class="feature-explanation-button" type="button">Show feature contributions</button>` +
+        `<button class="property-time-series-button" type="button">Show predicted value history</button>`,
+        { autoPan: false }
       );
       attachPointExplanationButton(layer, p);
     }
   }).addTo(zillowLayer);
+  // Zillow points also need a visible scale for the selected map colour.
+  buildLegend(variable, values, anchors);
 }
-

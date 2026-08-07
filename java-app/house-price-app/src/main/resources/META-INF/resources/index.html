@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="styles.css?v=transport-events-v2"/>
 </head>
 <body>
 <div id="sidebar">
@@ -20,39 +20,56 @@
   <div style="padding-left:20px">
     <label style="margin-bottom:2px">Point source</label>
     <select id="salesPointSource">
-      <option value="rentcast">RentCast only</option>
+      <option value="rentcast" selected>RentCast (recent) only</option>
       <option value="sales">Historical sales only</option>
-      <option value="all" selected>RentCast + Historical</option>
+      <option value="all" >RentCast + Historical</option>
     </select>
   </div>
   <div class="row"><input type="checkbox" id="showSales"/><label style="margin:0" for="showSales">H3 Sales Layer</label></div>
   <div class="row"><input type="checkbox" id="showCommunity"/><label style="margin:0" for="showCommunity">Community Layer</label></div>
   <div class="row"><input type="checkbox" id="showSynthetic"/><label style="margin:0" for="showSynthetic">Synthetic Layer</label></div>
   <div class="row"><input type="checkbox" id="showWater"/><label style="margin:0" for="showWater">OSM Water &amp; Coastline</label></div>
+  <div class="row"><input type="checkbox" id="showRail"/><label style="margin:0" for="showRail">Rail &amp; Light-Rail Stations</label></div>
+  <div class="row"><input type="checkbox" id="showBus"/><label style="margin:0" for="showBus">Bus Stations &amp; Routes</label></div>
+  <div class="row"><input type="checkbox" id="showMajorRoads"/><label style="margin:0" for="showMajorRoads">Motorways &amp; Major Roads</label></div>
+  <div class="row"><input type="checkbox" id="showTransportFeatures"/><label style="margin:0" for="showTransportFeatures">Transport Accessibility (H3)</label></div>
+  <div id="transportFeatureControl" style="padding-left:20px;display:none">
+    <label style="margin-bottom:2px">Transport map feature</label>
+    <select id="transportFeature">
+      <option value="light_rail_proximity">Light-rail proximity</option>
+      <option value="bus_stop_density_per_sq_km">Bus-stop density</option>
+      <option value="nearby_bus_route_count">Distinct nearby bus-route count</option>
+      <option value="bus_centrality_score">Bus centrality score</option>
+      <option value="motorway_connector_proximity">Motorway-connector proximity</option>
+      <option value="major_road_accessibility">Major-road accessibility</option>
+      <option value="major_road_density_km_per_sq_km">Major-road density</option>
+    </select>
+  </div>
 
   <!-- Sales variable -->
   <div class="divider"></div>
-  <label>Sales Layer Variable</label>
+  <button id="communityTrendsButton" onclick="openPerfPopup()" style="display:none;margin-bottom:8px">📈 Community level trends</button>
+  <label>Map color</label>
   <select id="variable">
-    <option value="pct_error">Avg Error (%)</option>
-    <option value="predicted_price_neural">Predicted Price (Neural Network)</option>
-    <option value="predicted_price_lightgbm">Predicted Price (LightGBM)</option>
-    <option value="sale_price">Avg Sale Price</option>
-    <option value="sqft">Avg Sqft</option>
-    <option value="num_sales">Number of Sales</option>
-    <option value="pred_std">Prediction Uncertainty ($)</option>
-    <option value="pred_cv_pct">Prediction Uncertainty (95% CI width)</option>
-    <option value="attn_community">Attention — Community</option>
-    <option value="attn_year">Attention — Year</option>
-    <option value="attn_week">Attention — Week</option>
-    <option value="attn_property">Attention — Property</option>
-    <option value="attn_time">Attention — Time Trend</option>
-    <option value="attn_market">Attention — Market</option>
+    <option value="pct_error">Price Error (%)</option>
+    <option value="predicted_price">Predicted Price</option>
+    <option value="sale_price">Sale (or listed) Price</option>
+    <option value="sqft">Finished Squared footage</option>
+    <option value="sqft_lot">Lot Square Footage</option>
+    <option value="pred_std" data-model="neural">Prediction Uncertainty ($)</option>
+    <option value="pred_cv_pct" data-model="neural">Prediction Uncertainty (95% CI width)</option>
+    <option value="attn_community" data-model="neural">Attention — Community</option>
+    <option value="attn_property" data-model="neural">Attention — Property</option>
+    <option value="attn_time" data-model="neural">Attention — Time</option>
+    <option value="attn_market" data-model="neural">Attention — Market</option>
+    <option value="num_sales">Sale count (when aggregated)</option>
+
   </select>
-  <label>H3 Color Model</label>
-  <select id="h3Model">
+  <label>Displayed Model</label>
+  <select id="DisplayedModel">
     <option value="lightgbm" selected>LightGBM</option>
     <option value="neural">Neural Network</option>
+    <option value="gnn">Spatial GNN</option>
   </select>
 
   <!-- Property type filters -->
@@ -98,16 +115,37 @@
   <div class="divider"></div>
   <h2>Statistics</h2>
   <div id="stats">Loading...</div>
-  <button onclick="openPerfPopup()" style="margin-top:6px">📈 Show Prediction Performance</button>
 </div>
 
 <div id="map"></div>
+<div id="mapProgress" aria-live="polite" aria-hidden="true">
+  <span id="mapProgressText"></span>
+  <div class="map-progress-track"><div id="mapProgressBar"></div></div>
+</div>
 
 <!-- Performance popup -->
 <div id="perfPopup">
   <div class="popup-header" id="perfDragHandle">
-    <h3>📈 Prediction Performance by Community</h3>
+    <h3>📈 Community level trends</h3>
     <button class="close-btn" onclick="closePerfPopup()">✕</button>
+  </div>
+  <div class="popup-controls">
+    <label>Variable
+      <select id="chartVariable" onchange="rebuildCommunityTrendChart()">
+        <option value="mean_error">Mean signed error (%)</option>
+        <option value="mape">Mean absolute error (%)</option>
+        <option value="predicted_price">Mean predicted price</option>
+        <option value="sale_price">Mean sale price</option>
+        <option value="count">Sales count</option>
+      </select>
+    </label>
+    <label>Model
+      <select id="chartModel" onchange="rebuildCommunityTrendChart()">
+        <option value="lightgbm" selected>LightGBM</option>
+        <option value="neural">Neural Network</option>
+        <option value="gnn">Spatial GNN</option>
+      </select>
+    </label>
   </div>
   <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap;font-size:12px;color:#aaa">
     <label style="margin:0">Y min: <input id="chartYMin" type="number" value="-100" step="10"
@@ -130,26 +168,39 @@
     <select id="chartCommunities" multiple size="4"
       style="flex:1;background:#0f3460;color:#eee;border:1px solid #444;border-radius:4px;padding:3px"></select>
   </div>
-  <div id="chartContainer" style="position:relative;height:320px;width:100%"><canvas id="perfChart"></canvas></div>
+  <div id="chartContainer"><canvas id="perfChart"></canvas></div>
 </div>
 
 <!-- Full synthetic observation explanation popup -->
 <div id="featurePopup">
-  <div class="popup-header">
+  <div class="popup-header" id="featureDragHandle">
     <h3 id="featurePopupTitle">Synthetic model features</h3>
     <button class="close-btn" onclick="closeFeaturePopup()">✕</button>
   </div>
   <div id="featurePopupBody" class="feature-explanation-scroll"></div>
 </div>
 
-<script src="js/map.js"></script>
+<!-- Monthly prediction history for one map property -->
+<div id="timeSeriesPopup">
+  <div class="popup-header" id="timeSeriesDragHandle">
+    <h3 id="timeSeriesPopupTitle">Property value history</h3>
+    <button class="close-btn" onclick="closeTimeSeriesPopup()">✕</button>
+  </div>
+  <div id="timeSeriesNote" class="explanation-note"></div>
+  <div id="timeSeriesChartContainer"><canvas id="timeSeriesChart"></canvas></div>
+</div>
+
+<script src="js/map.js?v=transport-events-v2"></script>
 <script src="js/api.js"></script>
 <script src="js/explanations.js"></script>
 <script src="js/layers/sales.js"></script>
 <script src="js/layers/synthetic.js"></script>
 <script src="js/layers/water.js"></script>
+<script src="js/layers/transport.js?v=transport-events-v2"></script>
+<script src="js/layers/transport-features.js?v=transport-features-v1"></script>
 <script src="js/layers/points.js"></script>
 <script src="js/charts.js"></script>
+<script src="js/time-series.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

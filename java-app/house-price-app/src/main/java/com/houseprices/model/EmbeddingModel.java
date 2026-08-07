@@ -9,8 +9,6 @@ import org.jboss.logging.Logger;
 
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.IsoFields;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -24,7 +22,7 @@ import java.util.SplittableRandom;
  * The ONNX model exposes three outputs:
  *   0: log_price_scaled  [batch, 1]
  *   1: log_var_scaled    [batch, 1]   — uncertainty head (log variance in scaled log-price space)
- *   2: cls_attention     [batch, 6]   — CLS token attention over [community, year, week, property, time, market]
+ *   2: cls_attention     [batch, 4]   — CLS attention over [community, property, time, market]
  */
 @ApplicationScoped
 public class EmbeddingModel {
@@ -32,9 +30,9 @@ public class EmbeddingModel {
     private static final Logger LOG = Logger.getLogger(EmbeddingModel.class);
     private static final int BATCH_SIZE = 512;
 
-    /** Token names matching the 6 CLS attention output positions */
+    /** Token names matching the four CLS attention output positions. */
     public static final String[] ATTENTION_TOKENS =
-        {"community", "year", "week", "property", "time", "market"};
+        {"community", "property", "time", "market"};
 
     /**
      * Full prediction result carrying price, uncertainty, and attention weights.
@@ -47,8 +45,8 @@ public class EmbeddingModel {
      *                           Price-normalised: 15% means the same regardless of
      *                           whether the property is $300k or $1.5m.
      *                           Directly interpretable as model confidence.
-     * @param clsAttention       6-element attention weights over input tokens
-     *                           [community, year, week, property, time, market]
+     * @param clsAttention       four attention weights over
+     *                           [community, property, time, market]
      */
     public record PredictionResult(
         double  predictedPrice,
@@ -58,7 +56,7 @@ public class EmbeddingModel {
     ) {
         /** Convenience: predictedPrice only, for callers that don't need extras */
         public static PredictionResult priceOnly(double price) {
-            return new PredictionResult(price, 0.0, 0.0, new float[6]);
+            return new PredictionResult(price, 0.0, 0.0, new float[4]);
         }
     }
 
@@ -81,7 +79,7 @@ public class EmbeddingModel {
     ) {}
 
     /**
-     * Exact seven-player Shapley decomposition in unscaled log-price space.
+     * Exact five-player Shapley decomposition in unscaled log-price space.
      * Continuous inputs use their training means as the reference (scaled zero),
      * while categorical inputs use their explicit unknown-token embeddings.
      */
@@ -98,7 +96,7 @@ public class EmbeddingModel {
     ) {}
 
     private static final String[] SHAPLEY_GROUPS = {
-        "Community", "Year", "Week", "Property", "Time", "Economics", "Local market"
+        "Community", "Property", "Time", "Economics", "Local market"
     };
     private static final int FEATURE_SHAPLEY_COALITIONS = 512;
 
@@ -132,6 +130,17 @@ public class EmbeddingModel {
                     )) {
                 throw new IllegalStateException(
                     "Neural property features do not match feature_contract.json"
+                );
+            }
+            TensorInfo timeInfo = (TensorInfo) session.getInputInfo()
+                .get("time_features").getInfo();
+            int modelTimeFeatureCount = Math.toIntExact(timeInfo.getShape()[1]);
+            if (modelTimeFeatureCount != featureContract.timeFeatures().size()) {
+                throw new IllegalStateException(
+                    "Neural ONNX time feature width is " + modelTimeFeatureCount
+                    + " but feature_contract.json requires "
+                    + featureContract.timeFeatures().size()
+                    + ". Retrain and export both models before starting Java."
                 );
             }
             // Attention is part of the deployment contract. PyTorch's
@@ -218,8 +227,8 @@ public class EmbeddingModel {
     }
 
     /**
-     * Explain one prediction with exact Shapley effects over the model's seven
-     * logical input groups. All 2^7 coalitions are evaluated in one ONNX batch.
+     * Explain one prediction with exact Shapley effects over the model's five
+     * logical input groups. All 2^5 coalitions are evaluated in one ONNX batch.
      */
     public ShapleyExplanation explain(BatchInput input, boolean demonstrationMode) {
         return explainPrepared(contextFactory.prepare(input, demonstrationMode));
@@ -231,40 +240,34 @@ public class EmbeddingModel {
         final int coalitionCount = 1 << groupCount;
 
         int[] actualCommunities = context.communities();
-        long actualYear = context.yearIndex();
-        long actualWeek = context.weekIndex();
         float[] actualProperty = context.scaledProperty();
-        float actualTime = context.scaledTimeTrend();
+        float[] actualTime = context.scaledTime();
         float[] actualMarket = context.scaledMarket();
         float[][] actualLocal = usesLocalMarketFeatures
             ? context.scaledLocalMarket() : new float[7][5];
 
         long[][] communities = new long[coalitionCount][7];
-        long[] years = new long[coalitionCount];
-        long[] weeks = new long[coalitionCount];
         float[][] properties = new float[coalitionCount][propertyFeatureCount];
-        float[][] times = new float[coalitionCount][1];
+        float[][] times = new float[coalitionCount][featureContract.timeFeatures().size()];
         float[][] markets = new float[coalitionCount][2];
         float[][][] locals = new float[coalitionCount][7][5];
 
         for (int mask = 0; mask < coalitionCount; mask++) {
             boolean includeCommunity = (mask & (1 << 0)) != 0;
-            boolean includeYear = (mask & (1 << 1)) != 0;
-            boolean includeWeek = (mask & (1 << 2)) != 0;
             for (int ring = 0; ring < 7; ring++) {
                 communities[mask][ring] = includeCommunity
                     ? actualCommunities[ring] : artifacts.getUnknownCommunityIdx();
             }
-            years[mask] = includeYear ? actualYear : artifacts.getUnknownYearIdx();
-            weeks[mask] = includeWeek ? actualWeek : artifacts.getUnknownWeekIdx();
-            if ((mask & (1 << 3)) != 0) {
+            if ((mask & (1 << 1)) != 0) {
                 System.arraycopy(actualProperty, 0, properties[mask], 0, propertyFeatureCount);
             }
-            if ((mask & (1 << 4)) != 0) times[mask][0] = actualTime;
-            if ((mask & (1 << 5)) != 0) {
+            if ((mask & (1 << 2)) != 0) {
+                System.arraycopy(actualTime, 0, times[mask], 0, actualTime.length);
+            }
+            if ((mask & (1 << 3)) != 0) {
                 System.arraycopy(actualMarket, 0, markets[mask], 0, 2);
             }
-            if (usesLocalMarketFeatures && (mask & (1 << 6)) != 0) {
+            if (usesLocalMarketFeatures && (mask & (1 << 4)) != 0) {
                 for (int ring = 0; ring < 7; ring++) {
                     System.arraycopy(actualLocal[ring], 0, locals[mask][ring], 0, 5);
                 }
@@ -272,7 +275,7 @@ public class EmbeddingModel {
         }
 
         double[] coalitionValues = runLogPriceBatch(
-            communities, years, weeks, properties, times, markets, locals
+            communities, properties, times, markets, locals
         );
         List<ShapleyGroupEffect> effects = new ArrayList<>(groupCount);
         double reconstructed = coalitionValues[0];
@@ -298,28 +301,28 @@ public class EmbeddingModel {
             ));
         }
         List<ShapleyFeatureEffect> featureEffects = sampledFeatureEffects(
-            input, effects, actualCommunities, actualYear, actualWeek,
-            actualProperty, context.rawProperty(), actualTime, actualMarket,
+            input, effects, actualCommunities, actualProperty,
+            context.rawProperty(), actualTime, context.rawTime(), actualMarket,
             actualLocal, context.rawLocalMarket()
         );
         return new ShapleyExplanation(
             coalitionValues[0], Math.exp(coalitionValues[0]),
             predicted, Math.exp(predicted), coalitionCount, FEATURE_SHAPLEY_COALITIONS,
-            "continuous training means and categorical unknown tokens",
+            "continuous training means and categorical community unknown tokens",
             List.copyOf(effects), featureEffects
         );
     }
 
     /**
      * Estimate feature-level KernelSHAP effects with one deterministic 512-row
-     * ONNX batch. The estimates are projected onto the exact seven-group totals,
+     * ONNX batch. The estimates are projected onto the exact five-group totals,
      * retaining feature detail while guaranteeing exact reconstruction.
      */
     private List<ShapleyFeatureEffect> sampledFeatureEffects(
             BatchInput input,
             List<ShapleyGroupEffect> exactGroups,
-            int[] actualCommunities, long actualYear, long actualWeek,
-            float[] actualProperty, double[] rawProperty, float actualTime,
+            int[] actualCommunities, float[] actualProperty,
+            double[] rawProperty, float[] actualTime, double[] rawTime,
             float[] actualMarket, float[][] actualLocal, float[][] rawLocal) {
         List<String> names = new ArrayList<>();
         List<Integer> groupIndices = new ArrayList<>();
@@ -330,28 +333,21 @@ public class EmbeddingModel {
             groupIndices.add(0);
             displayValues.add((double) actualCommunities[ring]);
         }
-        names.add("year");
-        groupIndices.add(1);
-        displayValues.add((double) input.saleDate().getYear());
-        names.add("week");
-        groupIndices.add(2);
-        displayValues.add((double) input.saleDate().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR));
-
         for (int feature = 0; feature < propertyFeatureCount; feature++) {
             names.add(artifacts.getPropertyFeatures().get(feature));
-            groupIndices.add(3);
+            groupIndices.add(1);
             displayValues.add(rawProperty[feature]);
         }
-        names.add("time_trend");
-        groupIndices.add(4);
-        displayValues.add(ChronoUnit.DAYS.between(
-            artifacts.getReferenceDate(), input.saleDate()
-        ) / 365.25);
+        for (int feature = 0; feature < featureContract.timeFeatures().size(); feature++) {
+            names.add(featureContract.timeFeatures().get(feature));
+            groupIndices.add(2);
+            displayValues.add(rawTime[feature]);
+        }
         names.add("mortgage_rate");
-        groupIndices.add(5);
+        groupIndices.add(3);
         displayValues.add(input.mortgageRate());
         names.add("unemployment_rate");
-        groupIndices.add(5);
+        groupIndices.add(3);
         displayValues.add(input.unemploymentRate());
 
         if (usesLocalMarketFeatures) {
@@ -360,7 +356,7 @@ public class EmbeddingModel {
                 for (int feature = 0;
                         feature < featureContract.localMarketFeatures().size(); feature++) {
                     names.add(prefix + featureContract.localMarketFeatures().get(feature));
-                    groupIndices.add(6);
+                    groupIndices.add(4);
                     displayValues.add((double) rawLocal[ring][feature]);
                 }
             }
@@ -370,26 +366,22 @@ public class EmbeddingModel {
         boolean[][] masks = kernelShapleyMasks(featureCount, input);
         int sampleCount = masks.length;
         long[][] communities = new long[sampleCount][7];
-        long[] years = new long[sampleCount];
-        long[] weeks = new long[sampleCount];
         float[][] properties = new float[sampleCount][propertyFeatureCount];
-        float[][] times = new float[sampleCount][1];
+        float[][] times = new float[sampleCount][featureContract.timeFeatures().size()];
         float[][] markets = new float[sampleCount][2];
         float[][][] locals = new float[sampleCount][7][5];
         for (int row = 0; row < sampleCount; row++) {
             Arrays.fill(communities[row], artifacts.getUnknownCommunityIdx());
-            years[row] = artifacts.getUnknownYearIdx();
-            weeks[row] = artifacts.getUnknownWeekIdx();
             int position = 0;
             for (int ring = 0; ring < 7; ring++, position++) {
                 if (masks[row][position]) communities[row][ring] = actualCommunities[ring];
             }
-            if (masks[row][position++]) years[row] = actualYear;
-            if (masks[row][position++]) weeks[row] = actualWeek;
             for (int feature = 0; feature < propertyFeatureCount; feature++, position++) {
                 if (masks[row][position]) properties[row][feature] = actualProperty[feature];
             }
-            if (masks[row][position++]) times[row][0] = actualTime;
+            for (int feature = 0; feature < actualTime.length; feature++, position++) {
+                if (masks[row][position]) times[row][feature] = actualTime[feature];
+            }
             for (int feature = 0; feature < 2; feature++, position++) {
                 if (masks[row][position]) markets[row][feature] = actualMarket[feature];
             }
@@ -408,7 +400,7 @@ public class EmbeddingModel {
         }
 
         double[] values = runLogPriceBatch(
-            communities, years, weeks, properties, times, markets, locals
+            communities, properties, times, markets, locals
         );
         RegressionEstimate estimate = fitKernelShapley(masks, values);
         double[] contributions = estimate.coefficients().clone();
@@ -580,21 +572,16 @@ public class EmbeddingModel {
     }
 
     private double[] runLogPriceBatch(
-        long[][] communities, long[] years, long[] weeks,
-        float[][] properties, float[][] times, float[][] markets,
+        long[][] communities, float[][] properties, float[][] times, float[][] markets,
         float[][][] locals
     ) {
         try (OnnxTensor tCommunity = OnnxTensor.createTensor(env, communities);
-             OnnxTensor tYear = OnnxTensor.createTensor(env, years);
-             OnnxTensor tWeek = OnnxTensor.createTensor(env, weeks);
              OnnxTensor tProperty = OnnxTensor.createTensor(env, properties);
              OnnxTensor tTime = OnnxTensor.createTensor(env, times);
              OnnxTensor tMarket = OnnxTensor.createTensor(env, markets);
              OnnxTensor tLocal = OnnxTensor.createTensor(env, locals)) {
             Map<String, OnnxTensor> inputs = new HashMap<>();
             inputs.put("community_indices", tCommunity);
-            inputs.put("year", tYear);
-            inputs.put("week", tWeek);
             inputs.put("property_features", tProperty);
             inputs.put("time_features", tTime);
             inputs.put("market_features", tMarket);
@@ -628,10 +615,8 @@ public class EmbeddingModel {
                                    int destinationOffset) {
         int size = contexts.size();
         long[][] communityArr = new long[size][7];
-        long[] yearArr = new long[size];
-        long[] weekArr = new long[size];
         float[][] propArr = new float[size][propertyFeatureCount];
-        float[][] timeArr = new float[size][1];
+        float[][] timeArr = new float[size][featureContract.timeFeatures().size()];
         float[][] marketArr = new float[size][2];
         float[][][] localMarketArr = new float[size][7][5];
 
@@ -639,12 +624,12 @@ public class EmbeddingModel {
             PredictionContext context = contexts.get(row);
             int[] neighbors = context.communities();
             for (int i = 0; i < 7; i++) communityArr[row][i] = neighbors[i];
-            yearArr[row] = context.yearIndex();
-            weekArr[row] = context.weekIndex();
             System.arraycopy(
                 context.scaledProperty(), 0, propArr[row], 0, propertyFeatureCount
             );
-            timeArr[row][0] = context.scaledTimeTrend();
+            System.arraycopy(
+                context.scaledTime(), 0, timeArr[row], 0, timeArr[row].length
+            );
             System.arraycopy(context.scaledMarket(), 0, marketArr[row], 0, 2);
             if (usesLocalMarketFeatures) {
                 localMarketArr[row] = context.scaledLocalMarket();
@@ -652,16 +637,12 @@ public class EmbeddingModel {
         }
 
         try (OnnxTensor tCommunity = OnnxTensor.createTensor(env, communityArr);
-             OnnxTensor tYear = OnnxTensor.createTensor(env, yearArr);
-             OnnxTensor tWeek = OnnxTensor.createTensor(env, weekArr);
              OnnxTensor tProp = OnnxTensor.createTensor(env, propArr);
              OnnxTensor tTime = OnnxTensor.createTensor(env, timeArr);
              OnnxTensor tMarket = OnnxTensor.createTensor(env, marketArr);
              OnnxTensor tLocal = OnnxTensor.createTensor(env, localMarketArr)) {
             Map<String, OnnxTensor> inputs = new HashMap<>();
             inputs.put("community_indices", tCommunity);
-            inputs.put("year", tYear);
-            inputs.put("week", tWeek);
             inputs.put("property_features", tProp);
             inputs.put("time_features", tTime);
             inputs.put("market_features", tMarket);
@@ -676,9 +657,9 @@ public class EmbeddingModel {
                     double logPrice = artifacts.inverseScaleLogPrice(priceOut[row][0]);
                     double predictedPrice = Math.exp(logPrice);
                     double stdLogPrice = Math.sqrt(Math.exp(logVarOut[row][0])) * logPriceScale;
-                    float[] attention = new float[6];
+                    float[] attention = new float[4];
                     System.arraycopy(
-                        attnOut[row], 0, attention, 0, Math.min(6, attnOut[row].length)
+                        attnOut[row], 0, attention, 0, Math.min(4, attnOut[row].length)
                     );
                     destination[destinationOffset + row] = new PredictionResult(
                         predictedPrice,

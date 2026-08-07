@@ -26,10 +26,10 @@ class ModelWithExtras(torch.nn.Module):
         super().__init__()
         self.model = model
 
-    def forward(self, community_indices, year, week, property_features,
+    def forward(self, community_indices, property_features,
                 time_features, market_features, local_market_features=None):
         log_price, log_var = self.model(
-            community_indices, year, week, property_features, time_features,
+            community_indices, property_features, time_features,
             market_features, local_market_features, return_uncertainty=True,
             need_weights=True,
         )
@@ -58,6 +58,33 @@ def _copy_required(source, destination, description):
     shutil.copy2(source, destination)
 
 
+def _compatible_local_market_snapshot(model_dir: Path) -> Path:
+    """Choose a snapshot whose local-field schema matches the exported model.
+
+    The mutable data snapshot is preferred when a scheduled refresh has already
+    produced the current schema. Otherwise use the checkpoint snapshot, rather
+    than silently pairing a new ONNX model with retired local-feature values.
+    """
+    expected_features = FEATURE_CONTRACT["groups"]["local_market"]
+    candidates = [
+        Path("data/local_market_snapshot.json"),
+        model_dir / "local_market_snapshot.json",
+    ]
+    for candidate in candidates:
+        if not candidate.is_file():
+            continue
+        try:
+            snapshot = json.loads(candidate.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"Invalid local market snapshot: {candidate}") from exc
+        if snapshot.get("feature_order") == expected_features:
+            return candidate
+    raise ValueError(
+        "No local-market snapshot matches the current feature contract. "
+        "Retrain the neural model or run refresh_local_market_snapshot.py first."
+    )
+
+
 def _export_onnx(manager, destination):
     """Export the model and verify numeric parity on a dynamic batch."""
     model = manager.predictor.model.cpu().eval()
@@ -65,13 +92,11 @@ def _export_onnx(manager, destination):
     batch = 2
     inputs = [
         torch.zeros(batch, 7, dtype=torch.long),
-        torch.zeros(batch, dtype=torch.long),
-        torch.zeros(batch, dtype=torch.long),
         torch.zeros(batch, manager.property_dim),
         torch.zeros(batch, manager.continuous_time_dim),
         torch.zeros(batch, manager.market_dim),
     ]
-    names = ["community_indices", "year", "week", "property_features",
+    names = ["community_indices", "property_features",
              "time_features", "market_features"]
     if manager.local_feature_dim:
         inputs.append(torch.zeros(batch, 7, manager.local_feature_dim))
@@ -103,6 +128,8 @@ def export_neural(args):
     model_dir = Path(args.model_dir) if args.model_dir else find_latest_model()
     bundle_dir = Path(args.bundle_dir) if args.bundle_dir else create_staging_directory()
     bundle_dir.mkdir(parents=True, exist_ok=True)
+    for retired_name in ("year_vocab.json", "week_vocab.json"):
+        (bundle_dir / retired_name).unlink(missing_ok=True)
 
     manager = ModelManager().load_model(model_dir)
     if list(manager._PROPERTY_FEATURES) != FEATURE_CONTRACT["groups"]["property"]:
@@ -126,21 +153,17 @@ def export_neural(args):
     if missing_scalers:
         raise ValueError("Checkpoint is missing scalers: " + ", ".join(missing_scalers))
     (bundle_dir / "scalers.json").write_text(json.dumps(scalers, indent=2) + "\n")
-    (bundle_dir / "year_vocab.json").write_text(json.dumps(manager.year_vocab, indent=2) + "\n")
-    (bundle_dir / "week_vocab.json").write_text(json.dumps(manager.week_vocab, indent=2) + "\n")
-
     checkpoint = torch.load(model_dir / "model.pth", map_location="cpu")
     metadata = {
         "model_version": model_dir.name,
         "embedding_dim": manager.embedding_dim,
+        "community_embedding_dim": manager.community_embedding_dim,
         "hidden_dim": manager.hidden_dim,
         "property_dim": manager.property_dim,
         "continuous_time_dim": manager.continuous_time_dim,
         "market_dim": manager.market_dim,
         "local_feature_dim": manager.local_feature_dim,
         "n_communities": manager.n_communities,
-        "year_length": manager.year_length,
-        "week_length": manager.week_length,
         "use_neighborhood_pooling": manager.use_neighborhood_pooling,
         "pooling_strategy": manager.pooling_strategy,
         "reference_date": checkpoint.get("reference_date"),
@@ -158,12 +181,13 @@ def export_neural(args):
         "community_map.json": Path("data/community_map.json"),
         "h3_l8_neighbor_communities.json": Path("data/h3_l8_neighbor_communities.json"),
         "h3_l8_neighbor_cells.json": Path("data/h3_l8_neighbor_cells.json"),
-        "local_market_snapshot.json": Path("data/local_market_snapshot.json"),
+        "local_market_snapshot.json": _compatible_local_market_snapshot(model_dir),
+        "synthetic_h3_l8_grid.json": Path("data/synthetic_h3_l8_grid.json"),
         "king_county_water.geojson": Path("data/osm/king_county_water.geojson"),
         "fred_indicators.csv": Path("data/market_indicators/fred_indicators.csv"),
     }
     for name, source in sources.items():
-        if not source.exists() and name in {"h3_l8_neighbor_cells.json", "local_market_snapshot.json"}:
+        if not source.exists() and name in {"h3_l8_neighbor_cells.json"}:
             source = model_dir / name
         _copy_required(source, bundle_dir / name, "Java neural inference")
     write_feature_contract(bundle_dir / "feature_contract.json")

@@ -17,7 +17,6 @@ import org.jboss.logging.Logger;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,6 +35,7 @@ public class LightGBMModel {
     private OrtEnvironment env;
     private OrtSession session;
     private LGBMBooster contributionBooster;
+    private double conformalLogResidual90;
     private double conformalLogResidual95;
     private int featureCount;
     private String[] featureNames;
@@ -113,12 +113,23 @@ public class LightGBMModel {
                         featureCount + " != " + onnxFeatureCount
                     );
                 }
-                conformalLogResidual95 = metadata.path("uncertainty")
-                    .path("absolute_log_residual_quantile").asDouble(Double.NaN);
+                JsonNode uncertainty = metadata.path("uncertainty");
+                conformalLogResidual90 = uncertainty.path("absolute_log_residual_quantiles")
+                    .path("0.90").asDouble(Double.NaN);
+                conformalLogResidual95 = uncertainty.path("absolute_log_residual_quantiles")
+                    .path("0.95").asDouble(
+                        uncertainty.path("absolute_log_residual_quantile").asDouble(Double.NaN)
+                    );
                 if (!Double.isFinite(conformalLogResidual95) || conformalLogResidual95 <= 0) {
                     throw new IllegalStateException(
                         "LightGBM metadata is missing its held-out 95% conformal interval"
                     );
+                }
+                if (!Double.isFinite(conformalLogResidual90) || conformalLogResidual90 <= 0) {
+                    // Compatibility only for pre-90%-interval artifacts. A complete
+                    // deployment writes a held-out empirical 90% quantile.
+                    conformalLogResidual90 = conformalLogResidual95 * 1.644854 / 1.959964;
+                    LOG.warn("LightGBM artifact lacks 90% conformal calibration; using a normal-ratio fallback. Re-export the complete bundle.");
                 }
             }
             try (InputStream input = getClass().getClassLoader()
@@ -227,7 +238,6 @@ public class LightGBMModel {
     }
 
     public synchronized PredictionExplanation explainPrepared(PredictionContext context) {
-        EmbeddingModel.BatchInput record = context.input();
         float[][] features = buildFeatureMatrix(List.of(context));
         try {
             double[] rawContributions = contributionBooster.predictForMat(
@@ -251,7 +261,7 @@ public class LightGBMModel {
                 reconstructedLogPrice += contribution;
                 contributions.add(new FeatureContribution(
                     featureNames[index],
-                    displayFeatureValue(featureNames[index], features[0][index], record),
+                    features[0][index],
                     contribution,
                     Math.expm1(contribution) * 100.0
                 ));
@@ -290,20 +300,15 @@ public class LightGBMModel {
         float[][] features = new float[contexts.size()][featureCount];
         for (int row = 0; row < contexts.size(); row++) {
             PredictionContext context = contexts.get(row);
-            EmbeddingModel.BatchInput input = context.input();
             int position = 0;
             int[] communities = context.communities();
             for (int community : communities) features[row][position++] = community;
-            features[row][position++] = context.yearIndex();
-            features[row][position++] = context.weekIndex();
-            features[row][position++] = (float) input.sqft();
-            features[row][position++] = (float) input.sqftLot();
-            features[row][position++] = (float) input.beds();
-            if (usesWaterFeatures) {
-                features[row][position++] = (float) context.rawProperty()[3];
-                features[row][position++] = (float) context.rawProperty()[4];
+            for (double value : context.rawProperty()) {
+                features[row][position++] = (float) value;
             }
-            features[row][position++] = (float) context.rawTimeTrend();
+            for (double value : context.rawTime()) {
+                features[row][position++] = (float) value;
+            }
             features[row][position++] = context.rawMarket()[0];
             features[row][position++] = context.rawMarket()[1];
             float[][] local = context.rawLocalMarket();
@@ -333,12 +338,11 @@ public class LightGBMModel {
 
     private String contributionGroup(String feature) {
         if (feature.startsWith("community_")) return "Community";
-        if (feature.equals("year") || feature.equals("week") ||
-                feature.equals("time_trend")) return "Time";
+        if (feature.equals("time_trend") || feature.equals("annual_sin") ||
+                feature.equals("annual_cos")) return "Time";
         if (feature.equals("sqft") || feature.equals("sqft_lot") ||
                 feature.equals("beds")) return "Property";
-        if (feature.equals("distance_to_water_m") || feature.equals("water_proximity") ||
-                feature.equals("is_waterfront")) {
+        if (feature.equals("distance_to_water_m") || feature.equals("water_proximity")) {
             return "Waterfront";
         }
         if (feature.equals("mortgage_rate") || feature.equals("unemployment_rate")) {
@@ -349,17 +353,13 @@ public class LightGBMModel {
         return "Other";
     }
 
-    private double displayFeatureValue(
-            String feature, double modelValue, EmbeddingModel.BatchInput record) {
-        if (feature.equals("year")) return record.saleDate().getYear();
-        if (feature.equals("week")) {
-            return record.saleDate().get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
-        }
-        return modelValue;
-    }
-
     public double getConformalLogResidual95() {
         return conformalLogResidual95;
+    }
+
+    /** Held-out absolute-log-residual conformal radius for a nominal 90% interval. */
+    public double getConformalLogResidual90() {
+        return conformalLogResidual90;
     }
 
 }

@@ -70,13 +70,6 @@ class LightGBMPriceModel:
         self.feature_importances = None
 
     @staticmethod
-    def _vocab_indices(values, vocab):
-        unknown = vocab["unknown"]
-        return np.asarray(
-            [vocab.get(int(value), unknown) for value in values], dtype=np.int32
-        )
-
-    @staticmethod
     def _price_mape(y_true, y_pred):
         actual = np.exp(np.clip(y_true, -50, 50))
         predicted = np.exp(np.clip(y_pred, -50, 50))
@@ -86,7 +79,7 @@ class LightGBMPriceModel:
     def build_feature_frame(self, prepared_data):
         """Build a DataFrame with the same information used by the neural model."""
         frame = prepared_data.dataframe
-        required = set(NUMERIC_FEATURES + ["year", "week", "community_neighbors"])
+        required = set(NUMERIC_FEATURES + ["community_neighbors"])
         missing = sorted(required.difference(frame.columns))
         if missing:
             raise ValueError(f"Prepared dataframe is missing features: {missing}")
@@ -122,15 +115,6 @@ class LightGBMPriceModel:
             )
             community_columns.append(name)
 
-        year_indices = self._vocab_indices(frame["year"], prepared_data.year_vocab)
-        week_indices = self._vocab_indices(frame["week"], prepared_data.week_vocab)
-        features["year"] = pd.Categorical(
-            year_indices, categories=range(prepared_data.year_length)
-        )
-        features["week"] = pd.Categorical(
-            week_indices, categories=range(prepared_data.week_length)
-        )
-
         numeric = frame[NUMERIC_FEATURES].to_numpy(dtype=np.float32)
         local = np.asarray(local_features, dtype=np.float32)
         if not np.isfinite(numeric).all() or not np.isfinite(local).all():
@@ -144,12 +128,11 @@ class LightGBMPriceModel:
                 features[name] = local[:, ring_position, feature_position]
                 local_columns.append(name)
 
-        self.categorical_features = community_columns + ["year", "week"]
+        self.categorical_features = community_columns
         self.feature_metadata = {
             "encoding": {
                 "community_center_and_neighbors": "native_categorical_7_columns",
-                "year": "native_categorical",
-                "week": "native_categorical",
+                "annual_cycle": "continuous_sine_cosine",
             },
             "categorical_features": self.categorical_features,
             "numeric_features": NUMERIC_FEATURES,

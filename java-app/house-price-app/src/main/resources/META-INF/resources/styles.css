@@ -26,6 +26,15 @@ button {
 }
 button:hover { background: #1a3a6e; }
 #map { flex: 1; }
+#mapProgress {
+  display: none; position: fixed; z-index: 1100; left: 316px; right: 18px; bottom: 16px;
+  max-width: 640px; margin: auto; padding: 8px 10px; background: rgba(22,33,62,.96);
+  border: 1px solid #0f3460; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,.45);
+  color: #eee; font-size: 11px;
+}
+.map-progress-track { height: 5px; overflow: hidden; margin-top: 6px; border-radius: 5px; background: #0b1730; }
+#mapProgressBar { width: 35%; height: 100%; border-radius: inherit; background: #e94560; animation: mapProgress 1.25s ease-in-out infinite; }
+@keyframes mapProgress { 0% { transform: translateX(-120%); } 100% { transform: translateX(340%); } }
 .leaflet-popup-content { font-size: 13px; line-height: 1.7; min-width: 220px; }
 .leaflet-popup-content a { color: #4a9eff; }
 
@@ -34,8 +43,10 @@ button:hover { background: #1a3a6e; }
   display: block; visibility: hidden; position: fixed; z-index: 9999;
   background: #16213e; border: 1px solid #0f3460; border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-  width: 900px; min-height: 460px; padding: 16px;
+  width: 900px; height: 620px; min-width: 560px; min-height: 430px;
+  max-width: 96vw; max-height: 94vh; padding: 16px;
   top: 80px; left: 50%; transform: translateX(-50%);
+  resize: both; overflow: hidden;
 }
 #perfPopup .popup-header {
   display: flex; justify-content: space-between; align-items: center;
@@ -47,7 +58,11 @@ button:hover { background: #1a3a6e; }
   cursor: pointer; padding: 0 4px; width: auto;
 }
 #perfPopup .close-btn:hover { color: #fff; background: none; }
-#chartContainer { position: relative; height: 340px; }
+#chartContainer { position: relative; height: calc(100% - 190px); min-height: 190px; }
+.popup-controls {
+  display: flex; gap: 12px; align-items: end; margin-bottom: 10px;
+}
+.popup-controls label { flex: 1; margin: 0; }
 .synthetic-date-control {
   background: rgba(22,33,62,0.95); color: #eee; padding: 9px 11px;
   border: 1px solid #0f3460; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,.35);
@@ -67,14 +82,17 @@ button:hover { background: #1a3a6e; }
 .shap-negative { color: #ff6b6b; }
 .shap-value { color: #aaa; }
 #featurePopup {
-  visibility: hidden; position: fixed; z-index: 10000; inset: 5vh 5vw;
-  max-width: 1100px; margin: auto; background: #16213e;
+  visibility: hidden; position: fixed; z-index: 10000;
+  top: 5vh; left: 5vw; width: 90vw; height: 90vh;
+  min-width: 480px; min-height: 320px; max-width: 96vw; max-height: 96vh;
+  background: #16213e;
   border: 1px solid #0f3460; border-radius: 8px;
   box-shadow: 0 10px 40px rgba(0,0,0,.7); padding: 14px;
+  resize: both; overflow: hidden;
 }
 #featurePopup .popup-header {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 10px; cursor: move; user-select: none;
 }
 #featurePopup h3 { color: #e94560; font-size: 14px; margin: 0; }
 #featurePopup .close-btn {
@@ -82,7 +100,7 @@ button:hover { background: #1a3a6e; }
   cursor: pointer; padding: 0 4px; width: auto;
 }
 .feature-explanation-scroll {
-  max-height: calc(90vh - 70px); overflow: auto; border: 1px solid #0f3460;
+  height: calc(100% - 42px); overflow: auto; border: 1px solid #0f3460;
   background: #101a31; padding: 10px; font-size: 11px; line-height: 1.45;
 }
 .feature-explanation-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -96,3 +114,58 @@ button:hover { background: #1a3a6e; }
 .feature-explanation-table td:first-child { white-space: normal; min-width: 210px; }
 .explanation-note { color: #aaa; margin: 5px 0; }
 
+#timeSeriesPopup {
+  visibility: hidden; position: fixed; z-index: 10001;
+  top: 10vh; left: 12vw; width: 76vw; height: 68vh;
+  min-width: 480px; min-height: 320px; max-width: 96vw; max-height: 94vh;
+  background: #16213e; border: 1px solid #0f3460; border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.7); padding: 14px;
+  resize: both; overflow: hidden;
+}
+#timeSeriesPopup .popup-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px; cursor: move; user-select: none;
+}
+#timeSeriesPopup h3 { color: #e94560; font-size: 14px; margin: 0; }
+#timeSeriesPopup .close-btn {
+  background: none; border: none; color: #aaa; font-size: 18px;
+  cursor: pointer; padding: 0 4px; width: auto;
+}
+#timeSeriesChartContainer {
+  position: relative; width: 100%; height: calc(100% - 62px); min-height: 220px;
+}
+.property-time-series-button { margin-top: 5px; }
+.synthetic-coordinate-icon {
+  background: #e94560; border: 2px solid white; border-radius: 50%;
+  width: 14px; height: 14px; box-shadow: 0 1px 5px rgba(0,0,0,.65);
+}
+.osm-layer-legend {
+  background: rgba(22,33,62,.94); padding: 9px 11px; border-radius: 6px;
+  border: 1px solid #0f3460; color: #eee; font-size: 10px;
+  line-height: 1.35; min-width: 180px;
+}
+.osm-layer-legend b { color: #e94560; font-size: 11px; }
+.osm-legend-row { display: flex; align-items: center; gap: 7px; margin-top: 5px; }
+.osm-legend-row span {
+  display: inline-block; width: 20px; height: 8px; border-radius: 2px;
+  border: 1px solid rgba(255,255,255,.7); flex-shrink: 0;
+}
+.osm-legend-row .route-swatch {
+  height: 0; border: 0; border-top: 2px dashed #aaa; border-radius: 0;
+}
+.osm-legend-row em { color: #999; font-style: normal; margin-left: auto; }
+.osm-attribution { color: #777; margin-top: 6px; }
+.transport-feature-tooltip { min-width: 285px; line-height: 1.55; }
+.transport-feature-gradient {
+  height: 9px; margin-top: 6px; border: 1px solid rgba(255,255,255,.55);
+  background: linear-gradient(90deg, #fff7bc, #fec44f, #d95f0e, #8c2d04);
+}
+.transport-feature-range { display: flex; justify-content: space-between; color: #aaa; font-size: 10px; }
+.local-market-warning {
+  margin: 6px 0; padding: 5px 6px; border-left: 3px solid #fcbf49;
+  background: rgba(252,191,73,.12); color: #a53c12dd; font-size: 11px; line-height: 1.35;
+}
+.transport-route-path {
+  pointer-events: stroke !important;
+  cursor: help;
+}

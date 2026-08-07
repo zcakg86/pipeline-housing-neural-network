@@ -6,7 +6,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from pricemodel.deployment import validate_bundle, write_manifest
+from pricemodel.deployment import (
+    REQUIRED_LIGHTGBM_ARTIFACTS,
+    REQUIRED_NEURAL_ARTIFACTS,
+    validate_bundle,
+    write_manifest,
+)
 from pricemodel.feature_contract import FEATURE_CONTRACT, write_feature_contract
 from pricemodel.reproducibility import seed_everything
 from pricemodel.training_config import TrainingConfig
@@ -35,6 +40,21 @@ class StructureReliabilityTests(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 validate_bundle(bundle)
 
+    def test_deployment_rejects_a_missing_synthetic_grid(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            bundle = Path(temporary)
+            required = (
+                REQUIRED_NEURAL_ARTIFACTS
+                | REQUIRED_LIGHTGBM_ARTIFACTS
+                | {"king_county_water.geojson", "fred_indicators.csv"}
+            )
+            for name in required - {"synthetic_h3_l8_grid.json"}:
+                (bundle / name).write_bytes(b"test")
+            with self.assertRaisesRegex(
+                FileNotFoundError, "synthetic_h3_l8_grid.json"
+            ):
+                validate_bundle(bundle)
+
     def test_training_seed_controls_python_numpy_torch_and_loader_generator(self):
         first_generator = seed_everything(42)
         first = (random.random(), np.random.random(), torch.rand(1).item(),
@@ -43,7 +63,12 @@ class StructureReliabilityTests(unittest.TestCase):
         second = (random.random(), np.random.random(), torch.rand(1).item(),
                   torch.rand(1, generator=second_generator).item())
         self.assertEqual(first, second)
-        self.assertEqual(TrainingConfig().train_kwargs(5)["random_seed"], 42)
+        config_kwargs = TrainingConfig().train_kwargs(5)
+        self.assertEqual(config_kwargs["random_seed"], 42)
+        self.assertEqual(config_kwargs["patience"], 8)
+        self.assertEqual(config_kwargs["lr_plateau_factor"], 0.5)
+        self.assertEqual(config_kwargs["lr_plateau_patience"], 2)
+        self.assertEqual(config_kwargs["residual_penalty"], 1e-2)
 
 
 if __name__ == "__main__":

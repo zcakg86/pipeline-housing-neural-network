@@ -6,18 +6,15 @@ import numpy as np
 import pandas as pd
 
 from pricemodel.lightgbm_model import LightGBMPriceModel
+from pricemodel.feature_contract import lightgbm_feature_names
 from pricemodel.local_market_features import LOCAL_MARKET_FEATURES
 
 
 class PreparedData:
     def __init__(self, rows=40):
         self.n_communities = 3
-        self.year_vocab = {2023: 0, 2024: 1, 2025: 2, 2026: 3, "unknown": 4}
-        self.week_vocab = {week: week - 1 for week in range(1, 54)}
-        self.week_vocab["unknown"] = 53
-        self.year_length = len(self.year_vocab)
-        self.week_length = len(self.week_vocab)
         dates = pd.date_range("2023-01-01", periods=rows, freq="20D")
+        phase = 2 * np.pi * (dates.dayofyear - 1) / np.where(dates.is_leap_year, 366, 365)
         prices = np.linspace(400_000, 800_000, rows)
         self.dataframe = pd.DataFrame({
             "sale_date": dates,
@@ -28,14 +25,13 @@ class PreparedData:
                 [i % 3, (i + 1) % 3, (i + 2) % 3, 3, 3, 3, 3]
                 for i in range(rows)
             ],
-            "year": dates.isocalendar().year,
-            "week": dates.isocalendar().week,
             "sqft": np.linspace(1000, 2400, rows),
             "sqft_lot": np.linspace(3000, 9000, rows),
             "beds": np.where(np.arange(rows) % 2, 3, 4),
             "water_proximity": np.exp(-np.linspace(10, 5000, rows) / 100.0),
-            "is_waterfront": (np.arange(rows) % 10 == 0).astype(float),
             "time_trend": np.arange(rows) / 12,
+            "annual_sin": np.sin(phase),
+            "annual_cos": np.cos(phase),
             "mortgage_rate": np.linspace(5, 7, rows),
             "unemployment_rate": np.linspace(3.5, 4.5, rows),
         })
@@ -49,8 +45,10 @@ class LightGBMPriceModelTests(unittest.TestCase):
         data = PreparedData()
         model = LightGBMPriceModel(n_estimators=5, n_jobs=1)
         features = model.build_feature_frame(data)
-        self.assertEqual(features.shape, (len(data.dataframe), 52))
-        self.assertEqual(len(model.categorical_features), 9)
+        self.assertEqual(
+            features.shape, (len(data.dataframe), len(lightgbm_feature_names()))
+        )
+        self.assertEqual(len(model.categorical_features), 7)
         for name in model.categorical_features:
             self.assertEqual(str(features[name].dtype), "category")
 

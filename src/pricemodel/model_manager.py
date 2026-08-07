@@ -3,7 +3,6 @@ Model Manager
 Handles training, prediction, and retraining pipeline.
 """
 import torch
-import torch.nn as nn
 import pandas as pd
 import numpy as np
 import joblib
@@ -11,10 +10,8 @@ import os
 from torch.utils.data import DataLoader, TensorDataset, Subset
 from sklearn.preprocessing import StandardScaler
 from datetime import datetime
-import json
 from typing import Optional, Tuple, Dict, List
 
-from .data_pipeline import vocab_replace_tensor
 from .feature_contract import (
     LOCAL_FEATURES, MARKET_FEATURES, PROPERTY_FEATURES, TIME_FEATURES
 )
@@ -54,13 +51,12 @@ class ModelManager:
         
         # Model architecture params
         self.embedding_dim = None
+        self.community_embedding_dim = None
         self.hidden_dim = None
         self.property_dim = None
         self.continuous_time_dim = None
         self.market_dim = None
         self.n_communities = None
-        self.year_length = None
-        self.week_length = None
         self.learning_rate = None
         self.dropout_rate = None
         self.epochs = None
@@ -77,10 +73,6 @@ class ModelManager:
         self.train_indices = None
         self.val_indices = None
         
-        # Vocabularies
-        self.year_vocab = None
-        self.week_vocab = None
-
     
     # Features that need scaling — shared across processor and scaler helpers
     _PROPERTY_FEATURES = list(PROPERTY_FEATURES)
@@ -108,12 +100,8 @@ class ModelManager:
 
         # Store metadata from the dataset object
         self.dataframe    = data.dataframe
-        self.year_length  = data.year_length
-        self.week_length  = data.week_length
         self.n_communities = data.n_communities
         self.data_length  = data.length
-        self.week_vocab   = data.week_vocab
-        self.year_vocab   = data.year_vocab
         self.reference_date = data.reference_date
         self.local_market_snapshot = getattr(data, 'local_market_snapshot', None)
         self.neighbor_cells_map = getattr(data, 'neighbor_cells_map', None)
@@ -269,8 +257,6 @@ class ModelManager:
 
         tensors = [
             self._community_tensor,
-            torch.tensor(self.dataframe['year'].values, dtype=torch.long),
-            torch.tensor(self.dataframe['week'].values, dtype=torch.long),
             torch.tensor(self.dataframe[[f'{f}_scaled' for f in property_features]].values, dtype=torch.float32),
             torch.tensor(self.dataframe[[f'{f}_scaled' for f in time_features]].values, dtype=torch.float32),
             torch.tensor(self.dataframe[[f'{f}_scaled' for f in market_features]].values, dtype=torch.float32),
@@ -361,34 +347,13 @@ class ModelManager:
                 f"val groups: {int((self.val_community_loss_weights > 0).sum())})"
             )
 
-        # --- Vocab replacement (year / week raw → vocab index) ---
-        def _replace_vocab_in_subset(subset, indices):
-            year_tensor = vocab_replace_tensor(
-                self.tensors.tensors[1][indices], self.year_vocab
-            )
-            week_tensor = vocab_replace_tensor(
-                self.tensors.tensors[2][indices], self.week_vocab
-            )
-            new_tensors = list(self.tensors.tensors)
-            # Build a mini-TensorDataset for this split with correct vocab indices
-            split_tensors = [t[indices] for t in new_tensors]
-            split_tensors[1] = year_tensor
-            split_tensors[2] = week_tensor
-            return TensorDataset(*split_tensors)
-
-        train_td = _replace_vocab_in_subset(self.train_dataset, train_indices)
-        val_td   = _replace_vocab_in_subset(self.val_dataset,   val_indices)
-
-        # Subsets with contiguous indices into their own TensorDatasets
-        self.train_dataset = Subset(train_td, list(range(len(train_indices))))
-        self.val_dataset   = Subset(val_td,   list(range(len(val_indices))))
-
         print(f"Split complete — train: {len(train_indices)}, val: {len(val_indices)}")
 
         return self
 
-    def train_model(self, embedding_dim=16, hidden_dim=32, 
-                   property_dim=None, continuous_time_dim=1, market_dim=2,
+    def train_model(self, embedding_dim=16, community_embedding_dim=16,
+                   hidden_dim=32,
+                   property_dim=None, continuous_time_dim=3, market_dim=2,
                    epochs=50, batch=256, learning_rate=0.0003,
                    dropout_rate=0.1, estimate_uncertainty=True,
                    pooling_strategy='mean', patience=20,
@@ -426,6 +391,7 @@ class ModelManager:
         
         # Store architecture params
         self.embedding_dim = embedding_dim
+        self.community_embedding_dim = community_embedding_dim
         self.hidden_dim = hidden_dim
         if property_dim is None:
             property_dim = len(self._PROPERTY_FEATURES)
@@ -435,6 +401,12 @@ class ModelManager:
                 f"contract has {len(self._PROPERTY_FEATURES)} fields: {self._PROPERTY_FEATURES}"
             )
         self.property_dim = property_dim
+        if continuous_time_dim != len(self._TIME_FEATURES):
+            raise ValueError(
+                f"continuous_time_dim={continuous_time_dim} but the configured "
+                f"time feature contract has {len(self._TIME_FEATURES)} fields: "
+                f"{self._TIME_FEATURES}"
+            )
         self.continuous_time_dim = continuous_time_dim
         self.market_dim = market_dim
         self.learning_rate = learning_rate
@@ -457,10 +429,10 @@ class ModelManager:
                 else self.n_communities + 1
             )
             self.predictor = PriceTrainer(
-                self.device, embedding_dim, hidden_dim, 
+                self.device, embedding_dim, hidden_dim,
                 property_dim, continuous_time_dim, market_dim,
                 community_embedding_length,
-                self.year_length, self.week_length,
+                community_embedding_dim,
                 learning_rate, epochs, len(train_loader),
                 dropout_rate, estimate_uncertainty,
                 use_neighborhood_pooling=self.use_neighborhood_pooling,
@@ -576,100 +548,6 @@ class ModelManager:
             shrinkage_strength=shrinkage_strength,
         )
     
-    def extend_year_vocab(self, new_years):
-        """
-        Extend the year vocabulary and grow the year_embedding weight matrix to
-        accommodate additional years without discarding learned weights.
-
-        Parameters
-        ----------
-        new_years : iterable of int
-            Calendar years to add (years already in the vocab are silently skipped).
-
-        Returns
-        -------
-        self
-
-        What this does
-        --------------
-        1. Adds each new year to self.year_vocab with the next available index.
-        2. Updates self.year_length to reflect the new vocab size.
-        3. Replaces self.predictor.model.year_embedding with a new nn.Embedding
-           that has one extra row per new year.  Existing weight rows are copied
-           verbatim; new rows are randomly initialised (same distribution as
-           torch default — N(0,1)).
-        4. Saves the updated year_vocab.json to self.directory.
-
-        Notes
-        -----
-        * The "unknown" token always stays at the last index.  New years are
-          inserted before it, and the unknown row is carried over correctly.
-        * After extending you should fine-tune the model on data containing the
-          new years so the new embedding rows learn meaningful representations.
-        """
-        if self.predictor is None:
-            raise RuntimeError("No model loaded — call train_model() or load_model() first.")
-
-        # Determine which years are genuinely new
-        # year_vocab keys are ints (plus the "unknown" string key)
-        existing_years = {k for k in self.year_vocab if isinstance(k, int)}
-        years_to_add   = [int(y) for y in sorted(new_years) if int(y) not in existing_years]
-
-        if not years_to_add:
-            print("extend_year_vocab: all supplied years are already in the vocab — nothing to do.")
-            return self
-
-        # Current unknown index (always the last row)
-        old_unknown_idx = self.year_vocab["unknown"]
-        old_size        = old_unknown_idx + 1  # total rows including unknown
-
-        # Remap: new years go between the last known year and the unknown token
-        # i.e. insert them before the existing unknown row.
-        new_year_indices = {}
-        for i, year in enumerate(years_to_add):
-            new_year_indices[year] = old_unknown_idx + i  # push unknown further out
-
-        new_unknown_idx = old_unknown_idx + len(years_to_add)
-        new_size        = new_unknown_idx + 1
-
-        # Update vocab in-place
-        for year, idx in new_year_indices.items():
-            self.year_vocab[year] = idx
-        self.year_vocab["unknown"] = new_unknown_idx
-        self.year_length = new_size
-
-        # --- Grow the embedding weight matrix ---
-        old_embedding = self.predictor.model.year_embedding
-        embedding_dim = old_embedding.embedding_dim
-
-        new_embedding = nn.Embedding(new_size, embedding_dim)
-        with torch.no_grad():
-            # Copy existing rows (all rows up to and including old unknown)
-            new_embedding.weight[:old_size] = old_embedding.weight
-
-            # The unknown row moved from old_unknown_idx → new_unknown_idx;
-            # rows old_unknown_idx .. new_unknown_idx-1 are new years —
-            # initialise them from N(0,1) (already done by default __init__).
-            # Overwrite the new unknown position with the old unknown embedding
-            # so it retains its learned representation.
-            new_embedding.weight[new_unknown_idx] = old_embedding.weight[old_unknown_idx]
-
-        new_embedding = new_embedding.to(self.predictor.device)
-        self.predictor.model.year_embedding = new_embedding
-
-        print(f"extend_year_vocab: added {len(years_to_add)} year(s): {years_to_add}")
-        print(f"  year_embedding size: {old_size} → {new_size} rows  "
-              f"(embedding_dim={embedding_dim})")
-        print(f"  unknown token index: {old_unknown_idx} → {new_unknown_idx}")
-
-        # Persist updated vocab
-        vocab_path = os.path.join(self.directory, "year_vocab.json")
-        with open(vocab_path, "w") as f:
-            json.dump(self.year_vocab, f)
-        print(f"  Updated year_vocab saved to {vocab_path}")
-
-        return self
-
     def _synchronize_device(self):
         """Finish queued accelerator work before checkpoint operations."""
         from .checkpoint_io import synchronize_device

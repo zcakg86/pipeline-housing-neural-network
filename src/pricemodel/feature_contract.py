@@ -13,12 +13,10 @@ from pathlib import Path
 from .local_market_features import LOCAL_MARKET_FEATURES
 
 
-FEATURE_CONTRACT_VERSION = 1
+FEATURE_CONTRACT_VERSION = 4
 NEIGHBOR_COUNT = 7
-PROPERTY_FEATURES = (
-    "sqft", "sqft_lot", "beds", "water_proximity", "is_waterfront"
-)
-TIME_FEATURES = ("time_trend",)
+PROPERTY_FEATURES = ("sqft", "sqft_lot", "beds", "water_proximity")
+TIME_FEATURES = ("time_trend", "annual_sin", "annual_cos")
 MARKET_FEATURES = ("mortgage_rate", "unemployment_rate")
 LOCAL_FEATURES = tuple(LOCAL_MARKET_FEATURES)
 RING_NAMES = ("center",) + tuple(
@@ -34,7 +32,7 @@ def lightgbm_feature_names() -> tuple[str, ...]:
     """Return the exact ordered feature vector consumed by LightGBM."""
     categorical = ("community_center",) + tuple(
         f"community_neighbor_{index}" for index in range(1, NEIGHBOR_COUNT)
-    ) + ("year", "week")
+    )
     local = tuple(
         f"{ring}_{feature}"
         for ring in RING_NAMES
@@ -56,8 +54,6 @@ FEATURE_CONTRACT = {
     },
     "neural_inputs": {
         "community_indices": ["batch", NEIGHBOR_COUNT],
-        "year": ["batch"],
-        "week": ["batch"],
         "property_features": ["batch", len(PROPERTY_FEATURES)],
         "time_features": ["batch", len(TIME_FEATURES)],
         "market_features": ["batch", len(MARKET_FEATURES)],
@@ -69,15 +65,16 @@ FEATURE_CONTRACT = {
         "sqft_lot": "sqft",
         "beds": "count",
         "water_proximity": "score_0_to_1",
-        "is_waterfront": "boolean",
         "time_trend": "years",
+        "annual_sin": "unitless",
+        "annual_cos": "unitless",
         "mortgage_rate": "percent",
         "unemployment_rate": "percent",
-        "local_mean_log_price": "log_dollars",
-        "local_log_price_std": "log_dollars",
-        "local_log1p_sales_count": "log_count",
+        "local_decayed_log_price_premium": "log_dollars_relative_to_global_market",
+        "local_decayed_log_price_std": "log_dollars",
+        "local_log1p_decayed_sales_count": "log_effective_count",
         "local_recency_years": "years",
-        "local_price_trend": "log_dollars_per_year",
+        "local_relative_price_trend": "log_dollars_recent_minus_prior_relative_to_global",
     },
 }
 

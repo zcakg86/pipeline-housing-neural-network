@@ -11,10 +11,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Loads and holds all model artifacts: scalers, vocabularies, H3 neighbor map, metadata.
- * All vocabs stored as HashMap<String, Integer> for O(1) lookup.
+ * Loads and holds scalers, H3 neighborhood state, and model metadata.
  */
 @ApplicationScoped
 public class ModelArtifacts {
@@ -24,17 +25,20 @@ public class ModelArtifacts {
     // Scalers: feature -> {mean, scale}
     private Map<String, double[]> scalers = new HashMap<>();
 
-    // Vocabularies: value -> index
-    private HashMap<String, Integer> yearVocab = new HashMap<>();
-    private HashMap<String, Integer> weekVocab = new HashMap<>();
-
     // H3 L9 -> [7 community indices]
     private HashMap<String, int[]> h3NeighborMap = new HashMap<>();
     private HashMap<String, String[]> h3NeighborCells = new HashMap<>();
     private Map<String, Map<String, Object>> localMarketCells = new HashMap<>();
     private Map<String, Object> globalLocalMarket = new HashMap<>();
+    /** Immutable deployed-snapshot trends, reused across bulk Zillow preparation. */
+    private final Map<TrendKey, OptionalDouble> localTrendCache = new ConcurrentHashMap<>();
+    private final Map<LocalDate, OptionalDouble> globalTrendCache = new ConcurrentHashMap<>();
     private double maxLocalRecencyYears = 5.0;
     private int localRecentWindowDays = 365;
+    private double localDecayHalfLifeDays = 730.0;
+    private int localTrendWindowDays = 365;
+    private double localPremiumShrinkageWeight = 3.0;
+    private boolean usesDecayedLocalMarketFeatures;
     private LocalDate localMarketAsOfDate;
     private LocalDate localMarketLatestSaleDate;
 
@@ -45,8 +49,6 @@ public class ModelArtifacts {
     // Metadata
     private LocalDate referenceDate;
     private int unknownCommunityIdx;   // = n_communities from model_metadata.json
-    private int unknownYearIdx;
-    private int unknownWeekIdx;
     private List<String> propertyFeatures = List.of("sqft", "sqft_lot", "beds");
 
     @PostConstruct
@@ -62,17 +64,6 @@ public class ModelArtifacts {
                 scalers.put(feat, new double[]{vals.get("mean"), vals.get("scale")})
             );
             LOG.infof("Loaded %d scalers", scalers.size());
-
-            // ── Year / week vocabularies ──────────────────────────────────────
-            yearVocab = mapper.readValue(resource("year_vocab.json"),
-                mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Integer.class));
-            weekVocab = mapper.readValue(resource("week_vocab.json"),
-                mapper.getTypeFactory().constructMapType(HashMap.class, String.class, Integer.class));
-
-            unknownYearIdx = yearVocab.getOrDefault("unknown", yearVocab.size() - 1);
-            unknownWeekIdx = weekVocab.getOrDefault("unknown", weekVocab.size() - 1);
-
-            LOG.infof("Loaded vocabs: year=%d, week=%d", yearVocab.size(), weekVocab.size());
 
             // ── H3 Neighbor Map ───────────────────────────────────────────────
             Map<String, List<Integer>> rawH3 = mapper.readValue(
@@ -122,11 +113,28 @@ public class ModelArtifacts {
                 if (recentWindow instanceof Number number) {
                     localRecentWindowDays = number.intValue();
                 }
+                Object featureOrder = snapshot.get("feature_order");
+                usesDecayedLocalMarketFeatures = featureOrder instanceof List<?> names
+                    && names.stream().map(String::valueOf)
+                        .anyMatch("local_decayed_log_price_premium"::equals);
+                Object halfLife = snapshot.get("decay_half_life_days");
+                if (halfLife instanceof Number number) {
+                    localDecayHalfLifeDays = number.doubleValue();
+                }
+                Object trendWindow = snapshot.get("trend_window_days");
+                if (trendWindow instanceof Number number) {
+                    localTrendWindowDays = number.intValue();
+                }
+                Object shrinkageWeight = snapshot.get("premium_shrinkage_weight");
+                if (shrinkageWeight instanceof Number number) {
+                    localPremiumShrinkageWeight = number.doubleValue();
+                }
                 localMarketAsOfDate = parseOptionalDate(snapshot.get("as_of_date"));
                 localMarketLatestSaleDate = parseOptionalDate(snapshot.get("latest_sale_date"));
                 LOG.infof(
-                    "Loaded local market snapshot: %d H3 cells, latest sale=%s, usable from=%s",
-                    localMarketCells.size(), localMarketLatestSaleDate, localMarketAsOfDate
+                    "Loaded local market snapshot: %d H3 cells, latest sale=%s, usable from=%s, decayed=%s",
+                    localMarketCells.size(), localMarketLatestSaleDate, localMarketAsOfDate,
+                    usesDecayedLocalMarketFeatures
                 );
             }
 
@@ -181,16 +189,6 @@ public class ModelArtifacts {
         return ms != null ? ms[1] : 1.0;
     }
 
-    // ── Vocab helpers ─────────────────────────────────────────────────────────
-
-    public int lookupYear(int year) {
-        return yearVocab.getOrDefault(String.valueOf(year), unknownYearIdx);
-    }
-
-    public int lookupWeek(int week) {
-        return weekVocab.getOrDefault(String.valueOf(week), unknownWeekIdx);
-    }
-
     public int[] lookupH3Neighbors(String h3Index) {
         int[] neighbors = h3NeighborMap.get(h3Index);
         if (neighbors != null) return neighbors;
@@ -238,6 +236,9 @@ public class ModelArtifacts {
             cells = new String[7];
             cells[0] = h3Index;
         }
+        if (usesDecayedLocalMarketFeatures) {
+            return lookupDecayedLocalMarketFeatures(cells, saleDate, scaled);
+        }
 
         float[][] result = new float[7][5];
         for (int i = 0; i < 7; i++) {
@@ -267,6 +268,125 @@ public class ModelArtifacts {
             result[i][4] = (float) (scaled ? scaleFeature("local_price_trend", trend) : trend);
         }
         return result;
+    }
+
+    /**
+     * Build the version-4 local feature tensor. The snapshot stores a decayed
+     * cell premium and its support at ``as_of_date``; when predicting later we
+     * age that support and reapply shrinkage toward the current global market.
+     */
+    private float[][] lookupDecayedLocalMarketFeatures(
+        String[] cells, LocalDate saleDate, boolean scaled
+    ) {
+        float[][] result = new float[7][5];
+        double globalStd = numeric(globalLocalMarket, "decayed_log_price_std", 0.5);
+        for (int i = 0; i < 7; i++) {
+            Map<String, Object> record = cells[i] == null ? null : localMarketCells.get(cells[i]);
+            boolean hasCellRecord = record != null;
+            if (record == null) record = globalLocalMarket;
+
+            // An unmapped H3 cell has no local sales. It inherits only the
+            // global dispersion fallback, matching Python's zero-support row.
+            double support = hasCellRecord ? agedDecayedSupport(record, saleDate) : 0.0;
+            double rawPremium = hasCellRecord
+                ? numeric(record, "raw_decayed_log_price_premium", 0.0) : 0.0;
+            double premium = support <= 0.0 ? 0.0
+                : rawPremium * support / (support + localPremiumShrinkageWeight);
+            double std = hasCellRecord
+                ? numeric(record, "decayed_log_price_std", globalStd) : globalStd;
+            double trend = hasCellRecord ? relativeTrend(cells[i], record, saleDate) : 0.0;
+
+            double recency = maxLocalRecencyYears;
+            Object lastDateValue = record.get("_parsed_last_sale_date");
+            if (lastDateValue instanceof LocalDate lastDate) {
+                long days = ChronoUnit.DAYS.between(lastDate, saleDate);
+                recency = Math.min(Math.max(days / 365.25, 0.0), maxLocalRecencyYears);
+            }
+
+            double logSupport = Math.log1p(support);
+            result[i][0] = (float) (scaled
+                ? scaleFeature("local_decayed_log_price_premium", premium) : premium);
+            result[i][1] = (float) (scaled
+                ? scaleFeature("local_decayed_log_price_std", std) : std);
+            result[i][2] = (float) (scaled
+                ? scaleFeature("local_log1p_decayed_sales_count", logSupport) : logSupport);
+            result[i][3] = (float) (scaled
+                ? scaleFeature("local_recency_years", recency) : recency);
+            result[i][4] = (float) (scaled
+                ? scaleFeature("local_relative_price_trend", trend) : trend);
+        }
+        return result;
+    }
+
+    private double agedDecayedSupport(Map<String, Object> record, LocalDate predictionDate) {
+        double supportAtSnapshot = Math.expm1(
+            numeric(record, "log1p_decayed_sales_count", 0.0)
+        );
+        if (supportAtSnapshot <= 0.0 || localMarketAsOfDate == null) return supportAtSnapshot;
+        long elapsedDays = Math.max(0, ChronoUnit.DAYS.between(localMarketAsOfDate, predictionDate));
+        return supportAtSnapshot * Math.pow(0.5, elapsedDays / localDecayHalfLifeDays);
+    }
+
+    /** Return a cell's trend after removing the matching global market trend. */
+    /** Memoize exact trends by cell/date so bulk inference does not rescan the snapshot. */
+    private double relativeTrend(
+            String cellId, Map<String, Object> record, LocalDate predictionDate) {
+        OptionalDouble localTrend = localTrendCache.computeIfAbsent(
+            new TrendKey(cellId, predictionDate),
+            ignored -> optionalTrend(windowTrend(record, predictionDate))
+        );
+        if (localTrend.isEmpty()) return 0.0;
+        OptionalDouble globalTrend = globalTrendCache.computeIfAbsent(
+            predictionDate,
+            ignored -> optionalTrend(windowTrend(globalLocalMarket, predictionDate))
+        );
+        return localTrend.getAsDouble()
+            - (globalTrend.isPresent() ? globalTrend.getAsDouble() : 0.0);
+    }
+
+    private static OptionalDouble optionalTrend(Double value) {
+        return value == null ? OptionalDouble.empty() : OptionalDouble.of(value);
+    }
+
+    private record TrendKey(String cellId, LocalDate predictionDate) {}
+
+    /**
+     * Compute the exponentially weighted mean price over the most recent
+     * window minus the preceding equally sized window. Snapshot sales are
+     * filtered by prediction date, which keeps demonstration lookups bounded
+     * even when they intentionally permit snapshot look-ahead.
+     */
+    private Double windowTrend(Map<String, Object> record, LocalDate predictionDate) {
+        if (record == null) return null;
+        Object rawTrendSales = record.get("trend_sales");
+        if (!(rawTrendSales instanceof List<?> trendSales)) return null;
+
+        LocalDate recentStart = predictionDate.minusDays(localTrendWindowDays);
+        LocalDate priorStart = recentStart.minusDays(localTrendWindowDays);
+        double recentWeight = 0.0;
+        double recentTotal = 0.0;
+        double priorWeight = 0.0;
+        double priorTotal = 0.0;
+        for (Object rawSale : trendSales) {
+            if (!(rawSale instanceof Map<?, ?> sale)) continue;
+            Object parsedDate = sale.get("_parsed_sale_date");
+            LocalDate transactionDate = parsedDate instanceof LocalDate date
+                ? date : parseOptionalDate(sale.get("sale_date"));
+            Object rawLogPrice = sale.get("log_price");
+            if (transactionDate == null || !(rawLogPrice instanceof Number logPrice)
+                    || !transactionDate.isBefore(predictionDate)) continue;
+            double ageDays = ChronoUnit.DAYS.between(transactionDate, predictionDate);
+            double weight = Math.pow(0.5, ageDays / localDecayHalfLifeDays);
+            if (!transactionDate.isBefore(recentStart)) {
+                recentWeight += weight;
+                recentTotal += weight * logPrice.doubleValue();
+            } else if (!transactionDate.isBefore(priorStart)) {
+                priorWeight += weight;
+                priorTotal += weight * logPrice.doubleValue();
+            }
+        }
+        if (recentWeight <= 0.0 || priorWeight <= 0.0) return null;
+        return recentTotal / recentWeight - priorTotal / priorWeight;
     }
 
     private double rollingTrend(
@@ -306,9 +426,14 @@ public class ModelArtifacts {
     private void prepareLocalDates(Map<String, Object> record) {
         LocalDate lastSaleDate = parseOptionalDate(record.get("last_sale_date"));
         if (lastSaleDate != null) record.put("_parsed_last_sale_date", lastSaleDate);
-        Object recentValue = record.get("recent_sales");
-        if (!(recentValue instanceof List<?> recentSales)) return;
-        for (Object rawSale : recentSales) {
+        prepareSaleDates(record.get("recent_sales"));
+        prepareSaleDates(record.get("trend_sales"));
+    }
+
+    @SuppressWarnings("unchecked")
+    private void prepareSaleDates(Object rawSales) {
+        if (!(rawSales instanceof List<?> sales)) return;
+        for (Object rawSale : sales) {
             if (!(rawSale instanceof Map<?, ?> sale)) continue;
             LocalDate saleDate = parseOptionalDate(sale.get("sale_date"));
             if (saleDate != null) {
@@ -327,8 +452,6 @@ public class ModelArtifacts {
     public LocalDate getLocalMarketAsOfDate() { return localMarketAsOfDate; }
     public LocalDate getLocalMarketLatestSaleDate() { return localMarketLatestSaleDate; }
     public int getUnknownCommunityIdx() { return unknownCommunityIdx; }
-    public int getUnknownYearIdx() { return unknownYearIdx; }
-    public int getUnknownWeekIdx() { return unknownWeekIdx; }
     public List<String> getPropertyFeatures() { return propertyFeatures; }
 
     /** Resolve H3 L9 index to community ID, or empty string if not in the map */

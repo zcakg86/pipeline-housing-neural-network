@@ -2,18 +2,20 @@ package com.houseprices.ingest;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class DataIngestionServiceTest {
 
     @Test
-    void createsUniqueIdsForDuplicatePreferredIds() {
-        String first = DataIngestionService.buildUniqueRecordId("sales", "2", 10, 47.6062, -122.3321);
-        String second = DataIngestionService.buildUniqueRecordId("sales", "2", 11, 47.6062, -122.3321);
+    void createsDeterministicUniqueIdsFromSaleDateAndCsvRow() {
+        String first = DataIngestionService.buildUniqueRecordId(LocalDate.of(2020, 6, 29), 87407);
+        String second = DataIngestionService.buildUniqueRecordId(LocalDate.of(2020, 6, 29), 87408);
 
-        assertEquals("sales_2_10", first);
-        assertEquals("sales_2_11", second);
+        assertEquals("2020062987407", first);
+        assertEquals("2020062987408", second);
         assertNotEquals(first, second);
     }
 }

@@ -88,14 +88,19 @@ class LocalMarketFeatureTests(unittest.TestCase):
         )
 
         self.assertEqual(snapshot["as_of_date"], "2025-07-01")
+        self.assertEqual(snapshot["feature_version"], 4)
+        # A single cell is identical to the global market, so its unshrunk
+        # local premium is zero even though its absolute sale prices changed.
         self.assertAlmostEqual(
-            snapshot["cells"]["a"]["price_trend"],
-            np.log(600_000.0) - np.mean(np.log([300_000.0, 600_000.0])),
+            snapshot["cells"]["a"]["raw_decayed_log_price_premium"], 0.0,
             places=5,
         )
         self.assertEqual(
-            snapshot["cells"]["a"]["recent_sales"],
-            [{"sale_date": "2024-12-01", "log_price": np.log(600_000.0)}],
+            snapshot["cells"]["a"]["trend_sales"],
+            [
+                {"sale_date": "2024-01-01", "log_price": np.log(300_000.0)},
+                {"sale_date": "2024-12-01", "log_price": np.log(600_000.0)},
+            ],
         )
 
     def test_snapshot_date_must_follow_all_included_sales(self):
@@ -166,10 +171,26 @@ class LocalMarketFeatureTests(unittest.TestCase):
 
         self.assertEqual(features[0, 0, 2], 0.0)
         self.assertEqual(features[1, 0, 2], 0.0)
-        self.assertAlmostEqual(features[2, 0, 2], np.log1p(2), places=5)
-        self.assertAlmostEqual(
-            features[2, 0, 0], np.mean(np.log([300_000.0, 330_000.0])), places=5
-        )
+        decayed_count = 2 * 0.5 ** (1 / 730.0)
+        self.assertAlmostEqual(features[2, 0, 2], np.log1p(decayed_count), places=5)
+        # The centre cell equals the global market in this fixture, so price
+        # level is represented as a zero local premium, not raw log price.
+        self.assertAlmostEqual(features[2, 0, 0], 0.0, places=5)
+
+    def test_price_level_is_shrunk_local_premium_not_raw_price(self):
+        frame = pd.DataFrame({
+            "sale_date": pd.to_datetime(["2024-01-01", "2024-01-01", "2024-01-02"]),
+            "h3_08": ["a", "b", "a"],
+            "h3_neighbor_cells": [["a", None, None, None, None, None, None]] * 3,
+            "log_price": np.log([300_000.0, 600_000.0, 360_000.0]),
+        })
+        features, _ = build_historical_local_features(frame)
+
+        log_a, log_b = np.log([300_000.0, 600_000.0])
+        support = 0.5 ** (1 / 730.0)
+        expected_premium = support / (support + 3.0) * (log_a - (log_a + log_b) / 2)
+        self.assertAlmostEqual(features[2, 0, 0], expected_premium, places=5)
+        self.assertAlmostEqual(features[2, 0, 2], np.log1p(support), places=5)
 
     def test_ring_is_center_first_and_deterministic(self):
         center = h3.latlng_to_cell(47.61, -122.33, 8)
@@ -194,7 +215,7 @@ class SnapshotRefreshTests(unittest.TestCase):
             lat, lng = 47.61, -122.33
             center = h3.latlng_to_cell(lat, lng, 8)
             pd.DataFrame({
-                "sale_date": ["2024-01-01"],
+                "sale_date": ["2023-01-01"],
                 "sale_price": [500_000],
                 "lat": [lat],
                 "lng": [lng],
@@ -229,10 +250,16 @@ class SnapshotRefreshTests(unittest.TestCase):
 
             self.assertEqual(first["rentcast_ledger_rows"], 1)
             self.assertEqual(second["rentcast_ledger_rows"], 1)
-            self.assertEqual(second["snapshot_sales"], 2)
+            self.assertEqual(second["historical_snapshot_sales"], 1)
+            self.assertEqual(second["rentcast_snapshot_sales"], 1)
             snapshot = json.loads((deploy_dir / "local_market_snapshot.json").read_text())
-            self.assertEqual(snapshot["latest_sale_date"], "2024-02-01")
-            self.assertEqual(snapshot["as_of_date"], "2024-02-02")
+            self.assertEqual(snapshot["latest_sale_date"], "2023-01-01")
+            self.assertEqual(snapshot["as_of_date"], "2023-01-02")
+            self.assertEqual(snapshot["refresh"]["snapshot_kind"], "historical_only")
+            rolling = json.loads((deploy_dir / "rentcast_local_market_snapshot.json").read_text())
+            self.assertEqual(rolling["latest_sale_date"], "2023-01-01")
+            self.assertEqual(rolling["as_of_date"], "2023-01-02")
+            self.assertEqual(rolling["refresh"]["snapshot_kind"], "rentcast_lagged_mixed_source")
             self.assertEqual(snapshot["refresh"]["input_cutoff_date"], "2024-03-01")
             self.assertEqual(len(pd.read_csv(ledger_path)), 1)
 
@@ -244,11 +271,10 @@ class LocalResidualModelTests(unittest.TestCase):
             embedding_dim=16,
             hidden_dim=32,
             property_dim=3,
-            continuous_time_dim=1,
+            continuous_time_dim=3,
             market_dim=2,
             community_embedding_length=4,
-            year_length=3,
-            week_length=54,
+            community_embedding_dim=8,
             use_neighborhood_pooling=True,
             local_feature_dim=5,
         )
@@ -273,13 +299,14 @@ class LocalResidualModelTests(unittest.TestCase):
     def test_model_exposes_gated_local_correction(self):
         torch.manual_seed(4)
         model = self._build_model()
+        self.assertEqual(model.community_embedding.embedding.embedding_dim, 8)
+        self.assertEqual(model.community_projection.in_features, 8)
+        self.assertEqual(model.community_projection.out_features, 16)
         batch = 3
         output, components = model(
             torch.zeros(batch, 7, dtype=torch.long),
-            torch.zeros(batch, dtype=torch.long),
-            torch.zeros(batch, dtype=torch.long),
             torch.zeros(batch, 3),
-            torch.zeros(batch, 1),
+            torch.zeros(batch, 3),
             torch.zeros(batch, 2),
             torch.randn(batch, 7, 5),
             return_components=True,
@@ -297,10 +324,8 @@ class LocalResidualModelTests(unittest.TestCase):
         batch = 3
         inputs = (
             torch.zeros(batch, 7, dtype=torch.long),
-            torch.zeros(batch, dtype=torch.long),
-            torch.zeros(batch, dtype=torch.long),
             torch.zeros(batch, 3),
-            torch.zeros(batch, 1),
+            torch.zeros(batch, 3),
             torch.zeros(batch, 2),
             torch.randn(batch, 7, 5),
         )
@@ -310,8 +335,8 @@ class LocalResidualModelTests(unittest.TestCase):
         self.assertIsNone(model.last_cls_attention)
 
         model(*inputs, need_weights=True)
-        self.assertEqual(tuple(model.last_attention_weights.shape), (batch, 4, 7, 7))
-        self.assertEqual(tuple(model.last_cls_attention.shape), (batch, 4, 6))
+        self.assertEqual(tuple(model.last_attention_weights.shape), (batch, 4, 5, 5))
+        self.assertEqual(tuple(model.last_cls_attention.shape), (batch, 4, 4))
 
     def test_local_gate_starts_conservatively(self):
         model = self._build_model()
@@ -327,7 +352,7 @@ class LocalResidualModelTests(unittest.TestCase):
                 self.bias = torch.nn.Parameter(torch.tensor(0.0))
 
             def forward(
-                self, community, year, week, property_feat, time_feat,
+                self, community, property_feat, time_feat,
                 market_feat, local_feat=None, return_uncertainty=False,
                 return_components=False,
             ):
@@ -361,10 +386,8 @@ class LocalResidualModelTests(unittest.TestCase):
         predictor.train_step = fake_train_step
         batch = (
             torch.zeros(1, 7, dtype=torch.long),
-            torch.zeros(1, dtype=torch.long),
-            torch.zeros(1, dtype=torch.long),
             torch.zeros(1, 3),
-            torch.zeros(1, 1),
+            torch.zeros(1, 3),
             torch.zeros(1, 2),
             torch.zeros(1),
         )
@@ -382,11 +405,10 @@ class LocalResidualModelTests(unittest.TestCase):
             embedding_dim=8,
             hidden_dim=16,
             property_dim=3,
-            continuous_time_dim=1,
+            continuous_time_dim=3,
             market_dim=2,
             community_embedding_length=3,
-            year_length=2,
-            week_length=4,
+            community_embedding_dim=4,
             learning_rate=1e-3,
             epochs=2,
             len_train_loader=2,
@@ -397,10 +419,8 @@ class LocalResidualModelTests(unittest.TestCase):
         rows = 12
         tensors = TensorDataset(
             torch.zeros(rows, 7, dtype=torch.long),
-            torch.zeros(rows, dtype=torch.long),
-            torch.zeros(rows, dtype=torch.long),
             torch.randn(rows, 3),
-            torch.randn(rows, 1),
+            torch.randn(rows, 3),
             torch.randn(rows, 2),
             torch.randn(rows),
         )
@@ -436,11 +456,10 @@ class LocalResidualModelTests(unittest.TestCase):
                 embedding_dim=8,
                 hidden_dim=16,
                 property_dim=3,
-                continuous_time_dim=1,
+                continuous_time_dim=3,
                 market_dim=2,
                 community_embedding_length=3,
-                year_length=2,
-                week_length=4,
+                community_embedding_dim=4,
                 learning_rate=1e-3,
                 epochs=1,
                 len_train_loader=1,
@@ -450,16 +469,15 @@ class LocalResidualModelTests(unittest.TestCase):
             )
             manager.results = {}
             manager.embedding_dim = 8
+            manager.community_embedding_dim = 4
             manager.hidden_dim = 16
             manager.property_dim = 3
-            manager.continuous_time_dim = 1
+            manager.continuous_time_dim = 3
             manager.market_dim = 2
             manager.n_communities = 3
             manager.local_feature_dim = 0
             manager.dropout_rate = 0.1
             manager.epochs = 1
-            manager.year_length = 2
-            manager.week_length = 4
             manager.learning_rate = 1e-3
             manager.pooling_strategy = "mean"  # intentionally stale metadata
             manager.use_neighborhood_pooling = True
@@ -470,8 +488,6 @@ class LocalResidualModelTests(unittest.TestCase):
             manager.lr_plateau_patience = 3
             manager.min_learning_rate = 1e-6
             manager.reference_date = None
-            manager.year_vocab = {2024: 0, "unknown": 1}
-            manager.week_vocab = {1: 0, 2: 1, 3: 2, "unknown": 3}
             manager.local_market_snapshot = None
             manager.neighbor_cells_map = None
             manager.train_indices = np.array([0, 1])
@@ -487,8 +503,6 @@ class LocalResidualModelTests(unittest.TestCase):
             np.testing.assert_array_equal(manager.train_indices, [0, 1])
             np.testing.assert_array_equal(manager.val_indices, [2, 3])
             self.assertTrue(manager.results["evaluation_checkpoint_reloaded"])
-            self.assertEqual(manager.year_vocab[2024], 0)
-            self.assertEqual(manager.week_vocab[1], 0)
 
     def test_community_metrics_use_validation_rows_and_shrink_small_groups(self):
         with tempfile.TemporaryDirectory() as directory:

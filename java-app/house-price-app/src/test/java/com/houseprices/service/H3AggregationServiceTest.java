@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,7 +35,13 @@ class H3AggregationServiceTest {
         assertEquals(2, result.getFirst().numSales());
         assertEquals(600_000, result.getFirst().avgSalePrice(), 0.01);
         assertEquals(620_000, result.getFirst().avgNeuralPredictedPrice(), 0.01);
+        assertEquals(4_000, result.getFirst().avgSqftLot(), 0.01);
         assertEquals(7, result.getFirst().boundary().size());
+        Map<String, Object> geoJson = service.toGeoJson(result, "sqft_lot", "neural");
+        List<?> features = (List<?>) geoJson.get("features");
+        Map<?, ?> feature = (Map<?, ?>) features.getFirst();
+        Map<?, ?> properties = (Map<?, ?>) feature.get("properties");
+        assertEquals(4_000, ((Number) properties.get("displayValue")).doubleValue(), 0.01);
 
         assertThrows(IllegalArgumentException.class, () -> PropertyRequestFilter.parse(
             "all", "bad-date", "", -500, 500, null, null, null, null
@@ -46,8 +53,9 @@ class H3AggregationServiceTest {
             id, "address", "sales", 47.6, -122.3, h3, "1",
             2_000, 4_000, 3, 2, "Single Family", LocalDate.of(2026, 7, 1),
             price, 0, null, prediction, 100 * (prediction - price) / price,
+            prediction, 100 * (prediction - price) / price,
             prediction, 100 * (prediction - price) / price, 20_000, 15,
-            new float[]{.1f, .2f, .1f, .2f, .2f, .2f}
+            new float[]{.1f, .3f, .3f, .3f}
         );
     }
 }

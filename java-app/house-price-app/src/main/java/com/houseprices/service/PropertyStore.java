@@ -72,6 +72,8 @@ public class PropertyStore {
             && Double.compare(left.pctError(), right.pctError()) == 0
             && Double.compare(left.lightgbmPredictedPrice(), right.lightgbmPredictedPrice()) == 0
             && Double.compare(left.lightgbmPctError(), right.lightgbmPctError()) == 0
+            && Double.compare(left.gnnPredictedPrice(), right.gnnPredictedPrice()) == 0
+            && Double.compare(left.gnnPctError(), right.gnnPctError()) == 0
             && Double.compare(left.predictionStdPrice(), right.predictionStdPrice()) == 0
             && Double.compare(left.predictionCvPct(), right.predictionCvPct()) == 0
             && Arrays.equals(left.clsAttention(), right.clsAttention());
