@@ -19,6 +19,10 @@ from .gnn_data import MonthlyGraphData
 from .gnn_explain import FEATURE_SHAPLEY_COALITIONS, explain_gnn_prediction
 from .gnn_network import H3GraphPriceModel
 from .reproducibility import seed_everything
+from .run_manifest import build_run_manifest, write_run_manifest
+
+
+GNN_ARCHITECTURE_VERSION = 2
 
 
 @dataclass(frozen=True)
@@ -52,6 +56,8 @@ class GNNBaselineTrainer:
         dropout_rate: float = 0.2,
         learning_rate: float = 3e-4,
         random_seed: int = 42,
+        graph_layer_norm: bool = False,
+        graph_residual: bool = False,
         directory_prefix: str = "outputs/gnn",
     ):
         self.graph_data = graph_data
@@ -60,6 +66,9 @@ class GNNBaselineTrainer:
         self.dropout_rate = dropout_rate
         self.learning_rate = learning_rate
         self.random_seed = random_seed
+        self.graph_layer_norm = bool(graph_layer_norm)
+        self.graph_residual = bool(graph_residual)
+        self.architecture_version = GNN_ARCHITECTURE_VERSION
         self.device = torch.device(
             "mps" if torch.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu"
         )
@@ -196,6 +205,7 @@ class GNNBaselineTrainer:
             raise ValueError("epochs and patience must be positive")
         seed_everything(self.random_seed)
         self.split_chronologically(train_ratio)
+        self.train_ratio = train_ratio
         self._fit_scalers()
         self._scaled_tensors()
         self.model = H3GraphPriceModel(
@@ -206,6 +216,8 @@ class GNNBaselineTrainer:
             graph_hidden_dim=self.graph_hidden_dim,
             head_hidden_dim=self.head_hidden_dim,
             dropout_rate=self.dropout_rate,
+            graph_layer_norm=self.graph_layer_norm,
+            graph_residual=self.graph_residual,
         ).to(self.device)
         self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=self.learning_rate)
         self.scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
@@ -326,7 +338,8 @@ class GNNBaselineTrainer:
         """Load a saved GNN plus its monthly graph state for on-demand Shapley use."""
         directory = Path(directory)
         checkpoint = torch.load(directory / "gnn_model.pth", map_location="cpu")
-        if checkpoint.get("architecture_version") != 1:
+        architecture_version = checkpoint.get("architecture_version")
+        if architecture_version not in {1, 2}:
             raise ValueError("Unsupported GNN checkpoint architecture")
         graph_path = directory / "monthly_graph_state.npz"
         sales_path = directory / "sales_with_predictions.csv"
@@ -351,7 +364,10 @@ class GNNBaselineTrainer:
             graph_hidden_dim=int(checkpoint["graph_hidden_dim"]),
             head_hidden_dim=int(checkpoint["head_hidden_dim"]),
             dropout_rate=float(checkpoint["dropout_rate"]),
+            graph_layer_norm=bool(checkpoint.get("graph_layer_norm", False)),
+            graph_residual=bool(checkpoint.get("graph_residual", False)),
         )
+        trainer.architecture_version = architecture_version
         trainer.directory = directory
         trainer.results = checkpoint.get("results", {})
         trainer.train_indices = np.asarray(metadata["train_indices"], dtype=np.int64)
@@ -368,6 +384,8 @@ class GNNBaselineTrainer:
             graph_hidden_dim=trainer.graph_hidden_dim,
             head_hidden_dim=trainer.head_hidden_dim,
             dropout_rate=trainer.dropout_rate,
+            graph_layer_norm=trainer.graph_layer_norm,
+            graph_residual=trainer.graph_residual,
         ).to(trainer.device)
         trainer.model.load_state_dict(checkpoint["model_state_dict"])
         trainer.model.eval()
@@ -378,6 +396,7 @@ class GNNBaselineTrainer:
         if self.model is None or self.train_indices is None:
             raise RuntimeError("Train the GNN before saving it")
         self.directory.mkdir(parents=True, exist_ok=True)
+        self.architecture_version = GNN_ARCHITECTURE_VERSION
         artifacts = GNNRunArtifacts(
             train_indices=self.train_indices.tolist(),
             validation_indices=self.validation_indices.tolist(),
@@ -390,11 +409,13 @@ class GNNBaselineTrainer:
         )
         torch.save(
             {
-                "architecture_version": 1,
+                "architecture_version": GNN_ARCHITECTURE_VERSION,
                 "model_state_dict": self.model.state_dict(),
                 "graph_hidden_dim": self.graph_hidden_dim,
                 "head_hidden_dim": self.head_hidden_dim,
                 "dropout_rate": self.dropout_rate,
+                "graph_layer_norm": self.graph_layer_norm,
+                "graph_residual": self.graph_residual,
                 "artifacts": asdict(artifacts),
                 "results": self.results,
             },
@@ -413,4 +434,27 @@ class GNNBaselineTrainer:
             self.graph_data.dataframe.to_csv(
                 self.directory / "sales_with_predictions.csv", index=False
             )
+        training_config = self.results.get("training_config", {
+            "train_ratio": getattr(self, "train_ratio", None),
+            "random_seed": self.random_seed,
+            "graph_hidden_dim": self.graph_hidden_dim,
+            "head_hidden_dim": self.head_hidden_dim,
+            "dropout_rate": self.dropout_rate,
+            "learning_rate": self.learning_rate,
+            "graph_layer_norm": self.graph_layer_norm,
+            "graph_residual": self.graph_residual,
+        })
+        write_run_manifest(self.directory, build_run_manifest(
+            run_id=self.timestamp,
+            model_family="gnn",
+            architecture_version=self.architecture_version,
+            architecture={
+                "graph_layer_norm": self.graph_layer_norm,
+                "graph_residual": self.graph_residual,
+            },
+            training_config=training_config,
+            metrics=self.results.get("metrics", {}),
+            train_indices=self.train_indices,
+            validation_indices=self.validation_indices,
+        ))
         return self.directory

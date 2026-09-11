@@ -37,6 +37,25 @@ def parse_args(argv=None):
         default=DEFAULT_CONFIG.random_seed,
         help="Python/NumPy/PyTorch/DataLoader seed (default: 42)",
     )
+    parser.add_argument(
+        "--attention-layer-norm",
+        action="store_true",
+        default=DEFAULT_CONFIG.attention_layer_norm,
+        help="Apply LayerNorm to the attention output tokens",
+    )
+    parser.add_argument(
+        "--no-local-correction",
+        action="store_false",
+        dest="use_local_correction",
+        default=DEFAULT_CONFIG.use_local_correction,
+        help="Disable the gated H3 local-market correction branch",
+    )
+    parser.add_argument(
+        "--attention-residual",
+        action="store_true",
+        default=DEFAULT_CONFIG.attention_residual,
+        help="Add the input-token residual to the attention output",
+    )
     return parser.parse_args(argv)
 
 
@@ -72,6 +91,7 @@ def main(config=None):
     # Initialize model manager
     print("\n4. Initializing model manager...")
     manager = ModelManager()
+    manager.configure_local_correction(config.use_local_correction)
     manager.processor(data, scale_mode="fit")
 
     print(f"   Device: {manager.device}")
@@ -95,6 +115,9 @@ def main(config=None):
     print(f"   - Hidden dim: {config.hidden_dim}")
     print("   - Continuous time: time_trend + annual_sin + annual_cos (dim=3)")
     print(f"   - Dropout: {config.dropout_rate}")
+    print(f"   - Attention LayerNorm: {config.attention_layer_norm}")
+    print(f"   - Attention residual: {config.attention_residual}")
+    print(f"   - Local correction: {config.use_local_correction}")
     print(f"   - Learning rate: {config.learning_rate}")
     print(f"   - Mean stage: up to {config.epochs} MSE epochs "
           f"(patience={config.patience}; best epoch restored)")
@@ -205,6 +228,10 @@ def main(config=None):
         'embedding_dim': manager.embedding_dim,
         'community_embedding_dim': manager.community_embedding_dim,
         'hidden_dim': manager.hidden_dim,
+        'architecture_version': manager.architecture_version,
+        'attention_layer_norm': manager.attention_layer_norm,
+        'attention_residual': manager.attention_residual,
+        'use_local_correction': manager.use_local_correction,
         'epochs_trained': len(manager.results['train_losses']),
         'best_epoch': manager.results['best_epoch'],
         'best_uncertainty_epoch': manager.results.get('best_uncertainty_epoch'),
@@ -236,4 +263,10 @@ def main(config=None):
 
 if __name__ == "__main__":
     arguments = parse_args()
-    manager = main(replace(DEFAULT_CONFIG, random_seed=arguments.seed))
+    manager = main(replace(
+        DEFAULT_CONFIG,
+        random_seed=arguments.seed,
+        attention_layer_norm=arguments.attention_layer_norm,
+        attention_residual=arguments.attention_residual,
+        use_local_correction=arguments.use_local_correction,
+    ))

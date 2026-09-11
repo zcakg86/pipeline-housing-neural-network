@@ -20,12 +20,16 @@ class EnhancedEmbeddingModel(nn.Module):
                  estimate_uncertainty=False,   # kept for API compat, no longer gates uncertainty_layer
                  use_neighborhood_pooling=True,
                  pooling_strategy='mean',
-                 local_feature_dim=0):
+                 local_feature_dim=0,
+                 attention_layer_norm=False,
+                 attention_residual=False):
         super().__init__()
         
         self.use_neighborhood_pooling = use_neighborhood_pooling
         self.local_feature_dim = int(local_feature_dim)
         self.community_embedding_dim = int(community_embedding_dim)
+        self.use_attention_layer_norm = bool(attention_layer_norm)
+        self.use_attention_residual = bool(attention_residual)
         
         # --- Embedding Layers (Categorical) ---
         if use_neighborhood_pooling:
@@ -60,6 +64,8 @@ class EnhancedEmbeddingModel(nn.Module):
             dropout=dropout_rate,
             batch_first=True
         )
+        if self.use_attention_layer_norm:
+            self.attention_output_norm = nn.LayerNorm(embedding_dim)
         
         # --- Regressor Head ---
         self.dropout = nn.Dropout(dropout_rate)
@@ -159,6 +165,10 @@ class EnhancedEmbeddingModel(nn.Module):
             need_weights=need_weights,
             average_attn_weights=False,
         )
+        if self.use_attention_residual:
+            attention_output = attention_output + seq
+        if self.use_attention_layer_norm:
+            attention_output = self.attention_output_norm(attention_output)
         
         cls_out = attention_output[:, 0, :]
         

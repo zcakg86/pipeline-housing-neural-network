@@ -15,6 +15,8 @@ class GNNTrainingConfig:
     graph_hidden_dim: int = 32
     head_hidden_dim: int = 128
     dropout_rate: float = 0.2
+    graph_layer_norm: bool = False
+    graph_residual: bool = False
     epochs: int = 30
     learning_rate: float = 3e-4
     patience: int = 8

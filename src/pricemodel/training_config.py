@@ -25,13 +25,16 @@ class TrainingConfig:
     dropout_rate: float = 0.2
     estimate_uncertainty: bool = True
     pooling_strategy: str = "center_weighted"
+    use_local_correction: bool = True
+    attention_layer_norm: bool = False
+    attention_residual: bool = False
     # Mean-stage early stopping is deliberately longer than the scheduler
     # patience, leaving several epochs to benefit from a reduced learning rate.
     patience: int = 8
     lr_plateau_factor: float = 0.5
     lr_plateau_patience: int = 2
     min_learning_rate: float = 1e-6
-    global_aux_weight: float = 0.5
+    global_aux_weight: float = 0.2
     residual_penalty: float = 1e-2
     uncertainty_calibration_epochs: int = 10
     uncertainty_patience: int = 3
@@ -77,6 +80,9 @@ class TrainingConfig:
             "dropout_rate": self.dropout_rate,
             "estimate_uncertainty": self.estimate_uncertainty,
             "pooling_strategy": self.pooling_strategy,
+            "use_local_correction": self.use_local_correction,
+            "attention_layer_norm": self.attention_layer_norm,
+            "attention_residual": self.attention_residual,
             "patience": self.patience,
             "lr_plateau_factor": self.lr_plateau_factor,
             "lr_plateau_patience": self.lr_plateau_patience,

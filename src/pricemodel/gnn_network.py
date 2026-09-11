@@ -38,10 +38,17 @@ class H3GraphPriceModel(nn.Module):
         graph_hidden_dim: int = 32,
         head_hidden_dim: int = 128,
         dropout_rate: float = 0.2,
+        graph_layer_norm: bool = False,
+        graph_residual: bool = False,
     ):
         super().__init__()
         self.graph_layer_one = GraphSAGEConv(node_feature_dim, graph_hidden_dim)
         self.graph_layer_two = GraphSAGEConv(graph_hidden_dim, graph_hidden_dim)
+        self.use_graph_layer_norm = bool(graph_layer_norm)
+        self.use_graph_residual = bool(graph_residual)
+        if self.use_graph_layer_norm:
+            self.graph_norm_one = nn.LayerNorm(graph_hidden_dim)
+            self.graph_norm_two = nn.LayerNorm(graph_hidden_dim)
         sale_feature_dim = property_dim + time_dim + market_dim
         self.price_head = nn.Sequential(
             nn.Linear(graph_hidden_dim + sale_feature_dim, head_hidden_dim),
@@ -54,8 +61,17 @@ class H3GraphPriceModel(nn.Module):
 
     def encode_nodes(self, node_features: torch.Tensor, edge_index: torch.Tensor) -> torch.Tensor:
         """Return embeddings with two rounds of one-ring message passing."""
-        encoded = torch.relu(self.graph_layer_one(node_features, edge_index))
-        return torch.relu(self.graph_layer_two(encoded, edge_index))
+        encoded = self.graph_layer_one(node_features, edge_index)
+        if self.use_graph_layer_norm:
+            encoded = self.graph_norm_one(encoded)
+        encoded = torch.relu(encoded)
+
+        updated = self.graph_layer_two(encoded, edge_index)
+        if self.use_graph_residual:
+            updated = updated + encoded
+        if self.use_graph_layer_norm:
+            updated = self.graph_norm_two(updated)
+        return torch.relu(updated)
 
     def forward(
         self,

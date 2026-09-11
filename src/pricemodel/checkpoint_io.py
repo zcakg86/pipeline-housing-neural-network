@@ -15,6 +15,10 @@ import pandas as pd
 import torch
 
 from .trainer import PriceTrainer
+from .run_manifest import build_run_manifest, write_run_manifest
+
+
+ATTENTION_ARCHITECTURE_VERSION = 5
 
 
 def _atomic_torch_save(value, destination):
@@ -47,6 +51,25 @@ def save_results(manager):
     """Persist mutable metrics without rewriting the verified model weights."""
     Path(manager.directory).mkdir(parents=True, exist_ok=True)
     _atomic_json_dump(manager.results, Path(manager.directory) / "results.json")
+    training_config = manager.results.get("training_config", {})
+    write_run_manifest(manager.directory, build_run_manifest(
+        run_id=Path(manager.directory).name,
+        model_family="attention",
+        architecture_version=getattr(
+            manager, "architecture_version", ATTENTION_ARCHITECTURE_VERSION
+        ),
+        architecture={
+            "attention_layer_norm": bool(getattr(manager, "attention_layer_norm", False)),
+            "attention_residual": bool(getattr(manager, "attention_residual", False)),
+            "use_local_correction": bool(
+                getattr(manager, "use_local_correction", manager.local_feature_dim > 0)
+            ),
+        },
+        training_config=training_config,
+        metrics=manager.results.get("metrics", {}),
+        train_indices=getattr(manager, "train_indices", None),
+        validation_indices=getattr(manager, "val_indices", None),
+    ))
     return manager
 
 
@@ -106,6 +129,7 @@ def save_model(manager):
     os.makedirs(manager.directory, exist_ok=True)
 
     synchronize_device(manager)
+    manager.architecture_version = ATTENTION_ARCHITECTURE_VERSION
 
     if manager.use_neighborhood_pooling:
         manager.pooling_strategy = (
@@ -120,7 +144,7 @@ def save_model(manager):
         raise ValueError("Cannot save a model with an ambiguous property feature contract")
 
     checkpoint = {
-        'architecture_version': 4,
+        'architecture_version': ATTENTION_ARCHITECTURE_VERSION,
         'model_state_dict': manager.predictor.model.state_dict(),
         'optimizer_state_dict': manager.predictor.optimizer.state_dict(),
         'scheduler_state_dict': manager.predictor.scheduler.state_dict(),
@@ -140,12 +164,17 @@ def save_model(manager):
         ),
         'community_embedding_size': manager.n_communities + 1,
         'local_feature_dim': manager.local_feature_dim,
+        'use_local_correction': bool(
+            getattr(manager, 'use_local_correction', manager.local_feature_dim > 0)
+        ),
         'local_feature_names': manager._LOCAL_FEATURES,
         'dropout_rate': manager.dropout_rate,
         'epochs': manager.epochs,
         'learning_rate': manager.learning_rate,
         'pooling_strategy': manager.pooling_strategy,
         'use_neighborhood_pooling': manager.use_neighborhood_pooling,
+        'attention_layer_norm': bool(getattr(manager, 'attention_layer_norm', False)),
+        'attention_residual': bool(getattr(manager, 'attention_residual', False)),
         'estimate_uncertainty': manager.estimate_uncertainty,
         'global_aux_weight': manager.global_aux_weight,
         'residual_penalty': manager.residual_penalty,
@@ -190,12 +219,14 @@ def load_model(manager, directory):
     
     # Load checkpoint
     ckpt = torch.load(directory / "model.pth", map_location=manager.device)
-    if ckpt.get('architecture_version') != 4:
+    architecture_version = ckpt.get('architecture_version')
+    if architecture_version not in {4, ATTENTION_ARCHITECTURE_VERSION}:
         raise ValueError(
             "This checkpoint predates the current compact-community and "
             "water-proximity-only architecture. "
             "Retrain with the current feature and model contract."
         )
+    manager.architecture_version = architecture_version
     
     # Restore architecture params
     manager.embedding_dim = ckpt['embedding_dim']
@@ -228,7 +259,16 @@ def load_model(manager, directory):
             f"'{manager.pooling_strategy}'"
         )
     manager.use_neighborhood_pooling = ckpt.get('use_neighborhood_pooling', False)
+    manager.attention_layer_norm = bool(ckpt.get('attention_layer_norm', False))
+    manager.attention_residual = bool(ckpt.get('attention_residual', False))
     manager.local_feature_dim = ckpt.get('local_feature_dim', 0)
+    manager.use_local_correction = bool(
+        ckpt.get('use_local_correction', manager.local_feature_dim > 0)
+    )
+    if manager.use_local_correction != (manager.local_feature_dim > 0):
+        raise ValueError(
+            "Checkpoint use_local_correction conflicts with local_feature_dim"
+        )
     manager.dropout_rate = ckpt.get('dropout_rate', 0.1)
     manager.epochs = ckpt.get('epochs', 1)
     manager.estimate_uncertainty = ckpt.get('estimate_uncertainty', False)
@@ -273,6 +313,8 @@ def load_model(manager, directory):
         local_feature_dim=manager.local_feature_dim,
         global_aux_weight=manager.global_aux_weight,
         residual_penalty=manager.residual_penalty,
+        attention_layer_norm=manager.attention_layer_norm,
+        attention_residual=manager.attention_residual,
         lr_plateau_factor=manager.lr_plateau_factor,
         lr_plateau_patience=manager.lr_plateau_patience,
         min_learning_rate=manager.min_learning_rate,

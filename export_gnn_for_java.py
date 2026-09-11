@@ -113,7 +113,10 @@ def export_gnn(args):
     (bundle / "gnn_scalers.json").write_text(json.dumps(scalers, indent=2) + "\n")
     metadata = {
         "model_version": model_dir.name,
-        "architecture": "monthly_h3_graphsage_v1",
+        "architecture": f"monthly_h3_graphsage_v{trainer.architecture_version}",
+        "architecture_version": trainer.architecture_version,
+        "graph_layer_norm": trainer.graph_layer_norm,
+        "graph_residual": trainer.graph_residual,
         "graph_hidden_dim": trainer.graph_hidden_dim,
         "head_hidden_dim": trainer.head_hidden_dim,
         "property_features": ["sqft", "sqft_lot", "beds", "water_proximity"],

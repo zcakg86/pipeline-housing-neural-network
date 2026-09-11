@@ -44,6 +44,7 @@ class ModelManager:
         self.predictor = None
         self.reference_date = None
         self.local_feature_dim = len(self._LOCAL_FEATURES)
+        self.use_local_correction = True
         self.local_market_snapshot = None
         self.neighbor_cells_map = None
         self.train_community_loss_weights = None
@@ -62,6 +63,9 @@ class ModelManager:
         self.epochs = None
         self.pooling_strategy = 'mean'
         self.use_neighborhood_pooling = False
+        self.attention_layer_norm = False
+        self.attention_residual = False
+        self.architecture_version = 5
         self.global_aux_weight = 0.5
         self.residual_penalty = 1e-2
         self.lr_plateau_factor = 0.5
@@ -80,6 +84,16 @@ class ModelManager:
     _MARKET_FEATURES   = list(MARKET_FEATURES)
     _LOCAL_FEATURES    = list(LOCAL_FEATURES)
     _TARGET_FEATURE    = 'log_price'
+
+    def configure_local_correction(self, enabled: bool):
+        """Include or remove the gated local-market correction branch."""
+        if self.predictor is not None:
+            raise RuntimeError(
+                "Configure local correction before constructing or loading a predictor"
+            )
+        self.use_local_correction = bool(enabled)
+        self.local_feature_dim = len(self._LOCAL_FEATURES) if enabled else 0
+        return self
 
     def processor(self, data, scale_mode = ''):
         """
@@ -316,7 +330,7 @@ class ModelManager:
 
         self.tensor_length = total_length
 
-        if self.local_feature_dim > 0:
+        if self.use_neighborhood_pooling:
             def _dataset_level_community_weights(indices):
                 communities = self._community_tensor[indices]
                 centers = communities[:, 0] if communities.ndim == 2 else communities
@@ -361,7 +375,9 @@ class ModelManager:
                    lr_plateau_factor=0.5, lr_plateau_patience=3,
                    min_learning_rate=1e-6,
                    uncertainty_calibration_epochs=10,
-                   uncertainty_patience=3, random_seed=42):
+                   uncertainty_patience=3, random_seed=42,
+                   attention_layer_norm=False, attention_residual=False,
+                   use_local_correction=True):
         """
         Train the enhanced model with H3 neighborhood pooling
         
@@ -421,6 +437,15 @@ class ModelManager:
         self.uncertainty_calibration_epochs = uncertainty_calibration_epochs
         self.uncertainty_patience = uncertainty_patience
         self.random_seed = random_seed
+        self.attention_layer_norm = bool(attention_layer_norm)
+        self.attention_residual = bool(attention_residual)
+        requested_local_correction = bool(use_local_correction)
+        if requested_local_correction != (self.local_feature_dim > 0):
+            raise ValueError(
+                "use_local_correction does not match the preprocessed tensors; "
+                "call configure_local_correction() before processor()."
+            )
+        self.use_local_correction = requested_local_correction
         # Initialize or update predictor. The manager owns the flag so the
         # predictor always receives the same value that processor() derived.
         if self.predictor is None:
@@ -440,6 +465,8 @@ class ModelManager:
                 local_feature_dim=self.local_feature_dim,
                 global_aux_weight=global_aux_weight,
                 residual_penalty=residual_penalty,
+                attention_layer_norm=self.attention_layer_norm,
+                attention_residual=self.attention_residual,
                 lr_plateau_factor=lr_plateau_factor,
                 lr_plateau_patience=lr_plateau_patience,
                 min_learning_rate=min_learning_rate,
@@ -447,6 +474,22 @@ class ModelManager:
                 val_community_loss_weights=self.val_community_loss_weights,
             )
         else:
+            model = self.predictor.model
+            existing_layer_norm = bool(
+                getattr(model, 'use_attention_layer_norm', False)
+            )
+            existing_residual = bool(
+                getattr(model, 'use_attention_residual', False)
+            )
+            if (
+                existing_layer_norm != self.attention_layer_norm
+                or existing_residual != self.attention_residual
+            ):
+                raise ValueError(
+                    "Attention normalization/residual settings change the model "
+                    "architecture; create a new model instead of continuing an "
+                    "existing predictor."
+                )
             if self.use_neighborhood_pooling:
                 embedding = self.predictor.model.community_embedding
                 current_strategy = embedding.pooling_strategy

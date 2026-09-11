@@ -79,9 +79,13 @@ def main(argv=None):
         patience=args.patience,
         estimate_uncertainty=estimate_uncertainty,
         pooling_strategy=manager.pooling_strategy,
+        use_local_correction=manager.use_local_correction,
+        attention_layer_norm=manager.attention_layer_norm,
+        attention_residual=manager.attention_residual,
         uncertainty_calibration_epochs=10 if estimate_uncertainty else 0,
         random_seed=args.seed,
     )
+    manager.results["training_config"] = config.as_dict()
     manager.train_model(**config.train_kwargs(len(manager._PROPERTY_FEATURES)))
     manager.save_and_reload_for_evaluation()
     print(f"Retrained checkpoint saved and verified at: {manager.directory}")

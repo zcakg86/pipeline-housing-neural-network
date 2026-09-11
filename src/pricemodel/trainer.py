@@ -29,6 +29,7 @@ class PriceTrainer:
                  use_neighborhood_pooling=False, pooling_strategy='mean',
                  local_feature_dim=0, global_aux_weight=0.5,
                  residual_penalty=1e-2, balance_community_loss=True,
+                 attention_layer_norm=False, attention_residual=False,
                  lr_plateau_factor=0.5, lr_plateau_patience=3,
                  min_learning_rate=1e-6,
                  train_community_loss_weights=None,
@@ -59,6 +60,8 @@ class PriceTrainer:
             use_neighborhood_pooling=use_neighborhood_pooling,
             pooling_strategy=pooling_strategy,
             local_feature_dim=self.local_feature_dim,
+            attention_layer_norm=attention_layer_norm,
+            attention_residual=attention_residual,
         ).to(device)
 
         self.optimizer = torch.optim.AdamW(self.model.parameters(), lr=learning_rate)
@@ -102,7 +105,7 @@ class PriceTrainer:
 
     def _reduce_loss(self, per_sample_loss, community, split='train'):
         """Apply precomputed dataset-level equal-community weighting."""
-        if not (self.local_feature_dim > 0 and self.balance_community_loss):
+        if not self.balance_community_loss:
             return per_sample_loss.mean()
         center_community = community[:, 0] if community.ndim == 2 else community
         weights_table = (

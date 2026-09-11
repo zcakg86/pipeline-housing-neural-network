@@ -134,7 +134,11 @@ def export_neural(args):
     manager = ModelManager().load_model(model_dir)
     if list(manager._PROPERTY_FEATURES) != FEATURE_CONTRACT["groups"]["property"]:
         raise ValueError("Neural property feature order differs from feature_contract.json")
-    if list(manager._LOCAL_FEATURES[:manager.local_feature_dim]) != FEATURE_CONTRACT["groups"]["local_market"]:
+    if (
+        manager.use_local_correction
+        and list(manager._LOCAL_FEATURES[:manager.local_feature_dim])
+        != FEATURE_CONTRACT["groups"]["local_market"]
+    ):
         raise ValueError("Neural local feature order differs from feature_contract.json")
 
     maximum_difference = _export_onnx(manager, bundle_dir / "model.onnx")
@@ -163,9 +167,13 @@ def export_neural(args):
         "continuous_time_dim": manager.continuous_time_dim,
         "market_dim": manager.market_dim,
         "local_feature_dim": manager.local_feature_dim,
+        "use_local_correction": manager.use_local_correction,
         "n_communities": manager.n_communities,
         "use_neighborhood_pooling": manager.use_neighborhood_pooling,
         "pooling_strategy": manager.pooling_strategy,
+        "architecture_version": manager.architecture_version,
+        "attention_layer_norm": manager.attention_layer_norm,
+        "attention_residual": manager.attention_residual,
         "reference_date": checkpoint.get("reference_date"),
         "property_features": list(manager._PROPERTY_FEATURES),
         "time_features": list(manager._TIME_FEATURES),

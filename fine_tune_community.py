@@ -144,6 +144,9 @@ def main():
         learning_rate=args.learning_rate,
         dropout_rate=manager.dropout_rate,
         pooling_strategy=manager.pooling_strategy,
+        use_local_correction=manager.use_local_correction,
+        attention_layer_norm=manager.attention_layer_norm,
+        attention_residual=manager.attention_residual,
         patience=args.patience
     )
 

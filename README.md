@@ -55,6 +55,23 @@ not consume the seven-cell local-market tensor attached to individual sales.
 make train-gnn
 ```
 
+LayerNorm and residual connections are independent ablation switches. Defaults
+preserve the prior architectures; enable either or both for a run:
+
+```bash
+python3 main_train.py --attention-layer-norm --attention-residual
+python3 main_train_gnn.py --graph-layer-norm --graph-residual
+```
+
+Use `python3 main_train.py --no-local-correction` to ablate the gated local
+market branch. This sets its feature width to zero and removes its auxiliary
+global-head and residual-penalty terms while retaining community-balanced
+training of the remaining prediction path.
+
+Each new neural or GNN run writes `run_manifest.json` with the architecture
+version and switches, full training configuration, dataset and split hashes,
+Git state, and final metrics.
+
 For Java deployment, Python precomputes the causal embedding for every
 cell-month and exports the small price head as ONNX. Java therefore does not
 reconstruct or run the graph at request time.
@@ -196,4 +213,3 @@ GNN, and copy one complete bundle to the Java app:
 ```bash
 make retrain-deploy
 ```
-
