@@ -30,6 +30,24 @@ def parse_args(argv=None):
         default=DEFAULT_CONFIG.graph_residual,
         help="Add a residual connection around the second GraphSAGE layer",
     )
+    parser.add_argument(
+        "--continuous-embedding-pooling",
+        action=argparse.BooleanOptionalAction,
+        default=DEFAULT_CONFIG.continuous_embedding_pooling,
+        help="Continuously pool nearby H3 node embeddings from property coordinates",
+    )
+    parser.add_argument(
+        "--spatial-pool-radius-km",
+        type=float,
+        default=DEFAULT_CONFIG.spatial_pool_radius_km,
+        help="Compact-support radius for continuous embedding pooling",
+    )
+    parser.add_argument(
+        "--spatial-pool-h3-ring",
+        type=int,
+        default=DEFAULT_CONFIG.spatial_pool_h3_ring,
+        help="H3 candidate ring used by continuous embedding pooling",
+    )
     return parser.parse_args(argv)
 
 
@@ -41,7 +59,12 @@ def main(config: GNNTrainingConfig = DEFAULT_CONFIG) -> GNNBaselineTrainer:
         sales,
         market_indicator_cache_path=config.market_indicator_csv,
     )
-    graph_data = build_monthly_graph_data(frame)
+    graph_data = build_monthly_graph_data(
+        frame,
+        continuous_embedding_pooling=config.continuous_embedding_pooling,
+        spatial_pool_radius_km=config.spatial_pool_radius_km,
+        spatial_pool_h3_ring=config.spatial_pool_h3_ring,
+    )
     print(
         f"Graph: {len(graph_data.cell_ids):,} cells, "
         f"{graph_data.edge_index.shape[1]:,} directed one-ring edges, "
@@ -49,6 +72,12 @@ def main(config: GNNTrainingConfig = DEFAULT_CONFIG) -> GNNBaselineTrainer:
     )
     print(f"Graph LayerNorm: {config.graph_layer_norm}")
     print(f"Graph residual: {config.graph_residual}")
+    print(f"Continuous embedding pooling: {config.continuous_embedding_pooling}")
+    if config.continuous_embedding_pooling:
+        print(
+            f"Spatial pooling: radius={config.spatial_pool_radius_km:g} km, "
+            f"candidate H3 ring={config.spatial_pool_h3_ring}"
+        )
     trainer = GNNBaselineTrainer(
         graph_data,
         graph_hidden_dim=config.graph_hidden_dim,
@@ -58,6 +87,9 @@ def main(config: GNNTrainingConfig = DEFAULT_CONFIG) -> GNNBaselineTrainer:
         random_seed=config.random_seed,
         graph_layer_norm=config.graph_layer_norm,
         graph_residual=config.graph_residual,
+        continuous_embedding_pooling=config.continuous_embedding_pooling,
+        spatial_pool_radius_km=config.spatial_pool_radius_km,
+        spatial_pool_h3_ring=config.spatial_pool_h3_ring,
     ).fit(
         train_ratio=config.train_ratio,
         epochs=config.epochs,
@@ -80,4 +112,7 @@ if __name__ == "__main__":
         random_seed=arguments.seed,
         graph_layer_norm=arguments.graph_layer_norm,
         graph_residual=arguments.graph_residual,
+        continuous_embedding_pooling=arguments.continuous_embedding_pooling,
+        spatial_pool_radius_km=arguments.spatial_pool_radius_km,
+        spatial_pool_h3_ring=arguments.spatial_pool_h3_ring,
     ))

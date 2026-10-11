@@ -120,6 +120,11 @@ async function loadStats() {
     `Avg List: $${Math.round(s.zillow.avgListPrice).toLocaleString()}<br>` +
     `Avg Neural: $${Math.round(s.zillow.avgNeuralPredicted).toLocaleString()}<br>` +
     `Avg LightGBM: $${Math.round(s.zillow.avgLightgbmPredicted).toLocaleString()}<br><br>`;
+  if (s.redfin) html +=
+    `<b>Redfin Listings</b><br>Total: ${s.redfin.total}<br>` +
+    `Avg List: $${Math.round(s.redfin.avgListPrice).toLocaleString()}<br>` +
+    `Avg Neural: $${Math.round(s.redfin.avgNeuralPredicted).toLocaleString()}<br>` +
+    `Avg LightGBM: $${Math.round(s.redfin.avgLightgbmPredicted).toLocaleString()}<br><br>`;
   if (s.sales) html +=
     `<b>Historical Sales</b><br>Total: ${s.sales.total}<br>` +
     `Unique Hexes: ${s.sales.uniqueHexes}<br>` +
@@ -149,6 +154,7 @@ async function loadHomeTypes() {
     });
   };
   fill('zillowType', d.zillow || []);
+  fill('redfinType', d.redfin || []);
   fill('salesType',  d.sales  || []);
 }
 
@@ -167,13 +173,17 @@ async function fetchApi(source) {
   const progressKey = `api-fetch-${source}`;
   beginMapEvent(progressKey, `Fetching ${source} API, saving its response, and ingesting records…`);
   try {
-    const res = await fetch(`/api/fetch/${source}?confirm=true`, { method: 'POST' });
+    const allPages = source === 'redfin' && document.getElementById('redfinAllPages')?.checked;
+    const res = await fetch(`/api/fetch/${source}?confirm=true${allPages ? '&allPages=true' : ''}`, { method: 'POST' });
     const data = await res.json();
-    if (data.status === 'ok') {
-      el.textContent = `✓ ${source}: ${data.fetched} records. Next in ${data.nextAllowedIn}`;
+    if (data.status === 'ok' || data.status === 'partial') {
+      const prefix = data.status === 'ok' ? '✓' : '⚠';
+      const detail = data.status === 'partial'
+        ? ` Stopped early; ${data.pages || 0} successful responses remain saved.` : '';
+      el.textContent = `${prefix} ${source}: ${data.fetched || 0} records.${detail} Next in ${data.nextAllowedIn || '0h'}`;
       pointExplanationCache.clear();
-      loadHomeTypes(); loadSales(); loadZillow(); loadRentcast(); loadStats();
-      completeMapEvent(progressKey, `${source} API fetch and ingestion complete`);
+      loadHomeTypes(); loadSales(); loadZillow(); loadRedfin(); loadRentcast(); loadStats();
+      completeMapEvent(progressKey, `${source} API fetch and ingestion ${data.status}`);
     } else {
       el.textContent = `✗ ${data.message}`;
       completeMapEvent(progressKey);

@@ -13,6 +13,7 @@
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.34.1</quarkus.platform.version>
+        <langchain4j.version>1.20.1</langchain4j.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.4</surefire-plugin.version>
     </properties>
@@ -74,6 +75,17 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-jackson</artifactId>
+        </dependency>
+        <!-- Agent orchestration. Hugging Face is called through its OpenAI-compatible router. -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+            <version>${langchain4j.version}</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

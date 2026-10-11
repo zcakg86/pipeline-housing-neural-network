@@ -16,6 +16,9 @@ h3==4.4.2
 networkx==3.5
 python-louvain==0.16
 shapely==2.1.2
+geopandas==1.2.0
+pyproj==3.8.0
+osmium==4.3.1
 
 # LightGBM and Java model export/parity checks
 lightgbm==4.6.0

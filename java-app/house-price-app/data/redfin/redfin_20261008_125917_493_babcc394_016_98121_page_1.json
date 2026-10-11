@@ -1,0 +1,1182 @@
+{
+  "requestMetadata" : {
+    "id" : "caa72c22-b536-4ce0-94be-262b8088ff59",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/caa72c22-b536-4ce0-94be-262b8088ff59.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/caa72c22-b536-4ce0-94be-262b8088ff59.json",
+    "url" : "https://redfin.com/zipcode/98121/filter/sort=lo-days,property-type=condo+townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 140
+  },
+  "properties" : [ {
+    "id" : 90939639,
+    "mlsId" : "2590091",
+    "url" : "https://www.redfin.com/WA/Seattle/583-Battery-St-98121/unit-3604N/home/90939639",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Hot tub", "Private balcony", "Sauna" ],
+    "yearBuilt" : 2016,
+    "area" : 1252,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1495000,
+    "addressRaw" : "583 Battery St Unit 3604N, Seattle, WA 98121",
+    "address" : {
+      "street" : "583 Battery St Unit 3604N",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6170456,
+    "longitude" : -122.3436082,
+    "description" : "Highly desirable northwest facing unit 3604 offers an exceptional combination of panoramic views and an incomparable lifestyle. From the moment you enter, your attention is drawn to the iconic Space Needle followed by sweeping views of Puget Sound, the Olympic Mountains, hills of Queen Ann and Downtown Seattle. Each area of the home offers its own captivating perspective, creating a sense of openness and connection to the city that is truly special. The thoughtfully designed 1252 sf floor plan includes two bedrooms, two baths and a versatile den w/ murphy bed adds flexibility, easily convertible to a refined workspace or guest suite. Open living and dining areas connect seamlessly with kitc",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_36_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_38_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/091/genIslnoResize.2590091_39_1.jpg" ]
+  }, {
+    "id" : 12536956,
+    "mlsId" : "2591842",
+    "url" : "https://www.redfin.com/WA/Seattle/2720-3rd-Ave-98121/unit-605/home/12536956",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Streamlined kitchen", "Generous living area", "Bosch appliances" ],
+    "yearBuilt" : 2008,
+    "area" : 550,
+    "beds" : 0,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 365000,
+    "addressRaw" : "2720 3rd Ave #605, Seattle, WA 98121",
+    "address" : {
+      "street" : "2720 3rd Ave #605",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6176461,
+    "longitude" : -122.3494532,
+    "description" : "Whether you are seeking a pied-à-terre or just a splendidly located full-time retreat at the quiet north edge of Belltown, Mosler Lofts is calling you home. Industrial loft vibes with exposed concrete, hardwood floors, peek Space Needle and skyline views are uniquely Seattle and timelessly cool. Fisher  &  Paykel + Bosch appliances in the streamlined kitchen with space for your dining table, desk/work space, and generous living area that can host a crowd. Lives bigger than your typical studio with good separation of space and flexible options for furniture and flow. A few short blocks to Climate Pledge Arena, Amazon, Seattle Center  &  Space Needle + the magnificently revampe",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/842/genIslnoResize.2591842_29_0.jpg" ]
+  }, {
+    "id" : 53187,
+    "mlsId" : "2591475",
+    "url" : "https://www.redfin.com/WA/Seattle/2607-Western-Ave-98121/unit-1002/home/53187",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Rooftop terrace", "Private balcony", "Gas fireplace" ],
+    "yearBuilt" : 2002,
+    "area" : 1025,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 598000,
+    "addressRaw" : "2607 Western Ave #1002, Seattle, WA 98121",
+    "address" : {
+      "street" : "2607 Western Ave #1002",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6146438,
+    "longitude" : -122.3509796,
+    "description" : "Welcome to the original show unit of the prestigious Vine building. One of the largest 1-bedroom units on site, this unit feels open and spacious while remaining versatile to your individual needs. Stepping into this south-facing unit, you’ll be drawn to the wall of windows overlooking a little bit of everything. .. Enjoy the view from your private balcony or spacious living room as cruise ships and ferries pass on the Sound and Mt. Rainier watches over the city. Lumen Field, T-Mobile Park, and \"The Wheel\" are also in this SAME VIEW, beckoning you to explore the city below. When you return to your comfortable home, AC keeps summer cool while a gas fireplace adds cozy PNW cha",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/475/genIslnoResize.2591475_36_0.jpg" ]
+  }, {
+    "id" : 18971,
+    "mlsId" : "2583738",
+    "url" : "https://www.redfin.com/WA/Seattle/2201-3rd-Ave-98121/unit-1404/home/18971",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private balconies", "In-unit w d", "Panoramic views" ],
+    "yearBuilt" : 1979,
+    "area" : 988,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 550000,
+    "addressRaw" : "2201 3rd Ave #1404, Seattle, WA 98121",
+    "address" : {
+      "street" : "2201 3rd Ave #1404",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.613898,
+    "longitude" : -122.344043,
+    "description" : "Perched in the heart of DT, enjoy the lifestyle that Belltown has to offer. This NW corner unit located on the 14th floor in the Grandview  Condominiums is waiting for you. Stunning panoramic views of Elliott Bay, the Olympics, Space Needle  &  a gorgeous skyline all from your living room, both bedrooms  &  2 private balconies. Fantastic open layout w/ dining area, modern kitchen w/ quartz counters, &  2 generously sized bedrooms. In-unit W/ D  &  assigned parking space. Amazing Walk Score 98  &  just minutes to the Space Needle, Pike Place Market, Amazon HQ, &  waterfront promenade. Amenities include an indoor pool, spa, sauna, gym, BBQ area w/ firepit, guest suite,",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2583738_29_0.jpg" ]
+  }, {
+    "id" : 2104,
+    "mlsId" : "2586778",
+    "url" : "https://www.redfin.com/WA/Seattle/66-Bell-St-98121/unit-306/home/2104",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "20-ft ceilings", "Wood beams", "Exposed brick" ],
+    "yearBuilt" : 1908,
+    "area" : 889,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 675000,
+    "addressRaw" : "66 Bell St #306, Seattle, WA 98121",
+    "address" : {
+      "street" : "66 Bell St #306",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6126356,
+    "longitude" : -122.3477932,
+    "description" : "Dramatic top-floor loft delivers an extraordinary urban lifestyle in the heart of Belltown. Soaring 20-ft ceilings, exposed brick, wood beams, steel details + a wall of oversized windows create a light-filled residence with authentic architectural character and captivating skyline views. Sleek chef’s kitchen pairs Poliform cabinetry with premium Miele + Sub-Zero appliances and oversized island. Loft bedroom features generous closets with custom built-ins, complemented by a stylish marble + subway tile bath. Above it all, a rare private rooftop deck showcases spectacular views of Puget Sound, Mt. Rainier, Space Needle + city lights. A/C, in-unit laundry, secured entry + assigned garage",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/778/genIslnoResize.2586778_38_0.jpg" ]
+  }, {
+    "id" : 52646,
+    "mlsId" : "2590993",
+    "url" : "https://www.redfin.com/WA/Seattle/2717-Western-Ave-98121/unit-8014/home/52646",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Fitness center", "Seattle views", "Outdoor courtyard" ],
+    "yearBuilt" : 2001,
+    "area" : 720,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 440000,
+    "addressRaw" : "2717 Western Ave #8014, Seattle, WA 98121",
+    "address" : {
+      "street" : "2717 Western Ave #8014",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.615262,
+    "longitude" : -122.352258,
+    "description" : "Experience the best of Belltown living from this stylish 8th-floor residence at The Klee, perfectly positioned to enjoy some of Seattle’s most iconic views and destinations. Soaring ceilings and an open kitchen and living area create a bright, spacious feel, while expansive windows frame views toward Puget Sound, the Great Wheel, Lumen Field and T-Mobile Park. The well-designed one-bedroom, one-bath floor plan offers an easy, comfortable retreat in the heart of the city. The Klee is a pet-friendly community with a strong HOA and an impressive collection of amenities, including concierge service, fitness center, guest suite, outdoor courtyard and patio, secure garage parking with EV ch",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/993/genIslnoResize.2590993_29_0.jpg" ]
+  }, {
+    "id" : 53889,
+    "mlsId" : "2590954",
+    "url" : "https://www.redfin.com/WA/Seattle/66-Bell-St-98121/unit-303/home/53889",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Custom cabinetry", "Open steel shelving", "Original brickwork" ],
+    "yearBuilt" : 1908,
+    "area" : 1580,
+    "beds" : 2,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 1295000,
+    "addressRaw" : "66 Bell St #303, Seattle, WA 98121",
+    "address" : {
+      "street" : "66 Bell St #303",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6126356,
+    "longitude" : -122.3477932,
+    "description" : "* 1Yr Buy Down Available-$8k+ Savings! *  Own a piece of Seattle’s creative soul. Once the legendary Seattle Empire Laundry, this building served as a 1980s underground epicenter for the city’s avant-garde, hosting everything from punk rock concerts to experimental theater and art studios. Today, Unit 303 honors that legacy through an extensive, high-end remodel that transforms the space into a stunning industrial-style loft. The interior is a masterclass in urban design, soaring ceilings and timber beams that anchor the space in its storied past. The remodel meticulously exposed original brickwork, creating a textured backdrop for sleek, modern finishes. Warm wood floors flow t",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/954/genIslnoResize.2590954_39_0.jpg" ]
+  }, {
+    "id" : 191515554,
+    "mlsId" : "2589152",
+    "url" : "https://www.redfin.com/WA/Seattle/910-Lenora-St-98121/unit-S1210/home/191515554",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "99 walk score", "Fitness center", "Two parking spaces" ],
+    "yearBuilt" : 2006,
+    "area" : 1321,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 995000,
+    "addressRaw" : "910 Lenora St Unit S1210, Seattle, WA 98121",
+    "address" : {
+      "street" : "910 Lenora St Unit S1210",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.617733,
+    "longitude" : -122.336768,
+    "description" : "This one is Special! Westerly views of the Space Needle, Denny Park, Queen Anne Hill  &  the Olympics. Spacious 1321 sf Corner unit with Large wrap around view deck. Air Conditioned, TWO PARKING SPACES  &  Storage Included. Located at 2200 Westlake: Best Location  &  Best Property in Downtown! Complex offers the ultimate in convenience with an on property Whole Foods, Luxury Hotel One, Fed Ex, BOA, and multiple restaurant options. All right in the Heart of the \"Amazon\", 99 Walk Score. Your New Ultimate Urban Lifestyle Awaits! Top end amenities including, Fitness Center, Sauna, Theater, Game Room, Guest Suite, Conference Room, &  Concierge.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2589152_35_2.jpg" ]
+  }, {
+    "id" : 16924,
+    "mlsId" : "2588109",
+    "url" : "https://www.redfin.com/WA/Seattle/2929-1st-Ave-98121/unit-1106/home/16924",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private balcony", "Soaking tub", "Eating bar" ],
+    "yearBuilt" : 2000,
+    "area" : 628,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 450000,
+    "addressRaw" : "2929 1st Ave #1106, Seattle, WA 98121",
+    "address" : {
+      "street" : "2929 1st Ave #1106",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.617223,
+    "longitude" : -122.353623,
+    "description" : "Perched on the 11th floor in the heart of Belltown, this light-filled corner-style home pairs gorgeous water views with the best of urban living. Floor-to-ceiling windows wrap the open living area, where a gas fireplace anchors the room and sliding doors open to a private balcony with water and city views. Premium hard flooring flows throughout. One assigned parking space in the secure garage is included, an incredible perk in the heart of downtown + a private storage unit for extra convenience. The kitchen features quartz counters, a mosaic tile backsplash, stainless steel appliances including a gas range, pendant lighting, and an eating bar that's perfect for casual dining or entertaining",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/109/genIslnoResize.2588109_39_0.jpg" ]
+  }, {
+    "id" : 564,
+    "mlsId" : "2589200",
+    "url" : "https://www.redfin.com/WA/Seattle/121-Vine-St-98121/unit-1404/home/564",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private view deck", "Elliott bay views", "Puget sound views" ],
+    "yearBuilt" : 1989,
+    "area" : 675,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 448980,
+    "addressRaw" : "121 Vine St #1404, Seattle, WA 98121",
+    "address" : {
+      "street" : "121 Vine St #1404",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.61538,
+    "longitude" : -122.348534,
+    "description" : "Experience elevated urban living with sweeping Puget Sound, Elliott Bay, and Olympic Mountain views from this beautifully updated condo in Arbor Place Tower. Perfectly positioned between Downtown Seattle and Belltown, this light-filled home offers northwest exposure, a private view deck, new kitchen appliances, new windows, an A/C port, and an open-concept layout designed to maximize the incredible scenery. The spacious bedroom captures the same stunning views, while in-unit laundry adds everyday convenience. Enjoy resort-style amenities including 24-hour concierge, four rooftop view decks with BBQs and entertaining spaces, indoor pool, hot tub, sauna, fitness center, owner's lounge, guest ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/200/genIslnoResize.2589200_38_0.jpg" ]
+  }, {
+    "id" : 69900,
+    "mlsId" : "2585763",
+    "url" : "https://www.redfin.com/WA/Seattle/2100-3rd-Ave-98121/unit-2601/home/69900",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Large center island", "Remodeled kitchen", "Quartzite counters" ],
+    "yearBuilt" : 1973,
+    "area" : 969,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 495000,
+    "addressRaw" : "2100 3rd Ave #2601, Seattle, WA 98121",
+    "address" : {
+      "street" : "2100 3rd Ave #2601",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6134959,
+    "longitude" : -122.3422742,
+    "description" : "Come home each day to panoramic views of the Olympic Mtns, Elliott Bay, glorious sunsets  &  twinkling downtown lights from your own private penthouse: welcome to luxe living at Royal Crest! The iconic downtown lifestyle is yours from this unbeatable location w/ immediate proximity to all the best dining, shopping, nightlife, sports  &  cultural events the city has to offer. Be at the heart of it all! Perched 26 floors above the city, this corner unit's layout has been opened up to maximize the views from nearly every room. Warm western light accentuates luxe finishes like engineered hardwood floors, Hunter Douglas top-down/bottom-up blinds  &  a remodeled kitchen outfitted w/ q",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/763/genIslnoResize.2585763_27_0.jpg" ]
+  }, {
+    "id" : 57814,
+    "mlsId" : "2590234",
+    "url" : "https://www.redfin.com/WA/Seattle/2100-3rd-Ave-98121/unit-2104/home/57814",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Controlled access", "Fitness center", "Clubhouse" ],
+    "yearBuilt" : 1973,
+    "area" : 570,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 299245,
+    "addressRaw" : "2100 3rd Ave #2104, Seattle, WA 98121",
+    "address" : {
+      "street" : "2100 3rd Ave #2104",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6134959,
+    "longitude" : -122.3422742,
+    "description" : "Save a ton and get these views and this newly remodeled 21st-floor 1=bedroom condo in the heart of downtown Seattle. Efficiently designed and filled with natural light, this residence lives large than its footprint, offering comfortable urban living with ever-changing water views and sparkling city lights. Exceptional building amenities include a rooftop pool, BBQ and entertaining area, fitness center, and clubhouse. Residents enjoy the convenience of a professionally managed building with controlled access, creating a welcoming urban retreat. Ideally located near Pike Place Market, the waterfront, Belltown's renowned dining scene, shopping, entertainment, and major employment centers, this",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/234/genIslnoResize.2590234_25_0.jpg" ]
+  }, {
+    "id" : 11543,
+    "mlsId" : "2589908",
+    "url" : "https://www.redfin.com/WA/Seattle/2125-1st-Ave-98121/unit-2304/home/11543",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Updated bath", "23rd floor", "Central location" ],
+    "yearBuilt" : 1981,
+    "area" : 832,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 658000,
+    "addressRaw" : "2125 1st Ave #2304, Seattle, WA 98121",
+    "address" : {
+      "street" : "2125 1st Ave #2304",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6123946,
+    "longitude" : -122.3451296,
+    "description" : "Life is better on the 23rd floor! Escape the ordinary in this sky-high retreat at the luxurious Continental Place tower. Updated corner unit offering wrap-around views stretching from the Space Needle, to the downtown city lights  &  stadiums and Elliott Bay crowned by the majesty of  Mount Rainier rising from the clouds. Live and entertain comfortably in this spacious home showcasing Swedish-style wide-plank engineered hardwood floors, updated kitchen and bath  &  all new appliances. Never run out of things to do in this central location just a few blocks to the Pike Place Market, the new 20-acre waterfront park, Light Rail station  &  ferry terminal. Enjoy newly-renovated buil",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/908/genIslnoResize.2589908_23_0.jpg" ]
+  }, {
+    "id" : 12537395,
+    "mlsId" : "2589898",
+    "url" : "https://www.redfin.com/WA/Seattle/76-Cedar-St-98121/unit-405/home/12537395",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Granite countertops", "Gas range", "Center island" ],
+    "yearBuilt" : 2008,
+    "area" : 918,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 369000,
+    "addressRaw" : "76 Cedar St #405, Seattle, WA 98121",
+    "address" : {
+      "street" : "76 Cedar St #405",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.615603,
+    "longitude" : -122.351696,
+    "description" : "One of the building's largest one-bedroom floor plans, this 918 sq. ft. home offers spacious urban living in the heart of downtown at The Parc. The open-concept layout features a well-appointed kitchen with granite countertops, stainless steel appliances, a gas range, and a center island that flows seamlessly into the expansive living and dining area. The generous primary suite includes an en-suite bath and an oversized walk-in closet with space for a home office. Enjoy exceptional amenities including 24-hour concierge, a fitness center, rooftop view deck, guest suite, secure garage parking, and private storage. Ideally located just moments from Belltown, Pike Place Market, the waterfront, ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/898/genIslnoResize.2589898_36_0.jpg" ]
+  }, {
+    "id" : 62119666,
+    "mlsId" : "2589874",
+    "url" : "https://www.redfin.com/WA/Seattle/588-Bell-St-98121/unit-1407S/home/62119666",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "2 level gym", "Flexible den", "Hardwood floors" ],
+    "yearBuilt" : 2015,
+    "area" : 1523,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1399000,
+    "addressRaw" : "588 Bell St Unit 1407S, Seattle, WA 98121",
+    "address" : {
+      "street" : "588 Bell St Unit 1407S",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.616748,
+    "longitude" : -122.343297,
+    "description" : "Most coveted floor-plan at Insignia. This unit only comes on the market once or twice a year. In addition to being rarely available, over half of these are still owned by the original purchaser. NW corner 2-bedroom + DEN with floor-to-ceiling walls of glass that flood the interior with natural light and showcase stunning wrap-around views of Puget Sound, the Olympic mountains and the vibrant Seattle skyline. Sprawling out over 1500 sqft, this unit feels more like a home than a condo. Large covered view deck is ideal for entertaining. Upgrades include custom CA closet systems and hardwood floors that span throughout both bedrooms; there is no carpet! Working from home has never been easier i",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/874/genIslnoResize.2589874_37_0.jpg" ]
+  }, {
+    "id" : 50051,
+    "mlsId" : "2589776",
+    "url" : "https://www.redfin.com/WA/Seattle/121-Vine-St-98121/unit-1702/home/50051",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Fitness center", "Private balcony", "Spa" ],
+    "yearBuilt" : 1989,
+    "area" : 661,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 550000,
+    "addressRaw" : "121 Vine St #1702, Seattle, WA 98121",
+    "address" : {
+      "street" : "121 Vine St #1702",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.61538,
+    "longitude" : -122.348534,
+    "description" : "Amazing direct water views of City, Puget Sound  &  the Olympics mountains. Western exposure from this 17th floor one bedroom at Arbor Place. Great layout Living  &  Dining area, and kitchen is open. Private balcony with Incredible sunsets, fireworks, Blue Angels. Priceless views year-round. Nice Parking, storage unit  &  furniture included in the price. Arbor Place Tower a lovely and responsible community HOA, amenities include pool, spa and sauna, Fitness center, garden space, several view rooftop decks with BBQs, and great 24/7 concierge staff at the lobby front desk. Walk score of 99, just minutes away from Pike Place Market, Space Needle, Stadiums, Seattle's best restaurant",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_1_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/776/genIslnoResize.2589776_36_0.jpg" ]
+  }, {
+    "id" : 72137472,
+    "mlsId" : "2585488",
+    "url" : "https://www.redfin.com/WA/Seattle/588-Bell-St-98121/unit-2606S/home/72137472",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Updated appliances", "Wine refrigerator", "Covered balcony" ],
+    "yearBuilt" : 2015,
+    "area" : 1269,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1325000,
+    "addressRaw" : "588 Bell St Unit 2606S, Seattle, WA 98121",
+    "address" : {
+      "street" : "588 Bell St Unit 2606S",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.616748,
+    "longitude" : -122.343297,
+    "description" : "Life here starts 26 floors above the city, with southwest views stretching across the Seattle skyline, Elliott Bay and the Olympic Mountains. The exposure brings in great natural light throughout the day, then delivers some pretty spectacular sunsets in the evening. Step outside onto the covered balcony and you have an easy spot to take it all in. Inside, 1,270 SF gives you room to spread out, with two bedrooms thoughtfully separated for privacy and a den that works equally well as an office, media room or guest space. The kitchen sits at the center of the home with a large island, wine refrigerator and updated appliances, while hardwood floors, motorized shades, smart switches and custom E",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/488/genIslnoResize.2585488_39_0.jpg" ]
+  }, {
+    "id" : 17969,
+    "mlsId" : "2588493",
+    "url" : "https://www.redfin.com/WA/Seattle/2821-2nd-Ave-98121/unit-2001/home/17969",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Breathtaking views", "Hot tub", "Outdoor decks" ],
+    "yearBuilt" : 1982,
+    "area" : 2577,
+    "beds" : 2,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 2375000,
+    "addressRaw" : "2821 2nd Ave #2001, Seattle, WA 98121",
+    "address" : {
+      "street" : "2821 2nd Ave #2001",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.617107,
+    "longitude" : -122.351503,
+    "description" : "Experience elevated city living in this exceptional condominium residence spanning more than 2,700 square feet in a premier concrete building. Enjoy breathtaking views from every window of the Puget Sound, Mt. Rainier, the Olympic Mountains, the Space Needle, and the glittering Seattle skyline. Flooded with natural light, the thoughtfully designed floor plan offers elegant entertaining and comfortable everyday living. Expansive public spaces include a gracious living room with a barrel ceiling, a breakfast area, dining room, and two outdoor decks to view spectacular sunsets and panoramic scenery. There are two luxurious bedroom suites, a generous office, a separate den/TV room, and two and ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/493/genIslnoResize.2588493_28_0.jpg" ]
+  }, {
+    "id" : 20155,
+    "mlsId" : "2587955",
+    "url" : "https://www.redfin.com/WA/Seattle/2414-1st-Ave-98121/unit-617/home/20155",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Fitness center", "Hot tub", "Sauna" ],
+    "yearBuilt" : 1994,
+    "area" : 890,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 665000,
+    "addressRaw" : "2414 1st Ave #617, Seattle, WA 98121",
+    "address" : {
+      "street" : "2414 1st Ave #617",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6145416,
+    "longitude" : -122.3481773,
+    "description" : "Stunning 6th-floor corner unit in the heart of Belltown! This beautifully updated 2-bedroom, 1.75 bath condominium features brand-new countertops, fresh interior painting, and a new carpet throughout. Enjoy the abundant natural light and breathtaking views of Puget sound. Belltown court amenities include an indoor pool, hot tub, sauna, fitness center, secure garage parking, concierge, rooftop deck and community clubroom. Just steps from Seattle's waterfront, Pike Place Market, renowned restaurants, nightlife, and downtown attractions. HOA allows short-term rentals/Airbnb, making this an ideal home, second residence, or investment property. A must-see property!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/955/genIslnoResize.2587955_21_0.jpg" ]
+  }, {
+    "id" : 51253,
+    "mlsId" : "2202599637119623649",
+    "url" : "https://www.redfin.com/WA/Seattle/2000-Alaskan-Way-98121/unit-256/home/51253",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/641/islphoto/649/genIslnoResize.2202599637119623649_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Hot tub", "Private balcony", "Shared rooftop deck" ],
+    "yearBuilt" : 1997,
+    "area" : 1392,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1250000,
+    "addressRaw" : "2000 Alaskan Way #256, Seattle, WA 98121",
+    "address" : {
+      "street" : "2000 Alaskan Way #256",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6100873,
+    "longitude" : -122.3458969,
+    "description" : "A front-row seat to Seattle’s waterfront at the Waterfront Landing. This modern corner residence frames Elliott Bay from inside and from its private balcony, with ferries, ships, the port, Seattle Great Wheel and piers in view. Sophistically renovated, this impressive living space offers two bedrooms, two baths, walk-in closets in both bedrooms and a coppersmith Japanese soaking tub in the primary suite. EVERY surface, flooring, lighting, baths and kitchen have been fully renovated, including beautiful built-ins. Enjoy a shared rooftop deck, fitness room, hot tub, 24-hour concierge and secure garage. Near Pike Place Market, the renewed waterfront and the stadiums.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/641/islphoto/649/genIslnoResize.2202599637119623649_0.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/649/genIslnoResize.2202599637119623649_1_0.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/649/genIslnoResize.2202599637119623649_2_0.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/649/genIslnoResize.2202599637119623649_3_0.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/649/genIslnoResize.2202599637119623649_4_0.jpg" ]
+  }, {
+    "id" : 21616593,
+    "mlsId" : "2587613",
+    "url" : "https://www.redfin.com/WA/Seattle/2911-2nd-Ave-98121/unit-517/home/21616593",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Business center", "Fitness center", "Sky lounge" ],
+    "yearBuilt" : 2009,
+    "area" : 671,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 349000,
+    "addressRaw" : "2911 2nd Ave #517, Seattle, WA 98121",
+    "address" : {
+      "street" : "2911 2nd Ave #517",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6176125,
+    "longitude" : -122.3523057,
+    "description" : "Welcome to Gallery, a 2009 concrete-and-steel building with 24-hour concierge service. Centrally located in the north end of Belltown, this move-in-ready 1-bedroom, 1-bath condo offers quiet, light-filled living with 9-foot ceilings and floor-to-ceiling windows. The home features a full dining room, a modern kitchen with generous counter space, and a thoughtful, efficient layout. Enjoy extensive amenities, including an owner’s lounge, Supper Club, business center, two guest suites, fitness center, Sky Lounge with kitchenette, large terraces, dining furnishings, fire pit, grilling areas, and a rooftop terrace with a dog relief area and grill. Ideal for downsizers, first-time buyers, or",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/613/genIslnoResize.2587613_32_0.jpg" ]
+  }, {
+    "id" : 179597128,
+    "mlsId" : "2586783",
+    "url" : "https://www.redfin.com/WA/Seattle/2510-6th-Ave-98121/unit-408/home/179597128",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Co-working spaces", "40th-floor clubroom", "Private balcony" ],
+    "yearBuilt" : 2021,
+    "area" : 1188,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 949000,
+    "addressRaw" : "2510 6th Ave #408, Seattle, WA 98121",
+    "address" : {
+      "street" : "2510 6th Ave #408",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6184194,
+    "longitude" : -122.3444346,
+    "description" : "Unobstructed views of the iconic Space Needle take center stage in this west-facing 2-bedroom, 2-full-bath residence at Spire, one of Seattle’s most distinctive condominium buildings. This thoughtfully designed Type A floor plan offers a desirable separation between bedrooms, a spacious primary suite with walk-in closet and private bath, plus a second full bath for guests. The open kitchen features a generous island and Bosch appliances, while the private balcony provides a front-row view of one of Seattle’s most recognizable landmarks. The home includes one dedicated parking space and one storage unit—valuable conveniences in the heart of downtown. Spire’s impressiv",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_38_0.jpg" ]
+  }, {
+    "id" : 12537356,
+    "mlsId" : "2587137",
+    "url" : "https://www.redfin.com/WA/Seattle/81-Clay-St-98121/unit-430/home/12537356",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Murphy bed", "Dedicated workspace", "In-unit laundry" ],
+    "yearBuilt" : 2008,
+    "area" : 903,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 450000,
+    "addressRaw" : "81 Clay St #430, Seattle, WA 98121",
+    "address" : {
+      "street" : "81 Clay St #430",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6158301,
+    "longitude" : -122.3519177,
+    "description" : "Welcome to vibrant urban living in the heart of Belltown at an  * IMPROVED PRICE * ! This light-filled southwest corner home captures abundant natural light through generous windows. Beautifully maintained, the interior features a spacious floorplan with fresh paint (2025), a new electric water heater (2025), rich Brazilian cherry hardwood flooring through the main living areas, premium wool carpeting in the bedrooms, and a spacious bathroom. The primary bedroom includes a spacious walk-in closet for ample storage  &  a peekaboo view of Puget Sound. The second bedroom boasts custom built-in shelving, a dedicated workspace, and a Murphy bed—perfect for a flex space. In-unit laundry",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/137/genIslnoResize.2587137_38_0.jpg" ]
+  }, {
+    "id" : 12538383,
+    "mlsId" : "2586277",
+    "url" : "https://www.redfin.com/WA/Seattle/2720-3rd-Ave-98121/unit-405/home/12538383",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private balcony", "New kitchen island", "Visible ductwork" ],
+    "yearBuilt" : 2008,
+    "area" : 838,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 499000,
+    "addressRaw" : "2720 3rd Ave #405, Seattle, WA 98121",
+    "address" : {
+      "street" : "2720 3rd Ave #405",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6176461,
+    "longitude" : -122.3494532,
+    "description" : "One of the best values we’ve seen at Mosler Lofts! Now offered at $499K with over $20K in recent upgrades, this true 1-bedroom corner residence delivers an incredible combination of space, views, design  &  location. Floor-to-ceiling windows showcase the Space Needle, creating a stunning backdrop from the living room, dining area  &  private balcony. Inspired by classic New York warehouse conversions, Mosler is one of Seattle’s most distinctive loft buildings, with exposed concrete ceilings, visible ductwork  &  industrial architecture rarely found in the city. Inside, enjoy a spacious open layout, new kitchen island, upgraded lighting, custom built-in closets  &",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/277/genIslnoResize.2586277_33_0.jpg" ]
+  }, {
+    "id" : 28623850,
+    "mlsId" : "2580008",
+    "url" : "https://www.redfin.com/WA/Seattle/820-Blanchard-St-98121/unit-1209/home/28623850",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Open floor plan", "Built-in office nook", "Two-sided fireplace" ],
+    "yearBuilt" : 2009,
+    "area" : 980,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 589000,
+    "addressRaw" : "820 Blanchard St #1209, Seattle, WA 98121",
+    "address" : {
+      "street" : "820 Blanchard St #1209",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.618062,
+    "longitude" : -122.339141,
+    "description" : "Live in the heart of it all. This sleek South Lake Union condo offers a sophisticated urban retreat with a layout that feels both expansive and intimate. The open floor plan featuring floor-to-ceiling windows is anchored by a stunning two-sided fireplace, creating a warm, modern focal point that transitions beautifully between living spaces. Frosted glass sliding doors add a touch of contemporary flair while maintaining a bright, airy flow throughout the home. With central air conditioning, a built-in office nook, and one and a half baths, the setup is perfectly designed for daily comfort, productive work-from-home days, and hosting guests. Beyond the front door, the amenities are truly top",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/008/genIslnoResize.2580008_24_1.jpg" ]
+  }, {
+    "id" : 12537397,
+    "mlsId" : "2583630",
+    "url" : "https://www.redfin.com/WA/Seattle/76-Cedar-St-98121/unit-313/home/12537397",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quartz counters", "Fresh paint", "Stainless appliances" ],
+    "yearBuilt" : 2008,
+    "area" : 423,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 260000,
+    "addressRaw" : "76 Cedar St #313, Seattle, WA 98121",
+    "address" : {
+      "street" : "76 Cedar St #313",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.615603,
+    "longitude" : -122.351696,
+    "description" : "Welcome to The Parc in the heart of Belltown. This studio home features quartz counters, subway tile backsplash, stainless appliances, a gas range, and a breakfast bar. Fresh paint, new carpet, and treetop views make it move-in ready. Assigned parking, in-unit laundry, and secure storage are included. Amenities include a front-desk lobby, fitness center, guest suites, and a rooftop deck with BBQs and sweeping views of Elliott Bay, the Olympics, the Space Needle, and the skyline. It's minutes to the Sculpture Park, new waterfront park, Pike Place Market, and Seattle Center. With no rental cap, enjoy the ultimate flexibility! HOA has an impressive $2,700,000+ in reserves!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/630/genIslnoResize.2583630_21_0.jpg" ]
+  }, {
+    "id" : 202717515,
+    "mlsId" : "2584932",
+    "url" : "https://www.redfin.com/WA/Seattle/2911-2nd-Ave-98121/unit-118/home/202717515",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Dramatic window wall", "Motorized shades", "Gated patio" ],
+    "yearBuilt" : 2009,
+    "area" : 983,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 525000,
+    "addressRaw" : "2911 2nd Ave #118, Seattle, WA 98121",
+    "address" : {
+      "street" : "2911 2nd Ave #118",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6176125,
+    "longitude" : -122.3523057,
+    "description" : "Luxury loft at Gallery Condominiums in Belltown. Only one of four Live/Work opportunities in this amenity rich community perfectly positioned near Seattle’s iconic landmarks. Convenience and quality shine with a double height window wall and two entrances into this spacious two level open living layout. Street level entry with a gated patio surrounded by lush foliage. Soaring ceiling height and a dramatic window wall show off this impeccably maintained one bedroom loft with motorized shades, hard surface flooring on the main level and A/C throughout. Large open kitchen with tons of cabinet storage, slab counters, Viking appliances and room for a prep island and eating bar are the back",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/932/genIslnoResize.2584932_39_0.jpg" ]
+  }, {
+    "id" : 12536715,
+    "mlsId" : "2582368",
+    "url" : "https://www.redfin.com/WA/Seattle/2720-3rd-Ave-98121/unit-500/home/12536715",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Fitness center", "Resident lounge", "$854 HOA" ],
+    "yearBuilt" : 2008,
+    "area" : 763,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 400000,
+    "addressRaw" : "2720 3rd Ave #500, Seattle, WA 98121",
+    "address" : {
+      "street" : "2720 3rd Ave #500",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6176461,
+    "longitude" : -122.3494532,
+    "description" : "Experience sophisticated urban living at Mosler Lofts. This beautiful west-facing 1-bedroom, 1-bath loft residence offers 763 square feet of thoughtfully designed living space, highlighted by soaring ceilings and dramatic floor-to-ceiling windows that fill the home with natural light and capture city and treetop views. The open-concept interior blends contemporary finishes with Mosler Lofts’ signature modern-industrial style. Built with steel-and-concrete and recognized for its LEED Silver/Built Green design, Mosler Lofts offers an impressive mix of amenities: experienced concierge staff, fitness center, resident lounge, conference and library spaces, guest accommodations and an ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/368/genIslnoResize.2582368_26_0.jpg" ]
+  }, {
+    "id" : 179597210,
+    "mlsId" : "2570787",
+    "url" : "https://www.redfin.com/WA/Seattle/2510-6th-Ave-98121/unit-1210/home/179597210",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spacious island", "Luxury amenities", "Space needle views" ],
+    "yearBuilt" : 2021,
+    "area" : 985,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 799000,
+    "addressRaw" : "2510 6th Ave #1210, Seattle, WA 98121",
+    "address" : {
+      "street" : "2510 6th Ave #1210",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6184194,
+    "longitude" : -122.3444346,
+    "description" : "One of the most desirable 2-bedroom / 1 bath floorplans at Spire Condominium! Seattle's high-rise community closest to the iconic Space Needle, located in the Denny Triangle. Offers city living with easy access to premier dining, shopping, entertainment and downtown amenities. This light and bright spacious 985sqft residence showcases stunning Space Needle views from the living room and primary bedroom. It is thoughtfully designed featuring a chef's kitchen with Bosch appliances and a spacious island with plenty of pantry and storage spaces. The primary bedroom comfortably accommodates a king-size bed, the 2nd bedroom is perfect for a home-office. It comes with 1 assigned parking in the sec",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_1_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_2_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_14_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_15_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_16_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_17_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_18_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_19_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_20_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/787/genIslnoResize.2570787_24_2.jpg" ]
+  }, {
+    "id" : 44901,
+    "mlsId" : "2577990",
+    "url" : "https://www.redfin.com/WA/Seattle/2201-3rd-Ave-98121/unit-2504/home/44901",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Panoramic views", "Iconic seattle views", "$1,796 HOA" ],
+    "yearBuilt" : 1979,
+    "area" : 1254,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 975000,
+    "addressRaw" : "2201 3rd Ave #2504, Seattle, WA 98121",
+    "address" : {
+      "street" : "2201 3rd Ave #2504",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.613898,
+    "longitude" : -122.344043,
+    "description" : "Rare Opportunity!!Enjoy breathtaking panoramic views of Puget Sound, Lake Union, the Olympic Mountains, the Space Needle, and the Seattle skyline from three generous private view balconys. This exceptional 25th-floor, 2-bedroom, 1.75-bath residence in the Grand View Condominiums offers luxury high-rise living in the heart of Belltown. Floor-to-ceiling windows flood the home with natural light while framing iconic Seattle views from nearly every room. Spacious, inviting, and full of potential, this is an exceptional opportunity to own one of Seattle’s premier view residences, just moments from world-class dining, shopping, Pike Place Market, the waterfront, and the city’s vibrant",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/990/genIslnoResize.2577990_34_0.jpg" ]
+  }, {
+    "id" : 57573,
+    "mlsId" : "2580841",
+    "url" : "https://www.redfin.com/WA/Seattle/66-Bell-St-98121/unit-4/home/57573",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Rooftop deck", "Garden courtyard", "Wolf gas range" ],
+    "yearBuilt" : 1908,
+    "area" : 790,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 475000,
+    "addressRaw" : "66 Bell St #4, Seattle, WA 98121",
+    "address" : {
+      "street" : "66 Bell St #4",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6126356,
+    "longitude" : -122.3477932,
+    "description" : "Rare opportunity to own a truly distinctive live/work loft in the heart of Belltown. Located in historic Belltown Lofts, 66 Bell Street blends authentic Seattle character with thoughtful architectural design and modern functionality. This one level loft condo features an open, flexible layout ideal for urban living, working from home, or creative pursuits. The standout commercial-grade kitchen is designed for serious cooking and entertaining, featuring a Wolf gas range w/ grill, stainless appliances, and a deep undermount sink. A storefront-style entrance adds architectural personality, while access to the building's garden courtyard creates an unexpected sense of privacy and greenery. Upst",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2580841_39_0.jpg" ]
+  }, {
+    "id" : 1186,
+    "mlsId" : "2582512",
+    "url" : "https://www.redfin.com/WA/Seattle/425-Vine-St-98121/unit-721/home/1186",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Rooftop deck", "Fitness center", "Panoramic views" ],
+    "yearBuilt" : 1999,
+    "area" : 531,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 359000,
+    "addressRaw" : "425 Vine St #721, Seattle, WA 98121",
+    "address" : {
+      "street" : "425 Vine St #721",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6177213,
+    "longitude" : -122.3463118,
+    "description" : "Discover the rare opportunity to own a top floor loft style home at Montreux in the heart of Belltown. With soaring character, an open living space, 1.5 baths, and the convenience of in unit laundry, this residence offers an ideal blend of comfort and city living. Whether you're looking for a full time home, a private Seattle getaway, or an investment property, the flexibility of short term rentals makes this an especially unique opportunity. Montreux is perfectly situated for enjoying the best of the city, with Seattle Center, Climate Pledge Arena, Lumen Field, T Mobile Park, the waterfront, Pike Place Market, restaurants, nightlife, and shopping all close by. Building amenities include a ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2582512_19_0.jpg" ]
+  }, {
+    "id" : 17382427,
+    "mlsId" : "2583218",
+    "url" : "https://www.redfin.com/WA/Seattle/3104-Western-Ave-98121/unit-104/home/17382427",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Ensuite bath", "Private patio", "Walk in closet" ],
+    "yearBuilt" : 2008,
+    "area" : 1306,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 575000,
+    "addressRaw" : "3104 Western Ave #104, Seattle, WA 98121",
+    "address" : {
+      "street" : "3104 Western Ave #104",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.618193,
+    "longitude" : -122.356093,
+    "description" : "Living more like a sophisticated NYC rowhouse than a typical condo, this exceptional live/work urban loft at Trio offers its own exterior entry, soaring 15' ceilings  &  a remarkable 1,306sf of living space. Perfectly situated along the edge of Lower Queen Anne  &  Belltown, this distinctive residence is moments from the best spots in Seattle’s core while still offering a peaceful  &  charming neighborhood feel to come home to. Leafy plants surround a private ~170sf patio  &  entry - a rare amenity. Step inside to fantastic natural light flowing in through floor-to-ceiling windows, amplifying sleek finishes  &  architectural interest throughout: polished concrete f",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/218/genIslnoResize.2583218_33_0.jpg" ]
+  }, {
+    "id" : 22338,
+    "mlsId" : "2583666",
+    "url" : "https://www.redfin.com/WA/Seattle/2125-1st-Ave-98121/unit-1304/home/22338",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Fully renovated", "Covered balcony", "Elliott bay views" ],
+    "yearBuilt" : 1981,
+    "area" : 1182,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 749000,
+    "addressRaw" : "2125 1st Ave #1304, Seattle, WA 98121",
+    "address" : {
+      "street" : "2125 1st Ave #1304",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6123946,
+    "longitude" : -122.3451296,
+    "description" : "Sublime views of Mount Rainier while overlooking the Pike Place Market, Elliott Bay and the ferries from your cozy southwest facing window seat perched up high on the 13th floor. A SE corner covered balcony offers year-round enjoyment and wraparound city views that span the city to the Space Needle. This home has been fully renovated, new hardwood floors, a chefs kitchen, complete with Wolf appliances. Two ovens, induction cooking and more. Two beautifully renovated 3/4 baths and 2 bedrooms with views of the Space Needle. Newer washer / dryer in kitchen, tons of storage. One parking space and storage. 24 hour doorstaff, spa amenities, pool, gym, amenity space for entertaining and sculpture ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2583666_37_0.jpg" ]
+  }, {
+    "id" : 47760,
+    "mlsId" : "2583505",
+    "url" : "https://www.redfin.com/WA/Seattle/425-Vine-St-98121/unit-405/home/47760",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Rooftop deck", "Fitness center", "Juliet balcony" ],
+    "yearBuilt" : 1999,
+    "area" : 433,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 299000,
+    "addressRaw" : "425 Vine St #405, Seattle, WA 98121",
+    "address" : {
+      "street" : "425 Vine St #405",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6177213,
+    "longitude" : -122.3463118,
+    "description" : "Amazing location and opportunity as your private residence, or an income producing Airbnb or VRBO or rental property. Space Needle View from the unit and Juliet balcony, the perfect spot for the New Year's Eve fireworks and 4th of July fireworks. Incredible views from the rooftop deck too. Rare to find a condo for this price that includes parking and an in-unit washer and dryer! The condo has recently been refreshed with new carpet and paint. Perfect for anyone looking to enjoy downtown Seattle living at its finest. Building amenities include a gorgeous lobby, a rooftop deck with panoramic downtown Seattle skyline and Space Needle views, a fitness center, and a business center with meeting ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2583505_23_0.jpg" ]
+  }, {
+    "id" : 12091356,
+    "mlsId" : "2581470",
+    "url" : "https://www.redfin.com/WA/Seattle/2015-Terry-Ave-98121/unit-415/home/12091356",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Two bathrooms", "East facing outlook", "Two parking spaces" ],
+    "yearBuilt" : 2004,
+    "area" : 996,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 495000,
+    "addressRaw" : "2015 Terry Ave #415, Seattle, WA 98121",
+    "address" : {
+      "street" : "2015 Terry Ave #415",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6172912,
+    "longitude" : -122.3358101,
+    "description" : "Hip, open and extra-roomy loft-style condo in the heart of where the action is! One of the largest one-bedroom homes in the building, this bright and sunny residence offers a highly functional den/office, two bathrooms, two parking spaces and dedicated storage. An open east-facing outlook to a quiet, tree-lined street—not another building—adds a sense of privacy and breathing room that is hard to find in the city. The open floor plan is enhanced by dramatic 10-foot ceilings and floor-to-ceiling windows that flood the home with natural light, keeping it bright even on the cloudiest Seattle day. Fresh interior paint, gleaming hardwood floors, designer carpet, updated kitchen and b",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/470/genIslnoResize.2581470_28_0.jpg" ]
+  }, {
+    "id" : 205542110,
+    "mlsId" : "2582437",
+    "url" : "https://www.redfin.com/WA/Seattle/2821-2nd-Ave-98121/unit-1102-3/home/205542110",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Two parking spaces", "Walk-in closets", "Panoramic views" ],
+    "yearBuilt" : 1982,
+    "area" : 2609,
+    "beds" : 2,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 1450000,
+    "addressRaw" : "2821 2nd Ave Unit 1102/3, Seattle, WA 98121",
+    "address" : {
+      "street" : "2821 2nd Ave Unit 1102/3",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.617074,
+    "longitude" : -122.351443,
+    "description" : "Perched high above the Seattle waterfront, this exceptional 2,609 square foot luxury residence occupies an entire side of Bay Vista Tower, showcasing breathtaking panoramic views stretching from the Olympic Mountains and Elliott Bay to the Space Needle. Comprised of two combined tax parcels this coveted end-unit is a true showpiece, thoughtfully curated by renowned interior designer Lamar Efaw. Sophisticated interiors feature sleek marble floors, soaring windows, exquisite custom millwork and luxurious finishes throughout. The flexible floor plan offers two sumptuous en-suite bedrooms including a stunning primary suite with adjoining office space that could easily be divided to create a thi",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/437/genIslnoResize.2582437_39_0.jpg" ]
+  }, {
+    "id" : 179597223,
+    "mlsId" : "2578208",
+    "url" : "https://www.redfin.com/WA/Seattle/2510-6th-Ave-98121/unit-1403/home/179597223",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Water views", "Rooftop terrace", "Private balcony" ],
+    "yearBuilt" : 2022,
+    "area" : 684,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 599950,
+    "addressRaw" : "2510 6th Ave #1403, Seattle, WA 98121",
+    "address" : {
+      "street" : "2510 6th Ave #1403",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6184194,
+    "longitude" : -122.3444346,
+    "description" : "Live at the center of Seattle with panoramic city and water views, modern interiors, and an impressive collection of amenities. Floor-to-ceiling windows bring abundant natural light into the residence, highlighting beautiful wood flooring and a contemporary kitchen with sleek cabinetry and a spacious island. The private balcony extends the living space outdoors while offering elevated views of the surrounding city. Residents enjoy an exceptional rooftop terrace with sweeping Space Needle and Elliott Bay views, outdoor lounge and dining areas, BBQ stations, and spaces to relax or entertain. The expansive fitness center features a wide range of equipment surrounded by dramatic city and water ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2578208_33_0.jpg" ]
+  }, {
+    "id" : 55203,
+    "mlsId" : "2569562",
+    "url" : "https://www.redfin.com/WA/Seattle/2030-Western-Ave-98121/unit-713/home/55203",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Garden courtyard", "Private terrace", "Ensuite bath" ],
+    "yearBuilt" : 1989,
+    "area" : 924,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 515000,
+    "addressRaw" : "2030 Western Ave #713, Seattle, WA 98121",
+    "address" : {
+      "street" : "2030 Western Ave #713",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6112139,
+    "longitude" : -122.3442471,
+    "description" : "Live in the heart of Pike Place Market with captivating South-facing views of the downtown Seattle skyline and the community's beautiful garden courtyard. This nearly 1,000SF 1bd/1.5ba home offers a well-designed floor plan with a dedicated dining area and inviting living room anchored by a wood-burning fireplace and custom built-ins. French doors open to a private terrace overlooking the gardens, creating a seamless extension of the living space for morning coffee or dining al fresco. The generously sized primary bedroom features an ensuite bath, while an additional half bath is conveniently located for guests. High ceilings, abundant storage, wall-mounted A/C, and a full-size W/ D round o",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2569562_23_0.jpg" ]
+  }, {
+    "id" : 68433,
+    "mlsId" : "2581764",
+    "url" : "https://www.redfin.com/WA/Seattle/2000-1st-Ave-98121/unit-1204/home/68433",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Expansive windows", "City views", "Siematic kitchen" ],
+    "yearBuilt" : 1994,
+    "area" : 1523,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1395000,
+    "addressRaw" : "2000 1st Ave #1204, Seattle, WA 98121",
+    "address" : {
+      "street" : "2000 1st Ave #1204",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6115178,
+    "longitude" : -122.342713,
+    "description" : "Set above the heart of downtown at One Pacific Tower, this sophisticated residence pairs sweeping Elliott Bay, Olympic Mountain and city views with beautifully considered interiors. Expansive windows frame the waterfront while filling the home with natural light. Custom built-ins, rich herringbone hardwoods and natural stone bring depth throughout. The thoughtfully designed Siematic kitchen opens seamlessly to living and dining spaces. Two spacious bedrooms and two beautifully appointed baths offer comfort and privacy. Two parking spaces provide an exceptional downtown convenience. One Pacific Tower offers 24-hour concierge service, an indoor pool and spa, fitness center and resident gather",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/764/genIslnoResize.2581764_22_1.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1,
+    "nextPage" : "https://redfin.com/zipcode/98121/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+    "otherPages" : {
+      "2" : "https://redfin.com/zipcode/98121/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+      "3" : "https://redfin.com/zipcode/98121/filter/sort=lo-days,property-type=condo+townhouse+house/page-3",
+      "4" : "https://redfin.com/zipcode/98121/filter/sort=lo-days,property-type=condo+townhouse+house/page-4"
+    }
+  }
+}

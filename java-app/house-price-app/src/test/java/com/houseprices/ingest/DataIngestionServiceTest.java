@@ -3,6 +3,8 @@ package com.houseprices.ingest;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -17,5 +19,28 @@ class DataIngestionServiceTest {
         assertEquals("2020062987407", first);
         assertEquals("2020062987408", second);
         assertNotEquals(first, second);
+    }
+
+    @Test
+    void usesLivingAreaWhenListingLotAreaIsMissing() {
+        DataIngestionService service = new DataIngestionService();
+
+        assertEquals(1_850.0, service.listingLotSqft(Map.of(), 1_850.0));
+        assertEquals(9_600.0, service.listingLotSqft(
+            Map.of("lotAreaValue", 9_600), 1_850.0));
+
+        Map<String, Object> nullLot = new HashMap<>();
+        nullLot.put("lotAreaValue", null);
+        assertEquals(1_850.0, service.listingLotSqft(nullLot, 1_850.0));
+    }
+
+    @Test
+    void choosesListingLotFallbackFromHomeType() {
+        DataIngestionService service = new DataIngestionService();
+
+        assertEquals(3_000.0, service.listingLotFallback("House", 2_000.0));
+        assertEquals(2_000.0, service.listingLotFallback("Condo", 2_000.0));
+        assertEquals(2_000.0, service.listingLotFallback("Townhouse", 2_000.0));
+        assertEquals(2_000.0, service.listingLotFallback("", 2_000.0));
     }
 }

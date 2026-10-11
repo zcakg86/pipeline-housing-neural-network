@@ -55,7 +55,7 @@ class H3AggregationServiceTest {
             price, 0, null, prediction, 100 * (prediction - price) / price,
             prediction, 100 * (prediction - price) / price,
             prediction, 100 * (prediction - price) / price, 20_000, 15,
-            new float[]{.1f, .3f, .3f, .3f}
+            new float[]{.1f, .3f, .3f, .3f}, "", List.of()
         );
     }
 }

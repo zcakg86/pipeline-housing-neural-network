@@ -1,12 +1,21 @@
 // Leaflet initialization and geographic helpers shared by all map layers.
 // ── Map ───────────────────────────────────────────────────────────────────────
 const map = L.map('map').setView([47.61, -122.33], 11);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap © CARTO', maxZoom: 19
+const cartoApiKey = window.HOUSE_PRICE_CONFIG?.cartoApiKey?.trim();
+const cartoTileUrl = 'https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png'
+  + (cartoApiKey ? `?key=${encodeURIComponent(cartoApiKey)}` : '');
+if (!cartoApiKey) {
+  console.warn('CARTO_API_KEY is not configured; the basemap may show an API key watermark.');
+}
+L.tileLayer(cartoTileUrl, {
+  attribution: '© OpenStreetMap contributors, © CARTO',
+  subdomains: 'abcd',
+  maxZoom: 20
 }).addTo(map);
 
 let salesLayer    = L.layerGroup();
 let zillowLayer   = L.layerGroup().addTo(map);
+let redfinLayer   = L.layerGroup();
 let rentcastLayer = L.layerGroup();
 let communityLayer = L.layerGroup();
 let syntheticLayer = L.layerGroup();
@@ -14,6 +23,7 @@ let waterLayer = L.layerGroup();
 let railLayer = L.layerGroup();
 let busLayer = L.layerGroup();
 let majorRoadLayer = L.layerGroup();
+let motorwayJunctionLayer = L.layerGroup();
 let transportFeatureLayer = L.layerGroup();
 let lightgbmExplanationCache = new Map();
 let pointExplanationCache = new Map();
@@ -25,6 +35,8 @@ map.createPane('railStationPane');
 map.getPane('railStationPane').style.zIndex = 430;
 map.createPane('busStationPane');
 map.getPane('busStationPane').style.zIndex = 431;
+map.createPane('motorwayJunctionPane');
+map.getPane('motorwayJunctionPane').style.zIndex = 432;
 map.createPane('railRoutePane');
 map.getPane('railRoutePane').style.zIndex = 440;
 map.createPane('busRoutePane');
@@ -37,6 +49,9 @@ const railStationRenderer = L.canvas({
 });
 const busStationRenderer = L.canvas({
   padding: 0.5, pane: 'busStationPane', tolerance: 5
+});
+const motorwayJunctionRenderer = L.canvas({
+  padding: 0.5, pane: 'motorwayJunctionPane', tolerance: 7
 });
 
 // ── Colormaps ─────────────────────────────────────────────────────────────────

@@ -198,10 +198,10 @@ def main(config=None):
     print(f"   Model directory: {manager.directory}")
     
     # Save predictions
-    output_path = 'data/sales_2020_25_with_predictions.csv'
-    manager.dataframe.to_csv(output_path, index=False)
-    print(f"   Predictions saved: {output_path}")
-    print(f"   Total records: {len(manager.dataframe)}")
+    # output_path = Path(manager.directory) / 'predictions.csv'
+    # manager.dataframe.to_csv(output_path, index=False)
+    # print(f"   Predictions saved: {output_path}")
+    # print(f"   Total records: {len(manager.dataframe)}")
     
     # Report data sources
     if 'data_source' in manager.dataframe.columns:

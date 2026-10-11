@@ -1,6 +1,6 @@
 # Makefile for House Price Model + Java App
 
-.PHONY: help test train train-gnn train-lightgbm export export-gnn export-lightgbm retrain-deploy osm-transport transport-features java-setup java-dev java-build java-run java-kill \
+.PHONY: help test train train-gnn train-lightgbm export export-gnn export-lightgbm deploy-gnn retrain-deploy osm-transport transport-features market-surface java-setup java-dev java-build java-run java-kill \
         rentcast-fetch rentcast-status clean
 
 JAVA_APP_DIR = java-app/house-price-app
@@ -30,6 +30,7 @@ help:
 	@echo "    make train-lightgbm Train LightGBM with the same prepared features"
 	@echo "    make export         Export trained model to ONNX for Java"
 	@echo "    make export-gnn     Export latest monthly H3 GNN for Java"
+	@echo "    make deploy-gnn     Deploy only the GNN; preserve other installed models"
 	@echo "    make export-lightgbm Export latest LightGBM model for Java"
 	@echo "    make retrain-deploy Retrain and deploy both water-aware models"
 	@echo ""
@@ -46,6 +47,7 @@ help:
 	@echo "    make test           Run Python and Java tests"
 	@echo "    make osm-transport  Rebuild OSM transport map layers and H3 accessibility fields"
 	@echo "    make transport-features Rebuild H3 transport accessibility fields from current OSM layers"
+	@echo "    make market-surface Rebuild compact H3 historical-market and place-label evidence"
 	@echo "    make clean          Remove build artifacts"
 	@echo ""
 
@@ -82,6 +84,10 @@ export-gnn:
 	@echo "Exporting latest GNN model for Java..."
 	$(PYTHON_ENV) python3 export_gnn_for_java.py --model-dir=$$(ls -dt outputs/gnn/* | head -1)
 
+deploy-gnn:
+	@echo "Deploying GNN without changing the attention or LightGBM artifacts..."
+	$(PYTHON_ENV) python3 deploy_gnn_for_java.py $(if $(GNN_MODEL_DIR),--gnn-model-dir=$(GNN_MODEL_DIR))
+
 export-lightgbm:
 	@echo "Exporting latest LightGBM model to ONNX..."
 	$(PYTHON_ENV) python3 export_lightgbm_for_java.py
@@ -96,6 +102,9 @@ osm-transport:
 
 transport-features:
 	python3 scripts/build_transport_features.py
+
+market-surface:
+	python3 scripts/build_h3_market_surface.py
 
 # ── Java app ──────────────────────────────────────────────────────────────────
 java-setup:

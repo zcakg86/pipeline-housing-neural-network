@@ -1,0 +1,1184 @@
+{
+  "requestMetadata" : {
+    "id" : "3aa55f94-3a79-43a0-ae0e-c302e3f90402",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/3aa55f94-3a79-43a0-ae0e-c302e3f90402.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/3aa55f94-3a79-43a0-ae0e-c302e3f90402.json",
+    "url" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 236
+  },
+  "properties" : [ {
+    "id" : 146281899,
+    "mlsId" : "2592208",
+    "url" : "https://www.redfin.com/WA/Kirkland/14509-127th-Ln-NE-98034/unit-N-39/home/146281899",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Newer appliances", "Painted cabinetry", "Updated kitchen" ],
+    "yearBuilt" : 1979,
+    "area" : 640,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 190000,
+    "addressRaw" : "14509 127th Ln NE Unit N-39, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14509 127th Ln NE Unit N-39",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7334068,
+    "longitude" : -122.170251,
+    "description" : "Motivated Seller says SELL NOW; leaving country so priced to sell quickly. Own for same price as renting on this quiet, convenient  &  move-in ready home. Bright mid-floor home w/ western views  &  tasteful updates in an unusually peaceful setting just minutes from Totem Lake amenities. Great price/value for 1 bedroom home. Spacious living  &  dining areas feature laminate wood flooring  &  a refreshed fireplace surround, doors  &  screens. Updated kitchen offers granite counters, painted cabinetry, newer appliances  &  lighting, plus an open connection to the main living areas. Painted millwork  &  updated interior doors add to the fresh feel. Full bath includes",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/208/genIslnoResize.2592208_19_0.jpg" ]
+  }, {
+    "id" : 453731,
+    "mlsId" : "2592183",
+    "url" : "https://www.redfin.com/WA/Kirkland/12728-NE-132nd-Pl-98034/home/453731",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Built-in pergola", "Gourmet kitchen", "New water heater" ],
+    "yearBuilt" : 1989,
+    "area" : 1350,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1010000,
+    "addressRaw" : "12728 NE 132nd Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12728 NE 132nd Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7195635,
+    "longitude" : -122.1709091,
+    "description" : "*  * Incredible price. Incredible opportunity. *  *  This beautiful rambler has been thoughtfully transformed with major updates already completed, offering exceptional value and move-in-ready living. The open floor plan lives large, with inviting spaces designed for both everyday comfort and effortless entertaining. The gorgeous gourmet kitchen features sleek slab countertops, a spacious island, and an open flow that keeps everyone connected. The generous primary suite creates a peaceful retreat, while the seamless indoor-outdoor connection leads to a spectacular new deck with a built-in pergola—perfect for morning coffee, summer gatherings, or relaxing evenings. The thoughtful impro",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2592183_23_0.jpg" ]
+  }, {
+    "id" : 453506,
+    "mlsId" : "2591248",
+    "url" : "https://www.redfin.com/WA/Kirkland/13544-127th-Ave-NE-98034/home/453506",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quiet cul-de-sac", "Spacious deck", "Updated kitchen" ],
+    "yearBuilt" : 1973,
+    "area" : 2515,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1129950,
+    "addressRaw" : "13544 127th Ave NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13544 127th Ave NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7227797,
+    "longitude" : -122.1714617,
+    "description" : "Tucked away on a cul-de-sac in Kirkland’s desirable Kingsgate neighborhood, this thoughtfully designed home offers a functional layout with plenty of space and flexibility. Fresh interior paint and brand-new carpet create a move-in-ready feel, while new skylights fill the main living area with natural light. The updated kitchen features refreshed cabinetry and appliances, and large windows frame serene views of the trees beyond. A slider off the dining room opens to a spacious deck, perfect for summer evenings, outdoor dining, and entertaining. Upstairs, the spacious primary suite features a private ¾ bath, along with two additional generously sized bedrooms and abundant storag",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/248/genIslnoResize.2591248_38_0.jpg" ]
+  }, {
+    "id" : 18092,
+    "mlsId" : "2591994",
+    "url" : "https://www.redfin.com/WA/Kirkland/12918-126th-Ct-NE-98034/unit-K302/home/18092",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Smartcore flooring", "Newer interior paint", "$539 HOA" ],
+    "yearBuilt" : 1980,
+    "area" : 1066,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 465000,
+    "addressRaw" : "12918 126th Ct NE Unit K302, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12918 126th Ct NE Unit K302",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7166651,
+    "longitude" : -122.1724421,
+    "description" : "Welcome to this secluded end-building condo in the desirable Arrowood community! This light-filled 2-bedroom, 1.75-bath home features vaulted ceilings, a cozy wood-burning fireplace, and a private deck overlooking trees and the community tennis court. Recent updates include newer interior paint, luxury vinyl plank and SmartCore flooring, built-in closet systems, updated lighting and outlets, all-new plumbing in both bathrooms, and newer stainless steel appliances, including a new range and over-the-range microwave. An attached storage closet provides added storage convenience. Mounted TV, all appliances, an in-unit washer/dryer, covered parking, and some West Elm furniture are included (exc",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2591994_36_0.jpg" ]
+  }, {
+    "id" : 453963,
+    "mlsId" : "2582852",
+    "url" : "https://www.redfin.com/WA/Kirkland/12304-NE-149th-Ct-98034/home/453963",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Stainless appliances", "High end countertops", "Full bath" ],
+    "yearBuilt" : 1972,
+    "area" : 1580,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 698000,
+    "addressRaw" : "12304 NE 149th Ct, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12304 NE 149th Ct",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7365653,
+    "longitude" : -122.1764612,
+    "description" : "Completely reimagined for 2026! This light-filled, south-facing Lendemain end-unit has been extensively remodeled nearly to the studs with thoughtful designer finishes throughout. The spacious 4-bedroom, 3-bath floor plan offers rare flexibility with a main-floor bedroom and full bath, plus three bedrooms upstairs. New LVP flooring flows throughout the main level and baths, complemented by new upstairs carpet, a beautifully redesigned kitchen with stainless appliances and high-end countertops, updated baths, and a new LG laundry tower. The improvements go well beyond what you can see—crawlspace and attic have been completely redone with all-new insulation, plus a newer water heater. O",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/852/genIslnoResize.2582852_31_0.jpg" ]
+  }, {
+    "id" : 21505,
+    "mlsId" : "2591259",
+    "url" : "https://www.redfin.com/WA/Kirkland/11802-98th-Ave-NE-98034/unit-B6/home/21505",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private deck", "Expanded flex space", "Juanita beach park" ],
+    "yearBuilt" : 1981,
+    "area" : 1070,
+    "beds" : 2,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 540597,
+    "addressRaw" : "11802 98th Ave NE Unit B6, Kirkland, WA 98034",
+    "address" : {
+      "street" : "11802 98th Ave NE Unit B6",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.705675,
+    "longitude" : -122.209094,
+    "description" : "Beautiful 3-story townhome nestled in desirable Hillside Village in the heart of Juanita! Light-filled and open, this stylish residence offers  generous living spaces, 2 spacious bedrooms with soaring vaulted ceilings, and 1.5 baths. Enjoy plush carpeting throughout and a modern  kitchen complete with durable quartz countertops, timeless cabinetry, and stainless steel appliances. The inviting living room serves as the  ideal retreat, anchored by a cozy wood-burning fireplace for chilly Northwest evenings. Step outside to your private deck—perfect for  morning coffee or hosting intimate summer gatherings—and take in seasonal views of Lake Washington from the front bedroom! An ove",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/259/genIslnoResize.2591259_39_0.jpg" ]
+  }, {
+    "id" : 198447300,
+    "mlsId" : "2591181",
+    "url" : "https://www.redfin.com/WA/Kirkland/14020-Juanita-Dr-NE-98034/unit-B3/home/198447300",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private deck", "Natural views", "Convenient access" ],
+    "yearBuilt" : 1977,
+    "area" : 675,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 282500,
+    "addressRaw" : "14020 Juanita Dr NE Unit B3, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14020 Juanita Dr NE Unit B3",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7268359,
+    "longitude" : -122.2431691,
+    "description" : "Welcome to this beautifully updated home in the heart of Kirkland’s sought-after Juanita neighborhood. Nestled against a lush greenbelt, this residence offers both privacy and natural views while being minutes from Lake Washington, parks, shops, and dining. Inside, you’ll find modern finishes throughout—an open layout with sleek flooring, quartz counters, stainless appliances, and stylish fixtures that create a fresh, move-in-ready feel. Large windows fill the space with natural light, while the private deck invites you to relax and enjoy the surrounding greenery. With convenient access to I-405 and downtown Kirkland, this home perfectly balances comfort, design, and locat",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2591181_30_0.jpg" ]
+  }, {
+    "id" : 457328,
+    "mlsId" : "2587299",
+    "url" : "https://www.redfin.com/WA/Kirkland/14032-110th-Pl-NE-98034/home/457328",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "7,665 sq ft lot", "Garage", "Built 1978" ],
+    "yearBuilt" : 1978,
+    "area" : 2090,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1150000,
+    "addressRaw" : "14032 110th Pl NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14032 110th Pl NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7267179,
+    "longitude" : -122.1934305,
+    "description" : "Light, open  &  wonderfully versatile with fresh updates throughout! This 2,000+ sq ft, 4BR/3BA home with gas heat is tucked into a friendly Kirkland cul de sac. Popular tri level floor plan features vaulted ceilings, cozy gas fireplace  &  a wall of windows connecting the living spaces to a lush, private backyard with beautiful greenbelt backdrop, fresh landscaping  &  new sod. Updated primary features ensuite bath, walk in closet  &  classic barn door. The standout is the NEW 2025 lower level attached studio with private exterior entrance + interior access, ideal for extended living, nanny/guest quarters, home office or potential rental income. Fresh interior paint + exter",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/299/genIslnoResize.2587299_36_1.jpg" ]
+  }, {
+    "id" : 512836,
+    "mlsId" : "2590994",
+    "url" : "https://www.redfin.com/WA/Kirkland/12943-NE-131st-St-98034/home/512836",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quiet cul-de-sac", "Next to the park", "Oversized kitchen" ],
+    "yearBuilt" : 1972,
+    "area" : 1860,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 995000,
+    "addressRaw" : "12943 NE 131st St, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12943 NE 131st St",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7173529,
+    "longitude" : -122.1672823,
+    "description" : "PRICE IMPROVEMENT Location, location, location, this house is a rare opportunity to live next to the park. Tucked onto a quiet cul-de-sac, this meticulously maintained home offers something increasingly hard to find: privacy, peace, and a little breathing room. Inside, the comfortable tri-level floor plan is designed for real life, with solid hardwood floors, an inviting living space, and an oversized kitchen with island. An open layout and skylights give the space lots of natural light even in gloomy winter months. Three bedrooms upstairs, including a primary suite with ensuite bathroom, are conveniently located together. A lower-level area provides additional open living space, separate b",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2590994_24_0.jpg" ]
+  }, {
+    "id" : 457579,
+    "mlsId" : "2589918",
+    "url" : "https://www.redfin.com/WA/Kirkland/10929-NE-116th-Pl-98034/home/457579",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Large deck", "Remodeled", "Quiet cul-de-sac" ],
+    "yearBuilt" : 1967,
+    "area" : 1590,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1295000,
+    "addressRaw" : "10929 NE 116th Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "10929 NE 116th Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7043526,
+    "longitude" : -122.1950499,
+    "description" : "Beautifully remodeled 4-bedroom, 2-bath Kirkland home offering 1,590 sq ft of thoughtfully updated living space on a spacious . 31-acre lot. Tucked away on a quiet cul-de-sac, this move-in-ready home has undergone an extensive remodel, with thoughtful updates throughout the interior and exterior, including fresh paint, new appliances, refreshed finishes, and numerous upgrades designed for comfortable modern living. The bright, functional floor plan flows seamlessly from the kitchen and dining area into the family room, creating a welcoming setting for everyday living and entertaining. Step outside to a large deck overlooking the expansive backyard, with plenty of room for outdoor dining, ga",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_5_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_6_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_7_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_10_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_11_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_12_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_13_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_14_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_15_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_16_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_17_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/918/genIslnoResize.2589918_19_2.jpg" ]
+  }, {
+    "id" : 59107,
+    "mlsId" : "2588163",
+    "url" : "https://www.redfin.com/WA/Kirkland/14518-127th-Ave-NE-98034/unit-W74/home/59107",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Visitor parking", "Private balcony", "Easy access to i-405" ],
+    "yearBuilt" : 1979,
+    "area" : 640,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 245000,
+    "addressRaw" : "14518 127th Ave NE Unit W74, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14518 127th Ave NE Unit W74",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7336925,
+    "longitude" : -122.1710317,
+    "description" : "1-bedroom, 1-bathroom top-floor condo in a convenient Kirkland location. The home features a private balcony with additional storage, plus a secure individual storage unit on the basement level. Enjoy easy access to I-405, with convenient travel to Bothell, Woodinville, Lynnwood, Everett, Bellevue, and Seattle. Safeway and a nearby shopping plaza are within walking distance, making everyday shopping easy and convenient. The community also offers a children’s playground and plenty of visitor parking. The unit includes one assigned parking space.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/163/genIslnoResize.2588163_8_0.jpg" ]
+  }, {
+    "id" : 456022,
+    "mlsId" : "2590657",
+    "url" : "https://www.redfin.com/WA/Kirkland/13701-115th-Ave-NE-98034/home/456022",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Separate entrance", "9,800 sq ft lot", "Built 1966" ],
+    "yearBuilt" : 1966,
+    "area" : 4060,
+    "beds" : 5,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1300000,
+    "addressRaw" : "13701 115th Ave NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13701 115th Ave NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7229901,
+    "longitude" : -122.1882105,
+    "description" : "One of the larger homes and lots in Kingsgate, this 4,060 sq ft home is one of those properties that just keeps going. With 5 bedrooms, 3 bathrooms, multiple living spaces, a bonus room, and a versatile room currently staged as a gym, there is space for everyone and endless possibilities for how to use it. The lower level features a separate entrance, large workshop/storage area, and potential for a kitchenette—creating even more flexibility for guests, multigenerational living, or rental income. Brand-new European-style windows tilt, slide, and open for exceptional ventilation and everyday comfort. Located in the desirable Kingsgate neighborhood within the Lake Washington School Dist",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/657/genIslnoResize.2590657_34_0.jpg" ]
+  }, {
+    "id" : 200103722,
+    "mlsId" : "2589858",
+    "url" : "https://www.redfin.com/WA/Kirkland/9012-124th-Ln-NE-98034/home/200103722",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Designer finishes", "Custom cabinetry", "Quartz countertops" ],
+    "yearBuilt" : 2026,
+    "area" : 1805,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1299950,
+    "addressRaw" : "9012 124th Ln NE, Kirkland, WA 98033",
+    "address" : {
+      "street" : "9012 124th Ln NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98033"
+    },
+    "latitude" : 47.7141201,
+    "longitude" : -122.1758511,
+    "description" : "Welcome to ISLA by GreenCity Homes, an exclusive boutique community of four thoughtfully designed modern cottages nestled in the heart of North Rose Hill. Blending contemporary architecture with timeless finishes, this beautifully crafted 3-bedroom, 2.5-bath home offers the perfect balance of style, comfort, and functionality. The light-filled open-concept main level is designed for effortless everyday living and entertaining, featuring designer finishes, quartz countertops, custom cabinetry, durable luxury vinyl plank flooring, and a cozy fireplace that creates a warm focal point. Upstairs, the spacious primary suite provides a peaceful retreat with a generous walk-in closet and a spa-insp",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/858/genIslnoResize.2589858_25_0.jpg" ]
+  }, {
+    "id" : 17078582,
+    "mlsId" : "2589618",
+    "url" : "https://www.redfin.com/WA/Kirkland/7791-NE-122nd-Ln-98034/unit-4/home/17078582",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Vaulting ceilings", "Private corner", "End-unit townhouse" ],
+    "yearBuilt" : 2003,
+    "area" : 1320,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 865000,
+    "addressRaw" : "7791 NE 122nd Ln #4, Kirkland, WA 98034",
+    "address" : {
+      "street" : "7791 NE 122nd Ln #4",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.709789,
+    "longitude" : -122.2387319,
+    "description" : "Welcome to the pristine Sinclair community, ideally situated in the vibrant heart of Finn Hill! Positioned on a private corner along a quiet dead-end street, this end-unit single-level townhouse provides smooth access and an exceptionally peaceful setting. Inside, vaulting ceilings and expansive picture windows frame tranquil green views while flooding the generous open-concept layout with brilliant sunshine. Stylish, easy-care hard surface flooring connects the main living, dining, and entertaining areas. The chef’s kitchen boasts dark granite counter space, rich cabinetry, stainless steel appliances, and a gas range. Two oversized bedrooms and two full bathrooms offer plenty of room",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/618/genIslnoResize.2589618_25_0.jpg" ]
+  }, {
+    "id" : 13652,
+    "mlsId" : "2590171",
+    "url" : "https://www.redfin.com/WA/Kirkland/9715-NE-Juanita-Dr-98034/unit-210B/home/13652",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quartz countertops", "Private balcony", "Renovated kitchen" ],
+    "yearBuilt" : 1976,
+    "area" : 1421,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 795000,
+    "addressRaw" : "9715 NE Juanita Dr Unit 210B, Kirkland, WA 98034",
+    "address" : {
+      "street" : "9715 NE Juanita Dr Unit 210B",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.703776,
+    "longitude" : -122.213307,
+    "description" : "Incredible lake lifestyle with fabulous view for under $800,000! Enjoy low-maintenance living in this beautiful Kirkland condo next to Juanita Beach Park, where beach walks, paddleboarding  &  coffee at your favorite neighborhood café can be part of your everyday routine. A private balcony overlooks the park  &  Lake Washington, offering the perfect spot to unwind. Freshly painted interiors feature a spacious, renovated kitchen with stainless steel appliances, quartz countertops, wood cabinetry  &  abundant storage. The open-concept living  &  dining areas provide a comfortable setting for everyday living  &  entertaining. Two generous bedrooms include a primary s",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2590171_31_0.jpg" ]
+  }, {
+    "id" : 279648,
+    "mlsId" : "2587875",
+    "url" : "https://www.redfin.com/WA/Kirkland/8622-NE-139th-St-98034/home/279648",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Updated electrical", "Den or office", "Kitchen countertops" ],
+    "yearBuilt" : 1965,
+    "area" : 1340,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1000000,
+    "addressRaw" : "8622 NE 139th St, Kirkland, WA 98034",
+    "address" : {
+      "street" : "8622 NE 139th St",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7258084,
+    "longitude" : -122.2259186,
+    "description" : "What a find! Extensively updated and move-in ready, this Finn Hill rambler has everything you need and more! Single level living has never been easier, with refreshed bathrooms, updated electrical, tankless water heater, kitchen countertops, appliances, lighting, new solid wood doors and more! Upon entering, you'll immediately feel that this is different than other homes. Gleaming hardwoods, large picture windows and a cosy gas fireplace greet you in the large living room. The kitchen has ample storage thanks to an additional bank of pantry cabinets, prep space and coffee bar. Through a curved archway, you'll find an unexpected den or office, leading through glass sliders to a large trex de",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/875/genIslnoResize.2587875_30_0.jpg" ]
+  }, {
+    "id" : 206031213,
+    "mlsId" : "2585909",
+    "url" : "https://www.redfin.com/WA/Kirkland/11618-100th-Ave-NE-98034/unit-111/home/206031213",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Remodeled bathroom", "Remodeled kitchen", "Private patio" ],
+    "yearBuilt" : 1978,
+    "area" : 1016,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 360000,
+    "addressRaw" : "11618 100th Ave NE #111, Kirkland, WA 98034",
+    "address" : {
+      "street" : "11618 100th Ave NE #111",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7049645,
+    "longitude" : -122.2075447,
+    "description" : "Enjoy the best of Juanita living in this thoughtfully updated 2-bedroom condo just two blocks from Juanita Village and moments from Juanita Beach Park, waterfront trails, shopping and dining. The inviting open living and dining area features new LVP flooring, a cozy wood-burning fireplace and abundant natural light. The kitchen and bathroom have been fully remodeled, complemented by fresh interior paint and new flooring throughout. Step outside to your private patio overlooking beautifully landscaped surroundings—an inviting spot for morning coffee or relaxing at the end of the day. Exceptional storage includes two generous bedroom closets, an oversized coat closet, linen closet and d",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/909/genIslnoResize.2585909_23_0.jpg" ]
+  }, {
+    "id" : 280705,
+    "mlsId" : "2587638",
+    "url" : "https://www.redfin.com/WA/Kirkland/13210-Holmes-Point-Dr-NE-98034/home/280705",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Sweeping sw views", "Chef’s kitchen", "0.53 acre lot" ],
+    "yearBuilt" : 1959,
+    "area" : 3430,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 2850000,
+    "addressRaw" : "13210 Holmes Point Dr NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13210 Holmes Point Dr NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7193747,
+    "longitude" : -122.2579561,
+    "description" : "Extraordinary Pacific NW mid-century modern in coveted Holmes Pt, w/ sweeping SW views of Lk Washington, city lights  &  rose-colored sunsets. Meticulously reimagined over the past 7 years, this exceptional 3+BR, 2.5BA, 3,430SF residence blends timeless architectural character w/ sophisticated modern updates. The chef’s kitchen features custom cherry cabinetry, an expansive entertaining island, &  top-of-the-line Wolf  &  Sub-Zero appliances, flowing seamlessly into the cathedral-ceilinged great room. Carefully curated details incl an elegant entry foyer w/ artistic glass doors created by renowned artist Mark Olson, walls of windows framing breathtaking lake views, vaulted",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_6_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_7_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_31_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/638/genIslnoResize.2587638_32_3.jpg" ]
+  }, {
+    "id" : 277105,
+    "mlsId" : "2589994",
+    "url" : "https://www.redfin.com/WA/Kirkland/8706-NE-135th-Pl-98034/home/277105",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Detached garage shop", "Walk-in closet", "Stainless appliances" ],
+    "yearBuilt" : 1961,
+    "area" : 2420,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1234950,
+    "addressRaw" : "8706 NE 135th Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "8706 NE 135th Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7220391,
+    "longitude" : -122.225101,
+    "description" : "Set on a quiet Finn Hill cul-de-sac, this extensively updated 2,420 sq ft home offers a main-floor primary suite and a 1,070 sq ft detached garage/shop on a level 10,166 sq ft corner lot. Hardwood floors, generous windows and a gas fireplace bring warmth to the living spaces. The kitchen features stainless appliances, ample cabinetry and breakfast bar seating, with French doors connecting the dining area to the patio for easy outdoor entertaining. The primary suite includes a walk-in closet with built-storage, direct backyard access and a private full bath with a double vanity and radiant heated floors. A second main-floor bedroom sits across from the separate powder room. Improvements incl",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/994/genIslnoResize.2589994_34_1.jpg" ]
+  }, {
+    "id" : 43281,
+    "mlsId" : "2586970",
+    "url" : "https://www.redfin.com/WA/Kirkland/9901-NE-124th-St-98034/unit-504/home/43281",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "In-unit laundry", "Private patio", "Granite countertops" ],
+    "yearBuilt" : 1975,
+    "area" : 937,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 399000,
+    "addressRaw" : "9901 NE 124th St #504, Kirkland, WA 98034",
+    "address" : {
+      "street" : "9901 NE 124th St #504",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7109799,
+    "longitude" : -122.2099833,
+    "description" : "Best location in the complex! Top-floor end unit with a private patio overlooking the creek. Two spacious bedrooms, one being a primary suite, and two baths. Updates include new carpet, vinyl windows, stainless steel appliances, maple cabinetry, granite countertops and in-unit laundry. Community features a pool, cabana, saunas, sport court, assigned parking space, ample guest spots plus an additional storage unit. Conveniently located near I-405, major tech campuses, Downtown Kirkland, Evergreen Health and Totem Lake Village. HOA allows two household pets. No rental cap makes this a great opportunity for an owner occupant or investor.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/970/genIslnoResize.2586970_28_0.jpg" ]
+  }, {
+    "id" : 278150,
+    "mlsId" : "2589913",
+    "url" : "https://www.redfin.com/WA/Kirkland/12815-98th-Pl-NE-98034/home/278150",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Flexible floor plan", "Remodeled kitchen", "Quality cabinetry" ],
+    "yearBuilt" : 1974,
+    "area" : 1390,
+    "beds" : 3,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 960000,
+    "addressRaw" : "12815 98th Pl NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12815 98th Pl NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.71532,
+    "longitude" : -122.2103404,
+    "description" : "Beautifully updated Kirkland rambler showcasing pride of ownership throughout. The remodeled kitchen features granite countertops, quality cabinetry, and ample workspace, while freshly refinished oak hardwood floors add warmth and character. Two newly remodeled bathrooms offer stylish, modern finishes. The flexible floor plan includes a spacious bonus second living room with a cozy wood-burning fireplace, perfect for entertaining, relaxing, or creating a separate gathering space. Thoughtful updates include new insulation in the attic, crawl space, and garage for improved comfort and efficiency, along with brand-new garage doors and openers. The low-maintenance exterior features durable viny",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/913/genIslnoResize.2589913_24_0.jpg" ]
+  }, {
+    "id" : 205696176,
+    "mlsId" : "2588464",
+    "url" : "https://www.redfin.com/WA/Kirkland/13633-103rd-Ave-NE-98034/home/205696176",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Covered front porch", "Private backyard", "Gas fireplace" ],
+    "yearBuilt" : 2026,
+    "area" : 1847,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1339000,
+    "addressRaw" : "13633 103rd NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13633 103rd NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7230276,
+    "longitude" : -122.2038515,
+    "description" : "Welcome to Itama Bay, where a one-of-a-kind architecturally designed residence offers approximately 1,847 square feet of living space on an approximately 5,100 square foot lot. This home features 3 bedrooms, 2.5 baths, and an open-concept floor plan filled with abundant natural light. Ideally located near walkable cafés, restaurants, and everyday conveniences and minutes from Edith Moulton Park, Juanita Beach Park, downtown Kirkland's waterfront, and The Village at Totem Lake, with quick I-405 access to all of Kirkland's sought-after destinations. A covered front porch and generously sized private backyard lead into an elegant living space equipped with a gas fireplace, adding an ext",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/464/genIslnoResize.2588464_38_0.jpg" ]
+  }, {
+    "id" : 512519,
+    "mlsId" : "2589344",
+    "url" : "https://www.redfin.com/WA/Kirkland/13216-NE-129th-Pl-98034/home/512519",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Cul-de-sac location", "Vaulted great room", "Chef's kitchen" ],
+    "yearBuilt" : 2026,
+    "area" : 3760,
+    "beds" : 5,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 2498000,
+    "addressRaw" : "13216 NE 129th Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13216 NE 129th Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7162431,
+    "longitude" : -122.1635374,
+    "description" : "Azori introduces a transitional design in the convenient Totem Lake neighborhood. Cul-de-sac location. Entertainment spaces include vaulted great room, chef’s kitchen, outdoor covered living space   &  upper-floor bonus room. Private, main floor guest en-suite. Upper floor primary retreat with 5-piece bath. Dedicated study. Private backyard with great natural light. Smart  &  green home features throughout, including solar panels. Just blocks to high end shopping and restaurants at The Village at Totem Lake. Convenient access to downtown Kirkland amenities, beaches, parks, schools  &  all major Tech campuses. Lake Washington Schools. Limited time $50,000 buyer credit!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/344/genIslnoResize.2589344_31_0.jpg" ]
+  }, {
+    "id" : 22449090,
+    "mlsId" : "2582180",
+    "url" : "https://www.redfin.com/WA/Kirkland/11905-89th-Ave-NE-98034/home/22449090",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Electric fireplace", "2,500 sq ft lot", "Garage" ],
+    "yearBuilt" : 2025,
+    "area" : 2419,
+    "beds" : 4,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 1398000,
+    "addressRaw" : "11905 89th Ave NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "11905 89th Ave NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7067334,
+    "longitude" : -122.2241987,
+    "description" : "Tucked into an elevated residential enclave above Juanita, this newly built detached home is surrounded by distinctive homes, mature greenery and Lake Washington outlooks that define this private hillside setting. Positioned on a quiet dead-end street with adjacent public land providing an added sense of separation, the home feels wonderfully removed—yet Juanita Beach, Juanita Village and the waterfront are just minutes away. Soaring ceilings and expansive windows bring abundant natural light into the open living spaces, while multiple private decks reach into the treetops with territorial and partial lake views. Thoughtfully arranged across multiple levels, the home offers four bedro",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/180/genIslnoResize.2582180_30_0.jpg" ]
+  }, {
+    "id" : 459074,
+    "mlsId" : "2581549",
+    "url" : "https://www.redfin.com/WA/Kirkland/14325-102nd-Ave-NE-98034/home/459074",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Custom storage", "Miele dishwasher", "Double ovens" ],
+    "yearBuilt" : 1975,
+    "area" : 2752,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1295000,
+    "addressRaw" : "14325 102 Ave NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14325 102 Ave NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.717533374,
+    "longitude" : -122.2062064,
+    "description" : "Warm, inviting, and full of thoughtful details, this beautiful home is designed for both comfortable everyday living  &  entertaining. The heart of the home is the chef’s kitchen, featuring a Sub-Zero refrigerator, Miele dishwasher, Wolf six-burner range with griddle and double ovens, custom storage, and generous counter space. .. a dream setting whether you’re preparing a quiet dinner or hosting a house full of friends. Hardwood floors and natural light carry throughout the main living spaces, creating an easy, welcoming flow that naturally connects indoor and outdoor living. The incredible sunroom may quickly become your favorite place, w/ walls of natural light, expansive",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_13_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_14_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_15_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_16_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_17_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_18_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_19_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_20_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/549/genIslnoResize.2581549_22_1.jpg" ]
+  }, {
+    "id" : 282384,
+    "mlsId" : "2589173",
+    "url" : "https://www.redfin.com/WA/Kirkland/11459-79th-Way-NE-98034/home/282384",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private 5-piece bath", "Walk-in closet", "Open-concept kitchen" ],
+    "yearBuilt" : 1999,
+    "area" : 3580,
+    "beds" : 6,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 1385000,
+    "addressRaw" : "11459 79th Way NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "11459 79th Way NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7037027,
+    "longitude" : -122.236587,
+    "description" : "Don’t miss this spacious 3,580-sq. -ft. tri-level home in one of Kirkland’s most desirable neighborhoods, conveniently located near Juanita Beach Park, major highways, shopping  &  dining, downtown Kirkland’s waterfront, Eastside tech hubs, and top-rated Lake Washington schools. The home offers 6 bedrooms and 3.5 baths, a rare blend of size, functionality, and value. Upstairs, the primary suite with a private 5-piece bath  &  walk-in closet, along with 3 additional bedrooms and a full bath. The main level includes a spacious open-concept kitchen ideal for everyday cooking  &  entertaining with SS appliances, warm maple cabinetry, hardwood floors, nook, and fami",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/173/genIslnoResize.2589173_29_0.jpg" ]
+  }, {
+    "id" : 282210,
+    "mlsId" : "2589359",
+    "url" : "https://www.redfin.com/WA/Kirkland/13133-Holmes-Point-Dr-NE-98034/home/282210",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Entertaining deck", "Chef’s kitchen", "3,103 sq ft lot" ],
+    "yearBuilt" : 2014,
+    "area" : 2760,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 3500000,
+    "addressRaw" : "13133 Holmes Point Dr NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13133 Holmes Point Dr NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.718322,
+    "longitude" : -122.2587981,
+    "description" : "Rare opportunity to enjoy the ultimate Lake Washington waterfront lifestyle from this exceptional west-facing retreat in Holmes Point. Rebuilt to the highest standards by Stellar Carpentry in 2014, this stunning 4-bedroom, 3.5-bath residence offers 2,760 square feet of light-filled living space designed to maximize breathtaking lake, sunset, and mountain views. Thoughtfully crafted interiors feature gleaming bamboo hardwood floors, a dramatic multi-sided gas fireplace, expansive view windows, and seamless indoor-outdoor living. The chef’s kitchen is beautifully appointed with stainless steel appliances, double ovens, walk-in pantry, breakfast nook, and adjoining dining area opening to",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/359/genIslnoResize.2589359_34_0.jpg" ]
+  }, {
+    "id" : 2086709,
+    "mlsId" : "2581507",
+    "url" : "https://www.redfin.com/WA/Kirkland/13150-102nd-Ln-NE-98034/unit-4/home/2086709",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Views of wetlands", "Newer cabinetry", "Updated kitchen" ],
+    "yearBuilt" : 1985,
+    "area" : 1076,
+    "beds" : 2,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 450000,
+    "addressRaw" : "13150 102nd Ln NE #4, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13150 102nd Ln NE #4",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7182092,
+    "longitude" : -122.2041369,
+    "description" : "Welcome to this stunning, beautifully updated 2-bedroom, 2.25-bath townhome-style condo in the highly sought-after Kirkland Village community! Perfectly situated just moments from the vibrant heart of Juanita, this 1,076-sqft residence offers the perfect blend of convenience and tranquil Pacific Northwest living. Step inside to discover a bright, open main floor featuring beautiful new plank flooring and a cozy wood-burning fireplace, perfect for chilly PNW nights. The updated kitchen boasts sparkling granite countertops, pristine newer cabinetry, and quality stainless steel appliances. Your dining and living spaces flow seamlessly out to a private, spacious deck overlooking a serene greenb",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/507/genIslnoResize.2581507_27_1.jpg" ]
+  }, {
+    "id" : 2117569,
+    "mlsId" : "2588185",
+    "url" : "https://www.redfin.com/WA/Kirkland/10009-NE-120th-Ln-98034/unit-B301/home/2117569",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New carpet", "Oversized kitchen", "Granite countertops" ],
+    "yearBuilt" : 1986,
+    "area" : 1012,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 449000,
+    "addressRaw" : "10009 NE 120th Ln Unit B301, Kirkland, WA 98034",
+    "address" : {
+      "street" : "10009 NE 120th Ln Unit B301",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7089892,
+    "longitude" : -122.2070106,
+    "description" : "Welcome home to this bright top-floor corner condo in a prime Kirkland location. With 2 bedrooms, 1 bath, abundant windows, and excellent storage, this home lives larger than its footprint. The oversized kitchen features granite countertops, stainless steel appliances, and ample workspace, while the wood-burning fireplace creates a warm and inviting gathering space. Recent updates include new carpet, paint, professionally cleaned, and a stylish new dining chandelier, making this home truly move-in ready. Two reserved parking spaces, including one covered spot, provide added convenience. Community amenities include a pool, hot tub, sauna, and clubhouse. Just minutes from Juanita Beach, water",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/185/genIslnoResize.2588185_32_0.jpg" ]
+  }, {
+    "id" : 282533,
+    "mlsId" : "2588505",
+    "url" : "https://www.redfin.com/WA/Kirkland/7433-NE-120th-Pl-98034/home/282533",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Central staircase", "Second floor catwalk", "Wooded ¼ acre lots" ],
+    "yearBuilt" : 1968,
+    "area" : 3068,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 1195000,
+    "addressRaw" : "7433 NE 120th Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "7433 NE 120th Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.708535,
+    "longitude" : -122.2417001,
+    "description" : "Welcome to Denny Park Heights, known for its unique Northwest style midcentury homes on wooded ¼ acre lots. Built by Stewart and Potter, a regularly featured builder in the 1950’s  &  60’s Parade of Homes, you’ll be enthralled with this home from the moment you arrive. A stone floored entry leads up or down via a central staircase wrapped cleverly around an indoor planter. Vaulted wood ceilings and a second floor catwalk gently illuminated by well-placed windows and a skylight overlook a massive dining room and sunroom just beyond. Tucked into the east wing is a kitchen refreshed with granite and new appliances in 2021, and a great room with fireplace and adjace",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/505/genIslnoResize.2588505_38_1.jpg" ]
+  }, {
+    "id" : 512832,
+    "mlsId" : "2582727",
+    "url" : "https://www.redfin.com/WA/Kirkland/13324-NE-138th-Pl-98034/home/512832",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private lot", "Premium lvp flooring", "Backs to greenbelt" ],
+    "yearBuilt" : 1981,
+    "area" : 1450,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 875000,
+    "addressRaw" : "13324 NE 138th Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13324 NE 138th Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7247292,
+    "longitude" : -122.1614234,
+    "description" : "Tucked away from the busy road, this thoughtfully remodeled Kirkland home sits on a quiet, private lot backing to a greenbelt - no development anticipated behind you, just birdsong  &  PNW calm. Platted as a single-family home. SS appliances, tall soft-close and high quality cabinetry to the ceiling (soffits removed for full-height storage), premium 12 mil LVP flooring, &  a Heat & Glo gas FP framed in natural stone - chosen to run without electricity, keeping the home warm  &  safe during outages. Upstairs, a skylit staircase leads to a spacious primary suite  &  two add. bedrooms, all w/ custom closets, plus fully tiled baths w/ rain showerheads  &  one bedroom w/ ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/727/genIslnoResize.2582727_39_0.jpg" ]
+  }, {
+    "id" : 274596,
+    "mlsId" : "2586789",
+    "url" : "https://www.redfin.com/WA/Kirkland/8210-NE-141st-St-98034/home/274596",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "0.25 acre lot", "Garage", "Built 1967" ],
+    "yearBuilt" : 1967,
+    "area" : 1723,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1085000,
+    "addressRaw" : "8210 NE 141st St, Kirkland, WA 98034",
+    "address" : {
+      "street" : "8210 NE 141st St",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.728103,
+    "longitude" : -122.2307349,
+    "description" : "Investors / Builders / Developers / This rambler is ready to either be cleaned up and rented out or torn down to prepare for building 3 new 3 bedroom 2.5 bath plus office cottages with 1 car garages. LSM Land surface modification permits final corrections with the city of Kirkland, building permits submitted with the city of Kirkland. Architecture, Survey, Civil engineering, Structural engineering, Arborists report, street lighting reports, street improvements, all completed and submitted with the City of Kirkland for permits",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2586789_12_0.jpg" ]
+  }, {
+    "id" : 455577,
+    "mlsId" : "2581562",
+    "url" : "https://www.redfin.com/WA/Kirkland/12614-NE-140th-St-98034/home/455577",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Wrap around porch", "Gourmet kitchen", "Butcher block island" ],
+    "yearBuilt" : 2006,
+    "area" : 3900,
+    "beds" : 5,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 2125000,
+    "addressRaw" : "12614 NE 140th St, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12614 NE 140th St",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7261121,
+    "longitude" : -122.172046,
+    "description" : "Step into your forever home, where timeless charm meets modern elegance. This stunning Craftsman showcases exquisite millwork throughout, a testament to true craftsmanship rarely found today. At the heart of the home, a gourmet kitchen awaits—complete with a butcher block island and floor-to-ceiling cabinetry, ready to inspire your next culinary adventure. Just beyond, the living room stretches upward beneath a soaring vaulted ceiling, filled with natural light. A versatile bonus room on the main floor offers endless possibilities: a MIL suite, billiards room, or private home office—the choice is yours. Step outside to a wrap-around porch and partially covered courtyard, the per",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/562/genIslnoResize.2581562_7_1.jpg" ]
+  }, {
+    "id" : 458176,
+    "mlsId" : "2587029",
+    "url" : "https://www.redfin.com/WA/Kirkland/14415-105th-Ave-NE-98034/home/458176",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Remodeled kitchen", "Primary suite", "Private yard" ],
+    "yearBuilt" : 1974,
+    "area" : 2015,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1399950,
+    "addressRaw" : "14415 105th Ave NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14415 105th Ave NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7320931,
+    "longitude" : -122.2008902,
+    "description" : "Welcome home to this beautifully updated tri-level gem tucked away on a quiet cul-de-sac in the highly sought-after North Juanita neighborhood. Boasting 4 bedrms, 2.75 remodeled baths, &  1,820 square feet of vibrant living space, this turnkey property perfectly blends modern refreshes w/ classic architectural charm. Step inside to find new interior paint, plush new carpet, &  stylish updated flooring throughout. The inviting main level features a sun-drenched living room showcasing dramatic vaulted ceilings, exposed wood beams, &  a cozy brick gas fireplace-the ultimate spot to unwind. Transition seamlessly into the dining room and the roomy, remodeled kitchen. From there, slid",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/029/genIslnoResize.2587029_29_0.jpg" ]
+  }, {
+    "id" : 459141,
+    "mlsId" : "2586219",
+    "url" : "https://www.redfin.com/WA/Kirkland/10026-NE-140th-St-98034/home/459141",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quiet cul-de-sac", "Primary suite", "Refreshed kitchen" ],
+    "yearBuilt" : 1980,
+    "area" : 2500,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1250000,
+    "addressRaw" : "10026 NE 140th St, Kirkland, WA 98034",
+    "address" : {
+      "street" : "10026 NE 140th St",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7266643,
+    "longitude" : -122.2064254,
+    "description" : "Completely reimagined home move-in ready!   Tucked away on a private lane in sought-after Boyd Farm, this home offers a wonderful sense of privacy and peacefulness. Experience warm and inviting spaces for everyday living thoughtfully updated in timeless Northwest style. The refreshed kitchen features beautiful new cabinets, quartz counters, stainless appliances, large eating area  &  sliders to entertainment size deck. Spacious light filled living room with  floor-to-ceiling windows  &  a wood-burning fireplace adjacent to the large formal dining room. A primary suite with new full-bath plus two additional bedrooms and a beautifully refreshed bath on main level. Fresh interior paint",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/219/genIslnoResize.2586219_18_0.jpg" ]
+  }, {
+    "id" : 282474,
+    "mlsId" : "2587687",
+    "url" : "https://www.redfin.com/WA/Kirkland/11822-Holmes-Point-Dr-NE-98034/home/282474",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Expansive decks", "Versatile lounge", "Dedicated office" ],
+    "yearBuilt" : 2019,
+    "area" : 4640,
+    "beds" : 4,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 3190000,
+    "addressRaw" : "11822 Holmes Point Dr NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "11822 Holmes Point Dr NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7071968,
+    "longitude" : -122.2478388,
+    "description" : "Lake Washington sunsets set the scene for this contemporary Holmes Point residence, where open living spaces connect beautifully with expansive decks. Built in 2019, the 4,640-square-foot home offers four bedrooms, a dedicated office and inviting spaces to gather across three levels. A kitchen equipped with Wolf, Sub-Zero and Bosch appliances anchors the main living area, with outdoor seating and a fireplace extending the entertaining space. A main-floor guest bedroom and nearby three-quarter bath provide flexibility for visitors. Upstairs, the primary retreat pairs distinctive finishes with a spa-inspired bath, while two additional bedrooms and a separate lounge offer room to spread out. T",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_36_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/687/genIslnoResize.2587687_38_1.jpg" ]
+  }, {
+    "id" : 277301,
+    "mlsId" : "2587664",
+    "url" : "https://www.redfin.com/WA/Kirkland/12613-93rd-Pl-NE-98034/home/277301",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private deck", "Walk-in closet", "New gutters" ],
+    "yearBuilt" : 1984,
+    "area" : 1740,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1150000,
+    "addressRaw" : "12613 93rd Pl NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "12613 93rd Pl NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7139686,
+    "longitude" : -122.2170343,
+    "description" : "Welcome to this beautifully refreshed Kirkland home in the desirable North Juanita area! This two-story home features a bright living area with fireplace, updated kitchen with new appliances, fresh paint, new luxury vinyl plank flooring, a spacious primary bedroom with walk-in closet, and a private deck. Enjoy the peace of mind of a new roof and gutters. Situated on a generous lot and conveniently located near parks, shopping, dining, schools, and major commuter routes. Move-in ready!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2587664_24_0.jpg" ]
+  }, {
+    "id" : 453157,
+    "mlsId" : "2584826",
+    "url" : "https://www.redfin.com/WA/Kirkland/11601-NE-150th-Pl-98034/home/453157",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Updated 2-story home", "Skylight", "Hardwood floors" ],
+    "yearBuilt" : 1968,
+    "area" : 2280,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1075000,
+    "addressRaw" : "11601 NE 150th Pl, Kirkland, WA 98034",
+    "address" : {
+      "street" : "11601 NE 150th Pl",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7367411,
+    "longitude" : -122.1860296,
+    "description" : "Spacious, beautifully updated 2-story Kirkland home on a peaceful street with room to live, gather  &  unwind. The generous 4-bedroom floorplan features beautiful hardwood floors, two fireplaces  &  multiple living spaces, including a family room with built-ins  &  skylight. The spacious kitchen offers granite counters, stainless appliances, newer induction cooktop  &  counter seating. An incredible sunroom with walls of windows  &  skylights overlooks the beautifully landscaped, fully fenced yard with multiple patios  &  a peaceful stone fountain water feature—your own backyard retreat. The primary suite features a W/ I closet  &  private bath with double ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/826/genIslnoResize.2584826_39_0.jpg" ]
+  }, {
+    "id" : 275511,
+    "mlsId" : "2587632",
+    "url" : "https://www.redfin.com/WA/Kirkland/14205-77th-Ave-NE-98034/home/275511",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New patio", "Fully remodeled home", "High-end finishes" ],
+    "yearBuilt" : 1970,
+    "area" : 1540,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 850000,
+    "addressRaw" : "14205 77th Ave NE, Kirkland, WA 98034",
+    "address" : {
+      "street" : "14205 77th Ave NE",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.729986,
+    "longitude" : -122.2384433,
+    "description" : "Stunning fully remodeled home sits on an extra large corner lot in the sought-after Heather Glen area of Finn Hill. Thoughtfully designed open layout with a new fully fenced yard, new patio and new extra large driveway. High-end finishes throughout, new appliances, hardwood flooring, built-in heat and A/C for year-round comfort. Large backyard with space for entertaining or a DADU. Prime location on a corner lot with Big Finn Hill Park and St. Edward State park nearby, plus quick access to 405. Award-winning Lake Washington schools.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/632/genIslnoResize.2587632_12_0.jpg" ]
+  }, {
+    "id" : 182035384,
+    "mlsId" : "2585738",
+    "url" : "https://www.redfin.com/WA/Kirkland/13128-NE-133rd-Ct-98034/home/182035384",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Main-level den", "2023 built home", "Open great room" ],
+    "yearBuilt" : 2023,
+    "area" : 3100,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 2150000,
+    "addressRaw" : "13128 NE 133rd Ct, Kirkland, WA 98034",
+    "address" : {
+      "street" : "13128 NE 133rd Ct",
+      "city" : "Kirkland",
+      "state" : "WA",
+      "zipcode" : "98034"
+    },
+    "latitude" : 47.7201846,
+    "longitude" : -122.1644816,
+    "description" : "Exceptional 2023-built home by Hamish Anderson Custom Homes — 3,100 SF of refined, move-in ready living. This meticulously maintained 4-bed / 2.5-bath residence combines modern craftsmanship with everyday functionality. Bright, open great room anchors the floor plan with oversized windows and seamless flow to covered outdoor living—ideal for indoor-outdoor entertaining. The chef’s kitchen features top-of-the-line appliances, an expanded island/breakfast bar, slab countertops, tile backsplash, and abundant cabinetry. A main-level den and mudroom add flexibility and convenience. Upstairs offers a serene primary suite with a spa-like bath, a sunny bonus room, two additional b",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/738/genIslnoResize.2585738_33_0.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1,
+    "nextPage" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+    "otherPages" : {
+      "2" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+      "3" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house/page-3",
+      "4" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house/page-4",
+      "5" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house/page-5",
+      "6" : "https://redfin.com/zipcode/98034/filter/sort=lo-days,property-type=condo+townhouse+house/page-6"
+    }
+  }
+}

@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GnnModelTest {
     @Test
+    void haversineDistanceIsZeroForSamePoint() {
+        assertEquals(0.0, GnnModel.haversineKm(47.61, -122.33, 47.61, -122.33), 1e-12);
+    }
+
+    @Test
     void exportedMonthlyEmbeddingAndPriceHeadProduceAPrice() {
         WaterProximityService water = new WaterProximityService();
         water.load();

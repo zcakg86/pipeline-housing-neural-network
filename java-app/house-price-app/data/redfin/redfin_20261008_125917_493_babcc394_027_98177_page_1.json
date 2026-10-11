@@ -1,0 +1,1179 @@
+{
+  "requestMetadata" : {
+    "id" : "1c64814b-93ad-4ff7-83b5-5b7d67ecbd11",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/1c64814b-93ad-4ff7-83b5-5b7d67ecbd11.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/1c64814b-93ad-4ff7-83b5-5b7d67ecbd11.json",
+    "url" : "https://redfin.com/zipcode/98177/filter/sort=lo-days,property-type=condo+townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 47
+  },
+  "properties" : [ {
+    "id" : 288529,
+    "mlsId" : "2589801",
+    "url" : "https://www.redfin.com/WA/Seattle/10523-13th-Ave-NW-98177/home/288529",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Bluestone patio", "Wood wrapped windows", "New composition roof" ],
+    "yearBuilt" : 1947,
+    "area" : 1620,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1125000,
+    "addressRaw" : "10523 13th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10523 13th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7058659,
+    "longitude" : -122.373069,
+    "description" : "Come fall in love with this Blue Ridge charmer!  You will be enticed the moment you walk in the front door. Built in 1947 and updated, it has a wonderful feeling, with a combo of classic details like oak floors  &  wood wrapped windows, and great updates like a new composition roof and efficient newer heat pump. You’ll love the amazing backyard complete with a Bluestone patio, custom built storage shed for bikes  &  paddle boards, and established plantings with seasonal color. The location in Blue Ridge offers coveted private beach access, as well as private parks, a clubhouse, outdoor pool  &  tennis/pickleball courts. Located near Carkeek Park with hiking trails, you wil",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_1_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/801/genIslnoResize.2589801_36_0.jpg" ]
+  }, {
+    "id" : 2172,
+    "mlsId" : "2590709",
+    "url" : "https://www.redfin.com/WA/Shoreline/1854-NW-195th-St-98177/unit-205/home/2172",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Large bedroom", "Deck", "Den" ],
+    "yearBuilt" : 2003,
+    "area" : 972,
+    "beds" : 1,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 550000,
+    "addressRaw" : "1854 NW 195th St #205, Shoreline, WA 98177",
+    "address" : {
+      "street" : "1854 NW 195th St #205",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.771207,
+    "longitude" : -122.381962,
+    "description" : "Floor plan features large bedroom, den, two baths, fireplace, deck. Newer stainless appliances, flooring and paint. Granite countertops. Just steps to Richmond Beach Salt Water Park, Library, Blackbird Restaurant, Richmond Beach Foods, Richmond Beach Animal Hospital, Pet Grooming. Very well maintained  &  managed. Secure building. Elevator. Camera surveillance. Reserve Fund. Two parking spaces in secure garage. Spacious storage room. One pet under 20 pounds. Compare and you will agree that quality, location, natural light, convenience and price can’t be matched. Come see!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/709/genIslnoResize.2590709_37_1.jpg" ]
+  }, {
+    "id" : 77025,
+    "mlsId" : "2579009",
+    "url" : "https://www.redfin.com/WA/Shoreline/17730-14th-Ave-NW-98177/home/77025",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Puget sound views", "Vaulted ceilings", "Walls of glass" ],
+    "yearBuilt" : 1949,
+    "area" : 4010,
+    "beds" : 5,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 3450000,
+    "addressRaw" : "17730 14th Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "17730 14th Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7588736,
+    "longitude" : -122.374351,
+    "description" : "Exceptional Mid-Century residence in coveted Innis Arden with iconic Northwest architecture and breathtaking Puget Sound and Olympic Mountain views. The main level features vaulted ceilings, walls of glass, and seamless indoor-outdoor living. Custom chef’s kitchen with quartz island, Wolf range, Sub-Zero refrigeration, and paneled appliances opens to a light-filled great room with gas fireplace. Dining area with bar complements the spacious living room with custom fireplace, dramatic views, and French doors to the backyard veranda. The primary wing offers a spa-inspired 5-pc bath, Kohler fixtures, walk-in closet, and French doors to the yard. Two additional ensuite bedrooms, laundry, ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_36_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_37_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_38_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/009/genIslnoResize.2579009_39_1.jpg" ]
+  }, {
+    "id" : 96340,
+    "mlsId" : "121200",
+    "url" : "https://www.redfin.com/WA/Seattle/10356-Dibble-Ave-NW-98177/home/96340",
+    "homeType" : "House",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Space to garden", "Rv parking potential", "Expansive patio" ],
+    "yearBuilt" : 1953,
+    "area" : 1320,
+    "beds" : 3,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 875000,
+    "daysOnSite" : 5,
+    "addressRaw" : "10356 Dibble Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10356 Dibble Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7050016,
+    "longitude" : -122.367102,
+    "description" : "A rare combination of space, flexibility  &  location on the edge of Carkeek Park! This inviting one-level home sits on an oversized corner lot with access from two streets, abundant off-street parking front  &  back, RV parking potential and a fully fenced backyard. Inside, hardwood floors, a classic brick fireplace and exposed brick add warmth  &  character, while the updated kitchen flows to the dining area and outdoors. French doors open to an expansive patio with room for entertaining, outdoor dining, play—or even a sport court. The generous lot offers space to garden, expand the home or explore future DADU possibilities. Enjoy miles of wooded trails, Piper’s Cr",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    }
+  }, {
+    "id" : 77299,
+    "mlsId" : "2590022",
+    "url" : "https://www.redfin.com/WA/Shoreline/17717-15th-Ave-NW-98177/home/77299",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Landscaped grounds", "Floating fireplace", "Puget sound views" ],
+    "yearBuilt" : 1951,
+    "area" : 4164,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 3900000,
+    "addressRaw" : "17717 15 Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "17717 15 Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7585653,
+    "longitude" : -122.3771272,
+    "description" : "Some homes are stunning. Very few are unforgettable. This is the rare combination of both. Entirely new, yet designed with the warmth and architectural soul of a classic mid-century modern, this exceptional Innis Arden home pairs timeless lines with extraordinary craftsmanship and a remarkable sense of place. Walls of glass frame sweeping Puget Sound and Olympic Mountain views, filling the home with natural light and bringing the landscape into nearly every room. Inside, a beautifully edited mix of honed stone, bespoke cabinetry, rich natural materials and designer lighting creates a home that feels sophisticated, warm and completely original. A striking floating fireplace anchors the main ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_35_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_36_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_38_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/022/genIslnoResize.2590022_39_1.jpg" ]
+  }, {
+    "id" : 77351,
+    "mlsId" : "2578051",
+    "url" : "https://www.redfin.com/WA/Shoreline/16727-16th-Ave-NW-98177/home/77351",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Multiple patios", "Private view deck", "Westerly views" ],
+    "yearBuilt" : 1956,
+    "area" : 2750,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 4500000,
+    "addressRaw" : "16727 16th Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "16727 16th Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7514949,
+    "longitude" : -122.3798859,
+    "description" : "Imagine turning onto one of the finest streets in the coveted Innis Arden community and arriving home through a garden bursting with a kaleidoscope of color and specimen plantings that delight you with texture and interest, season after season. Set on 1.47 acres, this swanky, cool mid-century modern home greets you with sweeping, mesmerizing, westerly views from nearly every room - the mountains, sailboats, ferries, even the occasional orca or humpback passing by. Tastefully reimagined in a joyful and playful palette, the house delivers a rare blend of light, space, and contemporary design with crisp lines, architectural drama, and soaring ceilings. Sweeping walls of glass invite the outdoo",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/051/genIslnoResize.2578051_39_0.jpg" ]
+  }, {
+    "id" : 18926,
+    "mlsId" : "2588754",
+    "url" : "https://www.redfin.com/WA/Shoreline/1854-NW-195th-St-98177/unit-309/home/18926",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "North facing unit", "Top floor unit", "Skylights" ],
+    "yearBuilt" : 2003,
+    "area" : 968,
+    "beds" : 1,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 559000,
+    "addressRaw" : "1854 NW 195th St #309, Shoreline, WA 98177",
+    "address" : {
+      "street" : "1854 NW 195th St #309",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.771207,
+    "longitude" : -122.381962,
+    "description" : "Rare opportunity in the heart of Richmond Beach! This stunning top floor 1 bed 2 bath + den unit in Richmond Manor offers a bright, inviting, open floor plan w/ thoughtful finishes throughout. The quiet north-facing unit features skylights, oversized windows, crown molding, lush carpet  &  tile, granite counters, eating bar  &  SS appliances. The spacious primary suite includes an en-suite bath w/ dual vanities, skylight, walk-in shower  &  radiant heated floors, as well as a walk-in closet. Fresh interior paint adds a crisp, move-in ready feel. Enjoy your morning coffee or an evening breeze on your private deck, or cozy up by the gas fireplace on cooler days. A secure building ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/754/genIslnoResize.2588754_30_0.jpg" ]
+  }, {
+    "id" : 25638,
+    "mlsId" : "2589620",
+    "url" : "https://www.redfin.com/WA/Shoreline/1821-NW-195th-St-98177/unit-11/home/25638",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Gated community", "Courtyard entrance", "Gas fireplace" ],
+    "yearBuilt" : 1972,
+    "area" : 1520,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 865000,
+    "addressRaw" : "1821 NW 195th St #11, Shoreline, WA 98177",
+    "address" : {
+      "street" : "1821 NW 195th St #11",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7698337,
+    "longitude" : -122.3807896,
+    "description" : "Well-maintained, one-level Richmond Beach living with a 2-car garage! Spacious and light-filled, this 1,520 sq. ft. single-level condo offers 2 bedrooms and 1.75 bathrooms in the heart of Richmond Beach. Located in a gated 55+ community of just 16 condos, residents enjoy beautifully maintained grounds, a private outdoor swimming pool and ample guest parking. A charming courtyard entrance with front patio welcomes you inside. The living room features vaulted ceilings and a gas fireplace, while the kitchen offers a breakfast bar opening to the family room. The main bedroom includes a ceiling fan, and the primary bedroom features an adjacent 3/4 bathroom with an updated full glass and tile sho",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/620/genIslnoResize.2589620_18_0.jpg" ]
+  }, {
+    "id" : 291033,
+    "mlsId" : "2588680",
+    "url" : "https://www.redfin.com/WA/Seattle/11825-8th-Ave-NW-98177/home/291033",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Hot tub", "Updated kitchen", "Lush landscaping" ],
+    "yearBuilt" : 1948,
+    "area" : 2080,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1295000,
+    "addressRaw" : "11825 8th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "11825 8th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7155517,
+    "longitude" : -122.3665778,
+    "description" : "Nestled among trees near Carkeek Park's northern edge, discover a rare combination within city limits: a fully turnkey mid-century home with updates abound, situated on a private shy half-acre lot with a newly painted pickleball / sport court. This is an opportunity like no other: a chance enjoy privacy, convenience  &  connection to nature in one of Seattle’s most desirable neighborhoods with exciting potential for a DADU or other expansion (seller has concept drawings  &  survey in-hand). A freshly painted interior accentuates a fabulously functional layout with hardwood floors, a gas fireplace, open living areas  &  picture windows. The beautifully updated kitchen is re",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/680/genIslnoResize.2588680_37_0.jpg" ]
+  }, {
+    "id" : 75101,
+    "mlsId" : "2587666",
+    "url" : "https://www.redfin.com/WA/Shoreline/836-NW-Richmond-Beach-Rd-98177/home/75101",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Open floor plan", "Towering evergreens", "Half-acre" ],
+    "yearBuilt" : 1951,
+    "area" : 2424,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1395000,
+    "addressRaw" : "836 NW Richmond Beach Rd, Shoreline, WA 98177",
+    "address" : {
+      "street" : "836 NW Richmond Beach Rd",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7659346,
+    "longitude" : -122.3678856,
+    "description" : "A rare Richmond Beach retreat, this beautifully updated midcentury home is set well back on an extraordinary half-acre surrounded by towering evergreens and thoughtfully designed exterior lighting. Inside, an elegant open floor plan is filled with natural light from expansive windows, warm hardwood floors and two wood-burning fireplaces. At the heart of the home, the stunning renovated kitchen features custom cabinetry, waterfall countertops and sophisticated modern design that flows seamlessly into the living spaces. Two bedrooms and two baths on the main floor include a brand-new, skylit primary bath creating a true ensuite retreat. Downstairs, the finished basement offers two additional ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/666/genIslnoResize.2587666_34_0.jpg" ]
+  }, {
+    "id" : 288133,
+    "mlsId" : "2587301",
+    "url" : "https://www.redfin.com/WA/Seattle/2425-NW-Blue-Ridge-Dr-98177/home/288133",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New cabinetry", "Puget sound views", "Walls of glass" ],
+    "yearBuilt" : 1959,
+    "area" : 2780,
+    "beds" : 3,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 2590000,
+    "addressRaw" : "2425 NW Blue Ridge Dr, Seattle, WA 98177",
+    "address" : {
+      "street" : "2425 NW Blue Ridge Dr",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.701999,
+    "longitude" : -122.3882211,
+    "description" : "A rare opportunity to own a true mid-century jewel in Seattle’s coveted Blue Ridge. Perfectly positioned to capture sweeping Puget Sound and Olympic Mountain views, this architectural standout blends iconic design with a fully completed, design-forward renovation. Walls of glass frame the view and fill the main living spaces with natural light, creating a seamless connection between indoors and out. The kitchen is both functional and elevated, featuring dual chef-grade refrigeration, new cabinetry, and curated finishes that complement the home’s mid-century roots. Extensive upgrades include water line, plumbing, electrical, windows, new interior and exterior doors, insulation, h",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/301/genIslnoResize.2587301_26_0.jpg" ]
+  }, {
+    "id" : 74232,
+    "mlsId" : "2583690",
+    "url" : "https://www.redfin.com/WA/Shoreline/2231-NW-190th-Pl-98177/home/74232",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "180º sound views", "Raised beds", "Tiered terraces" ],
+    "yearBuilt" : 1997,
+    "area" : 6830,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 4500000,
+    "addressRaw" : "2231 NW 190th Pl, Shoreline, WA 98177",
+    "address" : {
+      "street" : "2231 NW 190th Pl",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7670659,
+    "longitude" : -122.3860904,
+    "description" : "Endless sunsets  &  180º Sound views, perched on the bluff above Richmond Beach this 5-bed coastal Cape Cod stunner offers the pinnacle of luxurious private living. Panoramic unobstructed water  &  mountain views from nearly every room. Orcas breach, eagles soar, &  sailboats drift by the ever-changing backdrop to multiple indoor  &  outdoor private gathering spaces. Tiered terraces create incredible setting for entertaining, complete w/ bocce ball ct, garden casita, chicken coop, raised beds, expansive wraparound deck, new gate  &  fencing. Mature landscaping  &  lighting transforms the grounds after sunset. Inside, craftsmanship takes center stage. Rich millwo",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_36_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_38_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/690/genIslnoResize.2583690_39_1.jpg" ]
+  }, {
+    "id" : 288380,
+    "mlsId" : "2585786",
+    "url" : "https://www.redfin.com/WA/Seattle/13021-13th-Ave-NW-98177/home/288380",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "View deck", "Gourmet kitchen", "Panoramic views" ],
+    "yearBuilt" : 1985,
+    "area" : 3790,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 2999900,
+    "addressRaw" : "13021 13th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "13021 13th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7239717,
+    "longitude" : -122.3730725,
+    "description" : "Panoramic views of Puget Sound and the Olympic Mountains define this distinctive Seattle home, privately situated behind a gate on nearly 3/4 acre. Rich in character and designed to maximize the views from nearly every room, the spacious floor plan features a gourmet kitchen with Wolf range, Sub-Zero refrigerator, granite island, multiple gathering spaces, den/library, rec room with bar and multiple fireplaces. Four bedrooms include a private primary suite with fireplace, sitting area, sauna and French doors opening to its own view deck. Expansive outdoor living, a hot tub and mature landscaping create exceptional spaces for entertaining or taking in the surrounding scenery. An attached two",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/786/genIslnoResize.2585786_39_0.jpg" ]
+  }, {
+    "id" : 16745,
+    "mlsId" : "2583370",
+    "url" : "https://www.redfin.com/WA/Shoreline/18900-8th-Ave-NW-98177/unit-203/home/16745",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Outdoor pool", "Ample natural light", "3.03 acre lot" ],
+    "yearBuilt" : 1967,
+    "area" : 729,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 299950,
+    "addressRaw" : "18900 8th Ave NW #203, Shoreline, WA 98177",
+    "address" : {
+      "street" : "18900 8th Ave NW #203",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7664899,
+    "longitude" : -122.3651312,
+    "description" : "Welcome to Richmond Village Condo #203, a charming 729-square-foot, 1-bedroom, 1-bathroom home nestled in Shoreline's desirable Hillwood community. The inviting interior features a comfortable layout, ample natural light, and pleasant territorial views for everyday comfort. Residents enjoy peaceful surroundings on three beautifully landscaped acres alongside great community amenities, including an outdoor pool. Ideally situated just minutes from local parks, top-rated Shoreline schools, and nearby transit, this condo offers low-maintenance living with fantastic convenience.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/370/genIslnoResize.2583370_21_1.jpg" ]
+  }, {
+    "id" : 291544,
+    "mlsId" : "2586036",
+    "url" : "https://www.redfin.com/WA/Seattle/12703-4th-Ave-NW-98177/home/291544",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Oversized corner lot", "Gas fireplace", "Updated kitchen" ],
+    "yearBuilt" : 1948,
+    "area" : 3050,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1225000,
+    "addressRaw" : "12703 4th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "12703 4th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.721634,
+    "longitude" : -122.3626529,
+    "description" : "Pacific NW living at its best where Olympic mountain sunsets and Puget Sound breezes are part of the daily routine. Perfectly situated on an oversized 7,680 sq ft corner lot, this SW-facing, 4-bedroom plus bonus room home offers rare tranquility and incredible space. The main floor features an elegant living and dining layout with a gas fireplace and a beautifully updated kitchen with white cabinetry, granite counters, and stainless steel appliances. The luxurious primary suite is a true retreat, boasting a 5-piece spa bath with a jetted tub and a private West-facing deck designed for sunset viewing. Downstairs offers a large family room with its own gas fireplace, ideal for movie nights or",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/036/genIslnoResize.2586036_39_1.jpg" ]
+  }, {
+    "id" : 76849,
+    "mlsId" : "2585501",
+    "url" : "https://www.redfin.com/WA/Shoreline/1455-NW-188th-St-98177/home/76849",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Usable yard space", "Private shaded patio", "0.5 acre lot" ],
+    "yearBuilt" : 1955,
+    "area" : 3140,
+    "beds" : 5,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1950000,
+    "addressRaw" : "1455 NW 188th St, Shoreline, WA 98177",
+    "address" : {
+      "street" : "1455 NW 188th St",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7654835,
+    "longitude" : -122.3768431,
+    "description" : "Welcome Home to single-level elegance in one of Western Washington's premier communities! This classic 5-bedroom, 2.5-bathroom rambler offers an incredible opportunity to establish roots in the highly coveted Innis Arden neighborhood of Shoreline. This home highlights effortless entertaining with a thoughtful floor plan that features an intuitive circular flow that seamlessly connects the living spaces, making it perfect for hosting memorable gatherings. Step outside to a private, shaded patio ideal for alfresco dining, surrounded by a peaceful setting with plenty of open, usable yard space for a lush garden. Meticulously maintained and well-cared-for, this home provides the perfect blank c",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/501/genIslnoResize.2585501_39_0.jpg" ]
+  }, {
+    "id" : 96333,
+    "mlsId" : "2585573",
+    "url" : "https://www.redfin.com/WA/Seattle/10737-3rd-Ave-NW-98177/home/96333",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Exposed beams", "Vaulted ceilings", "Hardwood floors" ],
+    "yearBuilt" : 1953,
+    "area" : 2120,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1075000,
+    "addressRaw" : "10737 3rd Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10737 3rd Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7080237,
+    "longitude" : -122.3611375,
+    "description" : "Designed by renowned PNW architect Paul Hayden Kirk, this beautifully maintained Broadview residence showcases the timeless appeal of authentic mid-century modern design. Vaulted ceilings, exposed beams, hardwood floors, and a dramatic floor-to-ceiling windows fill the home with natural light while capturing Olympic Mountain and sunset views. Open-concept living and dining areas are anchored by a striking double-sided fireplace and flow seamlessly to an expansive view deck overlooking breathtaking panorama. Updated kitchen features stainless appliances and new counters/backsplash. Stylishly renovated baths, including a private primary ensuite with walk-in shower, blend modern comfort with a",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2585573_35_0.jpg" ]
+  }, {
+    "id" : 74533,
+    "mlsId" : "2580380",
+    "url" : "https://www.redfin.com/WA/Shoreline/20126-24th-Ave-NW-98177/home/74533",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Large windows", "Large kitchen", "Big deck" ],
+    "yearBuilt" : 1942,
+    "area" : 1760,
+    "beds" : 1,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1050000,
+    "addressRaw" : "20126 24th Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "20126 24th Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7758135,
+    "longitude" : -122.3879489,
+    "description" : "Location. .Location. .LOCATION! Among new or remodelled homes with smashing views and some multimillion-dollar homes. Here is your chance to step in and make your mark. While cleaned and ready to move into, others would say, \"I WANT TO do this. .. or build that!\" When walking in, notice how large the living and dining rooms are, with long, straight, gleaming hardwood floors. No carpet has ever lived here. Large windows bring lots of light and a sense of openness. Step into a large kitchen with oodles of cupboards and countertops, perfect for creating tasty masterpieces or warming falltime soups. A separate laundry room is just off the kitchen. Upstairs lets you imagine what could ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/380/genIslnoResize.2580380_39_2.jpg" ]
+  }, {
+    "id" : 77132,
+    "mlsId" : "2582868",
+    "url" : "https://www.redfin.com/WA/Shoreline/618-NW-163rd-St-98177/home/77132",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Gas cooktop", "Expansive windows", "Updated kitchen" ],
+    "yearBuilt" : 1982,
+    "area" : 4230,
+    "beds" : 5,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 1695000,
+    "addressRaw" : "618 NW 163rd St, Shoreline, WA 98177",
+    "address" : {
+      "street" : "618 NW 163rd St",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.747884,
+    "longitude" : -122.3640066,
+    "description" : "Introducing a distinctive Northwest contemporary set on nearly half an acre in Shoreline’s desirable Shorewood Hills neighborhood. Beyond the double-door entry, this 4,230 sq ft, 5-bedroom home unfolds with impressive volume, warmth  &  connection to its natural setting. A soaring wood-clad vaulted ceiling spans the main living spaces, where expansive windows frame mature greenery and flood the home with natural light. The updated kitchen pairs crisp cabinetry with a waterfall island, gas cooktop, double ovens  &  generous seating, opening seamlessly to dining and living spaces anchored by a striking fireplace. Living spaces open to expansive composite decking, glass railings ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/868/genIslnoResize.2582868_39_0.jpg" ]
+  }, {
+    "id" : 76218,
+    "mlsId" : "2583573",
+    "url" : "https://www.redfin.com/WA/Shoreline/825-NW-180th-St-98177/home/76218",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spacious carport", "Mature landscaping", "Circle driveway" ],
+    "yearBuilt" : 1956,
+    "area" : 1100,
+    "beds" : 3,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 795000,
+    "addressRaw" : "825 NW 180th St, Shoreline, WA 98177",
+    "address" : {
+      "street" : "825 NW 180th St",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7593567,
+    "longitude" : -122.3678423,
+    "description" : "Charming from the moment you arrive with its circle driveway, this adorable mid-century 1-story rambler is tucked among mature plantings in the desirable Richmond Highlands neighborhood, creating a setting that feels both welcoming and wonderfully established. Enjoy beautiful partial Puget Sound and mountain views from the dining and living rooms as well as the primary bedroom. Meticulously maintained and filled with warmth and character, this is one of those homes that simply feels good the moment you step inside. Beautiful hardwood floors, fresh interior and exterior paint and a cozy gas fireplace insert complement its timeless appeal, while the updates in the kitchen bring a fresh touch ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/573/genIslnoResize.2583573_34_1.jpg" ]
+  }, {
+    "id" : 17381583,
+    "mlsId" : "2583508",
+    "url" : "https://www.redfin.com/WA/Shoreline/19408-Richmond-Beach-Dr-NW-98177/unit-A/home/17381583",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private deck", "Built in wine fridge", "Backyard patio" ],
+    "yearBuilt" : 2008,
+    "area" : 3463,
+    "beds" : 3,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1650000,
+    "addressRaw" : "19408 Richmond Beach Dr NW Unit A, Shoreline, WA 98177",
+    "address" : {
+      "street" : "19408 Richmond Beach Dr NW Unit A",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7698636,
+    "longitude" : -122.3903039,
+    "description" : "Come home to a front row view of Puget Sound majesty at this beautiful Richmond Beach contemporary home! Warm living and dining space, with cozy gas fireplace and flooded with natural light with floor to ceiling windows, is positioned above street level to preserve privacy while framing sweeping sound and mountain views. A private deck extends the living space for year round enjoyment!  Open kitchen features stunning marble countertops, Viking gas range and SubZero Refrigerator, built in wine fridge and tons of storage space! Bedroom/office on main floor opens to backyard patio  &  yard. Upper level, spacious Primary bedroom suite features fireplace  &  private deck for sunset views",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/508/genIslnoResize.2583508_38_1.jpg" ]
+  }, {
+    "id" : 77231,
+    "mlsId" : "2582331",
+    "url" : "https://www.redfin.com/WA/Shoreline/18311-8th-Ave-NW-98177/home/77231",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Formal dining room", "Elegant living room", "Stone fireplace" ],
+    "yearBuilt" : 1946,
+    "area" : 5050,
+    "beds" : 5,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 3500000,
+    "addressRaw" : "18311 8th Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "18311 8th Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.761797,
+    "longitude" : -122.3671061,
+    "description" : "Absolutely THE BEST, MOST SWEEPING uninterrupted 180-degree view in Innis Arden. .. no cars cruising by in your view, no ravine trees blocking, just pure panorama. This property delivers WHAT MATTERS MOST: due-WEST Sound and mountain vistas, level access, all major entertaining spaces indoors and out positioned on the view side, and a logical floor plan with true main-floor living. A timeless Hamptons-inspired estate blending sophisticated classic American architecture with relaxed coastal elegance, all bathed in tons of natural light. Mature landscaping ensures complete privacy front and back. .. you don’t look onto neighbors, and they don’t look onto you. Enjoy the expansive l",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/331/genIslnoResize.2582331_39_0.jpg" ]
+  }, {
+    "id" : 95777,
+    "mlsId" : "2581365",
+    "url" : "https://www.redfin.com/WA/Seattle/10050-13th-Ave-NW-98177/home/95777",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spacious backyard", "Oversized deck", "High ceiling garage" ],
+    "yearBuilt" : 1945,
+    "area" : 2600,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1150000,
+    "addressRaw" : "10050 13th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10050 13th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7030576,
+    "longitude" : -122.3724533,
+    "description" : "Move-in ready and thoughtfully updated in the heart of Crown Hill! This inviting 4-bedroom, 2-bath home offers abundant natural light and warm, welcoming living spaces throughout. The updated kitchen features granite countertops, maple cabinetry, and a center cooktop, while fresh interior paint adds a clean, modern feel. Step from the kitchen onto the oversized deck—perfect for morning coffee, summer entertaining, and relaxing. The spacious backyard with alley access includes a swing gate for RV/boat parking or potential DADU opportunity. high ceiling single-car garage provides easy access to the home. Major updates include updated bathrooms with tile floors, a new roof, 200-amp elect",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/365/genIslnoResize.2581365_33_0.jpg" ]
+  }, {
+    "id" : 291120,
+    "mlsId" : "2579930",
+    "url" : "https://www.redfin.com/WA/Seattle/12221-8th-Ave-NW-98177/home/291120",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Open floor plan", "Secluded gardens", "Full kitchen" ],
+    "yearBuilt" : 1937,
+    "area" : 3470,
+    "beds" : 4,
+    "baths" : 5,
+    "currency" : "USD",
+    "price" : 1795000,
+    "addressRaw" : "12221 8th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "12221 8th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7183743,
+    "longitude" : -122.3667182,
+    "description" : "With 4 bedrooms and 4.5 bathrooms, this private home is a special find. An architectural triumph in North Seattle’s coveted Broadview neighborhood, this rare, custom-built Mediterranean home offers unmatched privacy, sophisticated finishes, and territorial views of the Puget Sound and Olympic Mountains. Designed with grand scale and an effortless open floor plan, the expansive main living spaces flow seamlessly out to stone verandas and sun-drenched patios. Surrounded by secluded gardens, these outdoor spaces create an ideal setting for both serene relaxation and memorable entertaining. Large windows throughout ensure every room is bathed in natural light while capturing glimpses of t",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/930/genIslnoResize.2579930_37_0.jpg" ]
+  }, {
+    "id" : 76216,
+    "mlsId" : "2580789",
+    "url" : "https://www.redfin.com/WA/Shoreline/17840-10th-Ave-NW-98177/home/76216",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Move-in ready", "Oversized island", "Chef's kitchen" ],
+    "yearBuilt" : 2021,
+    "area" : 2410,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1145000,
+    "addressRaw" : "17840 10th Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "17840 10th Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.758907,
+    "longitude" : -122.368614,
+    "description" : "Welcome to Sunset Park in Richmond Beach! This 2021 move-in ready 4-bed, 2.75-bath townhome offers 2,410 sq ft of modern living. Vaulted ceilings, engineered hardwoods, and open-concept design create the perfect scene for entertaining and everyday life. The chef's kitchen features quartz counters, oversized island, 6-burner gas range, and stainless-steel appliances, all flowing seamlessly into the light-filled living room with a cozy gas fireplace and large floor-to-ceiling windows with electric blinds. The main-level bedroom and ¾ bath provide flexibility for guests or a home office, while the expansive covered patio invites year-round BBQs, movie nights, and outdoor living. Upstair",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2580789_31_0.jpg" ]
+  }, {
+    "id" : 201532111,
+    "mlsId" : "2579520",
+    "url" : "https://www.redfin.com/WA/Shoreline/20134-23rd-Ave-NW-98177/home/201532111",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Induction cooking", "Bespoke cabinetry", "Custom millwork" ],
+    "yearBuilt" : 2026,
+    "area" : 3523,
+    "beds" : 6,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 2274500,
+    "addressRaw" : "20134 23rd Ave NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "20134 23rd Ave NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7759947,
+    "longitude" : -122.3867597,
+    "description" : "Coastal luxury meets exceptional craftsmanship in the highly desirable Richmond Beach community. Built by a respected local boutique builder known for exceptional quality and attention to detail, this brand-new home pairs elevated design with effortless livability. Custom millwork, bespoke cabinetry, layered lighting and sophisticated finishes create warmth throughout. The showpiece kitchen impresses with premium Thermador appliances, paneled refrigeration and dishwasher, and sleek induction cooking. Three ensuite bedrooms, a flexible fourth bedroom and 4.5 baths offer space to retreat, while dual primary suites feature spa-inspired baths with heated floors. Moments from beaches, parks and ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/520/genIslnoResize.2579520_39_0.jpg" ]
+  }, {
+    "id" : 96325,
+    "mlsId" : "2578574",
+    "url" : "https://www.redfin.com/WA/Seattle/10004-14th-Ave-NW-98177/home/96325",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Oversized corner lot", "Close to parks", "Close to schools" ],
+    "yearBuilt" : 1937,
+    "area" : 840,
+    "beds" : 3,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 560000,
+    "addressRaw" : "10004 14th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10004 14th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.701808,
+    "longitude" : -122.3737672,
+    "description" : "Incredible investment opportunity in an exceptional Crown Hill/Blue Ridge location. This 3-bedroom, 1-bath home sits on an oversized 8,789 sq. ft. corner lot and is ready for its next chapter. The home has substantial deferred maintenance, making this an ideal opportunity for a buyer with vision. Renovate, expand, or explore future redevelopment possibilities while enjoying a highly desirable neighborhood close to parks, schools, shops, transit and everything Northwest Seattle has to offer. Mature landscaping and established trees provide privacy and character throughout the property. Professional arborist inventory has been completed and is available upon request. Home is currently occupie",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/574/genIslnoResize.2578574_7_0.jpg" ]
+  }, {
+    "id" : 81180,
+    "mlsId" : "2579057",
+    "url" : "https://www.redfin.com/WA/Shoreline/112-NW-159th-St-98177/home/81180",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Mid-century home", "Fresh interior paint", "Versatile bonus room" ],
+    "yearBuilt" : 1951,
+    "area" : 1220,
+    "beds" : 4,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 725000,
+    "addressRaw" : "112 NW 159th St, Shoreline, WA 98177",
+    "address" : {
+      "street" : "112 NW 159th St",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7448275,
+    "longitude" : -122.3597022,
+    "description" : "Darling mid-century home that lives much larger than its square footage suggests! Tucked away at the end of a quiet street, this charming one-story home is filled with natural light and has been refreshed with newly refinished hardwood floors and fresh interior paint. Three bedrooms plus a versatile bonus room offer plenty of flexibility for bedrooms, a home office, workout space or hobbies. The kitchen and living areas flow easily to a huge, newly refinished deck - perfect for outdoor dining, entertaining or simply enjoying the expansive, private yard. There's room here for everyone to play, garden and relax. The utility room offers an exciting opportunity to add a second bathroom and make",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_1_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_3_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_4_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_5_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_6_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_7_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_8_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_9_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_11_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_12_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_13_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_14_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_15_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_16_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_17_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_18_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_19_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_20_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_21_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_22_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_23_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/057/genIslnoResize.2579057_24_2.jpg" ]
+  }, {
+    "id" : 74538,
+    "mlsId" : "2577605",
+    "url" : "https://www.redfin.com/WA/Shoreline/19610-Richmond-Beach-Dr-NW-98177/home/74538",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Olympic mountains", "Sweeping views", "One-year-old roof" ],
+    "yearBuilt" : 1925,
+    "area" : 680,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 845000,
+    "addressRaw" : "19610 Richmond Beach Dr NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "19610 Richmond Beach Dr NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7722469,
+    "longitude" : -122.3919853,
+    "description" : "Discover a rare Richmond Beach retreat with sweeping views of Puget Sound and the Olympic Mountains. This charming one-bedroom, one-bath beach cottage offers the perfect setting for a full-time residence, weekend pied-à-terre, or short-term rental. A quick jaunt across the nearby footbridge brings you directly to the beach, while convenient bus service provides easy connections to light rail, downtown Seattle, and beyond. Enjoy generous yard space for outdoor living, gardening, or entertaining, plus both street and alley access with ample off-street parking. Important improvements include a one-year-old roof, Wood Burning Stove, an updated 200-amp electrical panel, and revised plumbi",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_1_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_2_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_3_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_4_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_5_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_6_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_7_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_8_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_9_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_10_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_11_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_12_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_13_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_14_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_15_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_16_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_17_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_18_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_19_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_20_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_21_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_22_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/605/genIslnoResize.2577605_27_0.jpg" ]
+  }, {
+    "id" : 76737,
+    "mlsId" : "2574512",
+    "url" : "https://www.redfin.com/WA/Shoreline/72-Olympic-Dr-NW-98177/home/76737",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Indoor-outdoor flow", "Private beach access", "Chef’s kitchen" ],
+    "yearBuilt" : 1939,
+    "area" : 12919,
+    "beds" : 6,
+    "baths" : 8,
+    "currency" : "USD",
+    "price" : 6500000,
+    "addressRaw" : "72 Olympic Dr NW, Shoreline, WA 98177",
+    "address" : {
+      "street" : "72 Olympic Dr NW",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7423431,
+    "longitude" : -122.3732088,
+    "description" : "Tucked behind the gates of The Highlands, 72 Olympic Drive — once known as Cedargrove — is a timeless Georgian Colonial estate where nature, privacy, and gathering come together effortlessly. A winding approach leads to a circular drive and a welcoming arrival, while oversized doors open to a light-filled entry framed by sunset views of the Puget Sound and Olympic Mountains. The main level lives like a spacious rambler, anchored by a brand-new chef’s kitchen, family room, and seamless indoor-outdoor flow to terraces, rose gardens, and expansive lawns. A private primary suite with dual baths and water views offers a peaceful retreat, while five bedrooms upstairs and an indo",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/512/genIslnoResize.2574512_18_1.jpg" ]
+  }, {
+    "id" : 76414,
+    "mlsId" : "2562872",
+    "url" : "https://www.redfin.com/WA/Shoreline/509-NW-178th-Pl-98177/home/76414",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Extra parking", "Backyard patio", "Ev charger" ],
+    "yearBuilt" : 1967,
+    "area" : 3320,
+    "beds" : 5,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1089000,
+    "addressRaw" : "509 NW 178th Pl, Shoreline, WA 98177",
+    "address" : {
+      "street" : "509 NW 178th Pl",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7584143,
+    "longitude" : -122.3628518,
+    "description" : "Nestled on a peaceful cul-de-sac, this impeccably maintained and lovingly cared-for home offers exceptional space, comfort and versatility both inside and out. The main level features a gracious living room with a wood-burning fireplace, a cozy TV room, and an oversized dining room perfect for entertaining and holiday gatherings. 3 spacious bedrooms and beautifully remodeled bathrooms complete this floor. Downstairs, you'll find a large multi-purpose room ideal for a home office, reading retreat, fitness space, or playroom. Also, 2 additional bedrooms, an updated 3/4 bath, a laundry room and ample storage. Highlights include forced-air heating, A/C, a large backyard patio for outdoor enjoym",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/872/genIslnoResize.2562872_39_1.jpg" ]
+  }, {
+    "id" : 176359982,
+    "mlsId" : "2572558",
+    "url" : "https://www.redfin.com/WA/Seattle/11502-6th-Ave-NW-98177/unit-1/home/176359982",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Oversized decks", "Two kitchens", "Sauna" ],
+    "yearBuilt" : 2022,
+    "area" : 4100,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 2700000,
+    "addressRaw" : "11502 6th Ave NW #1, Seattle, WA 98177",
+    "address" : {
+      "street" : "11502 6th Ave NW #1",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7121916,
+    "longitude" : -122.3629885,
+    "description" : "Your Own Corner of the Forest, Right in the City. Some homes offer a view. This one offers an entire forest. Privately positioned at the end of a quiet, no-outlet street, this exceptional 2022 custom Northwest Contemporary pairs architectural sophistication with rare privacy and a deep connection to nature. Walls of glass bring the evergreen canopy inside, while expansive decks on two levels extend living spaces above the greenbelt. Morning light filters through the trees; evenings unfold in golden light and complete tranquility. Designed for elegant living and exceptional flexibility, the residence features three primary suites, two full kitchens, and two additional main-floor bedrooms. A ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2572558_39_1.jpg" ]
+  }, {
+    "id" : 178441556,
+    "mlsId" : "2567171",
+    "url" : "https://www.redfin.com/WA/Seattle/10413-Alderbrook-Pl-NW-98177/home/178441556",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Gourmet kitchen", "Near carkeek park", "Parking" ],
+    "yearBuilt" : 2021,
+    "area" : 1030,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 612700,
+    "addressRaw" : "10413 Alderbrook Pl NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10413 Alderbrook Pl NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7042599,
+    "longitude" : -122.3652029,
+    "description" : "Modern Isola Homes living in the heart of Northwest Seattle. This thoughtfully designed 2-bedroom, 1-bath home offers contemporary style, low-maintenance living, and a functional floor plan ideal for today's lifestyle. The open-concept main level is filled with natural light and designed for effortless everyday living and entertaining. The gourmet kitchen features slab quartz countertops, premium stainless steel appliances, European-inspired cabinetry, and polished chrome fixtures. Enjoy the convenience of motorized window blinds throughout the home, controlled by remote, with select top-down/bottom-up blinds that provide flexible natural light while maintaining privacy. Retreat to the priv",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/171/genIslnoResize.2567171_27_1.jpg" ]
+  }, {
+    "id" : 17089755,
+    "mlsId" : "2564343",
+    "url" : "https://www.redfin.com/WA/Shoreline/702-NW-189-Ln-98177/home/17089755",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spacious balcony", "Private balcony", "$521 HOA" ],
+    "yearBuilt" : 1979,
+    "area" : 961,
+    "beds" : 2,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 485000,
+    "addressRaw" : "702 NW 189th Ln, Shoreline, WA 98177",
+    "address" : {
+      "street" : "702 NW 189th Ln",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7667259,
+    "longitude" : -122.3659424,
+    "description" : "Don’t miss this beautiful townhome nestled in the highly coveted Richmond Beach community! The inviting living room features a charming wood-burning fireplace and opens to a spacious balcony, creating the perfect space to relax or entertain. The kitchen offers ample cabinetry, butcher block countertops, stainless steel appliances, and room for formal dining. Upstairs, you’ll find a spacious primary suite with vaulted ceilings and a private balcony, along with a well-appointed guest bedroom. The attached one-car garage includes an additional storage compartment for exceptional organization. Ideally located just moments from The Shops at Richmond Beach, Richmond Beach Saltwater Pa",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_1_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_2_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_3_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_4_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_5_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_6_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_7_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_8_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_9_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_10_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_11_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_12_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_13_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_14_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_15_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_16_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_17_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_18_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_19_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_20_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_21_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_22_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/343/genIslnoResize.2564343_23_4.jpg" ]
+  }, {
+    "id" : 96351,
+    "mlsId" : "2562498",
+    "url" : "https://www.redfin.com/WA/Seattle/10124-3rd-Ave-NW-98177/home/96351",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New furnace", "Ample driveway", "New flooring" ],
+    "yearBuilt" : 1925,
+    "area" : 2640,
+    "beds" : 6,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 899000,
+    "addressRaw" : "10124 3rd Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "10124 3rd Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.703041,
+    "longitude" : -122.3604576,
+    "description" : "Beautifully renovated all-brick home offering exceptional flexibility for today's lifestyle. Thoughtfully updated from top to bottom with new flooring, beautifully remodeled bathrooms, a new furnace, and stylish finishes throughout, this move-in ready home is designed to adapt to your needs. The versatile layout features six bedrooms, two separate living areas, private lower-level access, and the potential for multigenerational living, extended guests, a home office, or future income opportunities. Ample driveway and off-street parking accommodate multiple vehicles, while mature trees create a private setting rarely found this close to city conveniences. Enjoy easy access to Carkeek Park, P",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/498/genIslnoResize.2562498_39_1.jpg" ]
+  }, {
+    "id" : 95870,
+    "mlsId" : "2554500",
+    "url" : "https://www.redfin.com/WA/Seattle/122-NW-103rd-St-98177/home/95870",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Zoned nr", "Level topography", "Flat parcel" ],
+    "yearBuilt" : 1947,
+    "area" : 980,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 560000,
+    "addressRaw" : "122 NW 103rd St, Seattle, WA 98177",
+    "address" : {
+      "street" : "122 NW 103rd St",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7038915,
+    "longitude" : -122.3591551,
+    "description" : "Value is in the land here. This 5,100 SF flat parcel offers an ideal redevelopment opportunity in the well-established Holman neighborhood of North Seattle. Zoned NR, the lot qualifies for the transit-proximity density bonus, raising allowable density from 4 units up to 6 units. Capitalize on this rare opportunity to maximize yield on a lot this size. Tucked just off Holman Rd and Greenwood Ave N, the site sits on a quiet, low-traffic street while remaining minutes from Route 5 and D transit, shops, and restaurants along the Greenwood corridor. Level topography simplifies site work and design, and the established neighborhood setting offers strong long term fundamentals for a variety of hou",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/500/genIslnoResize.2554500_11_1.jpg" ]
+  }, {
+    "id" : 288156,
+    "mlsId" : "2556103",
+    "url" : "https://www.redfin.com/WA/Seattle/340-NW-137th-St-98177/home/288156",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private deck", "Treehouse", "Remodeled kitchen" ],
+    "yearBuilt" : 1950,
+    "area" : 6030,
+    "beds" : 6,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 2750000,
+    "addressRaw" : "340 NW 137th St, Seattle, WA 98177",
+    "address" : {
+      "street" : "340 NW 137th St",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7291385,
+    "longitude" : -122.3628382,
+    "description" : "Welcome home to this Broadview showpiece, where design sensibility meets everyday livability. Floor-to-ceiling windows flood the space with natural light. The remodeled kitchen anchors a home that balances clean lines with warmth throughout. Six bedrooms and 4 bathrooms offer room to spread out, including a primary suite with its own private deck. Behind the gated entry there are towering trees, complete with a treehouse and off of the living room there is a sunny lawn and covered patio. Meticulously maintained and thoughtfully curated, this is a home for those who notice the details.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/103/genIslnoResize.2556103_39_1.jpg" ]
+  }, {
+    "id" : 288238,
+    "mlsId" : "2550162",
+    "url" : "https://www.redfin.com/WA/Seattle/13237-8th-Ave-NW-98177/home/288238",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Two separate lots", "Oversized kitchen", "Private setting" ],
+    "yearBuilt" : 1952,
+    "area" : 4260,
+    "beds" : 5,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 2150000,
+    "addressRaw" : "13237 8th Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "13237 8th Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7261855,
+    "longitude" : -122.3666558,
+    "description" : "Tucked away in a private setting in the heart of desirable Broadview, this fully renovated home offers an exceptional combination of space, flexibility, ample parking and comes with TWO SEPARATE LOTS. With no details overlooked the home features a presidential roof, 48\" dual fuel stove and oversized kitchen plus walk in panty. The thoughtfully designed floor plan features a luxurious main-level primary suite with a spa-inspired 5-piece bath, while the fully finished basement provides additional living space ideal for entertaining, guests, or multi-generational living. A dedicated home gym adds even more versatility. Rare parking options include an attached 2-car garage, detached garage",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/162/genIslnoResize.2550162_38_1.jpg" ]
+  }, {
+    "id" : 288696,
+    "mlsId" : "2553710",
+    "url" : "https://www.redfin.com/WA/Seattle/14405-3rd-Ave-NW-98177/home/288696",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Sweeping views", "Mahogany library", "Chef's kitchen" ],
+    "yearBuilt" : 1996,
+    "area" : 8800,
+    "beds" : 5,
+    "baths" : 7,
+    "currency" : "USD",
+    "price" : 4590000,
+    "addressRaw" : "14405 3rd Ave NW, Seattle, WA 98177",
+    "address" : {
+      "street" : "14405 3rd Ave NW",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.733348,
+    "longitude" : -122.3615339,
+    "description" : "IINNISFREE | Broadview Commanding over half an acre of private, gated grounds, Innisfree is a landmark Broadview estate designed by Jeffrey Loveless. Named after W. B. Yeats’ idyllic poem, this Mediterranean residence pairs sweeping views of Puget Sound and the Olympic Mountains with luxury amenities. The main level features soaring ceilings, rich hardwoods, and hand-carved Honduran mahogany millwork. Formal spaces for grand-scale entertaining flow into everyday living areas, including a mahogany library, 5 fireplaces, a 2,500-bottle wine cellar, a 3-tiered THX home theater, and a chef’s kitchen with a 60-inch Viking range, dual Sub-Zero refrigeration, and two Bosch dishwashers.",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/710/genIslnoResize.2553710_32_1.jpg" ]
+  }, {
+    "id" : 76675,
+    "mlsId" : "2543308",
+    "url" : "https://www.redfin.com/WA/Shoreline/36-NW-Cherry-Loop-98177/home/76675",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Mature gardens", "Puget sound views", "Celebrated gardens" ],
+    "yearBuilt" : 1934,
+    "area" : 8490,
+    "beds" : 5,
+    "baths" : 7.5,
+    "currency" : "USD",
+    "price" : 14750000,
+    "addressRaw" : "36 NW Cherry Loop Dr, Shoreline, WA 98177",
+    "address" : {
+      "street" : "36 NW Cherry Loop Dr",
+      "city" : "Shoreline",
+      "state" : "WA",
+      "zipcode" : "98177"
+    },
+    "latitude" : 47.7360222,
+    "longitude" : -122.3724316,
+    "description" : "Set on more than two private acres overlooking Puget Sound and the Olympic Mountains, this extraordinary Highlands estate is a rare union of architectural significance, historic landscape design, and timeless luxury. Its story begins in 1927, when the Olmsted Brothers designed the estate's celebrated gardens and grounds. In 1934, renowned architect Harrie T. Lindeberg completed the residence, one of only two he designed in the Pacific Northwest. Meticulously restored in 2023, the home was reimagined by New York designer Clive Lonstein and later featured in Architectural Digest. Interiors blend historic character with modern comfort through hand-plastered walls, bespoke millwork, radiant hea",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/308/genIslnoResize.2543308_24_1.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1,
+    "nextPage" : "https://redfin.com/zipcode/98177/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+    "otherPages" : {
+      "2" : "https://redfin.com/zipcode/98177/filter/sort=lo-days,property-type=condo+townhouse+house/page-2"
+    }
+  }
+}

@@ -190,6 +190,7 @@ def export_neural(args):
         "h3_l8_neighbor_communities.json": Path("data/h3_l8_neighbor_communities.json"),
         "h3_l8_neighbor_cells.json": Path("data/h3_l8_neighbor_cells.json"),
         "local_market_snapshot.json": _compatible_local_market_snapshot(model_dir),
+        "h3_market_surface.json": Path("data/h3_market_surface.json"),
         "synthetic_h3_l8_grid.json": Path("data/synthetic_h3_l8_grid.json"),
         "king_county_water.geojson": Path("data/osm/king_county_water.geojson"),
         "fred_indicators.csv": Path("data/market_indicators/fred_indicators.csv"),

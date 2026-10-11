@@ -107,14 +107,16 @@ def _kernel_regression(masks: np.ndarray, values: np.ndarray) -> tuple[np.ndarra
     return coefficients[1:], np.sqrt(np.maximum(np.diag(covariance)[1:], 0.0))
 
 
-def _two_hop_subgraph(trainer, target_node: int) -> tuple[np.ndarray, torch.Tensor, list[np.ndarray]]:
-    """Extract precisely the two-hop receptive field of one GraphSAGE target."""
+def _two_hop_subgraph(
+    trainer, target_nodes: Iterable[int]
+) -> tuple[np.ndarray, torch.Tensor, list[np.ndarray]]:
+    """Extract the union of two-hop receptive fields for pooled target nodes."""
     edge = trainer.graph_data.edge_index.detach().cpu().numpy()
     adjacency: list[set[int]] = [set() for _ in trainer.graph_data.cell_ids]
     for source, target in edge.T:
         adjacency[int(source)].add(int(target))
         adjacency[int(target)].add(int(source))
-    hops: list[set[int]] = [{int(target_node)}]
+    hops: list[set[int]] = [{int(node) for node in target_nodes}]
     seen = set(hops[0])
     for _ in range(2):
         next_hop = set().union(*(adjacency[node] for node in hops[-1])) - seen
@@ -146,9 +148,9 @@ def explain_gnn_prediction(
     """Explain one trained GNN prediction with exact groups and 512 sampled fields.
 
     Continuous inputs use their training means (scaled zero) as the reference.
-    The spatial features are evaluated only over the target cell's two-hop
-    receptive field, which is mathematically sufficient for this two-layer
-    GraphSAGE network and avoids re-running the entire county graph.
+    Spatial features are evaluated over the union of the pooled cells' two-hop
+    receptive fields, which is sufficient for this two-layer GraphSAGE network
+    and avoids re-running the entire county graph.
     """
     if trainer.model is None:
         raise RuntimeError("Train or load a GNN model before explaining a prediction")
@@ -158,9 +160,19 @@ def explain_gnn_prediction(
     row = trainer.graph_data.dataframe.iloc[row_index]
     month = int(trainer.graph_data.sale_month_index[row_index])
     target_node = int(trainer.graph_data.sale_node_index[row_index])
-    node_ids, edge_index, hop_positions = _two_hop_subgraph(trainer, target_node)
+    if trainer.continuous_embedding_pooling:
+        positive = trainer.graph_data.sale_pool_weights[row_index] > 0
+        target_nodes = trainer.graph_data.sale_pool_node_index[row_index][positive]
+        pool_weights = trainer.graph_data.sale_pool_weights[row_index][positive]
+    else:
+        target_nodes = np.asarray([target_node], dtype=np.int64)
+        pool_weights = np.ones(1, dtype=np.float32)
+    node_ids, edge_index, hop_positions = _two_hop_subgraph(trainer, target_nodes)
     actual_nodes = trainer.node_features[month, node_ids].detach().cpu().numpy()
-    target_position = int(np.where(node_ids == target_node)[0][0])
+    local_index = {int(node): position for position, node in enumerate(node_ids)}
+    target_positions = np.asarray(
+        [local_index[int(node)] for node in target_nodes], dtype=np.int64
+    )
 
     feature_names: list[str] = []
     groups: list[int] = []
@@ -173,10 +185,14 @@ def explain_gnn_prediction(
             values.append(float(row[name]))
             counts.append(1)
     for field, name in enumerate(LOCAL_MARKET_FEATURES):
-        feature_names.append(f"cell_{name}")
+        feature_names.append(
+            f"pooled_cells_{name}" if trainer.continuous_embedding_pooling else f"cell_{name}"
+        )
         groups.append(3)
-        values.append(float(trainer.graph_data.node_features[month, target_node, field]))
-        counts.append(1)
+        values.append(float(np.sum(
+            trainer.graph_data.node_features[month, target_nodes, field] * pool_weights
+        )))
+        counts.append(int(len(target_nodes)))
     for hop, prefix in ((1, "one_ring"), (2, "two_ring")):
         positions = hop_positions[hop]
         for field, name in enumerate(LOCAL_MARKET_FEATURES):
@@ -204,7 +220,7 @@ def explain_gnn_prediction(
         nodes = np.zeros_like(actual_nodes)
         for field in range(len(LOCAL_MARKET_FEATURES)):
             if feature_mask[position + field]:
-                nodes[target_position, field] = actual_nodes[target_position, field]
+                nodes[target_positions, field] = actual_nodes[target_positions, field]
         position += len(LOCAL_MARKET_FEATURES)
         for hop in (1, 2):
             node_positions = hop_positions[hop]
@@ -213,13 +229,17 @@ def explain_gnn_prediction(
                     nodes[node_positions, field] = actual_nodes[node_positions, field]
             position += len(LOCAL_MARKET_FEATURES)
         with torch.no_grad():
+            spatial_positions = target_positions[None] if trainer.continuous_embedding_pooling else [target_positions[0]]
             output = trainer.model(
                 torch.tensor(nodes, dtype=torch.float32, device=trainer.device),
                 edge_index,
-                torch.tensor([target_position], dtype=torch.long, device=trainer.device),
+                torch.tensor(spatial_positions, dtype=torch.long, device=trainer.device),
                 torch.tensor(property_values[None], dtype=torch.float32, device=trainer.device),
                 torch.tensor(time_values[None], dtype=torch.float32, device=trainer.device),
                 torch.tensor(market_values[None], dtype=torch.float32, device=trainer.device),
+                sale_node_weights=torch.tensor(
+                    pool_weights[None], dtype=torch.float32, device=trainer.device
+                ) if trainer.continuous_embedding_pooling else None,
             )
         return float(output.item())
 

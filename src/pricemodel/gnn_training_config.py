@@ -17,6 +17,9 @@ class GNNTrainingConfig:
     dropout_rate: float = 0.2
     graph_layer_norm: bool = False
     graph_residual: bool = False
+    continuous_embedding_pooling: bool = False
+    spatial_pool_radius_km: float = 1.5
+    spatial_pool_h3_ring: int = 3
     epochs: int = 30
     learning_rate: float = 3e-4
     patience: int = 8
@@ -29,6 +32,8 @@ class GNNTrainingConfig:
             raise ValueError("train_ratio must be between zero and one")
         if min(self.graph_hidden_dim, self.head_hidden_dim, self.epochs, self.patience) < 1:
             raise ValueError("GNN dimensions and epoch counts must be positive")
+        if self.spatial_pool_radius_km <= 0 or self.spatial_pool_h3_ring < 1:
+            raise ValueError("GNN spatial pooling radius and H3 ring must be positive")
         if not 0 < self.lr_plateau_factor < 1:
             raise ValueError("lr_plateau_factor must be between zero and one")
 

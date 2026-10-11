@@ -1,6 +1,7 @@
 package com.houseprices.ingest;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Unified property record used across ingestion, prediction and serving.
@@ -14,7 +15,7 @@ public record PropertyRecord(
     // Identity
     String  id,
     String  address,
-    String  source,          // "zillow" | "rentcast" | "sales"
+    String  source,          // "zillow" | "redfin" | "rentcast" | "sales"
 
     // Location
     double  lat,
@@ -31,9 +32,9 @@ public record PropertyRecord(
 
     // Sale / listing
     LocalDate saleDate,
-    double    salePrice,         // 0 if unknown (Zillow listing)
+    double    salePrice,         // sale price or live listing price
     double    zestimate,         // Zillow estimate, 0 if unavailable/not applicable
-    String    listingUrl,        // Zillow URL if applicable
+    String    listingUrl,        // provider listing URL if applicable
 
     // Predictions (populated after inference)
     double    predictedPrice,
@@ -46,8 +47,17 @@ public record PropertyRecord(
     // Uncertainty and attention (populated after inference)
     double    predictionStdPrice, // std dev of prediction in $ (0 if unavailable)
     double    predictionCvPct,    // 95% CI width as % of predicted price (0 if unavailable)
-    float[]   clsAttention        // [community, property, time, market], null if unavailable
+    float[]   clsAttention,       // [community, property, time, market], null if unavailable
+
+    // Listing content retained for display and downstream text analysis.
+    String       description,
+    List<String> atAGlanceFacts
 ) {
+    public PropertyRecord {
+        description = description == null ? "" : description;
+        atAGlanceFacts = atAGlanceFacts == null ? List.of() : List.copyOf(atAGlanceFacts);
+    }
+
     /** Convenience: does this record have an actual sale price to compare against? */
     public boolean hasSalePrice() { return salePrice > 0; }
 }

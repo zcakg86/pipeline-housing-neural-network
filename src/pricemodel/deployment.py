@@ -22,6 +22,7 @@ REQUIRED_NEURAL_ARTIFACTS = {
     "community_map.json",
     "h3_l8_neighbor_communities.json", "h3_l8_neighbor_cells.json",
     "local_market_snapshot.json", "synthetic_h3_l8_grid.json",
+    "h3_market_surface.json",
     "feature_contract.json",
 }
 REQUIRED_LIGHTGBM_ARTIFACTS = {
@@ -35,14 +36,16 @@ REQUIRED_GNN_ARTIFACTS = {
 RETIRED_ARTIFACTS = {"year_vocab.json", "week_vocab.json"}
 
 
-def create_staging_directory(root="outputs/deployment", version=None, *, seed=True):
+def create_staging_directory(root="outputs/deployment", version=None, *, seed=True,
+                             source_dir=None):
     """Create a versioned bundle, optionally seeded from the live deployment."""
-    version = version or datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    version = version or datetime.now().strftime("%Y%m%d_%H%M%S")
     destination = Path(root) / version
     if destination.exists():
         raise FileExistsError(f"Deployment staging directory already exists: {destination}")
-    if seed and CANONICAL_JAVA_ARTIFACT_DIR.exists():
-        shutil.copytree(CANONICAL_JAVA_ARTIFACT_DIR, destination)
+    source = Path(source_dir) if source_dir is not None else CANONICAL_JAVA_ARTIFACT_DIR
+    if seed and source.exists():
+        shutil.copytree(source, destination)
     else:
         destination.mkdir(parents=True)
     return destination
@@ -73,6 +76,19 @@ def write_manifest(bundle_dir, *, sources=None):
     temporary = bundle_dir / "manifest.json.tmp"
     temporary.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     os.replace(temporary, bundle_dir / "manifest.json")
+    return manifest
+
+
+def verify_manifest(bundle_dir):
+    """Check that files recorded by an existing bundle manifest are unchanged."""
+    bundle_dir = Path(bundle_dir)
+    with (bundle_dir / "manifest.json").open(encoding="utf-8") as stream:
+        manifest = json.load(stream)
+    for name, expected in manifest["files"].items():
+        path = bundle_dir / name
+        if (not path.is_file() or path.stat().st_size != expected["bytes"]
+                or _sha256(path) != expected["sha256"]):
+            raise ValueError(f"Deployment manifest mismatch: {path}")
     return manifest
 
 

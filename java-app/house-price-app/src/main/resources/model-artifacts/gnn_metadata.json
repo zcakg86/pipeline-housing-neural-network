@@ -1,6 +1,14 @@
 {
-  "model_version": "20260803_113037",
-  "architecture": "monthly_h3_graphsage_v1",
+  "model_version": "20260916_094016",
+  "architecture": "monthly_h3_graphsage_v3",
+  "architecture_version": 3,
+  "graph_layer_norm": true,
+  "graph_residual": true,
+  "continuous_embedding_pooling": true,
+  "spatial_pool_radius_km": 1.5,
+  "spatial_pool_h3_ring": 3,
+  "spatial_pool_kernel": "wendland_c2",
+  "h3_resolution": 8,
   "graph_hidden_dim": 32,
   "head_hidden_dim": 128,
   "property_features": [
@@ -106,8 +114,8 @@
     "method": "held_out_absolute_log_residual_conformal",
     "calibration_sample_count": 38014,
     "absolute_log_residual_quantiles": {
-      "0.90": 0.34783683976790414,
-      "0.95": 0.47568342636645333
+      "0.90": 0.3496806596630382,
+      "0.95": 0.48102391063951977
     }
   },
   "max_verified_log_price_difference": 0.0

@@ -38,7 +38,9 @@ nb-configuration.xml
 
 # Local environment
 .env
-
+data/agent-evaluations/
+data/sales_2020_25_with_predictions.csv
+outputs/gnn/*/sales_with_prediction.csv
 # Secrets - never commit API keys
 src/main/resources/application-secrets.properties
 

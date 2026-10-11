@@ -1,0 +1,1185 @@
+{
+  "requestMetadata" : {
+    "id" : "efb5d950-857e-444a-908f-b765b85ee496",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/efb5d950-857e-444a-908f-b765b85ee496.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/efb5d950-857e-444a-908f-b765b85ee496.json",
+    "url" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 247
+  },
+  "properties" : [ {
+    "id" : 12091932,
+    "mlsId" : "2591038",
+    "url" : "https://www.redfin.com/WA/Bellevue/150-102nd-Ave-SE-98004/unit-306/home/12091932",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "$835 HOA", "Garage", "Built 2006" ],
+    "yearBuilt" : 2006,
+    "area" : 1414,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1048000,
+    "addressRaw" : "150 102nd Ave SE #306, Bellevue, WA 98004",
+    "address" : {
+      "street" : "150 102nd Ave SE #306",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6082549,
+    "longitude" : -122.2036872,
+    "description" : "Elevated boutique living steps from the charm of Old Bellevue. Turnkey and tucked just off Main Street, 150 Meydenbauer Bay offers a serene retreat moments from some of Bellevue’s best restaurants, cafés, and shops. This rare three-bedroom light filled, end-unit home, pairs high ceilings and a cozy gas fireplace with inviting living spaces, offering room to gather, unwind, and welcome guests, with flexibility for a dedicated home office. Windows overlook trees and lush landscaping, creating a peaceful sense of privacy in an exceptionally walkable location. A private deck sets the scene for morning coffee, summer evenings, and relaxed entertaining. Enjoy waterfront afternoons at",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/038/genIslnoResize.2591038_29_0.jpg" ]
+  }, {
+    "id" : 250553,
+    "mlsId" : "2592424",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/8619-NE-24th-St-98004/home/250553",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "0.46 acre lot", "Garage", "Built 1976" ],
+    "yearBuilt" : 1976,
+    "area" : 4723,
+    "beds" : 4,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 3388000,
+    "addressRaw" : "8619 NE 24th St, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "8619 NE 24th St",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.631674,
+    "longitude" : -122.2249409,
+    "description" : "Set in the highly coveted Clyde Hill community, this sophisticated modern residence offers 4,723 square feet of impeccably finished living space. Thoughtfully designed with clean lines, refined finishes, and exceptional attention to detail, the 4-bedroom, 4.5-bath home balances elegance with everyday comfort. The main level centers around a beautifully appointed chef’s kitchen with quartz countertops and premium stainless-steel appliances, flowing seamlessly into gracious living and dining spaces. The private primary suite features vaulted ceilings, a spa-like ensuite bath, and a custom walk-in closet. A fully finished daylight lower level expands the living experience with generous r",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/424/genIslnoResize.2592424_39_0.jpg" ]
+  }, {
+    "id" : 506021,
+    "mlsId" : "2592405",
+    "url" : "https://www.redfin.com/WA/Bellevue/10836-NE-12th-Pl-98004/home/506021",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "8,712 sq ft lot", "Garage", "Built 1967" ],
+    "yearBuilt" : 1967,
+    "area" : 1564,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 2248800,
+    "addressRaw" : "10836 NE 12th Pl, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10836 NE 12th Pl",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6218008,
+    "longitude" : -122.1943615,
+    "description" : "Step out your front door and take in the views of Downtown Bellevue—just a 5-minute walk away. Located on a quiet dead-end street, this extraordinary West Bellevue residence was rebuilt from the studs up to deliver an entirely like-new construction experience. Every detail of this home reflects top-tier design, solid core doors, A/C, smart wiring, and an EV charger in the garage with massive above-ceiling storage. Natural light pours through soaring 14-foot vaulted ceilings w/ skylights in both the main and primary baths. Rich hardwood floors, and high-end designer lighting and plumbing fixtures run throughout. The living room serves as a centerpiece with a sleek gas fireplace finishe",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/405/genIslnoResize.2592405_31_0.jpg" ]
+  }, {
+    "id" : 80581170,
+    "mlsId" : "2592386",
+    "url" : "https://www.redfin.com/WA/Bellevue/10650-NE-9th-PL-98005/unit-723/home/80581170",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private storage", "In unit laundry", "Concierge service" ],
+    "yearBuilt" : 2008,
+    "area" : 967,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 740000,
+    "addressRaw" : "10650 NE 9th Pl #723, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10650 NE 9th Pl #723",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.618724679,
+    "longitude" : -122.1975833,
+    "description" : "NEW PRICE! Exceptional Downtown Bellevue Value | MOVE-IN READY  &  WALKABLE DOWNTOWN BELLEVUE LIVING| Spacious 1BR + Den at Washington Square! Exceptional opportunity to own a spacious 1-bedroom + den residence at desirable Washington Square! Beautifully refreshed with NEW interior paint and NEW carpet, this light-filled home features an open floor plan, dramatic floor-to-ceiling windows, and inviting living and dining spaces. The well-appointed kitchen flows seamlessly into the main living area, perfect for everyday comfort and entertaining. A versatile den offers an ideal home office or flexible living space, while the generous primary bedroom provides a relaxing retreat. Enjoy in-uni",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/386/genIslnoResize.2592386_30_0.jpg" ]
+  }, {
+    "id" : 18657413,
+    "mlsId" : "2591664",
+    "url" : "https://www.redfin.com/WA/Bellevue/10610-NE-9th-Pl-98004/unit-603/home/18657413",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Game room", "Chef's kitchen", "$729 HOA" ],
+    "yearBuilt" : 2008,
+    "area" : 640,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 545000,
+    "addressRaw" : "10610 NE 9 Pl #603, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10610 NE 9 Pl #603",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6188174,
+    "longitude" : -122.1986043,
+    "description" : "Welcome to Washington Square, where refined luxury seamlessly integrates with the vibrant pulse of Downtown Bellevue. Exceptional peace of mind begins at the secure entrance, complemented by the rare sophistication of a full-service concierge team. Inside this sun-drenched 6th-floor residence, soaring 10-foot ceilings and expansive floor-to-ceiling glass illuminate rich hardwood floors while showcasing dynamic city views. Designed for effortless living and entertaining, the chef’s kitchen gracefully opens to a spacious living sanctuary anchored by a cozy gas fireplace. Premium features include slab granite countertops, full-height custom cabinetry, pendant lighting, and high-end stain",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/664/genIslnoResize.2591664_28_0.jpg" ]
+  }, {
+    "id" : 24791,
+    "mlsId" : "2590841",
+    "url" : "https://www.redfin.com/WA/Bellevue/10047-Main-St-98004/unit-305/home/24791",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Open concept living", "High end touches", "Remodeled condo" ],
+    "yearBuilt" : 2000,
+    "area" : 910,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 745000,
+    "addressRaw" : "10047 Main St #305, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10047 Main St #305",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.609764,
+    "longitude" : -122.205608,
+    "description" : "Downtown living at its best. Remodeled condo in the desirable Astoria Building in Old Bellevue. Walk to park, restaurants, and shopping. Open concept living and dining area boast expansive and bright floor to ceiling windows. The bathroom and kitchen are finished with high end touches. up to 3 parking spaces available.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/841/genIslnoResize.2590841_33_0.jpg" ]
+  }, {
+    "id" : 510542,
+    "mlsId" : "2591408",
+    "url" : "https://www.redfin.com/WA/Bellevue/10668-SE-32nd-St-98004/home/510542",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Primary suite", "Gourmet kitchen", "Modern farmhouse" ],
+    "yearBuilt" : 2021,
+    "area" : 5130,
+    "beds" : 6,
+    "baths" : 5.5,
+    "currency" : "USD",
+    "price" : 4298000,
+    "addressRaw" : "10668 SE 32nd St, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10668 SE 32nd St",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.5826847,
+    "longitude" : -122.1985932,
+    "description" : "Moments from the shores of Lake Washington in Bellevue's sought after Enatai neighborhood, this stunning modern farmhouse pairs refined craftsmanship  &  thoughtful design with 6 beds, 5 baths  &  5,130 sq ft. Inside, light-filled, open concept living  &  dining spaces showcase vaulted ceilings  &  rich hardwood floors. The gourmet kitchen anchors the home with high-end appliances, handcrafted cabinetry, an expansive center island  &  a walk in pantry, all open to the family room with a gas fireplace. A main floor bedroom suite  &  a dedicated office add everyday flexibility. Upstairs, the primary suite is a true retreat with a 5 piece ensuite bath  &  a generous",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/408/genIslnoResize.2591408_39_0.jpg" ]
+  }, {
+    "id" : 251036,
+    "mlsId" : "2589250",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/2659-90th-Ave-NE-98004/home/251036",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Flat usable yard", "Private office", "Chef's kitchen" ],
+    "yearBuilt" : 2021,
+    "area" : 6110,
+    "beds" : 5,
+    "baths" : 5,
+    "currency" : "USD",
+    "price" : 6750000,
+    "addressRaw" : "2659 90th Ave NE, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "2659 90th Ave NE",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6352498,
+    "longitude" : -122.2217101,
+    "description" : "An exceptional MN Custom Homes resale, this private modern sanctuary sits on a beautifully manicured half-acre lot in the heart of Clyde Hill. A rare blend of privacy, a flat usable yard, and refined designer finishes, the residence offers sophisticated indoor-outdoor living with soaring two-story, floor-to-ceiling windows and seamless flow to a covered outdoor living and dining area with fireplace, heaters and entertaining system, all overlooking the maturely landscaped backyard. The chef's kitchen features Wolf, Sub-Zero, and Bosch appliances, including a B pantry plus an expansive quartz island that connects effortlessly to the impressive great room. The main level includes a private off",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_36_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_38_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/250/genIslnoResize.2589250_39_1.jpg" ]
+  }, {
+    "id" : 510113,
+    "mlsId" : "2588589",
+    "url" : "https://www.redfin.com/WA/Bellevue/208-107th-Pl-SE-98004/home/510113",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Close to parks", "Exceptional lot", "Built-in storage" ],
+    "yearBuilt" : 2008,
+    "area" : 2711,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 2750000,
+    "addressRaw" : "208 107th Pl SE, Bellevue, WA 98004",
+    "address" : {
+      "street" : "208 107th Pl SE",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6079039,
+    "longitude" : -122.1976201,
+    "description" : "Meticulously maintained 4BR/2.5BA home on a quiet residential cul-de-sac in one of Bellevue's most established and sought-after neighborhoods. Greeted by a beautiful cherry blossom tree in the front yard, its seasonal blooms creating a picture-perfect first impression. Bright, open floor plan with light-filled living spaces flowing seamlessly from living room to dining area. Kitchen features sleek stainless steel appliances with open sightlines to the living areas. Four generous bedrooms including a luxurious primary suite with spa-like master bath and huge walk-in closet. Premium blinds throughout. An additional 190 sqft of built-in storage is a rare and genuinely valuable feature, providi",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/589/genIslnoResize.2588589_39_1.jpg" ]
+  }, {
+    "id" : 409134,
+    "mlsId" : "2592117",
+    "url" : "https://www.redfin.com/WA/Bellevue/11055-SE-Lake-Rd-98004/home/409134",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "South facing views", "Boat lift", "Private dock" ],
+    "yearBuilt" : 1978,
+    "area" : 4813,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 5950000,
+    "addressRaw" : "11055 SE Lake Rd, Bellevue, WA 98004",
+    "address" : {
+      "street" : "11055 SE Lake Rd",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.5784089,
+    "longitude" : -122.191798,
+    "description" : "A truly unique, once in a lifetime opportunity to purchase this street-to-waterfront property located on the shores of Lake Washington. Take in rare and expansive south facing views from this nearly flat large lot with 138 feet of waterfront! Enjoy modern living in this Classic 4 bed/3 bath home. Enjoy the large private dock and boat lift. Enatai Elementary  &  award winning Bellevue schools. Close to Old Main and downtown Bellevue shops and restaurants. Idyllic setting inspires year-round activities on the lake.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/117/genIslnoResize.2592117_16_0.jpg" ]
+  }, {
+    "id" : 195902956,
+    "mlsId" : "2591296",
+    "url" : "https://www.redfin.com/WA/Bellevue/10232-NE-10th-St-98004/unit-602/home/195902956",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Moments to dining", "Moments to shopping", "$548 HOA" ],
+    "yearBuilt" : 2024,
+    "area" : 431,
+    "beds" : 0,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 479000,
+    "addressRaw" : "10232 NE 10th St #602, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10232 NE 10th St #602",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6195293,
+    "longitude" : -122.2032469,
+    "description" : "Meet MARI. Boutique luxury one block from Bellevue Square. 138 residences across 20 stories with 9'8\" to nearly 12' ceilings, custom Italian kitchen cabinetry, and wide-plank wood floors throughout. Floor-to-ceiling windows pull the Pacific Northwest right inside. Atop the building, the SkyClub and open-air SkyDeck — Downtown Bellevue's only condominium tower rooftop amenity — open to sweeping views of Lake Washington, the Cascades, and the Olympics. From pied-à-terres to penthouses, MARI offers a home for every Bellevue lifestyle. Moments to dining, shopping, and parks. A building with character in a neighborhood with momentum — grounded and uplifted, familiar",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/296/genIslnoResize.2591296_29_0.jpg" ]
+  }, {
+    "id" : 205599736,
+    "mlsId" : "2584548",
+    "url" : "https://www.redfin.com/WA/Bellevue/10237-SE-6th-St-98004/home/205599736",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private office", "Shy quarter-acre lot", "Guest suite" ],
+    "yearBuilt" : 2026,
+    "area" : 4919,
+    "beds" : 5,
+    "baths" : 5.5,
+    "currency" : "USD",
+    "price" : 4999950,
+    "addressRaw" : "10237 SE 6th St, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10237 SE 6th St",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6040891,
+    "longitude" : -122.2023336,
+    "description" : "Six blocks from Main Street, this exceptional Meydenbauer residence offers a rare combination of scale, privacy, and walkability in the heart of Bellevue. Nearly 5,000 SF of newly built living space sits on a shy quarter-acre lot, creating a sense of retreat without giving up immediate access to acclaimed dining, boutiques, parks, and everything Downtown Bellevue has to offer. Inside, quiet sophistication unfolds through wide-plank Anderson Tuftex Chateau Oak flooring, custom Abodian cabinetry, sculptural stone, tailored millwork, and designer tile. The kitchen commands the main level with Thermador appliance package, 48-inch built-in refrigerator, dramatic honed island, full-height backspl",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/548/genIslnoResize.2584548_39_0.jpg" ]
+  }, {
+    "id" : 251653,
+    "mlsId" : "2591126",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/9412-NE-14th-St-98004/home/251653",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Expansive terraces", "Swimming pool", "Private estate" ],
+    "yearBuilt" : 2013,
+    "area" : 6810,
+    "beds" : 4,
+    "baths" : 5,
+    "currency" : "USD",
+    "price" : 13995000,
+    "addressRaw" : "9412 NE 14th St, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "9412 NE 14th St",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.623709,
+    "longitude" : -122.214814,
+    "description" : "A view this extraordinary changes everything. Perched at the top of Clyde Hill, this exceptional custom residence commands a breathtaking 180-degree panorama stretching from Lake Washington and the Seattle skyline to the Olympic Mountains and Mt. Rainier. By day, walls of glass fill the home with natural light. By night, the city becomes the backdrop. Set on a private . 74-acre estate, 6,810 square feet of sophisticated contemporary living unfolds with warm woods, natural stone and beautifully curated finishes. The architecture is designed for effortless entertaining, flowing from dramatic interior spaces to expansive terraces, a covered outdoor kitchen and dining area, level lawn and swimm",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/126/genIslnoResize.2591126_39_0.jpg" ]
+  }, {
+    "id" : 172711351,
+    "mlsId" : "2591558",
+    "url" : "https://www.redfin.com/WA/Bellevue/188-Bellevue-Way-NE-98004/unit-805/home/172711351",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Open floor plan", "Engineered floors", "Gaggenau appliances" ],
+    "yearBuilt" : 2020,
+    "area" : 1542,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1770000,
+    "addressRaw" : "188 bellevue Way NE #805, Bellevue, WA 98004",
+    "address" : {
+      "street" : "188 bellevue Way NE #805",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6118992,
+    "longitude" : -122.2008332,
+    "description" : "ONE88 resale by world renowned developer BOSA. Prime light filled 2 bedroom/2 bath+Den SE corner unit. Phenomenal open floor plan with walls of glass looking both east and south, views of vibrant Bellevue Downtown. 9ft ceilings, floor-to-ceiling windows, a gourmet kitchen w/ upscale European cabinetry, Caesar stone quartz counters, oversized island, Gaggenau appliances. Engineered floors throughout. CA closets in all rooms. Large weather protected balcony. 2 adjacent parking spaces and one storage on the same level. 24/7 concierge, golf simulator, children’s play area, fitness center, manicured terrace garden, private lounge, indoor pool, sauna  &  dog run. Top schools. The ultima",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/558/genIslnoResize.2591558_39_0.jpg" ]
+  }, {
+    "id" : 250754,
+    "mlsId" : "2584152",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/9355-NE-30th-St-98004/home/250754",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Serene lake outlook", "Panoramic views", "Great room" ],
+    "yearBuilt" : 1969,
+    "area" : 5220,
+    "beds" : 6,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 3888000,
+    "addressRaw" : "9355 NE 30th St, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "9355 NE 30th St",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6367891,
+    "longitude" : -122.2151233,
+    "description" : "Set above it all in coveted Clyde Hill, this iconic 1969 Mid-Century home captures panoramic Olympic, evergreen  &  skyline views plus a serene lake outlook, and delivers 5,220 sq ft of extraordinary living on a 0.45-acre corner lot in Aqua Vista. Designed for grand entertaining and effortless everyday living, the home welcomes you with a dramatic foyer before opening to a spectacular great room with vaulted wood-plank ceilings, exposed beams, floor-to-ceiling stone fireplace, clerestory windows  &  walls of glass. Two exciting paths forward: approved plans by McCullough Architects convey, and while the permits have expired, a new buyer can reapply with the City and build on that he",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_33_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_36_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_38_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/152/genIslnoResize.2584152_39_1.jpg" ]
+  }, {
+    "id" : 64715,
+    "mlsId" : "2583374",
+    "url" : "https://www.redfin.com/WA/Bellevue/10042-Main-St-98004/unit-117/home/64715",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Elevated decks", "Private patios", "Chef's kitchen" ],
+    "yearBuilt" : 1994,
+    "area" : 1669,
+    "beds" : 2,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1495000,
+    "addressRaw" : "10042 Main St #117, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10042 Main St #117",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6103228,
+    "longitude" : -122.2047737,
+    "description" : "Offering $15K Closing Cost Credit. Experience the ultimate urban sanctuary designed for modern living. Positioned perfectly between the vibrant energy of Old Main Street  &  the tranquility of Bellevue Downtown Park, this fully updated, multi-level townhouse offers an uncompromised lifestyle where luxury meets walkability. Step out your front door to premier dining  &  coffee shops, or take advantage of seamless transit with the South Bellevue Light Rail station just five minutes away making your commute to major tech hubs effortless. The open, light-filled layout makes an immediate impression with soaring two-story entry ceilings, rich hardwood, &  custom tile flooring througho",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/374/genIslnoResize.2583374_39_0.jpg" ]
+  }, {
+    "id" : 505859,
+    "mlsId" : "2590536",
+    "url" : "https://www.redfin.com/WA/Bellevue/10241-NE-20th-Pl-98004/home/505859",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Level sunny lot", "Natural light", "Private patio" ],
+    "yearBuilt" : 1952,
+    "area" : 1660,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1985000,
+    "addressRaw" : "10241 NE 20th Pl, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10241 NE 20th Pl",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.628509,
+    "longitude" : -122.2032588,
+    "description" : "Ideally located in the heart of West Bellevue, this light-filled rambler offers easy one-level living today with the opportunity to reimagine or build new in the future. Set on a level, sunny lot in a sought-after neighborhood, the home has been refreshed and is ready for its next chapter. Skylights and large windows bring natural light into the spacious living room, complemented by a dedicated dining area and additional bonus room. The primary suite features a private bath, walk-in closet and French doors opening to a private patio, plus three additional bedrooms. Hardwood floors and two fireplaces add warmth and character throughout. A one car garage, generous outdoor space and sought-aft",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/536/genIslnoResize.2590536_30_0.jpg" ]
+  }, {
+    "id" : 251329,
+    "mlsId" : "2589684",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/2829-92nd-Ave-NE-98004/home/251329",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Custom cabinetry", "High-end appliances", "Marble accents" ],
+    "yearBuilt" : 1951,
+    "area" : 2053,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 2658000,
+    "addressRaw" : "2829 92nd Ave NE, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "2829 92nd Ave NE",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6365071,
+    "longitude" : -122.2180485,
+    "description" : "Reimagined as a modern Newport Beach–inspired retreat, this sophisticated bungalow blends timeless design with everyday livability. Offering 4 bedrooms and 2.5 baths, the home delivers an ideal balance of style, comfort, and functionality. At its center is a thoughtfully designed chef’s kitchen, complete with high-end appliances, custom cabinetry, and an intuitive layout perfect for both daily living and entertaining. Wide-plank white oak flooring, marble accents, designer lighting, and curated fixtures bring warmth and refined character throughout, while abundant natural light enhances the home’s airy, inviting atmosphere. Designed for effortless indoor-outdoor living, th",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/684/genIslnoResize.2589684_39_0.jpg" ]
+  }, {
+    "id" : 172711400,
+    "mlsId" : "2589871",
+    "url" : "https://www.redfin.com/WA/Bellevue/188-Bellevue-Way-NE-98004/unit-1502/home/172711400",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "European cabinetry", "Breathtaking views", "Gourmet kitchen" ],
+    "yearBuilt" : 2020,
+    "area" : 1353,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1555000,
+    "addressRaw" : "188 Bellevue Way NE #1502, Bellevue, WA 98004",
+    "address" : {
+      "street" : "188 Bellevue Way NE #1502",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6118992,
+    "longitude" : -122.2008332,
+    "description" : "Discover modern luxury at One88, where upscale living meets breathtaking views on the 15th floor. Unit 1502 features a sophisticated north facing layout with two bedrooms and two bathrooms, designed for comfort and elegance. Enjoy ample natural light from expansive floor-to-ceiling windows, which offer stunning perspectives of downtown Bellevue and beyond. This thoughtfully crafted residence boasts a gourmet kitchen equipped with premium Gaggenau appliances, sleek Caesarstone quartz countertops, and European cabinetry, making it a chef’s delight. The spacious living and dining areas seamlessly flow to a private balcony, perfect for relaxation or entertainment. Additional highlights in",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/871/genIslnoResize.2589871_36_0.jpg" ]
+  }, {
+    "id" : 253560,
+    "mlsId" : "2589859",
+    "url" : "https://www.redfin.com/WA/Bellevue/613-Bellevue-Way-SE-98004/home/253560",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Exterior paint", "New composite roof", "Updated kitchen" ],
+    "yearBuilt" : 1986,
+    "area" : 1660,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1328000,
+    "addressRaw" : "613 Bellevue Way SE, Bellevue, WA 98004",
+    "address" : {
+      "street" : "613 Bellevue Way SE",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6038258,
+    "longitude" : -122.2019513,
+    "description" : "Nestled in the heart of downtown Bellevue, this beautifully updated 3-bedroom single-family home offers the perfect blend of comfort and convenience. Enjoy an unbeatable location just moments from Main Street and only blocks to Bellevue Square, with easy access to grocery stores, restaurants, and a nearby cinema. This two-story home sits on a level lot and features a bright, open floor plan with soaring vaulted ceilings. The main level includes a spacious bedroom, ideal for guests or flexible living. Upstairs, you’ll find two generously sized primary suites, offering privacy and comfort. The home boasts an upgraded kitchen with sleek stainless steel appliances, along with a beautifull",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/859/genIslnoResize.2589859_29_0.jpg" ]
+  }, {
+    "id" : 37665,
+    "mlsId" : "2589621",
+    "url" : "https://www.redfin.com/WA/Bellevue/10101-SE-3rd-St-98004/unit-202/home/37665",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Wet bar", "Cozy fireplace", "$771 HOA" ],
+    "yearBuilt" : 1978,
+    "area" : 1268,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 645000,
+    "addressRaw" : "10101 SE 3rd St #202, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10101 SE 3rd St #202",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.607763,
+    "longitude" : -122.204724,
+    "description" : "*  *  * OWNER FINANCING AVAILABLE AT A DISCOUNTED RATE! 6.5%, 25% down, 30-year Amortization, 5-year payoff, &  No Prepayment Penalty. Close quick and easy. *  *  *  Updated Meydenbauer Corner unit positioned overlooking Wildwood Park and just moments from downtown Bellevue, this light-filled 2-bedroom, 1.75-bath condo offers the perfect combination of convenience and serene surroundings. Brand new carpet and paint create a fresh, move-in-ready feel, while expansive corner windows fill the home with natural light. A cozy fireplace creates a warm and inviting living room. With the addition of a wet bar and extra storage cabinets adds flexibility for hosting or everyday living, would make",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/621/genIslnoResize.2589621_36_0.jpg" ]
+  }, {
+    "id" : 21882631,
+    "mlsId" : "2589689",
+    "url" : "https://www.redfin.com/WA/Bellevue/500-106th-Ave-NE-98004/unit-1313/home/21882631",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spa-inspired bath", "Oversized shower", "Cherry cabinetry" ],
+    "yearBuilt" : 2008,
+    "area" : 1424,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 1100000,
+    "addressRaw" : "500 106th Ave NE #1313, Bellevue, WA 98004",
+    "address" : {
+      "street" : "500 106th Ave NE #1313",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6145147,
+    "longitude" : -122.1986425,
+    "description" : "Welcome to Bellevue Towers Home 1313. This generous 1-bedroom residence enjoys a sunny southwest orientation overlooking the beautifully landscaped Bellevue Towers Urban Garden. A gracious gallery entry with custom cabinetry leads to a large, light-filled living space featuring 9-foot ceilings, a built-in desk, and a private balcony with gas for grilling. The thoughtfully designed kitchen features cherry cabinetry, updated slab quartz countertops, and premium Miele appliances. The spacious primary suite offers a spa-inspired bath with an oversized shower and Hansgrohe fixtures, while a large powder room provides added convenience for guests. A versatile flex/utility room with wall bed offer",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/689/genIslnoResize.2589689_36_0.jpg" ]
+  }, {
+    "id" : 43447,
+    "mlsId" : "2588669",
+    "url" : "https://www.redfin.com/WA/Bellevue/10410-NE-32nd-Pl-98004/unit-D104/home/43447",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Oversized deck", "One car garage space", "Large double closets" ],
+    "yearBuilt" : 1980,
+    "area" : 777,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 395000,
+    "addressRaw" : "10410 NE 32nd Pl Unit D-104, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10410 NE 32nd Pl Unit D-104",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6394294,
+    "longitude" : -122.2004692,
+    "description" : "Incredible end unit condo at an unbeatable location - minutes from downtown Kirkland, downtown Bellevue, 520/405 and on a bus route. Oversized deck with territorial views, perfect for dining, entertaining and for planters/flowers. Large living room with fireplace and sliding glass door onto the spacious corner deck! Efficient kitchen with pantry. Updated quartz bathroom counter. Spacious bedroom with large double closets. One car garage space, large storage locker. New washer dryer and new electric water heater. Best location in the complex, across from the pool and hot tub. This well maintained sunny condo is ideal for homeowners or investors. NO RENTAL CAP and a West Bellevue location!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/669/genIslnoResize.2588669_14_0.jpg" ]
+  }, {
+    "id" : 21883363,
+    "mlsId" : "121111",
+    "url" : "https://www.redfin.com/WA/Bellevue/500-106th-Ave-NE-98004/unit-1807/home/21883363",
+    "homeType" : "Condo",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Stone countertops", "Private balcony", "Premium cabinetry" ],
+    "yearBuilt" : 2008,
+    "area" : 1048,
+    "beds" : 1,
+    "baths" : 1.25,
+    "currency" : "USD",
+    "price" : 899000,
+    "daysOnSite" : 7,
+    "addressRaw" : "500 106th Ave NE #1807, Bellevue, WA 98004",
+    "address" : {
+      "street" : "500 106th Ave NE #1807",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6145147,
+    "longitude" : -122.1986425,
+    "description" : "Experience refined high-rise living on the 18th floor of the North Towerat Bellevue Towers. This spacious 1,048 sq ft residence features an open, light-filled layout with floor-to-ceiling insulated windows, Hunter Douglasroller shades, beautiful hardwood floors, and a private balconyshowcasing partial bay and city views. The chef’s kitchen boasts stonecountertops, premium cabinetry, and luxury appointments including aSub-Zero refrigerator and a Viking gas range—perfect for everyday diningor hosting. Enjoy a serene primary suite with a full en-suite bath andample closet space, plus a separate powder room for your guests. Bellevue Towers sets the standard for eco-luxury as a premi",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    }
+  }, {
+    "id" : 172711307,
+    "mlsId" : "2589480",
+    "url" : "https://www.redfin.com/WA/Bellevue/188-Bellevue-Way-NE-98004/unit-311/home/172711307",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Gourmet kitchen", "Caesarstone counters", "Ada-accessible" ],
+    "yearBuilt" : 2020,
+    "area" : 1342,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1295000,
+    "addressRaw" : "188 Bellevue Way NE #311, Bellevue, WA 98004",
+    "address" : {
+      "street" : "188 Bellevue Way NE #311",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6118992,
+    "longitude" : -122.2008332,
+    "description" : "Exceptional value at One88 in the heart of Downtown Bellevue. This sophisticated 2BD + flex/2BA residence offers 1,342 SF of beautifully designed living space with a highly functional floor plan that lives more like a 3-bedroom. The versatile flex room features a built-in desk and Murphy bed, creating an ideal home office, guest room, or both without sacrificing the second bedroom. Floor-to-ceiling windows fill the open living and dining areas with natural light, while the gourmet kitchen features Caesarstone counters, a waterfall island, Euro-style cabinetry, and premium Gaggenau appliances. A desirable split-bedroom layout provides privacy, complemented by spa-inspired baths, custom close",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/480/genIslnoResize.2589480_39_0.jpg" ]
+  }, {
+    "id" : 252150,
+    "mlsId" : "2584597",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/9411-NE-14th-St-98004/home/252150",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Significant remodel", "Private view deck", "Epicurean kitchen" ],
+    "yearBuilt" : 1951,
+    "area" : 4003,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 5800000,
+    "addressRaw" : "9411 NE 14th St, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "9411 NE 14th St",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6221255,
+    "longitude" : -122.2146193,
+    "description" : "Situated near the top of Clyde Hill, with sweeping views of Seattle, Lake Washington  &  the Olympics! Significant 2016 remodel  &  addition transformed the home, raising the roof line  &  expanding the living spaces to create a bright, open atmosphere. All of the main living areas  &  bedrooms enjoy the views! Stunning great room anchored by a gas fireplace  &  framed by walls of picture windows that capture captivating views. Epicurean kitchen with sleek custom cabinetry, honed Carrara marble counters, backsplash, &  a substantial center island.  Top of the line stainless appliances include a Sub-Zero refrigerator, Wolf gas cooktop, oven  &  steam/convecti",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2584597_39_0.jpg" ]
+  }, {
+    "id" : 253583,
+    "mlsId" : "2579793",
+    "url" : "https://www.redfin.com/WA/Bellevue/2131-104th-Pl-SE-98004/home/253583",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Motorized windows", "Hot tub", "Covered terrace" ],
+    "yearBuilt" : 2024,
+    "area" : 5850,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 5698000,
+    "addressRaw" : "2131 104th Pl SE, Bellevue, WA 98004",
+    "address" : {
+      "street" : "2131 104th Pl SE",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.5912502,
+    "longitude" : -122.2033003,
+    "description" : "Most new construction follows a formula. This home broke it. What began as a presale was reworked far past it, then handed to Brian Paquette, one of Seattle's most recognized designers, to give every room real character and cohesion. It feels nothing like the cookie-cutter builds so common at this level, where the layouts and finishes tend to repeat from one house to the next. It sits in Enatai, one of the Eastside's quieter pockets, with wide, tree-lined streets, deep lots, and a genuine sense of remove this close to the city. Downtown Bellevue is minutes away, Seattle a quick drive over I-90, light rail nearby, and Sea-Tac in about twenty. Inside, a soaring two-story great room anchors a ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/793/genIslnoResize.2579793_39_1.jpg" ]
+  }, {
+    "id" : 205525151,
+    "mlsId" : "2570513",
+    "url" : "https://www.redfin.com/WA/Bellevue/10042-Main-St-98004/unit-112/home/205525151",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Cozy gas fireplace", "Four private patios", "Efficient heat pump" ],
+    "yearBuilt" : 1994,
+    "area" : 1669,
+    "beds" : 2,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1485000,
+    "addressRaw" : "10042 Main St #112, Bellevue, WA 98004",
+    "address" : {
+      "street" : "10042 Main St #112",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6103228,
+    "longitude" : -122.2047737,
+    "description" : "Stunning updated McKee townhome in the heart of Downtown Bellevue, ideally located between charming Old Bellevue and the Downtown Bellevue Park. This spacious 2-bedroom, 2.5-bath residence offers 1,669 square feet with soaring ceilings, four private patios and decks, and a flexible multi-level floor plan. The updated kitchen features granite countertops and new stainless steel appliances. Enjoy an efficient heat pump with air conditioning, new water heater, and a cozy gas fireplace. The upper-level primary suite includes a private bath, while a separate loft-style office provides an ideal work-from-home space. Additional highlights include a newer washer and dryer, new carpets, new interior",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/513/genIslnoResize.2570513_39_1.jpg" ]
+  }, {
+    "id" : 252410,
+    "mlsId" : "2588817",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/3227-96th-Ave-NE-98004/home/252410",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Custom cabinetry", "Two-story entry", "Gated entry" ],
+    "yearBuilt" : 2027,
+    "area" : 6938,
+    "beds" : 5,
+    "baths" : 6,
+    "currency" : "USD",
+    "price" : 8750000,
+    "addressRaw" : "3227 96th Ave NE, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "3227 96th Ave NE",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6399963,
+    "longitude" : -122.2128366,
+    "description" : "New construction by Murray Franklyn Homes nearing completion in the heart of Clyde Hill, set on a flat, shy half-acre lot. A gated entry, grand approach  &  striking architectural presence set the tone for The Radium, offering 6,938 square feet with impressive scale, warm modern finishes  &  a floor plan designed for everyday living  &  entertaining. Inside, a dramatic two-story entry opens to a soaring family room, where walls of glass  &  multi-panel doors connect the interiors to covered outdoor living. At the center of the home, the kitchen pairs custom cabinetry  &  an oversized waterfall island with Wolf  &  Gaggenau appliances, complemented by a fully equipped",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/817/genIslnoResize.2588817_23_1.jpg" ]
+  }, {
+    "id" : 21883613,
+    "mlsId" : "2587915",
+    "url" : "https://www.redfin.com/WA/Bellevue/500-106th-Ave-NE-98004/unit-3109/home/21883613",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Breathtaking views", "High-end appliances", "Exclusive balcony" ],
+    "yearBuilt" : 2008,
+    "area" : 1277,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 1050000,
+    "addressRaw" : "500 106th Ave NE #3109, Bellevue, WA 98004",
+    "address" : {
+      "street" : "500 106th Ave NE #3109",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6145147,
+    "longitude" : -122.1986425,
+    "description" : "Experience the ultimate in downtown living! This convenient, 1-level condominium home resides in the north tower of desirable Bellevue Towers with southern exposure and breathtaking views of Lake Washington, downtown Bellevue, the Olympics and the Cascades. Its prime location is walking distance to premier dining, shopping, the 21-acre Downtown Bellevue Park, and everyday conveniences. The spacious great room features gleaming, solid hardwood floors, a wall of windows to showcase the views, dining area, living space with an entertainment alcove, and an exclusive balcony. The slab granite kitchen boasts bar seating, pendant lighting, and high-end appliances including Wolf gas cooktop, oven a",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/915/genIslnoResize.2587915_36_0.jpg" ]
+  }, {
+    "id" : 202715858,
+    "mlsId" : "2588319",
+    "url" : "https://www.redfin.com/WA/Bellevue/1300-Bellevue-Way-NE-98004/unit-2/home/202715858",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Newer appliances", "New interior paint", "Newish flooring" ],
+    "yearBuilt" : 1984,
+    "area" : 810,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 522500,
+    "addressRaw" : "1300 Bellevue Way NE #2, Bellevue, WA 98004",
+    "address" : {
+      "street" : "1300 Bellevue Way NE #2",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6225206,
+    "longitude" : -122.2012143,
+    "description" : "Quintessential downtown Bellevue living!  Immaculate one bedroom top floor unit in a gorgeous park-like setting. Absolutely move in ready. New interior paint, newer appliances and newish flooring and carpet. Location, location, location just four blocks from Bellevue Square Mall. The Carlyle remains one of Bellevue’s most highly regarded complexes. Well run, well managed, well funded. Manageable inclusive monthly HOA dues. Feeds in to some of the best schools in the state, including highly ranked Clyde Hill Elementary. The bus stop is literally right across the street. This is a fantastic opportunity for live-in investment ownership, or for a solid rental property. Don’t delay o",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/319/genIslnoResize.2588319_33_0.jpg" ]
+  }, {
+    "id" : 2118274,
+    "mlsId" : "2205205833082242465",
+    "url" : "https://www.redfin.com/WA/Bellevue/650-Bellevue-Way-NE-98004/unit-2504/home/2118274",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Full fitness center", "Concierge service", "On site spa" ],
+    "yearBuilt" : 2005,
+    "area" : 2629,
+    "beds" : 2,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 5998000,
+    "daysOnSite" : 9,
+    "addressRaw" : "650 Bellevue Way NE #2504, Bellevue, WA 98004",
+    "address" : {
+      "street" : "650 Bellevue Way NE #2504",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6157887,
+    "longitude" : -122.2009571,
+    "description" : "Set within what is widely regarded as the finest building in Bellevue, this one of a kind residence stands apart from the cookie cutter condos around it, reimagined top to bottom to bring earth, water, and light into every room. The building offers a light filled lobby, concierge service, a resort style indoor pool, a full fitness center, and an on site spa. Inside, floor to ceiling windows and a raw concrete column ground the great room in quiet texture. Custom dyed reclaimed wood, given a deep indigo hue, wraps the kitchen island and ceiling detail, paired with a honeyed reclaimed wood top, waterfall marble counters, a built in wine fridge, and a dramatic suspended hood, the same reclaime",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_0.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_1_0.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_2_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_3_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_4_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_5_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_6_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_7_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_8_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_9_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_10_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_11_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_12_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_13_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_14_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_15_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_16_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_17_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_18_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_19_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_20_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_21_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_22_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_23_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_24_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_25_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_26_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_27_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_28_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_29_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_30_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_31_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_32_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_33_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_34_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_35_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_36_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_37_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_38_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_39_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_40_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_41_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_42_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_43_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_44_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_45_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_46_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_47_1.jpg", "https://ssl.cdn-redfin.com/photo/641/islphoto/465/genIslnoResize.2205205833082242465_48_1.jpg" ]
+  }, {
+    "id" : 20842,
+    "mlsId" : "2587896",
+    "url" : "https://www.redfin.com/WA/Bellevue/1622-103rd-Pl-NE-98004/unit-L3/home/20842",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Close to bel square", "Private patio", "Ground level entry" ],
+    "yearBuilt" : 1974,
+    "area" : 1156,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 589000,
+    "addressRaw" : "1622 103rd Pl NE Unit L3, Bellevue, WA 98004",
+    "address" : {
+      "street" : "1622 103rd Pl NE Unit L3",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6255228,
+    "longitude" : -122.2020618,
+    "description" : "Welcome to Towne Square in West Bellevue! Rarely available and ideally located, this condominium offers the perfect blend of a quiet residential setting and an exceptionally walkable lifestyle. Enjoy the convenience of being just 0.6 miles from Bellevue Square and 0.7 miles from the Bellevue Transit Center, with shopping, dining, entertainment, parks, and everyday essentials all within easy reach. Inside, the bright open-concept floor plan features soaring vaulted ceilings, spacious rooms, and no neighbors above, creating a comfortable and private retreat. The living and dining areas flow seamlessly together, with a large deck just off the dining room, perfect for morning coffee, outdoor di",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/896/genIslnoResize.2587896_39_0.jpg" ]
+  }, {
+    "id" : 510468,
+    "mlsId" : "2587645",
+    "url" : "https://www.redfin.com/WA/Bellevue/1020-107th-Ave-SE-98004/home/510468",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "7,000 sq ft lot", "Garage", "Built 2025" ],
+    "yearBuilt" : 2025,
+    "area" : 4760,
+    "beds" : 6,
+    "baths" : 5.5,
+    "currency" : "USD",
+    "price" : 3795000,
+    "addressRaw" : "1020 107th Ave SE, Bellevue, WA 98004",
+    "address" : {
+      "street" : "1020 107th Ave SE",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6009478,
+    "longitude" : -122.1971606,
+    "description" : "*  * $75,000 Builder Credit for rate buydown *  * Discover Ava, a Straight Arrow Homes creation unlike any other. This new construction residence in West Bellevue is a testament to sophisticated living, blending contemporary elegance with enduring style. Step inside to an immediate embrace of warmth, bold design choices, and meticulous refinements. The open floorplan living room provides an ideal setting for grand entertaining, while the dedicated media room invites intimate evenings. Beyond the main living areas, this home continues to impress with five generously-sized bedrooms, four and a half spa-like bathrooms, and additional bonus spaces designed to accommodate every facet of your lif",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/645/genIslnoResize.2587645_36_0.jpg" ]
+  }, {
+    "id" : 510911,
+    "mlsId" : "2587808",
+    "url" : "https://www.redfin.com/WA/Bellevue/1652-104th-Ave-SE-98004/home/510911",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Flat lot", "West facing", "Sprawling grounds" ],
+    "yearBuilt" : 1951,
+    "area" : 3310,
+    "beds" : 3,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1790000,
+    "addressRaw" : "1652 104th Ave SE, Bellevue, WA 98004",
+    "address" : {
+      "street" : "1652 104th Ave SE",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.5951078,
+    "longitude" : -122.2015898,
+    "description" : "1.0 mile from main street at Killarney Glen Park in esteemed Enetai sits this flat, west-facing, .21 acre / 135' x 70' lot, prime for redevelopment. Surrounded by $4M+ luxury estates, the sprawling grounds should comfortably support a 5,000+ sqft home with spacious yards  &  plenty of parking. Originally constructed in 1951  &  since expanded with 3,710sf across 3 floors, the current home could be completely renovated or rented out while future site plans are realized. Exceptional west Bellevue location moments to parks, beaches, top schools  &  downtown!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/808/genIslnoResize.2587808_17_0.jpg" ]
+  }, {
+    "id" : 205699217,
+    "mlsId" : "2587551",
+    "url" : "https://www.redfin.com/WA/Bellevue/889-Avenue-Sq-NE-98004/unit-1703/home/205699217",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Dog lounge", "Stylish lounge", "Living wall" ],
+    "yearBuilt" : 2024,
+    "area" : 1044,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1699000,
+    "addressRaw" : "889 Avenue Sq NE #1703, Bellevue, WA 98004",
+    "address" : {
+      "street" : "889 Avenue Sq NE #1703",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6184633,
+    "longitude" : -122.2031957,
+    "description" : "A global icon. A Bellevue address. Experience the distinctive lifestyle at Nobu Residences Bellevue, the first completed and move-in ready Nobu-branded residential development in the United States. Located in the heart of downtown Bellevue, this northwest-facing two-bedroom, two-bath residence pairs modern design with the elevated hospitality, wellness, and dining experiences synonymous with Nobu. Interiors feature clean architectural lines, warm neutral tones, and premium finishes from world-renowned brands. Residents enjoy a curated collection of amenities, including a state-of-the-art fitness center, stylish indoor and outdoor lounges, an outdoor terrace with a dedicated dog area, indoor",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/551/genIslnoResize.2587551_17_2.jpg" ]
+  }, {
+    "id" : 251729,
+    "mlsId" : "2587813",
+    "url" : "https://www.redfin.com/WA/Clyde-Hill/1441-88th-Ave-NE-98004/home/251729",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Outdoor amenities", "Expansive decks", "Spacious kitchen" ],
+    "yearBuilt" : 1971,
+    "area" : 3470,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 4188888,
+    "addressRaw" : "1441 88th Ave NE, Clyde Hill, WA 98004",
+    "address" : {
+      "street" : "1441 88th Ave NE",
+      "city" : "Clyde Hill",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6234196,
+    "longitude" : -122.2235091,
+    "description" : "Offered for the first time in more than 30 years, this west-facing Clyde Hill home is a rare opportunity in one of the Eastside’s most sought-after neighborhoods. Set on nearly half an acre, the property blends generous living spaces, incredible outdoor amenities, and a layout designed to evolve with you. Natural light fills the open main level, where multiple gathering spaces flow easily to expansive decks and beautifully landscaped grounds. The heart of the home includes a spacious kitchen with walk-in pantry and wine refrigerator, inviting great room, dedicated office, main-level primary suite, and an additional bedroom perfect for guests, a nursery, or flexible living space. Downs",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/813/genIslnoResize.2587813_39_0.jpg" ]
+  }, {
+    "id" : 12307820,
+    "mlsId" : "2587284",
+    "url" : "https://www.redfin.com/WA/Bellevue/118-107th-Ave-NE-98004/unit-B403/home/12307820",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private balcony", "In-unit laundry", "Private storage" ],
+    "yearBuilt" : 2000,
+    "area" : 1004,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 750000,
+    "addressRaw" : "118 107th Ave NE Unit B403, Bellevue, WA 98004",
+    "address" : {
+      "street" : "118 107th Ave NE Unit B403",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6106523,
+    "longitude" : -122.1973643,
+    "description" : "Top-floor corner condo in the heart of Downtown Bellevue! Discover 1,004 SF of light-filled, single-level living at Belle Arts, offering 2 bedrooms, 1.75 baths and a flexible layout designed for everyday living, work and guests. Nine-foot ceilings and expansive windows enhance the open living and dining areas, while the kitchen features granite counters, stainless appliances and breakfast-bar seating. Step outside to your private balcony or retreat to the spacious bedrooms. In-unit laundry, secured garage parking and private storage add everyday convenience. Belle Arts offers secured entry, elevator access, fitness center and community spaces. Enjoy an exceptional Downtown Bellevue location",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/284/genIslnoResize.2587284_18_0.jpg" ]
+  }, {
+    "id" : 250197,
+    "mlsId" : "2585846",
+    "url" : "https://www.redfin.com/WA/Yarrow-Point/8804-NE-34th-St-98004/home/250197",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Guest retreat", "Private dock", "0.37 acre lot" ],
+    "yearBuilt" : 2018,
+    "area" : 4630,
+    "beds" : 4,
+    "baths" : 6,
+    "currency" : "USD",
+    "price" : 13800000,
+    "addressRaw" : "8804 NE 34th St, Yarrow Point, WA 98004",
+    "address" : {
+      "street" : "8804 NE 34th St",
+      "city" : "Yarrow Point",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6418738,
+    "longitude" : -122.2220917,
+    "description" : "A remarkable offering of move-in-ready, west-facing waterfront on Yarrow Point. Custom built in 2018 by Lochwood Lozier and filled with natural light, this residence is designed for effortless lakeside living. LaCantina bifold doors open wide to expansive outdoor entertaining spaces, seamlessly connecting indoors and out. Voluminous interiors pair steel, warm woods and natural stone, all illuminated by western sunlight. Every bedroom is ensuite, including two conveniently located on the main level. An attached studio apartment with living/bonus room, kitchen and bedroom creates an ideal guest retreat or ultimate hangout space. The exceptional private dock accommodates a 50-foot yacht year-r",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/846/genIslnoResize.2585846_32_1.jpg" ]
+  }, {
+    "id" : 251678,
+    "mlsId" : "2578490",
+    "url" : "https://www.redfin.com/WA/Bellevue/9801-NE-4th-St-98004/unit-D/home/251678",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private gated yard", "No rental cap", "No hoa" ],
+    "yearBuilt" : 2005,
+    "area" : 2050,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1995000,
+    "addressRaw" : "9801 NE 4th St Unit D, Bellevue, WA 98004",
+    "address" : {
+      "street" : "9801 NE 4th St Unit D",
+      "city" : "Bellevue",
+      "state" : "WA",
+      "zipcode" : "98004"
+    },
+    "latitude" : 47.6134393,
+    "longitude" : -122.209369,
+    "description" : "Townhome style, single-family ownership: this fee-simple property gives you full ownership of both the residence and the land. Enjoy the freedom of NO HOA and NO RENTAL CAP. Stunning property in the Heart of Downtown Bellevue! This exceptional 3-bedroom, 2.5-bath townhome offers the best of both worlds: the space, privacy, &  flexibility of an SFR w/ the convenience of a lock-and-go lifestyle. Ideally located just 1.5 blocks from Old Main, Downtown Park  &  the new Meydenbauer Beach, &  only 2 blocks from Bellevue Square  &  Lincoln Center, you’ll be steps from the best of downtown Bellevue while tucked away in a quiet residential setting. The home features beautiful w",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/490/genIslnoResize.2578490_38_0.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1,
+    "nextPage" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+    "otherPages" : {
+      "2" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-2",
+      "3" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-3",
+      "4" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-4",
+      "5" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-5",
+      "6" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-6",
+      "7" : "https://redfin.com/zipcode/98004/filter/sort=lo-days,property-type=condo+townhouse+house/page-7"
+    }
+  }
+}

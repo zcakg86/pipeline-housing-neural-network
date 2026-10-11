@@ -5,6 +5,8 @@ import ai.onnxruntime.OrtEnvironment;
 import ai.onnxruntime.OrtSession;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uber.h3core.H3Core;
+import com.uber.h3core.util.LatLng;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -41,6 +43,7 @@ public class GnnModel {
     private Map<String, double[][]> scalers;
     private Map<String, Integer> cellIndex;
     private Map<YearMonth, Integer> monthIndex;
+    private H3Core h3;
     private float[] embeddings;
     private int cellCount;
     private int embeddingDim;
@@ -49,6 +52,10 @@ public class GnnModel {
     private YearMonth latestMonth;
     private double conformalLogResidual90;
     private double conformalLogResidual95;
+    private boolean continuousEmbeddingPooling;
+    private double spatialPoolRadiusKm = 1.5;
+    private int spatialPoolH3Ring = 3;
+    private int h3Resolution = 8;
 
     /** An exact Shapley effect for one deployable GNN input group. */
     public record ShapleyGroupEffect(
@@ -105,6 +112,7 @@ public class GnnModel {
     void load() {
         try {
             ObjectMapper mapper = new ObjectMapper();
+            h3 = H3Core.newInstance();
             try (InputStream input = resource("gnn_scalers.json")) {
                 Map<String, Map<String, List<Double>>> raw = mapper.readValue(input,
                     new TypeReference<>() {});
@@ -116,6 +124,18 @@ public class GnnModel {
             try (InputStream input = resource("gnn_metadata.json")) {
                 Map<String, Object> metadata = mapper.readValue(input, new TypeReference<>() {});
                 referenceDate = LocalDate.parse(String.valueOf(metadata.get("reference_date")));
+                continuousEmbeddingPooling = Boolean.parseBoolean(
+                    String.valueOf(metadata.getOrDefault("continuous_embedding_pooling", false))
+                );
+                if (metadata.get("spatial_pool_radius_km") instanceof Number value) {
+                    spatialPoolRadiusKm = value.doubleValue();
+                }
+                if (metadata.get("spatial_pool_h3_ring") instanceof Number value) {
+                    spatialPoolH3Ring = value.intValue();
+                }
+                if (metadata.get("h3_resolution") instanceof Number value) {
+                    h3Resolution = value.intValue();
+                }
                 Object months = metadata.get("month_starts");
                 if (!(months instanceof List<?> values) || values.isEmpty()) {
                     throw new IllegalStateException("GNN metadata has no monthly snapshots");
@@ -138,8 +158,11 @@ public class GnnModel {
             try (InputStream input = resource("gnn_price_head.onnx")) {
                 session = environment.createSession(input.readAllBytes(), new OrtSession.SessionOptions());
             }
-            LOG.infof("Loaded GNN price head: %,d cells × %d months × %d dimensions; latest=%s",
-                cellCount, monthCount, embeddingDim, latestMonth);
+            LOG.infof(
+                "Loaded GNN price head: %,d cells × %d months × %d dimensions; latest=%s; spatial=%s",
+                cellCount, monthCount, embeddingDim, latestMonth,
+                continuousEmbeddingPooling ? "continuous pooling" : "single cell"
+            );
         } catch (Exception exception) {
             throw new RuntimeException("Failed to load GNN model artifacts", exception);
         }
@@ -336,7 +359,11 @@ public class GnnModel {
 
     private PreparedInput prepare(Input value) {
         float[] embedding = new float[embeddingDim];
-        copyEmbedding(value.h3Index(), value.saleDate(), embedding);
+        if (continuousEmbeddingPooling) {
+            copyPooledEmbedding(value.latitude(), value.longitude(), value.saleDate(), embedding);
+        } else {
+            copyEmbedding(value.h3Index(), value.saleDate(), embedding);
+        }
         WaterProximityService.WaterFeatures waterFeatures = water.lookup(value.latitude(), value.longitude());
         float[] property = new float[]{scale("property", 0, value.sqft()), scale("property", 1, value.sqftLot()),
             scale("property", 2, value.beds()), scale("property", 3, WaterProximityService.waterProximity(waterFeatures.distanceToWaterM()))};
@@ -392,11 +419,55 @@ public class GnnModel {
     private void copyEmbedding(String h3Index, LocalDate date, float[] destination) {
         Integer cell = cellIndex.get(h3Index);
         if (cell == null) return; // unseen cells receive the learned zero-state fallback.
+        int month = embeddingMonth(date);
+        int start = (month * cellCount + cell) * embeddingDim;
+        System.arraycopy(embeddings, start, destination, 0, embeddingDim);
+    }
+
+    /** Pool nearby observed cell embeddings using the training-time Wendland C2 kernel. */
+    private void copyPooledEmbedding(
+            double latitude, double longitude, LocalDate date, float[] destination) {
+        long origin = h3.latLngToCell(latitude, longitude, h3Resolution);
+        int month = embeddingMonth(date);
+        double totalWeight = 0.0;
+        for (long candidate : h3.gridDisk(origin, spatialPoolH3Ring)) {
+            Integer cell = cellIndex.get(h3.h3ToString(candidate));
+            if (cell == null) continue;
+            LatLng center = h3.cellToLatLng(candidate);
+            double distanceKm = haversineKm(latitude, longitude, center.lat, center.lng);
+            if (distanceKm >= spatialPoolRadiusKm) continue;
+            double scaled = distanceKm / spatialPoolRadiusKm;
+            double weight = Math.pow(1.0 - scaled, 4.0) * (4.0 * scaled + 1.0);
+            int start = (month * cellCount + cell) * embeddingDim;
+            for (int dimension = 0; dimension < embeddingDim; dimension++) {
+                destination[dimension] += (float) (weight * embeddings[start + dimension]);
+            }
+            totalWeight += weight;
+        }
+        if (totalWeight > 0.0) {
+            for (int dimension = 0; dimension < embeddingDim; dimension++) {
+                destination[dimension] /= (float) totalWeight;
+            }
+        }
+    }
+
+    private int embeddingMonth(LocalDate date) {
         YearMonth requested = YearMonth.from(date);
         Integer month = monthIndex.get(requested);
         if (month == null) month = requested.isAfter(latestMonth) ? monthIndex.get(latestMonth) : 0;
-        int start = (month * cellCount + cell) * embeddingDim;
-        System.arraycopy(embeddings, start, destination, 0, embeddingDim);
+        return month;
+    }
+
+    static double haversineKm(double latitudeOne, double longitudeOne,
+                              double latitudeTwo, double longitudeTwo) {
+        double latitudeDelta = Math.toRadians(latitudeTwo - latitudeOne);
+        double longitudeDelta = Math.toRadians(longitudeTwo - longitudeOne);
+        double firstLatitude = Math.toRadians(latitudeOne);
+        double secondLatitude = Math.toRadians(latitudeTwo);
+        double haversine = Math.pow(Math.sin(latitudeDelta / 2.0), 2.0)
+            + Math.cos(firstLatitude) * Math.cos(secondLatitude)
+            * Math.pow(Math.sin(longitudeDelta / 2.0), 2.0);
+        return 2.0 * 6371.0088 * Math.asin(Math.sqrt(Math.max(0.0, Math.min(1.0, haversine))));
     }
 
     @PreDestroy void close() { try { if (session != null) session.close(); } catch (Exception ignored) {} }

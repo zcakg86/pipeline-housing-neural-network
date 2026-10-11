@@ -129,6 +129,13 @@ function attachPointExplanationButton(layer, properties) {
         properties.source, properties.id, properties.address
       ));
     }
+    const assessmentButton = event.popup.getElement()?.querySelector('.price-assessment-button');
+    if (assessmentButton && assessmentButton.dataset.bound !== 'true') {
+      assessmentButton.dataset.bound = 'true';
+      assessmentButton.addEventListener('click', () => openPriceAssessment(
+        properties.id, properties.address
+      ));
+    }
     const timeButton = event.popup.getElement()?.querySelector(
       '.property-time-series-button'
     );

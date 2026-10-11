@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-08-06T18:01:33.292707+00:00",
+  "created_at_utc": "2026-10-08T21:48:25.701241+00:00",
   "sources": {
     "neural_model_dir": "latest",
     "lightgbm_model_dir": "latest",
-    "gnn_model_dir": "outputs/gnn/20260803_113037"
+    "gnn_model_dir": "outputs/gnn/20260916_094016"
   },
   "files": {
     "community_map.json": {
@@ -20,15 +20,15 @@
       "bytes": 54373
     },
     "gnn_metadata.json": {
-      "sha256": "8ae8e315c918fbe0908511bf8444cc1eca45a650c74d085e46ef907ed20d485e",
-      "bytes": 2370
+      "sha256": "6433bf462a3cef2296306baf57e1c0b1ffd2d6fa73dc2c4dfb23dd5c2b8ea6c5",
+      "bytes": 2616
     },
     "gnn_monthly_embeddings.bin.gz": {
-      "sha256": "aba60fe0ad9efebaa0d9e71c0c5708afd517161c3098771bf79e5df41ee31834",
-      "bytes": 18251198
+      "sha256": "c9e24ad63e5f77ddecaacc24b47b5a9c92d39c9fc8cd9e79bb1a7d829ffc4ed4",
+      "bytes": 14787912
     },
     "gnn_price_head.onnx": {
-      "sha256": "4c46a724af429f4f3ce8391d4ac17e8bdfacc0fbfb0df530f3120d6902cc7de0",
+      "sha256": "9b787844d378efa655dc0d73b63b67243161441e69d7e177a6f14b9e8cfc7b62",
       "bytes": 56150
     },
     "gnn_scalers.json": {
@@ -42,6 +42,14 @@
     "h3_l8_neighbor_communities.json": {
       "sha256": "fe3548acc4da7c23a8489e9b573e84a0644bc3a051ff2d2043295348a67bfdcf",
       "bytes": 268639
+    },
+    "h3_l8_transport_features.json": {
+      "sha256": "06667a736c8f70243e62b2d9c785ba599e6d83cffbe8cc501071e410efe023de",
+      "bytes": 767469
+    },
+    "h3_market_surface.json": {
+      "sha256": "d10a7b4a28e7658a279e11c0c82753aeb3a8ee11a5d4121365c72f4f55821175",
+      "bytes": 2108019
     },
     "king_county_water.geojson": {
       "sha256": "634a024dbb390f6e502d678aebe3488f60908d9313f797c08d3dab788a4f3c8c",
@@ -70,6 +78,14 @@
     "model_metadata.json": {
       "sha256": "3a4b9370ef5dd817606c7d46ad6ecde9b3ac2671e71a10e18459f6b348651110",
       "bytes": 870
+    },
+    "rentcast_h3_l8_neighbor_cells.json": {
+      "sha256": "5c60df24794bb9a3787317d2b415e5ff77b46d67b45ce445a80f68bf41e89e20",
+      "bytes": 574718
+    },
+    "rentcast_local_market_snapshot.json": {
+      "sha256": "d7c91ef7d91b5ff8682bd9d5e3cf266b60952e4a630f05c7ab2cb2fb7cb7467f",
+      "bytes": 6959341
     },
     "scalers.json": {
       "sha256": "ffdc5683b50a673a78a6f818dcee90f9d83d5b4d556ce9292747e5011d451e16",

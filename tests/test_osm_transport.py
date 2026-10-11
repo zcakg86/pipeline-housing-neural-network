@@ -40,34 +40,36 @@ class OsmTransportTest(unittest.TestCase):
             "coordinates": [[-122.4, 47.5], [-122.2, 47.7], [-122.4, 47.5]],
         })
         self.assertEqual(point["type"], "Point")
-        self.assertAlmostEqual(point["coordinates"][0], -122.3)
-        self.assertAlmostEqual(point["coordinates"][1], 47.6)
+        # Outlines now use a point on the geometry, rather than the centre of
+        # their bounding box (which may fall outside a station polygon).
+        self.assertAlmostEqual(point["coordinates"][0], -122.2)
+        self.assertAlmostEqual(point["coordinates"][1], 47.7)
 
     def test_motorway_connector_requires_shared_osm_node_not_geometry_overlap(self):
-        link = {
-            "geometry": {"type": "LineString", "coordinates": [[0, 0], [1, 0]]},
-            "properties": {"osm_id": "link", "highway": "motorway_link"},
+        junctions = {
+            1: {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [1, 0]},
+                "properties": {"osm_id": "1", "osm_type": "node"},
+            }
         }
-        crossing = {
-            "geometry": {"type": "LineString", "coordinates": [[0.5, -1], [0.5, 1]]},
-            "properties": {"highway": "primary"},
+        link_edge = {
+            "wayId": "10", "neighborNodeId": "2", "highway": "motorway_link",
         }
-        different_level = {
-            "geometry": {"type": "LineString", "coordinates": [[1, 0], [2, 0]]},
-            "properties": {"highway": "primary", "layer": "1"},
+        road_edge = {
+            "wayId": "11", "neighborNodeId": "3", "highway": "secondary",
         }
-        touching = {
-            "geometry": {"type": "LineString", "coordinates": [[1, 0], [2, 0]]},
-            "properties": {"highway": "secondary"},
-        }
-        self.assertEqual(motorway_connector_features([link], [crossing]), [])
-        self.assertEqual(motorway_connector_features([link], [different_level]), [])
-        connectors = motorway_connector_features([link], [crossing, touching])
+        # Geometry overlap is irrelevant: only incident edges keyed by the same
+        # OSM node ID are considered; no motorway_junction tag is required.
+        self.assertEqual(motorway_connector_features(junctions, {}), [])
+        self.assertEqual(motorway_connector_features(junctions, {1: [link_edge]}), [])
+        connectors = motorway_connector_features(junctions, {1: [link_edge, road_edge]})
         self.assertEqual(len(connectors), 1)
         self.assertEqual(connectors[0]["geometry"]["coordinates"], [1, 0])
         self.assertEqual(
             connectors[0]["properties"]["connectedRoadTypes"], ["secondary"]
         )
+        self.assertFalse(connectors[0]["properties"]["taggedMotorwayJunction"])
 
     def test_deployed_transport_artifacts_are_self_consistent(self):
         expected = {
@@ -138,7 +140,7 @@ class OsmTransportTest(unittest.TestCase):
             "major_road_accessibility",
             "major_road_density_km_per_sq_km",
         }
-        self.assertEqual(artifact["schema_version"], 1)
+        self.assertEqual(artifact["schema_version"], 2)
         self.assertEqual(set(artifact["feature_names"]), expected)
         self.assertEqual(artifact["cell_count"], grid["cell_count"])
         self.assertEqual(

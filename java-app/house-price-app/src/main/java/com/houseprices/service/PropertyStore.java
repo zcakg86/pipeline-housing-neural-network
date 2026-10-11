@@ -27,7 +27,8 @@ public class PropertyStore {
         long version,
         List<PropertyRecord> sales,
         List<PropertyRecord> rentcast,
-        List<PropertyRecord> zillow
+        List<PropertyRecord> zillow,
+        List<PropertyRecord> redfin
     ) {
         public List<PropertyRecord> completedSales() {
             List<PropertyRecord> result = new ArrayList<>(sales.size() + rentcast.size());
@@ -76,7 +77,9 @@ public class PropertyStore {
             && Double.compare(left.gnnPctError(), right.gnnPctError()) == 0
             && Double.compare(left.predictionStdPrice(), right.predictionStdPrice()) == 0
             && Double.compare(left.predictionCvPct(), right.predictionCvPct()) == 0
-            && Arrays.equals(left.clsAttention(), right.clsAttention());
+            && Arrays.equals(left.clsAttention(), right.clsAttention())
+            && Objects.equals(left.description(), right.description())
+            && Objects.equals(left.atAGlanceFacts(), right.atAGlanceFacts());
     }
 
     public List<PropertyRecord> getBySource(String source) {
@@ -110,6 +113,10 @@ public class PropertyStore {
         return getBySource("zillow");
     }
 
+    public List<PropertyRecord> getRedfinListings() {
+        return getBySource("redfin");
+    }
+
     public int totalCount() {
         return store.values().stream().mapToInt(Map::size).sum();
     }
@@ -128,7 +135,8 @@ public class PropertyStore {
             version.get(),
             List.copyOf(getBySource("sales")),
             List.copyOf(getBySource("rentcast")),
-            List.copyOf(getBySource("zillow"))
+            List.copyOf(getBySource("zillow")),
+            List.copyOf(getBySource("redfin"))
         );
     }
 }

@@ -198,6 +198,15 @@ public class ModelArtifacts {
         return unknown;
     }
 
+    /** H3 cell IDs aligned with the center-plus-neighbor model feature rows. */
+    public String[] lookupH3NeighborCells(String h3Index) {
+        String[] cells = h3NeighborCells.get(h3Index);
+        if (cells != null && cells.length == 7) return cells.clone();
+        String[] fallback = new String[7];
+        fallback[0] = h3Index;
+        return fallback;
+    }
+
     /** Build scaled [7,5] center-plus-neighbor market features as of saleDate. */
     public float[][] lookupLocalMarketFeatures(String h3Index, LocalDate saleDate) {
         return lookupLocalMarketFeatures(h3Index, saleDate, true, true);

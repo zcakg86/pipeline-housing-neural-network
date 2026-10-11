@@ -70,13 +70,15 @@ class NormalizationArchitectureTests(unittest.TestCase):
             use_local_correction=False,
         ).as_dict()
         graph = replace(
-            GNNTrainingConfig(), graph_layer_norm=True, graph_residual=True
+            GNNTrainingConfig(), graph_layer_norm=True, graph_residual=True,
+            continuous_embedding_pooling=True,
         ).as_dict()
         self.assertTrue(attention["attention_layer_norm"])
         self.assertTrue(attention["attention_residual"])
         self.assertFalse(attention["use_local_correction"])
         self.assertTrue(graph["graph_layer_norm"])
         self.assertTrue(graph["graph_residual"])
+        self.assertTrue(graph["continuous_embedding_pooling"])
 
     def test_manager_can_remove_local_correction_before_processing(self):
         manager = ModelManager().configure_local_correction(False)
@@ -116,6 +118,24 @@ class RunManifestTests(unittest.TestCase):
             self.assertEqual(manifest["architecture_variant"], "layer_norm+no_residual")
             self.assertIsNotNone(manifest["dataset"]["sha256"])
             self.assertIsNotNone(manifest["split"]["validation_indices_sha256"])
+
+    def test_manifest_identifies_continuous_gnn_pooling(self):
+        manifest = build_run_manifest(
+            run_id="gnn-test",
+            model_family="gnn",
+            architecture_version=3,
+            architecture={
+                "graph_layer_norm": False,
+                "graph_residual": False,
+                "continuous_embedding_pooling": True,
+            },
+            training_config={"random_seed": 42, "train_ratio": 0.7},
+            metrics={},
+        )
+        self.assertEqual(
+            manifest["architecture_variant"],
+            "no_norm+no_residual+continuous_pooling",
+        )
 
 
 if __name__ == "__main__":

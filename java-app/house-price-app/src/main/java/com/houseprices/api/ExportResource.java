@@ -13,7 +13,7 @@ import java.io.*;
 import java.util.List;
 
 /**
- * GET /api/export/csv?source=all|sales|rentcast|zillow
+ * GET /api/export/csv?source=all|sales|rentcast|zillow|redfin
  * Streams all in-memory records as a CSV download.
  */
 @Path("/api/export")
@@ -33,6 +33,7 @@ public class ExportResource {
             case "sales"    -> store.getBySource("sales");
             case "rentcast" -> store.getBySource("rentcast");
             case "zillow"   -> store.getBySource("zillow");
+            case "redfin"   -> store.getBySource("redfin");
             default         -> store.getAll();
         };
 
@@ -42,9 +43,10 @@ public class ExportResource {
             try (PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out)))) {
                 pw.println("id,address,source,lat,lng,h3Index,community," +
                            "sqft,sqftLot,beds,baths,homeType," +
-                           "saleDate,salePrice,zestimate,predictedPrice,pctError,listingUrl");
+                           "saleDate,salePrice,zestimate,predictedPrice,pctError,listingUrl," +
+                           "description,atAGlanceFacts");
                 for (PropertyRecord r : records) {
-                    pw.printf("%s,%s,%s,%.6f,%.6f,%s,%s,%.0f,%.0f,%d,%.1f,%s,%s,%.0f,%.0f,%.0f,%.2f,%s%n",
+                    pw.printf("%s,%s,%s,%.6f,%.6f,%s,%s,%.0f,%.0f,%d,%.1f,%s,%s,%.0f,%.0f,%.0f,%.2f,%s,%s,%s%n",
                         esc(r.id()), esc(r.address()), esc(r.source()),
                         r.lat(), r.lng(),
                         esc(r.h3Index()), esc(r.community()),
@@ -52,7 +54,8 @@ public class ExportResource {
                         esc(r.homeType()),
                         r.saleDate() != null ? r.saleDate().toString() : "",
                         r.salePrice(), r.zestimate(), r.predictedPrice(), r.pctError(),
-                        esc(r.listingUrl())
+                        esc(r.listingUrl()), esc(r.description()),
+                        esc(String.join(" | ", r.atAGlanceFacts()))
                     );
                 }
             }

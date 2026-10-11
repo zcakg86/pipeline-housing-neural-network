@@ -15,7 +15,8 @@
 
   <!-- Layer toggles -->
   <div class="divider"></div>
-  <div class="row"><input type="checkbox" id="showZillow" checked/><label style="margin:0" for="showZillow">Zillow Listings <span style="color:#3399ff">●</span></label></div>
+  <div class="row"><input type="checkbox" id="showRedfin" checked/><label style="margin:0" for="showRedfin">Redfin Listings <span style="color:#e53935">●</span></label></div>
+  <div class="row"><input type="checkbox" id="showZillow"/><label style="margin:0" for="showZillow">Zillow Listings <span style="color:#3399ff">●</span></label></div>
   <div class="row"><input type="checkbox" id="showRentcast"/><label style="margin:0" for="showRentcast">Sales Points <span style="color:#00cc66">●</span></label></div>
   <div style="padding-left:20px">
     <label style="margin-bottom:2px">Point source</label>
@@ -32,6 +33,7 @@
   <div class="row"><input type="checkbox" id="showRail"/><label style="margin:0" for="showRail">Rail &amp; Light-Rail Stations</label></div>
   <div class="row"><input type="checkbox" id="showBus"/><label style="margin:0" for="showBus">Bus Stations &amp; Routes</label></div>
   <div class="row"><input type="checkbox" id="showMajorRoads"/><label style="margin:0" for="showMajorRoads">Motorways &amp; Major Roads</label></div>
+  <div class="row"><input type="checkbox" id="showMotorwayJunctions"/><label style="margin:0" for="showMotorwayJunctions">Motorway Junctions <span style="color:#ff006e">●</span></label></div>
   <div class="row"><input type="checkbox" id="showTransportFeatures"/><label style="margin:0" for="showTransportFeatures">Transport Accessibility (H3)</label></div>
   <div id="transportFeatureControl" style="padding-left:20px;display:none">
     <label style="margin-bottom:2px">Transport map feature</label>
@@ -52,7 +54,7 @@
   <label>Map color</label>
   <select id="variable">
     <option value="pct_error">Price Error (%)</option>
-    <option value="predicted_price">Predicted Price</option>
+    <option value="predicted_price" selected>Predicted Price</option>
     <option value="sale_price">Sale (or listed) Price</option>
     <option value="sqft">Finished Squared footage</option>
     <option value="sqft_lot">Lot Square Footage</option>
@@ -67,15 +69,18 @@
   </select>
   <label>Displayed Model</label>
   <select id="DisplayedModel">
-    <option value="lightgbm" selected>LightGBM</option>
+    <option value="lightgbm">LightGBM</option>
     <option value="neural">Neural Network</option>
-    <option value="gnn">Spatial GNN</option>
+    <option value="gnn" selected>Spatial GNN</option>
   </select>
 
   <!-- Property type filters -->
   <div class="divider"></div>
   <label>Zillow Property Type</label>
   <select id="zillowType"><option value="all">All Types</option></select>
+
+  <label>Redfin Property Type</label>
+  <select id="redfinType"><option value="all">All Types</option></select>
 
   <label>Sales Property Type</label>
   <select id="salesType"><option value="all">All Types</option></select>
@@ -109,6 +114,8 @@
   <h2>Fetch Live Data</h2>
   <button onclick="fetchApi('rentcast')">↓ Fetch RentCast API</button>
   <button onclick="fetchApi('zillow')">↓ Fetch Zillow API</button>
+  <button onclick="fetchApi('redfin')">↓ Fetch Redfin API</button>
+  <label class="row" style="margin-top:4px"><input type="checkbox" id="redfinAllPages" style="width:auto"/> Fetch all Redfin pages</label>
   <div id="fetchStatus"></div>
 
   <!-- Stats -->
@@ -190,17 +197,19 @@
   <div id="timeSeriesChartContainer"><canvas id="timeSeriesChart"></canvas></div>
 </div>
 
-<script src="js/map.js?v=transport-events-v2"></script>
+<script src="/api/client-config.js"></script>
+<script src="js/map.js?v=motorway-junctions-v1"></script>
 <script src="js/api.js"></script>
 <script src="js/explanations.js"></script>
 <script src="js/layers/sales.js"></script>
 <script src="js/layers/synthetic.js"></script>
 <script src="js/layers/water.js"></script>
-<script src="js/layers/transport.js?v=transport-events-v2"></script>
+<script src="js/layers/transport.js?v=motorway-junctions-v1"></script>
 <script src="js/layers/transport-features.js?v=transport-features-v1"></script>
 <script src="js/layers/points.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/time-series.js"></script>
+<script src="js/agent.js?v=html-assessment-v1"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

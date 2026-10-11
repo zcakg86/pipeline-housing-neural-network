@@ -26,6 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Watches configured directories for new canonical JSON files.
  * - data/rentcast/   → ingested as Rentcast sales data
  * - data/zillow/     → ingested as Zillow listings (JSON)
+ * - data/redfin/     → ingested as Redfin listings (JSON)
  *
  * New files are processed immediately on arrival.
  */
@@ -42,6 +43,9 @@ public class FileWatcherService {
 
     @ConfigProperty(name = "watcher.zillow.dir", defaultValue = "data/zillow")
     String zillowDir;
+
+    @ConfigProperty(name = "watcher.redfin.dir", defaultValue = "data/redfin")
+    String redfinDir;
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r, "file-watcher");
@@ -65,8 +69,10 @@ public class FileWatcherService {
         }
         ensureDir(rentcastDir);
         ensureDir(zillowDir);
+        ensureDir(redfinDir);
         executor.submit(this::watchLoop);
-        LOG.infof("File watcher started. Watching: %s, %s", rentcastDir, zillowDir);
+        LOG.infof("File watcher started. Watching: %s, %s, %s",
+            rentcastDir, zillowDir, redfinDir);
     }
 
     private void watchLoop() {
@@ -79,9 +85,11 @@ public class FileWatcherService {
             }
             Path rentcast = Path.of(rentcastDir);
             Path zillow   = Path.of(zillowDir);
+            Path redfin   = Path.of(redfinDir);
 
             rentcast.register(watcher, StandardWatchEventKinds.ENTRY_CREATE);
             zillow.register(watcher,   StandardWatchEventKinds.ENTRY_CREATE);
+            redfin.register(watcher,   StandardWatchEventKinds.ENTRY_CREATE);
 
             while (running.get() && !Thread.currentThread().isInterrupted()) {
                 WatchKey key = watcher.take();  // blocks
@@ -97,7 +105,8 @@ public class FileWatcherService {
                         LOG.debugf("Ignoring non-JSON watcher entry: %s", file.getPath());
                         continue;
                     }
-                    processNewFile(file, dir.equals(rentcast) ? "rentcast" : "zillow");
+                    processNewFile(file, dir.equals(rentcast) ? "rentcast"
+                        : dir.equals(zillow) ? "zillow" : "redfin");
                 }
                 if (!key.reset()) {
                     LOG.warnf("Stopped watching unavailable directory: %s", dir);
@@ -135,6 +144,8 @@ public class FileWatcherService {
                 records = ingestion.ingestRentcastJson(file);
             } else if (source.equals("zillow") && name.endsWith(".json")) {
                 records = ingestion.ingestZillowJson(file);
+            } else if (source.equals("redfin") && name.endsWith(".json")) {
+                records = ingestion.ingestRedfinJson(file);
             } else {
                 LOG.infof("Skipping unsupported file type: %s", file.getName());
                 if (completion != null) completion.completeExceptionally(

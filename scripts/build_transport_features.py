@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build static H3 transport-accessibility features from OSM map extracts.
+"""Build static H3 transport-accessibility features from pyosmium map extracts.
 
 The output is deliberately separate from the price-model feature contract.  It
 is a versioned spatial artifact for map exploration today and for a future
@@ -19,7 +19,8 @@ from typing import Any, Iterable
 import numpy as np
 from shapely import STRtree, points
 from shapely.geometry import Point, shape
-from shapely.ops import transform
+import geopandas as gpd
+from pyproj import Transformer
 
 
 DEFAULT_GRID = Path(
@@ -37,12 +38,9 @@ DEFAULT_DEPLOY_OUTPUT = Path(
 )
 DEFAULT_BUNDLE_OUTPUT = Path("java-app/model-artifacts/h3_l8_transport_features.json")
 
-EARTH_RADIUS_METERS = 6_371_008.8
-REFERENCE_LATITUDE_DEGREES = 47.4
-LONGITUDE_SCALE = EARTH_RADIUS_METERS * math.cos(
-    math.radians(REFERENCE_LATITUDE_DEGREES)
-) * math.pi / 180.0
-LATITUDE_SCALE = EARTH_RADIUS_METERS * math.pi / 180.0
+# King County falls in UTM zone 10N. Distances and areas use metres.
+METRIC_CRS = "EPSG:32610"
+PROJECTOR = Transformer.from_crs("EPSG:4326", METRIC_CRS, always_xy=True)
 
 BUS_RADIUS_METERS = 800.0
 ROAD_DENSITY_RADIUS_METERS = 1_000.0
@@ -62,14 +60,7 @@ FEATURE_NAMES = (
 
 
 def _project(longitude, latitude, altitude=None):
-    return (
-        np.asarray(longitude) * LONGITUDE_SCALE,
-        np.asarray(latitude) * LATITUDE_SCALE,
-    )
-
-
-def _project_geometry(geometry):
-    return transform(_project, geometry)
+    return PROJECTOR.transform(longitude, latitude)
 
 
 def _features(path: Path) -> list[dict[str, Any]]:
@@ -80,18 +71,15 @@ def _features(path: Path) -> list[dict[str, Any]]:
 def _usable_geometries(
     features: Iterable[dict[str, Any]], predicate
 ) -> list[tuple[Any, dict[str, Any]]]:
-    result = []
-    for feature in features:
-        properties = feature.get("properties") or {}
-        if not predicate(properties):
-            continue
-        geometry = feature.get("geometry")
-        if not geometry:
-            continue
-        value = _project_geometry(shape(geometry))
-        if not value.is_empty:
-            result.append((value, properties))
-    return result
+    selected = [f for f in features if f.get("geometry")
+                and predicate(f.get("properties") or {})]
+    if not selected:
+        return []
+    frame = gpd.GeoDataFrame.from_features(selected, crs="EPSG:4326")
+    frame.geometry = frame.geometry.make_valid()
+    frame = frame.to_crs(METRIC_CRS)
+    return [(geom, feature.get("properties") or {})
+            for geom, feature in zip(frame.geometry, selected) if not geom.is_empty]
 
 
 def _nearest_distances(query_points, geometries: list[Any]) -> np.ndarray:
@@ -155,6 +143,14 @@ def build_features(
         lambda props: props.get("kind") == "motorway_connector",
     )
 
+    ids = [cell["h3_l8"] for cell in cells]
+    if len(ids) != len(set(ids)):
+        raise ValueError("Duplicate h3_l8 IDs in input grid")
+    if any(not (math.isfinite(float(c["lng"])) and math.isfinite(float(c["lat"]))
+                    and -180 <= float(c["lng"]) <= 180 and -90 <= float(c["lat"]) <= 90)
+           for c in cells):
+        raise ValueError("Grid coordinates must be finite WGS84 longitude/latitude")
+
     longitude = np.asarray([cell["lng"] for cell in cells], dtype=np.float64)
     latitude = np.asarray([cell["lat"] for cell in cells], dtype=np.float64)
     x, y = _project(longitude, latitude)
@@ -207,23 +203,28 @@ def build_features(
     def proximity(distances: np.ndarray, decay: float) -> np.ndarray:
         return np.where(np.isfinite(distances), np.exp(-distances / decay), 0.0)
 
+    rail_proximity = proximity(rail_distances, RAIL_DECAY_METERS)
+    connector_proximity = proximity(motorway_distances, MOTORWAY_CONNECTOR_DECAY_METERS)
+    road_proximity = proximity(road_distances, MAJOR_ROAD_DECAY_METERS)
     records: dict[str, dict[str, float]] = {}
     for index, cell in enumerate(cells):
         records[cell["h3_l8"]] = {
-            "light_rail_proximity": round(float(proximity(rail_distances, RAIL_DECAY_METERS)[index]), 7),
+            "light_rail_proximity": round(float(rail_proximity[index]), 7),
             "bus_stop_density_per_sq_km": round(float(raw_density[index]), 5),
             "nearby_bus_route_count": int(raw_routes[index]),
             "bus_centrality_score": round(float(bus_centrality[index]), 7),
-            "motorway_connector_proximity": round(float(proximity(motorway_distances, MOTORWAY_CONNECTOR_DECAY_METERS)[index]), 7),
-            "major_road_accessibility": round(float(proximity(road_distances, MAJOR_ROAD_DECAY_METERS)[index]), 7),
+            "motorway_connector_proximity": round(float(connector_proximity[index]), 7),
+            "major_road_accessibility": round(float(road_proximity[index]), 7),
             "major_road_density_km_per_sq_km": round(float(road_density[index]), 5),
         }
 
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "h3_resolution": 8,
         "feature_names": list(FEATURE_NAMES),
         "parameters": {
+            "metric_crs": METRIC_CRS,
+            "bus_score_p95_normalizer": normalizer,
             "light_rail_decay_m": RAIL_DECAY_METERS,
             "bus_catchment_radius_m": BUS_RADIUS_METERS,
             "motorway_connector_decay_m": MOTORWAY_CONNECTOR_DECAY_METERS,
@@ -236,7 +237,7 @@ def build_features(
             "bus_stop_density_per_sq_km": "bus and trolleybus stops within 800 m, divided by circular catchment area",
             "nearby_bus_route_count": "distinct route_ref values recorded on bus stops within 800 m",
             "bus_centrality_score": "bounded combination of local bus-stop density and distinct nearby route count",
-            "motorway_connector_proximity": "exp(-straight_line_distance_to_the_endpoint_where_an_OSM_motorway_link_touches_a_non_motorway_road_m / 500)",
+            "motorway_connector_proximity": "exp(-straight_line_distance_to_highway_motorway_junction_node_with_incident_motorway_link_and_qualifying_non_motorway_road_m / 500)",
             "major_road_accessibility": "exp(-straight_line_distance_to_nearest_motorway_trunk_primary_or_secondary_m / 500)",
             "major_road_density_km_per_sq_km": "clipped length of motorway, trunk, primary and secondary roads within 1 km, per km²",
         },
@@ -267,15 +268,16 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--deploy-output", type=Path, default=DEFAULT_DEPLOY_OUTPUT)
     parser.add_argument("--bundle-output", type=Path, default=DEFAULT_BUNDLE_OUTPUT)
+    parser.add_argument("--no-deploy", action="store_true")
     args = parser.parse_args()
 
     payload = build_features(
         args.grid, args.rail, args.bus, args.roads, args.motorway_connectors
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, separators=(",", ":")))
+    args.output.write_text(json.dumps(payload, separators=(",", ":"), allow_nan=False))
     for target in (args.deploy_output, args.bundle_output):
-        if target:
+        if target and not args.no_deploy and target.resolve() != args.output.resolve():
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(args.output, target)
     print(

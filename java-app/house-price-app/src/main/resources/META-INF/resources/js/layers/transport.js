@@ -24,6 +24,11 @@ const ROAD_STYLES = {
   primary:  { label: 'Primary road', color: '#fcbf49', weight: 2.8 },
   secondary:{ label: 'Secondary road', color: '#3a86ff', weight: 2.1 }
 };
+const MOTORWAY_JUNCTION_STYLES = {
+  motorway_connector: {
+    label: 'Qualified motorway junction', color: '#ff006e', radius: 7
+  }
+};
 
 const transportSources = {
   rail: {
@@ -40,6 +45,11 @@ const transportSources = {
     url: '/data/king_county_major_roads.geojson?v=osm-transport-v1',
     checkbox: 'showMajorRoads', layer: majorRoadLayer,
     data: null, loaded: false, legend: null, panes: ['majorRoadPane']
+  },
+  junctions: {
+    url: '/data/king_county_motorway_connectors.geojson?v=osm-transport-v3',
+    checkbox: 'showMotorwayJunctions', layer: motorwayJunctionLayer,
+    data: null, loaded: false, legend: null, panes: ['motorwayJunctionPane']
   }
 };
 
@@ -115,6 +125,18 @@ function roadTooltip(properties) {
     transportValueRow('Access', properties.access) +
     transportValueRow('Busway', properties.busway) +
     `<span style="color:#888">OSM way ${escapeHtml(properties.osmId)}</span>`;
+}
+
+function motorwayJunctionTooltip(properties) {
+  const title = properties.name || properties.ref
+    ? properties.name || `Junction ${properties.ref}` : 'Motorway junction';
+  return `<b>${escapeHtml(title)}</b><br>` +
+    `Strict tagged-node connection<br>` +
+    transportValueRow('Junction reference', properties.ref) +
+    transportValueRow('Connected road types', properties.connectedRoadTypes) +
+    transportValueRow('Motorway-link ways', properties.motorwayLinkWayIds) +
+    transportValueRow('Connected road ways', properties.connectedRoadWayIds) +
+    `<span style="color:#888">OSM node ${escapeHtml(properties.osmId)}</span>`;
 }
 
 function stationMarker(feature, latlng, styles, renderer, pane) {
@@ -237,6 +259,30 @@ function addRoadGeometry(data, layerGroup) {
   }).addTo(layerGroup);
 }
 
+function addMotorwayJunctionGeometry(data, layerGroup) {
+  L.geoJSON(data, {
+    pane: 'motorwayJunctionPane',
+    pointToLayer: (feature, latlng) => {
+      const style = MOTORWAY_JUNCTION_STYLES.motorway_connector;
+      return L.circleMarker(latlng, {
+        renderer: motorwayJunctionRenderer,
+        pane: 'motorwayJunctionPane',
+        radius: style.radius,
+        color: '#fff',
+        weight: 2,
+        fillColor: style.color,
+        fillOpacity: 0.96
+      });
+    },
+    onEachFeature: (feature, layer) => {
+      layer.bindTooltip(motorwayJunctionTooltip(feature.properties || {}), {
+        direction: 'top',
+        offset: [0, -5]
+      });
+    }
+  }).addTo(layerGroup);
+}
+
 function buildStaticLayerLegend(source, title, styles, routeCategories = []) {
   if (source.legend) map.removeControl(source.legend);
   source.legend = L.control({ position: 'bottomright' });
@@ -320,5 +366,12 @@ function loadBusLayer() {
 function loadMajorRoadLayer() {
   return loadStaticTransportSource(
     'roads', addRoadGeometry, 'Motorways and major roads', ROAD_STYLES
+  );
+}
+
+function loadMotorwayJunctionLayer() {
+  return loadStaticTransportSource(
+    'junctions', addMotorwayJunctionGeometry, 'Motorway junctions',
+    MOTORWAY_JUNCTION_STYLES
   );
 }

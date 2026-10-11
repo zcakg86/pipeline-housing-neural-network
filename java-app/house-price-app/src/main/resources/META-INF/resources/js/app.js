@@ -18,6 +18,9 @@ document.getElementById('showBus').addEventListener('change', () => {
 document.getElementById('showMajorRoads').addEventListener('change', () => {
   loadMajorRoadLayer().catch(showTransportLayerError);
 });
+document.getElementById('showMotorwayJunctions').addEventListener('change', () => {
+  loadMotorwayJunctionLayer().catch(showTransportLayerError);
+});
 document.getElementById('showTransportFeatures').addEventListener('change', () => {
   const visible = document.getElementById('showTransportFeatures').checked;
   document.getElementById('transportFeatureControl').style.display = visible ? 'block' : 'none';
@@ -36,7 +39,7 @@ document.getElementById('showSynthetic').addEventListener('change', () => {
     const variable = document.getElementById('variable');
     if (['pct_error', 'sale_price', 'num_sales'].includes(variable.value)) {
       variable.value = 'predicted_price';
-      loadSales(); loadZillow(); loadRentcast();
+      loadSales(); loadZillow(); loadRedfin(); loadRentcast();
     }
   }
   loadSynthetic();
@@ -46,7 +49,7 @@ let viewportReloadTimer = null;
 function scheduleFilteredLayerReload() {
   clearTimeout(filterReloadTimer);
   filterReloadTimer = setTimeout(() => {
-    loadSales(); loadZillow(); loadRentcast();
+    loadSales(); loadZillow(); loadRedfin(); loadRentcast();
   }, 250);
 }
 function scheduleViewportLayerReload() {
@@ -55,10 +58,12 @@ function scheduleViewportLayerReload() {
     const reloaded = [];
     if (document.getElementById('showSales').checked) reloaded.push('H3 sales');
     if (document.getElementById('showZillow').checked) reloaded.push('Zillow');
+    if (document.getElementById('showRedfin').checked) reloaded.push('Redfin');
     if (document.getElementById('showRentcast').checked) reloaded.push('RentCast');
     if (reloaded.length) reportMapInteraction('map viewport changed', `reloading ${reloaded.join(', ')}`);
     if (document.getElementById('showSales').checked) loadSales();
     if (document.getElementById('showZillow').checked) loadZillow();
+    if (document.getElementById('showRedfin').checked) loadRedfin();
     if (document.getElementById('showRentcast').checked) loadRentcast();
   }, 250);
 }
@@ -69,6 +74,7 @@ map.on('click', event => {
 });
 
 document.getElementById('showZillow').addEventListener('change', loadZillow);
+document.getElementById('showRedfin').addEventListener('change', loadRedfin);
 document.getElementById('showRentcast').addEventListener('change', loadRentcast);
 document.getElementById('showSales').addEventListener('change', loadSales);
 document.getElementById('showCommunity').addEventListener('change', event => {
@@ -82,14 +88,15 @@ document.getElementById('variable').addEventListener('change', () => {
       )) {
     document.getElementById('variable').value = 'predicted_price';
   }
-  loadSales(); loadZillow(); loadRentcast(); loadSynthetic();
+  loadSales(); loadZillow(); loadRedfin(); loadRentcast(); loadSynthetic();
 });
 document.getElementById('DisplayedModel').addEventListener('change', () => {
   synchronizeMapVariableOptions();
-  loadSales(); loadZillow(); loadRentcast(); loadSynthetic();
+  loadSales(); loadZillow(); loadRedfin(); loadRentcast(); loadSynthetic();
 });
 document.getElementById('salesPointSource').addEventListener('change', loadRentcast);
 document.getElementById('zillowType').addEventListener('change', loadZillow);
+document.getElementById('redfinType').addEventListener('change', loadRedfin);
 document.getElementById('salesType').addEventListener('change', () => { loadSales(); loadRentcast(); });
 document.getElementById('dateFrom').addEventListener('change', () => { loadSales(); loadRentcast(); });
 document.getElementById('dateTo').addEventListener('change', () => { loadSales(); loadRentcast(); });
@@ -105,13 +112,13 @@ document.getElementById('noFilterMin').addEventListener('change', () => {
   const disabled = document.getElementById('noFilterMin').checked;
   document.getElementById('minError').disabled = disabled;
   document.getElementById('minErrVal').textContent = disabled ? '–' : document.getElementById('minError').value;
-  loadSales(); loadZillow(); loadRentcast();
+  loadSales(); loadZillow(); loadRedfin(); loadRentcast();
 });
 document.getElementById('noFilterMax').addEventListener('change', () => {
   const disabled = document.getElementById('noFilterMax').checked;
   document.getElementById('maxError').disabled = disabled;
   document.getElementById('maxErrVal').textContent = disabled ? '–' : document.getElementById('maxError').value;
-  loadSales(); loadZillow(); loadRentcast();
+  loadSales(); loadZillow(); loadRedfin(); loadRentcast();
 });
 document.getElementById('minSqft').addEventListener('input', () => { updateSqftLabel(); scheduleFilteredLayerReload(); });
 document.getElementById('maxSqft').addEventListener('input', () => { updateSqftLabel(); scheduleFilteredLayerReload(); });

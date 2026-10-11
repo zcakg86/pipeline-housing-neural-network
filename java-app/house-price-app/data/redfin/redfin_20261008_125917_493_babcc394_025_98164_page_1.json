@@ -1,0 +1,103 @@
+{
+  "requestMetadata" : {
+    "id" : "54a52a23-f677-4ae9-9cc4-1671cf1fc37e",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/54a52a23-f677-4ae9-9cc4-1671cf1fc37e.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/54a52a23-f677-4ae9-9cc4-1671cf1fc37e.json",
+    "url" : "https://redfin.com/zipcode/98164/filter/sort=lo-days,property-type=condo+townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 3
+  },
+  "properties" : [ {
+    "id" : 17382520,
+    "mlsId" : "2583020",
+    "url" : "https://www.redfin.com/WA/Seattle/909-5th-Ave-98164/unit-502/home/17382520",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Juliet french doors", "Front row view", "North facing" ],
+    "yearBuilt" : 2007,
+    "area" : 978,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 519000,
+    "addressRaw" : "909 5th Ave #502, Seattle, WA 98164",
+    "address" : {
+      "street" : "909 5th Ave #502",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98164"
+    },
+    "latitude" : 47.6062153,
+    "longitude" : -122.332069,
+    "description" : "Loft-like elegance meets flexible living in the heart of downtown Seattle. This immaculate 5th-floor, north-facing 1BD + large proper den, 1.5BA home offers 978+SF with soaring ceilings, expansive wall-to-wall windows and amazing natural light. Take in the architectural energy of the city with a front-row view of the iconic Seattle Central Library designed by Rem Koolhaas. Signature Juliet French doors add character and welcome fresh air off Elliott Bay into the home. Open living and dining flow seamlessly into a well-appointed kitchen with a large gathering island, Bosch appliances, gas range, and slab granite countertops. The generous primary suite easily accommodates larger furnishings, ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/020/genIslnoResize.2583020_29_0.jpg" ]
+  }, {
+    "id" : 17381681,
+    "mlsId" : "2579302",
+    "url" : "https://www.redfin.com/WA/Seattle/909-5th-Ave-98164/unit-402/home/17381681",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Gas cooktop", "Gold leed-certified", "Granite countertops" ],
+    "yearBuilt" : 2007,
+    "area" : 978,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 535000,
+    "addressRaw" : "909 5th Ave #402, Seattle, WA 98164",
+    "address" : {
+      "street" : "909 5th Ave #402",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98164"
+    },
+    "latitude" : 47.6062153,
+    "longitude" : -122.332069,
+    "description" : "Luxury living in premier location surrounded by all Seattle has to offer with a 99 walk score. This exceptional residence combines sophisticated design, abundant natural light, and excellent amenities. Gold LEED-certified concrete and steel construction provides quality and peace of mind. The thoughtfully designed floor plan features a welcoming entry with powder room, spacious living and dining areas, and a well-appointed kitchen with granite countertops, island with breakfast bar, gas cooktop, and abundant storage. Primary suite with spacious bth  &  large walk-in closet w/ built-ins. Soaring 10.5-foot ceilings, floor-to-ceiling windows, and a Juliet balcony create an airy, light-fill",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_1_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_2_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_3_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_4_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_5_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_6_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_7_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_8_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_9_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_10_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_11_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_12_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_13_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_14_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_15_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_16_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_17_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_18_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_19_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/302/genIslnoResize.2579302_20_3.jpg" ]
+  }, {
+    "id" : 11905805,
+    "mlsId" : "2535181",
+    "url" : "https://www.redfin.com/WA/Seattle/909-5th-Ave-98164/unit-1103/home/11905805",
+    "homeType" : "Condo",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Fitness center", "Waterfront access", "Owner's lounge" ],
+    "yearBuilt" : 2008,
+    "area" : 979,
+    "beds" : 1,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 523000,
+    "addressRaw" : "909 5th Ave #1103, Seattle, WA 98164",
+    "address" : {
+      "street" : "909 5th Ave #1103",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98164"
+    },
+    "latitude" : 47.6062153,
+    "longitude" : -122.332069,
+    "description" : "Just refreshed at 5th  &  Madison! Experience elevated downtown living where spacious design, luxury hotel-inspired service, and everyday convenience come together in one of Seattle’s most desirable urban addresses. This 979 SF, 1-bedroom, 1.5-bath residence shines with new interior paint, new carpet, secure garage parking, and a smart, open layout designed for comfortable city living. The expansive walk-in closet offers exciting potential for a den, office, or flexible bonus space. Enjoy exceptional access to the waterfront, Pike Place Market, Benaroya Hall, Seattle Public Library, light rail, dining, shopping, and major employers. Premier building amenities include 24-hour conci",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/181/genIslnoResize.2535181_29_2.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1
+  }
+}

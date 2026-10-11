@@ -81,10 +81,18 @@ class H3GraphPriceModel(nn.Module):
         property_features: torch.Tensor,
         time_features: torch.Tensor,
         market_features: torch.Tensor,
+        sale_node_weights: torch.Tensor | None = None,
     ) -> torch.Tensor:
         node_embeddings = self.encode_nodes(node_features, edge_index)
+        selected_embeddings = node_embeddings[sale_node_index]
+        if sale_node_index.ndim == 2:
+            if sale_node_weights is None or sale_node_weights.shape != sale_node_index.shape:
+                raise ValueError("Pooled node indexes require matching spatial weights")
+            selected_embeddings = torch.sum(
+                selected_embeddings * sale_node_weights.unsqueeze(-1), dim=1
+            )
         sale_inputs = torch.cat(
-            [node_embeddings[sale_node_index], property_features, time_features, market_features],
+            [selected_embeddings, property_features, time_features, market_features],
             dim=1,
         )
         return self.price_head(sale_inputs)

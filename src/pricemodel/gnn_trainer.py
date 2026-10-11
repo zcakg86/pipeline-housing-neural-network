@@ -22,7 +22,7 @@ from .reproducibility import seed_everything
 from .run_manifest import build_run_manifest, write_run_manifest
 
 
-GNN_ARCHITECTURE_VERSION = 2
+GNN_ARCHITECTURE_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -58,6 +58,9 @@ class GNNBaselineTrainer:
         random_seed: int = 42,
         graph_layer_norm: bool = False,
         graph_residual: bool = False,
+        continuous_embedding_pooling: bool = False,
+        spatial_pool_radius_km: float = 1.5,
+        spatial_pool_h3_ring: int = 3,
         directory_prefix: str = "outputs/gnn",
     ):
         self.graph_data = graph_data
@@ -68,6 +71,15 @@ class GNNBaselineTrainer:
         self.random_seed = random_seed
         self.graph_layer_norm = bool(graph_layer_norm)
         self.graph_residual = bool(graph_residual)
+        self.continuous_embedding_pooling = bool(continuous_embedding_pooling)
+        self.spatial_pool_radius_km = float(spatial_pool_radius_km)
+        self.spatial_pool_h3_ring = int(spatial_pool_h3_ring)
+        if self.continuous_embedding_pooling and (
+            graph_data.sale_pool_node_index is None or graph_data.sale_pool_weights is None
+        ):
+            raise ValueError(
+                "Continuous embedding pooling was enabled without sale pooling indexes and weights"
+            )
         self.architecture_version = GNN_ARCHITECTURE_VERSION
         self.device = torch.device(
             "mps" if torch.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu"
@@ -150,6 +162,21 @@ class GNNBaselineTrainer:
         )
         self.edge_index = self.graph_data.edge_index.to(self.device)
         self.sale_node_index = torch.tensor(self.graph_data.sale_node_index, dtype=torch.long, device=self.device)
+        self.sale_pool_node_index = None
+        self.sale_pool_weights = None
+        if self.continuous_embedding_pooling:
+            self.sale_pool_node_index = torch.tensor(
+                self.graph_data.sale_pool_node_index, dtype=torch.long, device=self.device
+            )
+            self.sale_pool_weights = torch.tensor(
+                self.graph_data.sale_pool_weights, dtype=torch.float32, device=self.device
+            )
+
+    def _spatial_inputs(self, rows: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor | None]:
+        """Return either legacy one-cell indexes or continuous pooling inputs."""
+        if self.continuous_embedding_pooling:
+            return self.sale_pool_node_index[rows], self.sale_pool_weights[rows]
+        return self.sale_node_index[rows], None
 
     @staticmethod
     def _group_indices_by_month(indices: np.ndarray, sale_month_index: np.ndarray) -> dict[int, np.ndarray]:
@@ -172,13 +199,15 @@ class GNNBaselineTrainer:
         with context:
             for month in months:
                 rows = torch.tensor(monthly[month], dtype=torch.long, device=self.device)
+                spatial_index, spatial_weights = self._spatial_inputs(rows)
                 prediction = self.model(
                     self.node_features[month],
                     self.edge_index,
-                    self.sale_node_index[rows],
+                    spatial_index,
                     self.property_features[rows],
                     self.time_features[rows],
                     self.market_features[rows],
+                    sale_node_weights=spatial_weights,
                 )
                 error = prediction - self.targets[rows]
                 loss = torch.mean(error.square())
@@ -279,13 +308,15 @@ class GNNBaselineTrainer:
         with torch.no_grad():
             for month, rows_array in grouped.items():
                 rows = torch.tensor(rows_array, dtype=torch.long, device=self.device)
+                spatial_index, spatial_weights = self._spatial_inputs(rows)
                 scaled = self.model(
                     self.node_features[month],
                     self.edge_index,
-                    self.sale_node_index[rows],
+                    spatial_index,
                     self.property_features[rows],
                     self.time_features[rows],
                     self.market_features[rows],
+                    sale_node_weights=spatial_weights,
                 ).detach().cpu().numpy()
                 predictions[rows_array] = scaled.reshape(-1)
 
@@ -339,7 +370,7 @@ class GNNBaselineTrainer:
         directory = Path(directory)
         checkpoint = torch.load(directory / "gnn_model.pth", map_location="cpu")
         architecture_version = checkpoint.get("architecture_version")
-        if architecture_version not in {1, 2}:
+        if architecture_version not in {1, 2, 3}:
             raise ValueError("Unsupported GNN checkpoint architecture")
         graph_path = directory / "monthly_graph_state.npz"
         sales_path = directory / "sales_with_predictions.csv"
@@ -358,6 +389,10 @@ class GNNBaselineTrainer:
                 node_features=state["node_features"],
                 sale_node_index=state["sale_node_index"],
                 sale_month_index=state["sale_month_index"],
+                sale_pool_node_index=(
+                    state["sale_pool_node_index"] if "sale_pool_node_index" in state else None
+                ),
+                sale_pool_weights=(state["sale_pool_weights"] if "sale_pool_weights" in state else None),
             )
         trainer = cls(
             graph_data,
@@ -366,6 +401,11 @@ class GNNBaselineTrainer:
             dropout_rate=float(checkpoint["dropout_rate"]),
             graph_layer_norm=bool(checkpoint.get("graph_layer_norm", False)),
             graph_residual=bool(checkpoint.get("graph_residual", False)),
+            continuous_embedding_pooling=bool(
+                checkpoint.get("continuous_embedding_pooling", False)
+            ),
+            spatial_pool_radius_km=float(checkpoint.get("spatial_pool_radius_km", 1.5)),
+            spatial_pool_h3_ring=int(checkpoint.get("spatial_pool_h3_ring", 3)),
         )
         trainer.architecture_version = architecture_version
         trainer.directory = directory
@@ -416,6 +456,9 @@ class GNNBaselineTrainer:
                 "dropout_rate": self.dropout_rate,
                 "graph_layer_norm": self.graph_layer_norm,
                 "graph_residual": self.graph_residual,
+                "continuous_embedding_pooling": self.continuous_embedding_pooling,
+                "spatial_pool_radius_km": self.spatial_pool_radius_km,
+                "spatial_pool_h3_ring": self.spatial_pool_h3_ring,
                 "artifacts": asdict(artifacts),
                 "results": self.results,
             },
@@ -423,17 +466,23 @@ class GNNBaselineTrainer:
         )
         for name, scaler in self.scalers.items():
             joblib.dump(scaler, self.directory / f"{name}_scaler.pkl")
+        graph_state = {
+            "node_features": self.graph_data.node_features,
+            "edge_index": self.graph_data.edge_index.detach().cpu().numpy(),
+            "sale_node_index": self.graph_data.sale_node_index,
+            "sale_month_index": self.graph_data.sale_month_index,
+        }
+        if self.continuous_embedding_pooling:
+            graph_state["sale_pool_node_index"] = self.graph_data.sale_pool_node_index
+            graph_state["sale_pool_weights"] = self.graph_data.sale_pool_weights
         np.savez_compressed(
             self.directory / "monthly_graph_state.npz",
-            node_features=self.graph_data.node_features,
-            edge_index=self.graph_data.edge_index.detach().cpu().numpy(),
-            sale_node_index=self.graph_data.sale_node_index,
-            sale_month_index=self.graph_data.sale_month_index,
+            **graph_state,
         )
-        if "predicted_price" in self.graph_data.dataframe.columns:
-            self.graph_data.dataframe.to_csv(
-                self.directory / "sales_with_predictions.csv", index=False
-            )
+        # if "predicted_price" in self.graph_data.dataframe.columns:
+        #     self.graph_data.dataframe.to_csv(
+        #         self.directory / "sales_with_predictions.csv", index=False
+        #     )
         training_config = self.results.get("training_config", {
             "train_ratio": getattr(self, "train_ratio", None),
             "random_seed": self.random_seed,
@@ -443,6 +492,9 @@ class GNNBaselineTrainer:
             "learning_rate": self.learning_rate,
             "graph_layer_norm": self.graph_layer_norm,
             "graph_residual": self.graph_residual,
+            "continuous_embedding_pooling": self.continuous_embedding_pooling,
+            "spatial_pool_radius_km": self.spatial_pool_radius_km,
+            "spatial_pool_h3_ring": self.spatial_pool_h3_ring,
         })
         write_run_manifest(self.directory, build_run_manifest(
             run_id=self.timestamp,
@@ -451,6 +503,9 @@ class GNNBaselineTrainer:
             architecture={
                 "graph_layer_norm": self.graph_layer_norm,
                 "graph_residual": self.graph_residual,
+                "continuous_embedding_pooling": self.continuous_embedding_pooling,
+                "spatial_pool_radius_km": self.spatial_pool_radius_km,
+                "spatial_pool_h3_ring": self.spatial_pool_h3_ring,
             },
             training_config=training_config,
             metrics=self.results.get("metrics", {}),

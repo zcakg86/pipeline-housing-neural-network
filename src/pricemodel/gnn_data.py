@@ -36,6 +36,8 @@ class MonthlyGraphData:
     node_features: np.ndarray
     sale_node_index: np.ndarray
     sale_month_index: np.ndarray
+    sale_pool_node_index: np.ndarray | None = None
+    sale_pool_weights: np.ndarray | None = None
 
     @property
     def node_feature_names(self) -> tuple[str, ...]:
@@ -139,7 +141,91 @@ def build_h3_edge_index(cell_ids: Iterable[str]) -> torch.Tensor:
     return torch.tensor([sources, targets], dtype=torch.long)
 
 
-def build_monthly_graph_data(frame: pd.DataFrame) -> MonthlyGraphData:
+def _haversine_km(
+    latitude: float,
+    longitude: float,
+    candidate_latitudes: np.ndarray,
+    candidate_longitudes: np.ndarray,
+) -> np.ndarray:
+    """Return great-circle distances from one point to candidate coordinates."""
+    earth_radius_km = 6371.0088
+    latitude_radians = np.radians(latitude)
+    candidate_latitude_radians = np.radians(candidate_latitudes)
+    latitude_delta = candidate_latitude_radians - latitude_radians
+    longitude_delta = np.radians(candidate_longitudes - longitude)
+    haversine = (
+        np.sin(latitude_delta / 2.0) ** 2
+        + np.cos(latitude_radians)
+        * np.cos(candidate_latitude_radians)
+        * np.sin(longitude_delta / 2.0) ** 2
+    )
+    return 2.0 * earth_radius_km * np.arcsin(np.sqrt(np.clip(haversine, 0.0, 1.0)))
+
+
+def build_continuous_embedding_pooling(
+    frame: pd.DataFrame,
+    cell_ids: Iterable[str],
+    *,
+    radius_km: float = 1.5,
+    h3_ring: int = 3,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Build compact-support spatial interpolation weights for every sale.
+
+    A Wendland C2 kernel reaches zero smoothly at ``radius_km``.  Candidate
+    discovery uses the same H3 disk operation as Java deployment, while the
+    weights depend on the property's continuous latitude/longitude.
+    """
+    if radius_km <= 0:
+        raise ValueError("Continuous embedding pooling radius must be positive")
+    if h3_ring < 1:
+        raise ValueError("Continuous embedding pooling H3 ring must be positive")
+    cells = tuple(cell_ids)
+    cell_index = {cell: position for position, cell in enumerate(cells)}
+    centers = np.asarray([h3.cell_to_latlng(cell) for cell in cells], dtype=np.float64)
+    candidate_cache: dict[str, np.ndarray] = {}
+    row_indices: list[np.ndarray] = []
+    row_weights: list[np.ndarray] = []
+
+    for cell, latitude, longitude in zip(frame["h3_08"], frame["lat"], frame["lng"]):
+        candidates = candidate_cache.get(cell)
+        if candidates is None:
+            candidates = np.asarray(
+                [cell_index[value] for value in h3.grid_disk(cell, h3_ring) if value in cell_index],
+                dtype=np.int64,
+            )
+            candidate_cache[cell] = candidates
+        distances = _haversine_km(
+            float(latitude), float(longitude), centers[candidates, 0], centers[candidates, 1]
+        )
+        keep = distances < radius_km
+        selected = candidates[keep]
+        selected_distances = distances[keep]
+        if not len(selected):
+            selected = np.asarray([cell_index[cell]], dtype=np.int64)
+            weights = np.ones(1, dtype=np.float64)
+        else:
+            scaled = selected_distances / radius_km
+            weights = (1.0 - scaled) ** 4 * (4.0 * scaled + 1.0)
+            weights /= weights.sum()
+        row_indices.append(selected)
+        row_weights.append(weights.astype(np.float32))
+
+    width = max(map(len, row_indices))
+    pooled_indices = np.zeros((len(frame), width), dtype=np.int64)
+    pooled_weights = np.zeros((len(frame), width), dtype=np.float32)
+    for row, (indices, weights) in enumerate(zip(row_indices, row_weights)):
+        pooled_indices[row, :len(indices)] = indices
+        pooled_weights[row, :len(weights)] = weights
+    return pooled_indices, pooled_weights
+
+
+def build_monthly_graph_data(
+    frame: pd.DataFrame,
+    *,
+    continuous_embedding_pooling: bool = False,
+    spatial_pool_radius_km: float = 1.5,
+    spatial_pool_h3_ring: int = 3,
+) -> MonthlyGraphData:
     """Build all calendar-month snapshots and sale lookup indexes for training."""
     snapshots = build_monthly_h3_market_snapshots(frame)
     cell_ids = tuple(snapshots["cell_ids"])
@@ -152,6 +238,15 @@ def build_monthly_graph_data(frame: pd.DataFrame) -> MonthlyGraphData:
         sale_month_index = np.asarray([month_index[month] for month in month_labels], dtype=np.int64)
     except KeyError as exc:
         raise RuntimeError(f"GNN graph lookup was unexpectedly incomplete: {exc}") from exc
+    sale_pool_node_index = None
+    sale_pool_weights = None
+    if continuous_embedding_pooling:
+        sale_pool_node_index, sale_pool_weights = build_continuous_embedding_pooling(
+            frame,
+            cell_ids,
+            radius_km=spatial_pool_radius_km,
+            h3_ring=spatial_pool_h3_ring,
+        )
     return MonthlyGraphData(
         dataframe=frame,
         cell_ids=cell_ids,
@@ -160,6 +255,8 @@ def build_monthly_graph_data(frame: pd.DataFrame) -> MonthlyGraphData:
         node_features=np.asarray(snapshots["features"], dtype=np.float32),
         sale_node_index=sale_node_index,
         sale_month_index=sale_month_index,
+        sale_pool_node_index=sale_pool_node_index,
+        sale_pool_weights=sale_pool_weights,
     )
 
 

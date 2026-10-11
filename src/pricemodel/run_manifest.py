@@ -64,6 +64,12 @@ def build_run_manifest(
         ["layer_norm" if normalization else "no_norm",
          "residual" if residual else "no_residual"]
     )
+    if "continuous_embedding_pooling" in architecture:
+        variant += (
+            "+continuous_pooling"
+            if architecture["continuous_embedding_pooling"]
+            else "+single_cell"
+        )
     return {
         "schema_version": 1,
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),

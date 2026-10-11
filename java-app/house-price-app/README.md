@@ -4,10 +4,10 @@ A Quarkus application that loads property data, runs ONNX inference, and serves 
 
 The map also serves optional static OSM overlays from
 `src/main/resources/META-INF/resources/data/`: natural water, rail/light-rail
-stations and routes, bus stops/stations and routes, and categorized major
-roads. These GeoJSON files are fetched only when their corresponding map
-checkbox is enabled. Rebuild the transport files from the repository root with
-`make osm-transport`.
+stations and routes, bus stops/stations and routes, categorized major roads,
+and strict tagged-node motorway junctions. These GeoJSON files are fetched only
+when their corresponding map checkbox is enabled. Rebuild the transport files
+from the repository root with `make osm-transport`.
 
 ---
 
@@ -19,19 +19,23 @@ checkbox is enabled. Rebuild the transport files from the repository root with
 │  ├── GET /api/sales/h3           → H3 hex layer             │
 │  ├── GET /api/rentcast           → sales points layer       │
 │  ├── GET /api/zillow             → Zillow listing points    │
+│  ├── GET /api/redfin             → Redfin listing points    │
 │  ├── GET /api/sales/community    → community polygons       │
 │  ├── GET /api/performance        → community error chart    │
 │  ├── GET /api/home-types         → filter dropdowns         │
 │  ├── GET /api/stats              → sidebar stats            │
 │  ├── GET /api/export/csv         → CSV download             │
 │  ├── POST /api/fetch/rentcast    → live RentCast fetch      │
-│  └── POST /api/fetch/zillow      → live Zillow fetch        │
+│  ├── POST /api/fetch/zillow      → live Zillow fetch        │
+│  ├── POST /api/fetch/redfin      → live Redfin fetch        │
+│  └── POST /api/agent/redfin/...  → AI price assessment      │
 └──────────────────┬──────────────────────────────────────────┘
                    │ JAX-RS REST
 ┌──────────────────▼──────────────────────────────────────────┐
 │  api/                                                        │
 │  ├── MapResource.java     map data endpoints                │
 │  ├── FetchResource.java   live API triggers + cooldown      │
+│  ├── AgentResource.java   assessments + evaluation feedback │
 │  ├── ExportResource.java  CSV download                      │
 │  └── StartupLoader.java   data load on boot                 │
 └──────────┬────────────────────────┬────────────────────────┘
@@ -54,6 +58,12 @@ checkbox is enabled. Rebuild the transport files from the repository root with
                          ┌──────────────────────────────────┐
                          │  watcher/                         │
                          │  └── FileWatcherService           │
+                         └──────────────────────────────────┘
+                         ┌──────────────────────────────────┐
+                         │  agent/                           │
+                         │  ├── RedfinPriceAssessmentAgent  │
+                         │  ├── PropertyAssessmentEvidence  │
+                         │  └── AgentEvaluationStore         │
                          └──────────────────────────────────┘
                          ┌──────────────────────────────────┐
                          │  cli/                             │
@@ -145,8 +155,9 @@ Key fields:
 - **Identity**: `id`, `address`, `source` (`"sales"`, `"rentcast"`, `"zillow"`)
 - **Location**: `lat`, `lng`, `h3Index`, `community`
 - **Property**: `sqft`, `sqftLot`, `beds`, `baths`, `homeType`
-- **Transaction/listing**: `saleDate` (prediction observation date for Zillow),
-  `salePrice` (list price for Zillow), `zestimate` (0 when unavailable), `listingUrl`
+- **Transaction/listing**: `saleDate` (prediction observation date for live listings),
+  `salePrice` (listing price), `zestimate` (0 when unavailable), `listingUrl`,
+  `description`, and `atAGlanceFacts`
 - **Predictions**: `predictedPrice`, `pctError`, `lightgbmPredictedPrice`,
   `lightgbmPctError`, `gnnPredictedPrice`, `gnnPctError`
 - **Uncertainty**: `predictionStdPrice`, `predictionCvPct`
@@ -160,8 +171,9 @@ Parses the historical CSV and canonical API-response JSON into `PropertyRecord` 
 | `ingestSalesCsv(file)` | `sales_2020_25.csv` — historical |
 | `ingestRentcastJson(file)` | RentCast JSON |
 | `ingestZillowJson(file)` | Zillow JSON |
+| `ingestRedfinJson(file)` | Redfin JSON, including description and at-a-glance facts |
 
-#### `RentcastApiClient.java` / `ZillowApiClient.java`
+#### `RentcastApiClient.java` / `ZillowApiClient.java` / `RedfinApiClient.java`
 HTTP clients for the respective APIs. Parameters come from `application.properties`. Return raw `List<Map<String, Object>>` for `DataIngestionService` to parse.
 
 ---
@@ -217,6 +229,7 @@ look-forward guard.
 |---|---|---|
 | `GET /api/rentcast` | Viewport-bounded GeoJSON — clustered at low zoom, detailed sales at high zoom | Sales points layer |
 | `GET /api/zillow` | Viewport-bounded GeoJSON — clustered at low zoom, detailed listings at high zoom | Zillow layer |
+| `GET /api/redfin` | Viewport-bounded GeoJSON including `description` and `atAGlanceFacts` | Redfin layer |
 | `GET /api/sales/h3` | GeoJSON polygons — H3 hex grid | H3 sales layer |
 | `GET /api/sales/community` | GeoJSON polygons — hexes by community | Community layer |
 | `GET /api/synthetic?saleDate=YYYY-MM-DD` | GeoJSON H3 L8 polygons with neural, LightGBM, and GNN predictions, intervals, and attention | Synthetic layer |
@@ -251,16 +264,68 @@ against the ONNX log price. The native explanation binding requires OpenMP
 Linux).
 
 #### `FetchResource.java`
-Triggers live API fetches. Both endpoints require `?confirm=true`. RentCast calls use a 24-hour in-process cooldown plus the persistent shared 45-call budget; the cooldown for other sources is configured with `fetch.cooldown.hours`. Each response is atomically saved as a new timestamped JSON file. `FileWatcherService` is the sole ingestion owner, and the HTTP action waits for its completion before reporting success.
+Triggers live API fetches. All fetch endpoints require `?confirm=true`. RentCast calls use a 24-hour in-process cooldown plus the persistent shared 45-call budget; the cooldown for other sources is configured with `fetch.cooldown.hours`. Each response is atomically saved as a new timestamped JSON file. `FileWatcherService` is the sole ingestion owner, and the HTTP action waits for its completion before reporting success.
 
 | Endpoint | Action |
 |---|---|
 | `POST /api/fetch/rentcast?confirm=true` | Calls RentCast, saves timestamped JSON, waits for watcher ingestion |
 | `POST /api/fetch/zillow?confirm=true` | Calls Zillow, saves timestamped JSON, waits for watcher ingestion |
+| `POST /api/fetch/redfin?confirm=true&allPages=true` | Calls Redfin, optionally follows pagination, and saves/ingests each successful full response before starting the next request |
 | `GET /api/fetch/status` | Last fetch times and cooldown state |
 
+Redfin responses are append-only at the file level: every successful ZIP/page
+is written to its own `data/redfin/redfin_<run>_<sequence>_<zip>_page_<n>.json`
+artifact. If a later request is denied or fails, the endpoint returns
+`status: partial`; all earlier response files remain available and ingested.
+
+#### `AgentResource.java`
+
+Creates an evidence-grounded LangChain4j price-assessment agent for an individual
+Redfin listing. The agent is backed by a Hugging Face Inference Provider model
+through its OpenAI-compatible endpoint. It receives three bounded evidence
+views: the selected listing (including `description` and `atAGlanceFacts`), all
+three already-stored listing predictions plus their explanations/time inputs,
+and deployed model-artifact H3 center/neighbor features with nearby Redfin
+listings and their stored predictions. A compact `h3_market_surface.json` adds
+the historical-sales-derived price level, regional premium, dispersion, decayed
+sale support, and last-sale date for each covered H3 cell, plus nearest OSM city
+and neighborhood labels. Those labels are nearest named place nodes, not legal
+boundaries. The agent path never loads the historical sales CSV or OSM extract
+and does not generate the full monthly property time series. Evidence is sent in
+one model request rather than through provider-side tool calls; this avoids
+GPT-OSS Harmony tool-parser incompatibilities and saves an extra inference round
+trip.
+
+| Endpoint | Action |
+|---|---|
+| `POST /api/agent/redfin/{listingId}/assessment` | Assess the selected listing; accepts an optional `{"question":"..."}` body |
+| `POST /api/agent/assessments/{assessmentId}/feedback` | Append a 1–5 rating plus optional expected price and comments |
+| `GET /api/agent/evaluations/summary` | Return assessment/feedback counts, average rating, and feedback records |
+
+Every assessment is saved under `data/agent-evaluations/assessments/`. Feedback
+is stored as a separate append-only record under
+`data/agent-evaluations/feedback/`, so later feedback never replaces the
+original assessment. These directories are ignored by Git because they may
+contain listing data and user comments.
+
+To enable assessments, save the Hugging Face token in
+`java-app/house-price-app/.env` (do not commit it), then restart Quarkus:
+
+```dotenv
+HF_TOKEN=hf_your_token_here
+# Optional; the default is shown below.
+HF_MODEL=openai/gpt-oss-120b:fastest
+```
+
+The token needs permission to use Hugging Face Inference Providers. At map zoom
+13 or higher, enable the Redfin layer, select a listing, and choose **Assess
+price with AI**. Clicking that button sends the selected public listing plus
+the locally derived prediction, explanation, H3 artifact, and nearby-listing evidence
+to the configured Hugging Face provider. No evidence is sent before the user
+requests an assessment.
+
 #### `ExportResource.java`
-`GET /api/export/csv?source=all|sales|rentcast|zillow` — streams all in-memory records as a CSV download.
+`GET /api/export/csv?source=all|sales|rentcast|zillow|redfin` — streams all in-memory records as a CSV download.
 
 #### `StartupLoader.java`
 Runs once at boot. Loads the configured historical sales CSV and supported JSON files already present in the watch directories. Directories, non-JSON files, and archival files whose names contain `previous` are ignored.
@@ -274,7 +339,10 @@ Runs once at boot. Loads the configured historical sales CSV and supported JSON 
 The watcher is closed and its executor is interrupted during Quarkus shutdown or
 hot reload. Duplicate create events for the same normalized file path are ignored
 within an application run, so one saved response has exactly one ingestion owner.
-Watches `data/rentcast/` and `data/zillow/` using Java NIO `WatchService` on a background daemon thread. When a new file appears, waits for size stabilisation then ingests it. Skips files currently being written by `FetchResource`.
+Watches `data/rentcast/`, `data/zillow/`, and `data/redfin/` using Java NIO
+`WatchService` on a background daemon thread. When a new file appears, waits
+for size stabilisation then ingests it. Skips files currently being written by
+`FetchResource`.
 
 ---
 
@@ -330,12 +398,23 @@ budget, locking, immediate response saving, and hard safety limits.
 | `data.sales.csv` | `../../data/sales_2020_25_with_predictions.csv` | Historical CSV loaded on startup |
 | `watcher.rentcast.dir` | `data/rentcast` | Watched for new RentCast files |
 | `watcher.zillow.dir` | `data/zillow` | Watched for new Zillow files |
+| `watcher.redfin.dir` | `data/redfin` | Watched for new Redfin files |
 | `fetch.cooldown.hours` | `0` | Minimum hours between non-RentCast live API calls (0 = disabled) |
 | `fetch.rentcast.cooldown.hours` | `24` | Additional in-process cooldown for RentCast REST calls |
 | `rentcast.months` | `4` | Completed-sale lookback window used in RentCast requests |
 | `rentcast.timeout.seconds` | `180` | Maximum wait for one RentCast HTTP response; no automatic retry |
 | `rentcast.api.key` | *(from env)* | RentCast API key |
 | `zillow.api.key` | *(from env)* | Zillow/HasData API key |
+| `carto.api.key` | *(from `CARTO_API_KEY`)* | Browser-visible CARTO Basemaps key; restrict it by website referrer in CARTO |
+| `redfin.keywords` | Seattle/Eastside ZIP list | Comma-separated Redfin search keywords; one page is requested for each by default |
+| `redfin.fetch.all.pages` | `false` | Follow Redfin response pagination by default |
+| `redfin.max.pages` | `20` | Per-keyword billing safety cap for all-pages requests |
+| `fetch.redfin.cooldown.hours` | `0` | Minimum time between Redfin fetches; set above zero for cost protection |
+| `agent.huggingface.token` | *(from `HF_TOKEN`)* | Hugging Face token; leave unset to disable live assessments without preventing app startup |
+| `agent.huggingface.base-url` | `https://router.huggingface.co/v1` | OpenAI-compatible Hugging Face router URL |
+| `agent.huggingface.model` | `openai/gpt-oss-120b:fastest` | Inference Provider model and routing preference; override with `HF_MODEL` |
+| `agent.timeout.seconds` | `180` | Maximum wait for an assessment response |
+| `agent.evaluation.dir` | `data/agent-evaluations` | Append-only assessment and feedback artifacts |
 
 #### `model-artifacts/`
 Exported from the Python pipeline by `export_model_for_java.py`:
@@ -346,6 +425,7 @@ Exported from the Python pipeline by `export_model_for_java.py`:
 | `scalers.json` | Feature scaler parameters |
 | `community_map.json` | H3 hex → community ID |
 | `h3_l9_neighbor_communities.json` | H3 hex → 7 community neighbour indices |
+| `h3_market_surface.json` | Compact H3 historical-market aggregates plus nearest OSM city/neighborhood labels for agent evidence |
 | `model_metadata.json` | Architecture dimensions, reference date, n_communities |
 | `gnn_price_head.onnx` | GraphSAGE price head after precomputed spatial encoding |
 | `gnn_monthly_embeddings.bin.gz` | Dated H3 cell embeddings, loaded once at startup |

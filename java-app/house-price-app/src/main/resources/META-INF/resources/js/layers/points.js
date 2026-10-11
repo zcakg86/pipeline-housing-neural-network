@@ -1,4 +1,4 @@
-// Detailed historical/RentCast/Zillow points, popups, and on-demand explanations.
+// Detailed historical/RentCast/Zillow/Redfin points, popups, and explanations.
 // ── Sales points layer (RentCast / historical / both) ────────────────────────
 function waterFeatureRows(properties) {
   const distance = Number(properties.distanceToWaterM);
@@ -112,6 +112,94 @@ async function loadRentcast() {
     }
   }).addTo(rentcastLayer);
   // Detailed sales use the same active map-colour scale as the H3 layer.
+  buildLegend(variable, values, anchors);
+}
+
+// ── Redfin layer ─────────────────────────────────────────────────────────────
+async function loadRedfin() {
+  redfinLayer.clearLayers();
+  const visible = document.getElementById('showRedfin').checked;
+  setLayerGroupVisible(redfinLayer, visible);
+  if (!visible) { abortLayerRequest('redfin'); return; }
+
+  const variable = document.getElementById('variable').value;
+  const model = displayedModel();
+  const {min: minErr, max: maxErr} = getErrorRange();
+  const minSqft = document.getElementById('minSqft').value;
+  const maxSqft = document.getElementById('maxSqft').value;
+  const homeType = document.getElementById('redfinType').value;
+  const firstLoad = !loadedLiveSources.has('redfin');
+  if (firstLoad) beginMapEvent('redfin-load', 'Loading saved Redfin listings and computing predictions…');
+
+  let gj;
+  try {
+    gj = await fetchLayerJson('redfin',
+      `/api/redfin?minError=${minErr}&maxError=${maxErr}` +
+      `&minSqft=${minSqft}&maxSqft=${maxSqft}&homeType=${homeType}&model=${model}` +
+      `&${mapViewportQuery()}`
+    );
+  } finally {
+    if (firstLoad) completeMapEvent('redfin-load', gj ? 'Redfin layer ready' : '');
+  }
+  if (!gj) return;
+  if (!loadedLiveSources.has('redfin')) {
+    loadedLiveSources.add('redfin');
+    loadHomeTypes();
+    loadStats();
+  }
+  reportPointResponse('Redfin', gj);
+  if (!gj.features || !gj.features.length) return;
+
+  const values = gj.features.map(f => pointVariableValue(f.properties, variable, model));
+  const anchors = variable === 'pct_error' ? computeErrorAnchors(values) : null;
+  const colorFn = getColorFn(variable, values, anchors);
+  L.geoJSON(gj, {
+    pointToLayer: (f, latlng) => L.circleMarker(latlng, {
+      radius: f.properties.cluster
+        ? Math.min(15, 5 + Math.log1p(f.properties.count || 1) * 1.5) : 7,
+      fillColor: colorFn(pointVariableValue(f.properties, variable, model)),
+      fillOpacity: 0.85,
+      color: '#e53935',
+      weight: 1.5
+    }),
+    onEachFeature: (f, layer) => {
+      const p = f.properties;
+      if (p.cluster) {
+        layer.bindPopup(
+          `<b>${Number(p.count).toLocaleString()} Redfin listings in this map cell</b><br>` +
+          `Average list: $${Math.round(p.listPrice || 0).toLocaleString()}<br>` +
+          `Zoom in to inspect individual listings.`,
+          { autoPan: false }
+        );
+        return;
+      }
+      const facts = Array.isArray(p.atAGlanceFacts) && p.atAGlanceFacts.length
+        ? `<b>At a glance</b><ul>${p.atAGlanceFacts.map(fact => `<li>${escapeHtml(fact)}</li>`).join('')}</ul>`
+        : '';
+      const description = p.description
+        ? `<details><summary><b>Description</b></summary>${escapeHtml(p.description)}</details>`
+        : '';
+      const listingUrl = typeof p.url === 'string' && p.url.startsWith('https://')
+        ? `<a href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer">View Listing</a><br>`
+        : '';
+      layer.bindPopup(
+        `<b>Predicted at: ${escapeHtml(p.predictionDate || p.saleDate || 'Unknown')}</b><br>` +
+        `<b>${escapeHtml(p.address)}</b><br>` +
+        `<i style="color:#e53935">Redfin Listing</i><br>` +
+        `List: $${Math.round(p.listPrice || 0).toLocaleString()}<br>` +
+        `<b>Neural:</b> $${Math.round(p.predictedPrice).toLocaleString()} (${p.pctError.toFixed(1)}%)<br>` + modelIntervalRows(p, 'neural') +
+        `<b>LightGBM:</b> $${Math.round(p.lightgbmPredictedPrice).toLocaleString()} (${p.lightgbmPctError.toFixed(1)}%)<br>` + modelIntervalRows(p, 'lightgbm') +
+        `<b>Spatial GNN:</b> $${Math.round(p.gnnPredictedPrice || 0).toLocaleString()} (${(p.gnnPctError || 0).toFixed(1)}%)<br>` + modelIntervalRows(p, 'gnn') +
+        `Beds: ${p.beds} | Baths: ${p.baths} | Sqft: ${Math.round(p.sqft).toLocaleString()}<br>` +
+        `Type: ${escapeHtml(p.homeType)}<br>${facts}${description}${listingUrl}` +
+        `<button class="price-assessment-button" type="button">Assess price with AI</button>` +
+        `<button class="feature-explanation-button" type="button">Show feature contributions</button>` +
+        `<button class="property-time-series-button" type="button">Show predicted value history</button>`,
+        { autoPan: false, maxWidth: 420 }
+      );
+      attachPointExplanationButton(layer, p);
+    }
+  }).addTo(redfinLayer);
   buildLegend(variable, values, anchors);
 }
 

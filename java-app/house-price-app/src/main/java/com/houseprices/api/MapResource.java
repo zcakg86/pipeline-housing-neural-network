@@ -156,7 +156,7 @@ public class MapResource {
     }
 
     /**
-     * Feature contributions for one stored Zillow, RentCast, or historical-sale point.
+     * Feature contributions for one stored Zillow, Redfin, RentCast, or historical-sale point.
      * LightGBM and neural results are feature-level; GNN results are exact effects
      * for its deployed graph/property/time/economic input groups.
      */
@@ -165,8 +165,8 @@ public class MapResource {
     public Map<String, Object> pointExplanation(
             @QueryParam("source") @DefaultValue("") String source,
             @QueryParam("id") @DefaultValue("") String id) {
-        if (!Set.of("zillow", "rentcast", "sales").contains(source)) {
-            throw new BadRequestException("source must be zillow, rentcast, or sales");
+        if (!Set.of("zillow", "redfin", "rentcast", "sales").contains(source)) {
+            throw new BadRequestException("source must be zillow, redfin, rentcast, or sales");
         }
         if (id == null || id.isBlank()) throw new BadRequestException("id is required");
         PropertyRecord record = store.findBySourceAndId(source, id)
@@ -175,7 +175,7 @@ public class MapResource {
             ? java.time.LocalDate.now() : record.saleDate();
 
         // Historical CSV predictions used their row-specific economic values.
-        // Live Zillow/RentCast ingestion currently uses the deployment defaults.
+        // Live Zillow/Redfin/RentCast ingestion currently uses the deployment defaults.
         double mortgageRate = FeatureContract.DEFAULT_MORTGAGE_RATE;
         double unemploymentRate = FeatureContract.DEFAULT_UNEMPLOYMENT_RATE;
         String indicatorDate = "deployment defaults";
@@ -229,8 +229,8 @@ public class MapResource {
     public Map<String, Object> pointTimeSeries(
             @QueryParam("source") @DefaultValue("") String source,
             @QueryParam("id") @DefaultValue("") String id) {
-        if (!Set.of("zillow", "rentcast", "sales").contains(source)) {
-            throw new BadRequestException("source must be zillow, rentcast, or sales");
+        if (!Set.of("zillow", "redfin", "rentcast", "sales").contains(source)) {
+            throw new BadRequestException("source must be zillow, redfin, rentcast, or sales");
         }
         if (id == null || id.isBlank()) throw new BadRequestException("id is required");
         try {
@@ -347,12 +347,40 @@ public class MapResource {
             @QueryParam("zoom") @DefaultValue("12") int zoom,
             @QueryParam("limit") @DefaultValue("5000") int limit) {
 
-        liveSources.ensureLoaded("zillow");
+        return listingPoints("zillow", minError, maxError, minSqft, maxSqft,
+            homeType, model, west, south, east, north, zoom, limit);
+    }
+
+    /** Redfin listings, including description and at-a-glance facts. */
+    @GET
+    @Path("/redfin")
+    public Map<String, Object> redfinListings(
+            @QueryParam("minError")   @DefaultValue("-500")  double minError,
+            @QueryParam("maxError")   @DefaultValue("500")   double maxError,
+            @QueryParam("minSqft")    @DefaultValue("0")     double minSqft,
+            @QueryParam("maxSqft")    @DefaultValue("10000") double maxSqft,
+            @QueryParam("homeType")   @DefaultValue("all")   String homeType,
+            @QueryParam("model")      @DefaultValue("lightgbm") String model,
+            @QueryParam("west") Double west,
+            @QueryParam("south") Double south,
+            @QueryParam("east") Double east,
+            @QueryParam("north") Double north,
+            @QueryParam("zoom") @DefaultValue("12") int zoom,
+            @QueryParam("limit") @DefaultValue("5000") int limit) {
+        return listingPoints("redfin", minError, maxError, minSqft, maxSqft,
+            homeType, model, west, south, east, north, zoom, limit);
+    }
+
+    private Map<String, Object> listingPoints(
+            String source, double minError, double maxError, double minSqft, double maxSqft,
+            String homeType, String model, Double west, Double south, Double east, Double north,
+            int zoom, int limit) {
+        liveSources.ensureLoaded(source);
 
         PropertyRequestFilter filter = requestFilter(
             homeType, "", "", minError, maxError, west, south, east, north
         );
-        List<PropertyRecord> matches = store.snapshot().zillow().stream()
+        List<PropertyRecord> matches = store.getBySource(source).stream()
             .filter(r -> r.sqft() >= minSqft && r.sqft() <= maxSqft)
             .filter(r -> filter.includes(r, selectedError(r, model)))
             .toList();
@@ -388,6 +416,8 @@ public class MapResource {
                 props.put("baths",               r.baths());
                 props.put("homeType",            r.homeType());
                 props.put("url",                 r.listingUrl());
+                props.put("description",         r.description());
+                props.put("atAGlanceFacts",      r.atAGlanceFacts());
                 props.put("saleDate",            r.saleDate() != null ? r.saleDate().toString() : "");
                 props.put("predictionDate",      r.saleDate() != null ? r.saleDate().toString() : "");
                 putWaterFeatures(props, r);
@@ -444,10 +474,13 @@ public class MapResource {
         Set<String> zillowTypes = store.getZillowListings().stream()
             .map(PropertyRecord::homeType).filter(t -> t != null && !t.isBlank())
             .collect(Collectors.toCollection(TreeSet::new));
+        Set<String> redfinTypes = store.getRedfinListings().stream()
+            .map(PropertyRecord::homeType).filter(t -> t != null && !t.isBlank())
+            .collect(Collectors.toCollection(TreeSet::new));
         Set<String> salesTypes = store.getSalesRecords().stream()
             .map(PropertyRecord::homeType).filter(t -> t != null && !t.isBlank())
             .collect(Collectors.toCollection(TreeSet::new));
-        return Map.of("zillow", zillowTypes, "sales", salesTypes);
+        return Map.of("zillow", zillowTypes, "redfin", redfinTypes, "sales", salesTypes);
     }
 
     private PropertyRequestFilter requestFilter(
@@ -844,6 +877,7 @@ public class MapResource {
     @Path("/stats")    public Map<String, Object> stats() {
         PropertyStore.Snapshot snapshot = store.snapshot();
         List<PropertyRecord> zillow = snapshot.zillow();
+        List<PropertyRecord> redfin = snapshot.redfin();
         List<PropertyRecord> sales = snapshot.completedSales();
         List<PropertyRecord> rentcast = snapshot.rentcast();
 
@@ -851,7 +885,8 @@ public class MapResource {
         result.put("counts", Map.of(
             "sales", snapshot.sales().size(),
             "rentcast", snapshot.rentcast().size(),
-            "zillow", snapshot.zillow().size()
+            "zillow", snapshot.zillow().size(),
+            "redfin", snapshot.redfin().size()
         ));
 
         if (!zillow.isEmpty()) {
@@ -875,6 +910,8 @@ public class MapResource {
             ));
         }
 
+        if (!redfin.isEmpty()) result.put("redfin", listingSummary(redfin));
+
         if (!sales.isEmpty()) {
             ErrorStats values = errorStats(sales);
             result.put("sales", Map.of(
@@ -897,6 +934,27 @@ public class MapResource {
         }
 
         return result;
+    }
+
+    private Map<String, Object> listingSummary(List<PropertyRecord> listings) {
+        double listTotal = 0;
+        int listCount = 0;
+        double neuralTotal = 0;
+        double treeTotal = 0;
+        for (PropertyRecord record : listings) {
+            if (record.hasSalePrice()) {
+                listTotal += record.salePrice();
+                listCount++;
+            }
+            neuralTotal += record.predictedPrice();
+            treeTotal += record.lightgbmPredictedPrice();
+        }
+        return Map.of(
+            "total", listings.size(),
+            "avgListPrice", listCount == 0 ? 0 : listTotal / listCount,
+            "avgNeuralPredicted", neuralTotal / listings.size(),
+            "avgLightgbmPredicted", treeTotal / listings.size()
+        );
     }
 
     private ErrorStats errorStats(List<PropertyRecord> records) {

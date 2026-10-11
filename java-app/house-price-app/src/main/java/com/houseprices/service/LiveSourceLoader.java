@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LiveSourceLoader {
 
     private static final Logger LOG = Logger.getLogger(LiveSourceLoader.class);
-    private static final Set<String> SOURCES = Set.of("sales", "rentcast", "zillow");
+    private static final Set<String> SOURCES = Set.of("sales", "rentcast", "zillow", "redfin");
 
     @Inject DataIngestionService ingestion;
     @Inject PropertyStore store;
@@ -32,6 +32,9 @@ public class LiveSourceLoader {
 
     @ConfigProperty(name = "watcher.zillow.dir", defaultValue = "data/zillow")
     String zillowDir;
+
+    @ConfigProperty(name = "watcher.redfin.dir", defaultValue = "data/redfin")
+    String redfinDir;
 
     @ConfigProperty(name = "data.sales.csv", defaultValue = "../../data/sales_2020_25.csv")
     String salesCsv;
@@ -50,13 +53,19 @@ public class LiveSourceLoader {
             if (loaded.contains(source)) return;
             long started = System.nanoTime();
             List<File> files = "sales".equals(source) ? List.of(new File(salesCsv))
-                : sourceFiles("rentcast".equals(source) ? rentcastDir : zillowDir);
+                : sourceFiles(switch (source) {
+                    case "rentcast" -> rentcastDir;
+                    case "zillow" -> zillowDir;
+                    case "redfin" -> redfinDir;
+                    default -> throw new IllegalArgumentException("Unknown source: " + source);
+                });
             List<PropertyRecord> records;
             try {
                 records = switch (source) {
                     case "sales" -> ingestion.ingestSalesCsv(files.getFirst());
                     case "rentcast" -> ingestion.ingestRentcastJsonFiles(files);
                     case "zillow" -> ingestion.ingestZillowJsonFiles(files);
+                    case "redfin" -> ingestion.ingestRedfinJsonFiles(files);
                     default -> throw new IllegalArgumentException("Unknown source: " + source);
                 };
             } catch (IOException exception) {

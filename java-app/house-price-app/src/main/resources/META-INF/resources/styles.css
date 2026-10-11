@@ -135,6 +135,41 @@ button:hover { background: #1a3a6e; }
   position: relative; width: 100%; height: calc(100% - 62px); min-height: 220px;
 }
 .property-time-series-button { margin-top: 5px; }
+.price-assessment-button { margin-top: 5px; border-color: #46d17a; }
+.agent-meta { color: #aaa; font-size: 10px; margin-bottom: 10px; }
+.agent-assessment-text {
+  font-size: 13px; line-height: 1.55; color: #eee;
+  padding: 12px; border: 1px solid #273555; border-radius: 5px; background: #0d172c;
+}
+.agent-assessment-text h2, .agent-assessment-text h3, .agent-assessment-text h4 {
+  color: #e94560; margin: 14px 0 6px;
+}
+.agent-assessment-text h2:first-child,
+.agent-assessment-text h3:first-child,
+.agent-assessment-text h4:first-child { margin-top: 0; }
+.agent-assessment-text p { margin: 7px 0; }
+.agent-assessment-text ul, .agent-assessment-text ol { margin: 7px 0 7px 22px; }
+.agent-assessment-text table { width: 100%; margin: 10px 0; border-collapse: collapse; }
+.agent-assessment-text th, .agent-assessment-text td {
+  padding: 6px; border: 1px solid #273555; text-align: left; vertical-align: top;
+}
+.agent-assessment-text th { color: #4a9eff; background: #101d35; }
+.agent-assessment-text blockquote {
+  margin: 9px 0; padding-left: 10px; border-left: 3px solid #4a9eff; color: #bbb;
+}
+.agent-evidence { margin-top: 12px; color: #bbb; }
+.agent-evidence summary { cursor: pointer; color: #4a9eff; }
+.agent-evidence pre {
+  margin-top: 8px; padding: 10px; max-height: 340px; overflow: auto;
+  white-space: pre-wrap; color: #bbb; background: #0b1325; border: 1px solid #273555;
+}
+.agent-feedback { margin-top: 16px; padding-top: 12px; border-top: 1px solid #273555; }
+.agent-feedback h4 { color: #e94560; margin-bottom: 9px; }
+.agent-feedback label { margin: 8px 0; }
+.agent-feedback input, .agent-feedback textarea {
+  width: 100%; margin-top: 3px; padding: 6px; color: #eee; background: #0f3460;
+  border: 1px solid #444; border-radius: 4px; font: inherit;
+}
 .synthetic-coordinate-icon {
   background: #e94560; border: 2px solid white; border-radius: 50%;
   width: 14px; height: 14px; box-shadow: 0 1px 5px rgba(0,0,0,.65);

@@ -8,7 +8,11 @@ import numpy as np
 import pandas as pd
 import torch
 
-from pricemodel.gnn_data import MonthlyGraphData, build_h3_edge_index
+from pricemodel.gnn_data import (
+    MonthlyGraphData,
+    build_continuous_embedding_pooling,
+    build_h3_edge_index,
+)
 from pricemodel.gnn_network import H3GraphPriceModel
 from pricemodel.gnn_trainer import GNNBaselineTrainer
 from pricemodel.local_market_features import build_monthly_h3_market_snapshots
@@ -43,6 +47,33 @@ class MonthlyGnnSnapshotTests(unittest.TestCase):
         self.assertEqual(edge_index.shape, (2, 2))
         self.assertEqual({tuple(edge) for edge in edge_index.T.tolist()}, {(0, 1), (1, 0)})
 
+    def test_continuous_pooling_changes_smoothly_across_h3_boundary(self):
+        first = h3.latlng_to_cell(47.61, -122.33, 8)
+        second = next(iter(h3.grid_ring(first, 1)))
+        first_center = np.asarray(h3.cell_to_latlng(first))
+        second_center = np.asarray(h3.cell_to_latlng(second))
+        low, high = first_center.copy(), second_center.copy()
+        for _ in range(60):
+            midpoint = (low + high) / 2.0
+            if h3.latlng_to_cell(*midpoint, 8) == first:
+                low = midpoint
+            else:
+                high = midpoint
+        frame = pd.DataFrame({
+            "h3_08": [first, second],
+            "lat": [low[0], high[0]],
+            "lng": [low[1], high[1]],
+        })
+        indices, weights = build_continuous_embedding_pooling(
+            frame, [first, second], radius_km=1.5, h3_ring=3
+        )
+        dense = np.zeros((2, 2), dtype=np.float64)
+        for row in range(2):
+            dense[row, indices[row]] += weights[row]
+        self.assertNotEqual(frame.loc[0, "h3_08"], frame.loc[1, "h3_08"])
+        np.testing.assert_allclose(dense.sum(axis=1), 1.0, atol=1e-7)
+        np.testing.assert_allclose(dense[0], dense[1], atol=1e-5)
+
 
 class GraphNetworkTests(unittest.TestCase):
     def test_network_returns_one_log_price_per_sale(self):
@@ -64,6 +95,33 @@ class GraphNetworkTests(unittest.TestCase):
         )
         self.assertEqual(tuple(prediction.shape), (2, 1))
         self.assertTrue(torch.isfinite(prediction).all())
+
+    def test_network_pools_node_embeddings_before_price_head(self):
+        model = H3GraphPriceModel(
+            node_feature_dim=5,
+            property_dim=4,
+            time_dim=3,
+            market_dim=2,
+            graph_hidden_dim=8,
+            head_hidden_dim=16,
+        ).eval()
+        nodes = torch.randn(3, 5)
+        edges = torch.tensor([[0, 1, 2, 1], [1, 0, 1, 2]])
+        indexes = torch.tensor([[0, 1], [1, 2]])
+        weights = torch.tensor([[0.25, 0.75], [0.6, 0.4]])
+        property_features = torch.randn(2, 4)
+        time_features = torch.randn(2, 3)
+        market_features = torch.randn(2, 2)
+        actual = model(
+            nodes, edges, indexes, property_features, time_features, market_features,
+            sale_node_weights=weights,
+        )
+        encoded = model.encode_nodes(nodes, edges)
+        pooled = torch.sum(encoded[indexes] * weights.unsqueeze(-1), dim=1)
+        expected = model.price_head(torch.cat(
+            [pooled, property_features, time_features, market_features], dim=1
+        ))
+        torch.testing.assert_close(actual, expected)
 
     def test_trainer_uses_month_grouped_graph_batches(self):
         frame = pd.DataFrame(

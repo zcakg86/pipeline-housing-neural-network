@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-10T23:10:44.789712+00:00",
+  "run_id": "20260910_161020",
+  "model_family": "gnn",
+  "architecture_version": 2,
+  "architecture_variant": "layer_norm+residual",
+  "architecture": {
+    "graph_layer_norm": true,
+    "graph_residual": true
+  },
+  "training_config": {
+    "sales_csv": "data/sales_2020_25.csv",
+    "market_indicator_csv": "data/market_indicators/fred_indicators.csv",
+    "train_ratio": 0.7,
+    "random_seed": 42,
+    "graph_hidden_dim": 32,
+    "head_hidden_dim": 128,
+    "dropout_rate": 0.2,
+    "graph_layer_norm": true,
+    "graph_residual": true,
+    "epochs": 30,
+    "learning_rate": 0.0003,
+    "patience": 8,
+    "lr_plateau_factor": 0.5,
+    "lr_plateau_patience": 2,
+    "min_learning_rate": 1e-06
+  },
+  "random_seed": 42,
+  "dataset": {
+    "path": "data/sales_2020_25.csv",
+    "sha256": "29223c63c122e975725646cd1fa54bf9d1ef3bda74a26c6494cd840370a0ddd5"
+  },
+  "split": {
+    "strategy": "chronological",
+    "train_ratio": 0.7,
+    "train_indices_sha256": "5d07cd5fcc25f7edd2cafbd1035103dfa7ef6575690679943fa516f6817808a5",
+    "validation_indices_sha256": "d5adad992e5ddf5826f5c0705c16f5317dd81dbeec2ba16248a34019c343c30e"
+  },
+  "git": {
+    "commit": "e90690ada6e5be528ca3c1a2cb8940d46d354cf0",
+    "working_tree_dirty": true
+  },
+  "metrics": {
+    "whole_dataset_mape": 16.66421305727488,
+    "validation_mape": 16.541399890033905,
+    "validation_log_price_mse": 0.05596944719968323,
+    "validation_price_mse": 366707690631.991,
+    "validation_rmse": 605563.9442965466,
+    "validation_sample_count": 38014,
+    "validation_community_count": 277,
+    "community_min_support": 20,
+    "community_shrinkage_strength": 20.0,
+    "community_supported_count": 223,
+    "community_raw_mean_mape": 18.582646488280126,
+    "community_raw_p90_mape": 26.507814904536595,
+    "community_raw_worst_mape": 179.6387300355038,
+    "community_shrunk_mean_mape": 16.972945939397693,
+    "community_shrunk_p90_mape": 22.428459697935697,
+    "community_shrunk_worst_mape": 35.595796750881505,
+    "community_supported_mean_mape": 17.050138367405655,
+    "community_supported_p90_mape": 25.311562461503794,
+    "community_supported_worst_mape": 39.91068531183502
+  }
+}

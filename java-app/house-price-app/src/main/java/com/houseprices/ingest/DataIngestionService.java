@@ -20,7 +20,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 /**
- * Ingests historical sales CSV and canonical RentCast/Zillow JSON files.
+ * Ingests historical sales CSV and canonical RentCast/Zillow/Redfin JSON files.
  * Live JSON records are normalized first and inferred in model batches.
  */
 @ApplicationScoped
@@ -157,7 +157,8 @@ public class DataIngestionService {
                         saleDate, salePrice, 0.0, null,
                         predicted, pctError,
                         lightgbmPredicted, lightgbmPctError, 0.0, 0.0,
-                        predictionStdPrice, predictionCvPct, clsAttention
+                        predictionStdPrice, predictionCvPct, clsAttention,
+                        "", List.of()
                     ));
                 } catch (Exception e) {
                     // Skip malformed rows silently
@@ -220,7 +221,8 @@ public class DataIngestionService {
                 pending.add(new PendingProperty(
                     id, address, "rentcast", lat, lng, h3Index,
                     artifacts.lookupCommunity(h3Index), sqft, sqftLot, beds, baths,
-                    stringValue(p.get("propertyType")), saleDate, salePrice, 0.0, null
+                    stringValue(p.get("propertyType")), saleDate, salePrice, 0.0, null,
+                    "", List.of()
                 ));
             } catch (Exception e) {
                 LOG.debugf("Skipping malformed RentCast entry: %s", e.getMessage());
@@ -240,9 +242,23 @@ public class DataIngestionService {
     }
 
     /** Parse all saved Zillow responses, then score the de-duplicated source in one batch. */
-    @SuppressWarnings("unchecked")
     public List<PropertyRecord> ingestZillowJsonFiles(List<File> files) throws IOException {
-        LOG.infof("Ingesting %d Zillow JSON file(s) as one batch", files.size());
+        return ingestListingJsonFiles(files, "zillow");
+    }
+
+    public List<PropertyRecord> ingestRedfinJson(File file) throws IOException {
+        return ingestRedfinJsonFiles(List.of(file));
+    }
+
+    /** Parse all saved Redfin responses, retaining descriptions and at-a-glance facts. */
+    public List<PropertyRecord> ingestRedfinJsonFiles(List<File> files) throws IOException {
+        return ingestListingJsonFiles(files, "redfin");
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<PropertyRecord> ingestListingJsonFiles(List<File> files, String source)
+            throws IOException {
+        LOG.infof("Ingesting %d %s JSON file(s) as one batch", files.size(), source);
         long started = System.nanoTime();
         com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         List<PendingProperty> pending = new ArrayList<>();
@@ -254,21 +270,22 @@ public class DataIngestionService {
                     mapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
                 properties = (List<Map<String, Object>>) root.get("properties");
             } catch (IOException exception) {
-                LOG.warnf("Skipping unreadable Zillow JSON %s: %s", file.getName(), exception.getMessage());
+                LOG.warnf("Skipping unreadable %s JSON %s: %s",
+                    source, file.getName(), exception.getMessage());
                 continue;
             }
             if (properties == null) continue;
             LocalDate observationDate = jsonObservationDate(root, file);
             for (Map<String, Object> p : properties) try {
-                pending.add(zillowMapToPending(p, observationDate));
+                pending.add(listingMapToPending(p, observationDate, source));
             } catch (Exception e) {
-                LOG.debugf("Skipping malformed Zillow entry: %s", e.getMessage());
+                LOG.debugf("Skipping malformed %s entry: %s", source, e.getMessage());
             }
         }
         long parsedAt = System.nanoTime();
         List<PropertyRecord> records = predictChanged(pending);
-        LOG.infof("Ingested %d changed Zillow listings (%d parsed from %d file(s)) — parse %.1f ms, prediction pipeline %.1f ms, total %.1f ms",
-            records.size(), pending.size(), files.size(), (parsedAt - started) / 1_000_000.0,
+        LOG.infof("Ingested %d changed %s listings (%d parsed from %d file(s)) — parse %.1f ms, prediction pipeline %.1f ms, total %.1f ms",
+            records.size(), source, pending.size(), files.size(), (parsedAt - started) / 1_000_000.0,
             (System.nanoTime() - parsedAt) / 1_000_000.0, (System.nanoTime() - started) / 1_000_000.0);
         return records;
     }
@@ -277,7 +294,8 @@ public class DataIngestionService {
         String id, String address, String source,
         double lat, double lng, String h3Index, String community,
         double sqft, double sqftLot, int beds, double baths, String homeType,
-        LocalDate saleDate, double salePrice, double zestimate, String listingUrl
+        LocalDate saleDate, double salePrice, double zestimate, String listingUrl,
+        String description, List<String> atAGlanceFacts
     ) {}
 
     private List<PropertyRecord> predictChanged(List<PendingProperty> parsed) {
@@ -339,7 +357,8 @@ public class DataIngestionService {
                 value.beds(), value.baths(), value.homeType(), value.saleDate(),
                 value.salePrice(), value.zestimate(), value.listingUrl(), prediction.predictedPrice(),
                 neuralError, tree[index], treeError, gnnPredictions[index], gnnError, prediction.predictionStdPrice(),
-                prediction.predictionCvPct(), prediction.clsAttention()
+                prediction.predictionCvPct(), prediction.clsAttention(),
+                value.description(), value.atAGlanceFacts()
             ));
         }
         LOG.infof("Prediction record assembly: %,d %s record(s) — %.1f ms",
@@ -365,7 +384,8 @@ public class DataIngestionService {
                 record.baths(), record.homeType(), record.saleDate(), record.salePrice(), record.zestimate(),
                 record.listingUrl(), record.predictedPrice(), record.pctError(),
                 record.lightgbmPredictedPrice(), record.lightgbmPctError(), predictions[index], error,
-                record.predictionStdPrice(), record.predictionCvPct(), record.clsAttention()
+                record.predictionStdPrice(), record.predictionCvPct(), record.clsAttention(),
+                record.description(), record.atAGlanceFacts()
             ));
         }
         return result;
@@ -384,7 +404,9 @@ public class DataIngestionService {
             && Objects.equals(existing.saleDate(), value.saleDate())
             && Double.compare(existing.salePrice(), value.salePrice()) == 0
             && Double.compare(existing.zestimate(), value.zestimate()) == 0
-            && Objects.equals(existing.listingUrl(), value.listingUrl());
+            && Objects.equals(existing.listingUrl(), value.listingUrl())
+            && Objects.equals(existing.description(), value.description())
+            && Objects.equals(existing.atAGlanceFacts(), value.atAGlanceFacts());
     }
 
     private LocalDate jsonObservationDate(Map<String, Object> root, File file) {
@@ -402,14 +424,15 @@ public class DataIngestionService {
             .atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
-    private PendingProperty zillowMapToPending(
-            Map<String, Object> p, LocalDate observationDate) {
+    private PendingProperty listingMapToPending(
+            Map<String, Object> p, LocalDate observationDate, String source) {
         double lat = toDouble(p.get("latitude"));
         double lng = toDouble(p.get("longitude"));
         String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
         double sqft = toDoubleOrDefault(p.get("area"),
             toDoubleOrDefault(p.get("livingArea"), 1500));
-        double sqftLot = toDoubleOrDefault(p.get("lotAreaValue"), 5000);
+        String homeType = stringValue(p.get("homeType"));
+        double sqftLot = listingLotSqft(p, listingLotFallback(homeType, sqft));
         int beds = (int) toDoubleOrDefault(p.get("beds"),
             toDoubleOrDefault(p.get("bedrooms"), 3));
         double baths = toDoubleOrDefault(p.get("baths"),
@@ -417,22 +440,35 @@ public class DataIngestionService {
         double price = toDoubleOrDefault(p.get("price"), 0);
         double zestimate = toDoubleOrDefault(p.get("zestimate"), 0);
         String url = stringValue(p.getOrDefault("url", p.get("detailUrl")));
-        String address;
+        String address = stringValue(p.get("addressRaw"));
         Object addressValue = p.get("address");
         if (addressValue instanceof Map<?, ?> addressMap) {
-            address = stringValue(addressMap.get("street")) + ", "
-                + stringValue(addressMap.get("city")) + ", "
-                + stringValue(addressMap.get("state"));
-        } else {
+            if (address.isBlank()) {
+                address = stringValue(addressMap.get("street")) + ", "
+                    + stringValue(addressMap.get("city")) + ", "
+                    + stringValue(addressMap.get("state")) + " "
+                    + stringValue(addressMap.get("zipcode"));
+            }
+        } else if (address.isBlank()) {
             address = stringValue(addressValue);
         }
         String id = stringValue(p.getOrDefault("id", p.get("zpid")));
         if (id.isBlank()) id = address;
         return new PendingProperty(
-            id, address, "zillow", lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
-            sqft, sqftLot, beds, baths, stringValue(p.get("homeType")),
-            observationDate, price, zestimate, url
+            id, address, source, lat, lng, h3Index, artifacts.lookupCommunity(h3Index),
+            sqft, sqftLot, beds, baths, homeType,
+            observationDate, price, zestimate, url,
+            stringValue(p.get("description")), stringList(p.get("atAGlanceFacts"))
         );
+    }
+
+    private List<String> stringList(Object value) {
+        if (!(value instanceof List<?> values)) return List.of();
+        return values.stream()
+            .filter(Objects::nonNull)
+            .map(String::valueOf)
+            .filter(item -> !item.isBlank())
+            .toList();
     }
 
     private String stringValue(Object value) {
@@ -510,6 +546,16 @@ public class DataIngestionService {
 
     private double toDoubleOrDefault(Object o, double def) {
         try { return toDouble(o); } catch (Exception e) { return def; }
+    }
+
+    double listingLotFallback(String homeType, double sqft) {
+        return "house".equalsIgnoreCase(homeType == null ? "" : homeType.trim())
+            ? sqft * 1.5
+            : sqft;
+    }
+
+    double listingLotSqft(Map<String, Object> listing, double fallbackSqft) {
+        return toDoubleOrDefault(listing.get("lotAreaValue"), fallbackSqft);
     }
 
     /** Minimal CSV line parser (handles quoted fields) */
