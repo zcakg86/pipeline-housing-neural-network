@@ -1,0 +1,74 @@
+{
+  "requestMetadata" : {
+    "id" : "5fd1d9e4-c1a9-47f1-b078-74a69efaec98",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/5fd1d9e4-c1a9-47f1-b078-74a69efaec98.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/5fd1d9e4-c1a9-47f1-b078-74a69efaec98.json",
+    "url" : "https://redfin.com/zipcode/98121/filter/sort=lo-days,property-type=townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 2
+  },
+  "properties" : [ {
+    "id" : 179597128,
+    "mlsId" : "2586783",
+    "url" : "https://www.redfin.com/WA/Seattle/2510-6th-Ave-98121/unit-408/home/179597128",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Co-working spaces", "40th-floor clubroom", "Private balcony" ],
+    "yearBuilt" : 2021,
+    "area" : 1188,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 949000,
+    "addressRaw" : "2510 6th Ave #408, Seattle, WA 98121",
+    "address" : {
+      "street" : "2510 6th Ave #408",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6184194,
+    "longitude" : -122.3444346,
+    "description" : "Unobstructed views of the iconic Space Needle take center stage in this west-facing 2-bedroom, 2-full-bath residence at Spire, one of Seattle’s most distinctive condominium buildings. This thoughtfully designed Type A floor plan offers a desirable separation between bedrooms, a spacious primary suite with walk-in closet and private bath, plus a second full bath for guests. The open kitchen features a generous island and Bosch appliances, while the private balcony provides a front-row view of one of Seattle’s most recognizable landmarks. The home includes one dedicated parking space and one storage unit—valuable conveniences in the heart of downtown. Spire’s impressiv",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/783/genIslnoResize.2586783_38_0.jpg" ]
+  }, {
+    "id" : 21616605,
+    "mlsId" : "2577654",
+    "url" : "https://www.redfin.com/WA/Seattle/2911-2nd-Ave-98121/unit-324/home/21616605",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Custom cabinetry", "Rain showerhead", "9 ft ceilings" ],
+    "yearBuilt" : 2009,
+    "area" : 699,
+    "beds" : 1,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 285000,
+    "addressRaw" : "2911 2nd Ave #324, Seattle, WA 98121",
+    "address" : {
+      "street" : "2911 2nd Ave #324",
+      "city" : "Seattle",
+      "state" : "WA",
+      "zipcode" : "98121"
+    },
+    "latitude" : 47.6176125,
+    "longitude" : -122.3523057,
+    "description" : "Large open 1 bedroom with eastern exposure and peak a boo Space Needle view. Home features 9 ft ceilings. Hardwood floors, custom cabinetry, Stainless appliance, deep soaking tub with rain showerhead. Beautiful tile surround and amazing closed space for all of your storage need. Bridling features 24/7 concierge, owner lounge with private supper club and Chef's kitchen. 2 guest suites with full kitchens. Business center, rooftop terrace w/ BBQ, fitness center, dog run  &  dog wash area.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/654/genIslnoResize.2577654_11_1.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1
+  }
+}

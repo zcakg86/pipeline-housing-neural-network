@@ -8,6 +8,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DataIngestionServiceTest {
 
@@ -42,5 +43,30 @@ class DataIngestionServiceTest {
         assertEquals(2_000.0, service.listingLotFallback("Condo", 2_000.0));
         assertEquals(2_000.0, service.listingLotFallback("Townhouse", 2_000.0));
         assertEquals(2_000.0, service.listingLotFallback("", 2_000.0));
+    }
+
+    @Test
+    void parsesDisplayedRedfinLotSizesIntoSquareFeet() {
+        assertEquals(6_250.0, DataIngestionService.parseLotSizeSqft("6,250 Sq. Ft."));
+        assertEquals(10_890.0, DataIngestionService.parseLotSizeSqft("0.25 Acres"));
+        assertEquals(7_405.0, DataIngestionService.parseLotSizeSqft("7,405 sqft"));
+        assertTrue(Double.isNaN(DataIngestionService.parseLotSizeSqft("—")));
+    }
+
+    @Test
+    void prefersRetrievedRedfinLotSizeButKeepsSuppliedApiValue() {
+        DataIngestionService service = new DataIngestionService();
+        Map<String, Double> retrieved = Map.of("https://www.redfin.com/home/1", 6_250.0);
+
+        assertEquals(6_250.0, service.listingLotSqft(
+            Map.of(), "redfin", "https://www.redfin.com/home/1", 2_000.0, retrieved
+        ));
+        assertEquals(9_600.0, service.listingLotSqft(
+            Map.of("lotAreaValue", 9_600), "redfin",
+            "https://www.redfin.com/home/1", 2_000.0, retrieved
+        ));
+        assertEquals(2_000.0, service.listingLotSqft(
+            Map.of(), "zillow", "https://www.redfin.com/home/1", 2_000.0, retrieved
+        ));
     }
 }

@@ -187,7 +187,7 @@ async function loadCommunityLayer() {
         `<b>Community ${c}</b><br>` +
         `Sales: ${salesCount}<br>` +
         `Mean Price: $${meanPrice.toLocaleString()}<br>` +
-        `<b>Neural:</b> $${meanNeuralPred.toLocaleString()} (${neuralError}%)<br>` +
+        `<b>Transformer:</b> $${meanNeuralPred.toLocaleString()} (${neuralError}%)<br>` +
         `<b>LightGBM:</b> $${meanLightgbmPred.toLocaleString()} (${lightgbmError}%)<br>` +
         `Avg Sqft: ${meanSqft.toLocaleString()}<br>` +
         `Avg Lot Sqft: ${meanSqftLot.toLocaleString()}<br>` +
@@ -351,7 +351,7 @@ function buildChart(data) {
             display: true,
             text: `${definition.title}` +
               (['sale_price', 'count'].includes(definition.variable)
-                ? '' : ` — ${definition.model === 'lightgbm' ? 'LightGBM' : 'Neural Network'}`),
+                ? '' : ` — ${definition.model === 'lightgbm' ? 'LightGBM' : 'Transformer'}`),
             color: '#aaa'
           }
         }

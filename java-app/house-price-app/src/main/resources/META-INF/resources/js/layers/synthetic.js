@@ -146,7 +146,7 @@ async function loadSynthetic() {
     }
 
     const requestedVariable = document.getElementById('variable').value;
-    const variable = ['pct_error', 'sale_price', 'num_sales'].includes(requestedVariable)
+    const variable = ['pct_error', 'prediction_shift', 'bias_shift', 'sale_price', 'num_sales'].includes(requestedVariable)
       ? 'predicted_price' : requestedVariable;
     const model = displayedModel();
     const values = geojson.features.map(feature =>
@@ -264,7 +264,7 @@ async function loadSynthetic() {
       `Sale date: ${p.saleDate}<br>` +
       `Sqft: ${p.sqft.toLocaleString()} | Lot Sqft: ${p.sqftLot.toLocaleString()} | Beds: ${p.beds}<br>` +
       waterFeatureRows(p) + `<br>` +
-      `<b>Neural: ${money(p.neuralPredictedPrice)}</b><br>` +
+      `<b>Transformer: ${money(p.neuralPredictedPrice)}</b><br>` +
       `&nbsp;90% CI: ${money(p.neuralLower90)} – ${money(p.neuralUpper90)}<br>` +
       `&nbsp;95% CI: ${money(p.neuralLower95)} – ${money(p.neuralUpper95)}<br><br>` +
       `<b>Spatial GNN: ${money(p.gnnPredictedPrice)}</b><br>` +
@@ -274,6 +274,17 @@ async function loadSynthetic() {
       `&nbsp;90% conformal CI: ${money(p.lightgbmLower90)} – ${money(p.lightgbmUpper90)}<br>` +
       `&nbsp;95% conformal CI: ${money(p.lightgbmLower95)} – ${money(p.lightgbmUpper95)}<br><br>` +
       `<span class="shap-value">Click the cell for full model feature effects.</span></div>`;
+
+    const coordinateTooltipHtml = (p, heading) =>
+      `<div class="synthetic-tooltip"><b>${heading}</b><br>` +
+      `${Number(p.lat).toFixed(5)}, ${Number(p.lng).toFixed(5)}<br><br>` +
+      `<b>SpatialGNN: ${money(p.gnnPredictedPrice)}</b><br>` +
+      `<b>Transformer: ${money(p.neuralPredictedPrice)}</b><br>` +
+      `<b>LightGBM: ${money(p.lightgbmPredictedPrice)}</b><br><br>` +
+      `<span class="shap-value">Drag to recalculate · double-click to reset</span></div>`;
+
+    const selectedModelLabel = model === 'gnn'
+      ? 'SpatialGNN' : model === 'lightgbm' ? 'LightGBM' : 'Transformer';
 
     const recalculateMovedPoint = async (p, polygonLayer, latlng, marker) => {
       const progressKey = `synthetic-marker-${p.h3Index}`;
@@ -294,10 +305,10 @@ async function loadSynthetic() {
         Object.assign(p, await response.json());
         polygonLayer.setTooltipContent(tooltipHtml(p));
         polygonLayer.setStyle({ fillColor: colorFn(syntheticVariableValue(p, variable, model)) });
-        marker.bindTooltip(
-          `Adjusted coordinate<br>${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}<br>` +
-          `Drag to recalculate · double-click to reset`, { direction: 'top' }
-        ).openTooltip();
+        marker.setTooltipContent(coordinateTooltipHtml(p, 'Adjusted prediction')).openTooltip();
+        status.textContent = `${selectedModelLabel} at adjusted coordinate: ` +
+          `${money(syntheticVariableValue(p, 'predicted_price', model))} · ` +
+          `${Number(p.lat).toFixed(5)}, ${Number(p.lng).toFixed(5)}`;
         completeMapEvent(progressKey, 'Adjusted synthetic prediction ready');
       } catch (error) {
         completeMapEvent(progressKey);
@@ -324,9 +335,7 @@ async function loadSynthetic() {
         title: 'Drag to adjust synthetic property coordinates'
       }).addTo(syntheticLayer);
       syntheticCoordinateMarker.bindTooltip(
-        `Cell center<br>${Number(p.lat).toFixed(5)}, ${Number(p.lng).toFixed(5)}<br>` +
-        `Drag to recalculate · double-click to reset`,
-        { direction: 'top' }
+        coordinateTooltipHtml(p, 'Cell-center prediction'), { direction: 'top' }
       ).openTooltip();
       syntheticCoordinateMarker.on('dragend', async event => {
         try {
@@ -376,7 +385,7 @@ async function loadSynthetic() {
           const title = document.getElementById('featurePopupTitle');
           const body = document.getElementById('featurePopupBody');
           title.textContent = `All model features — ${p.h3Index}`;
-          body.innerHTML = '<span class="shap-value">Calculating TreeSHAP, neural feature Shapley, and 1,024 exact Spatial GNN feature coalitions…</span>';
+          body.innerHTML = '<span class="shap-value">Calculating TreeSHAP, Transformer feature Shapley, and 1,024 exact SpatialGNN feature coalitions…</span>';
           popup.style.visibility = 'visible';
           const progressKey = `synthetic-explanation-${p.h3Index}`;
           beginMapEvent(progressKey, 'Calculating feature contributions…');

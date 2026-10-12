@@ -37,7 +37,7 @@ document.getElementById('showSynthetic').addEventListener('change', () => {
   if (dateControl) dateControl.style.display = visible ? 'block' : 'none';
   if (visible) {
     const variable = document.getElementById('variable');
-    if (['pct_error', 'sale_price', 'num_sales'].includes(variable.value)) {
+    if (['pct_error', 'prediction_shift', 'bias_shift', 'sale_price', 'num_sales'].includes(variable.value)) {
       variable.value = 'predicted_price';
       loadSales(); loadZillow(); loadRedfin(); loadRentcast();
     }
@@ -83,11 +83,12 @@ document.getElementById('showCommunity').addEventListener('change', event => {
 });
 document.getElementById('variable').addEventListener('change', () => {
   if (document.getElementById('showSynthetic').checked &&
-      ['pct_error', 'sale_price', 'num_sales'].includes(
+      ['pct_error', 'prediction_shift', 'bias_shift', 'sale_price', 'num_sales'].includes(
         document.getElementById('variable').value
       )) {
     document.getElementById('variable').value = 'predicted_price';
   }
+  updateVariableInterpretation();
   loadSales(); loadZillow(); loadRedfin(); loadRentcast(); loadSynthetic();
 });
 document.getElementById('DisplayedModel').addEventListener('change', () => {

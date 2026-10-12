@@ -118,12 +118,12 @@ async function loadStats() {
   if (s.zillow) html +=
     `<b>Zillow Listings</b><br>Total: ${s.zillow.total}<br>` +
     `Avg List: $${Math.round(s.zillow.avgListPrice).toLocaleString()}<br>` +
-    `Avg Neural: $${Math.round(s.zillow.avgNeuralPredicted).toLocaleString()}<br>` +
+    `Avg Transformer: $${Math.round(s.zillow.avgNeuralPredicted).toLocaleString()}<br>` +
     `Avg LightGBM: $${Math.round(s.zillow.avgLightgbmPredicted).toLocaleString()}<br><br>`;
   if (s.redfin) html +=
     `<b>Redfin Listings</b><br>Total: ${s.redfin.total}<br>` +
     `Avg List: $${Math.round(s.redfin.avgListPrice).toLocaleString()}<br>` +
-    `Avg Neural: $${Math.round(s.redfin.avgNeuralPredicted).toLocaleString()}<br>` +
+    `Avg Transformer: $${Math.round(s.redfin.avgNeuralPredicted).toLocaleString()}<br>` +
     `Avg LightGBM: $${Math.round(s.redfin.avgLightgbmPredicted).toLocaleString()}<br><br>`;
   if (s.sales) html +=
     `<b>Historical Sales</b><br>Total: ${s.sales.total}<br>` +

@@ -10,7 +10,7 @@ async function openPropertyTimeSeries(source, id, title) {
   const heading = document.getElementById('timeSeriesPopupTitle');
   const note = document.getElementById('timeSeriesNote');
   heading.textContent = `Property value history — ${title || id}`;
-  note.textContent = 'Calculating monthly Neural, LightGBM, and Spatial GNN predictions…';
+  note.textContent = 'Calculating monthly Transformer, LightGBM, and SpatialGNN predictions…';
   reportMapInteraction('property value history requested', title || id);
   const progressKey = `time-series-${source}-${id}`;
   beginMapEvent(progressKey, 'Calculating monthly property value history…');
@@ -63,7 +63,7 @@ function renderPropertyTimeSeries(payload) {
       labels,
       datasets: [
         {
-          label: 'Neural Network',
+          label: 'Transformer',
           data: points.map(point => point.neuralPredictedPrice),
           borderColor: '#4a9eff',
           backgroundColor: '#4a9eff33',
@@ -98,7 +98,7 @@ function renderPropertyTimeSeries(payload) {
           spanGaps: true
         },
         {
-          label: 'Stored Neural prediction',
+          label: 'Stored Transformer prediction',
           data: storedNeural,
           borderColor: '#b9dcff',
           backgroundColor: '#b9dcff',

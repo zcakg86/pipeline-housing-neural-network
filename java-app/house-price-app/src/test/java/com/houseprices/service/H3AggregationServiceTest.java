@@ -48,13 +48,48 @@ class H3AggregationServiceTest {
         ));
     }
 
+    @Test
+    void comparesSelectedModelAccuracyAndBiasWithLightgbm() throws Exception {
+        String h3 = H3Core.newInstance().latLngToCellAddress(47.6, -122.3, 8);
+        PropertyStore store = new PropertyStore();
+        store.upsert(List.of(recordWithPredictions(
+            "comparison", h3, 100_000, 110_000, 120_000, 95_000
+        )));
+        H3AggregationService service = new H3AggregationService();
+        service.store = store;
+        PropertyRequestFilter filter = PropertyRequestFilter.parse(
+            "all", "", "", -500, 500, null, null, null, null
+        );
+        List<H3AggregationService.HexStats> stats = service.aggregateSales(
+            "prediction_shift", "gnn", filter
+        );
+
+        Map<?, ?> predictionFeature = (Map<?, ?>) ((List<?>) service.toGeoJson(
+            stats, "prediction_shift", "gnn"
+        ).get("features")).getFirst();
+        Map<?, ?> predictionProperties = (Map<?, ?>) predictionFeature.get("properties");
+        assertEquals(15.0, ((Number) predictionProperties.get("displayValue")).doubleValue(), 0.01);
+
+        Map<?, ?> biasFeature = (Map<?, ?>) ((List<?>) service.toGeoJson(
+            stats, "bias_shift", "gnn"
+        ).get("features")).getFirst();
+        Map<?, ?> biasProperties = (Map<?, ?>) biasFeature.get("properties");
+        assertEquals(-25.0, ((Number) biasProperties.get("displayValue")).doubleValue(), 0.01);
+    }
+
     private PropertyRecord record(String id, String h3, double price, double prediction) {
+        return recordWithPredictions(id, h3, price, prediction, prediction, prediction);
+    }
+
+    private PropertyRecord recordWithPredictions(
+            String id, String h3, double price,
+            double neuralPrediction, double treePrediction, double gnnPrediction) {
         return new PropertyRecord(
             id, "address", "sales", 47.6, -122.3, h3, "1",
             2_000, 4_000, 3, 2, "Single Family", LocalDate.of(2026, 7, 1),
-            price, 0, null, prediction, 100 * (prediction - price) / price,
-            prediction, 100 * (prediction - price) / price,
-            prediction, 100 * (prediction - price) / price, 20_000, 15,
+            price, 0, null, neuralPrediction, 100 * (neuralPrediction - price) / price,
+            treePrediction, 100 * (treePrediction - price) / price,
+            gnnPrediction, 100 * (gnnPrediction - price) / price, 20_000, 15,
             new float[]{.1f, .3f, .3f, .3f}, "", List.of()
         );
     }

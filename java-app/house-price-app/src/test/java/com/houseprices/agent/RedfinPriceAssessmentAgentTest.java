@@ -23,7 +23,9 @@ class RedfinPriceAssessmentAgentTest {
         assertNotNull(assess.getAnnotation(UserMessage.class));
         String prompt = String.join("\n", systemMessage.value());
         assertFalse(prompt.contains("@UserMessage"));
-        assertTrue(prompt.contains("Return only a concise HTML fragment"));
+        assertTrue(prompt.contains("Return only a concise semantic HTML fragment"));
+        assertTrue(prompt.contains("href is exactly the supplied listingUrl"));
+        assertFalse(prompt.contains("without html,\n            head, body, style, script, links"));
         assertTrue(prompt.contains("End the response with an <h3>Assessment rationale</h3>"));
         assertTrue(prompt.indexOf("Assessment rationale") > prompt.indexOf("Confidence and limitations"));
     }
@@ -35,6 +37,10 @@ class RedfinPriceAssessmentAgentTest {
             assertNotNull(input);
             String javascript = new String(input.readAllBytes(), StandardCharsets.UTF_8);
             assertTrue(javascript.contains("sanitizeAgentHtml(payload.assessment)"));
+            assertTrue(javascript.contains("safeAgentListingUrl(element.getAttribute('href'))"));
+            assertTrue(javascript.contains("url.protocol !== 'https:'"));
+            assertTrue(javascript.contains("hostname.endsWith('.redfin.com')"));
+            assertTrue(javascript.contains("element.setAttribute('rel', 'noopener noreferrer')"));
             assertTrue(javascript.contains("element.removeAttribute(attribute.name)"));
             assertFalse(javascript.contains("escapeHtml(payload.assessment)"));
         }

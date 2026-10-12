@@ -1,0 +1,1180 @@
+{
+  "requestMetadata" : {
+    "id" : "8732c5c8-e6e1-4beb-a368-68d007e2ea59",
+    "status" : "ok",
+    "html" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/8732c5c8-e6e1-4beb-a368-68d007e2ea59.html",
+    "json" : "https://files.hasdata.com/4ClDCt1qaUM9XZJaUjoKLbLxpeC3/8732c5c8-e6e1-4beb-a368-68d007e2ea59.json",
+    "url" : "https://redfin.com/zipcode/98052/filter/sort=lo-days,property-type=townhouse+house"
+  },
+  "searchInformation" : {
+    "totalResults" : 145
+  },
+  "properties" : [ {
+    "id" : 516090,
+    "mlsId" : "2593205",
+    "url" : "https://www.redfin.com/WA/Redmond/14223-NE-66th-St-98052/home/516090",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Updated dishwasher", "Updated range", "Newer roof" ],
+    "yearBuilt" : 1977,
+    "area" : 2150,
+    "beds" : 3,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1639000,
+    "addressRaw" : "14223 NE 66th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "14223 NE 66th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6646702,
+    "longitude" : -122.1493707,
+    "description" : "This home offers abundant natural light, a comfortable layout, and major recent upgrades including a newer roof, energy-efficient heat pump with A/C, updated water heater, dishwasher, range and microwave, fresh interior paint, new carpeting, and more. The main level features 3 bedrooms, a living room, and a dining area. The fully finished daylight lower level includes a family room and guest room. With convenient access to highly rated schools in the Lake Washington School District, close to Microsoft, SR 520, I-405, and the downtowns of Redmond, Kirkland, and Bellevue, and just a 5-minute walk to Grass Lawn Park, this home delivers comfort, convenience, and one of the best locations on the",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/205/genIslnoResize.2593205_23_0.jpg" ]
+  }, {
+    "id" : 515224,
+    "mlsId" : "2593399",
+    "url" : "https://www.redfin.com/WA/Redmond/13771-NE-76th-Pl-98052/home/515224",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spacious yard", "Marymoor park", "Covered trex deck" ],
+    "yearBuilt" : 1963,
+    "area" : 1560,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1200000,
+    "addressRaw" : "13771 NE 76th Pl, Redmond, WA 98052",
+    "address" : {
+      "street" : "13771 NE 76th Pl",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6725521,
+    "longitude" : -122.1561604,
+    "description" : "Amazing location! Rose Hill Rambler with spacious yard in a great location just minutes to elementary, middle, and high school in the coveted Lake Washington School District. Close to Microsoft campus, 3 major parks, and great shopping and easy access to 520 and 405. The living room separates a permitted primary bedroom on one side and 3 bedrooms on the other. 2nd living area/family room with its own 3/4 bath could be a guest suite, entertainment hub, or MIL suite for when loved ones stay with you. The family room slider leads to a covered trex deck, perfect for BBQs and entertaining. Enjoy playing, gardening, or relaxing in the level, flat, fenced backyard. Backyard storage shed and additi",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/399/genIslnoResize.2593399_8_0.jpg" ]
+  }, {
+    "id" : 514378,
+    "mlsId" : "2593183",
+    "url" : "https://www.redfin.com/WA/Redmond/7003-134th-Ave-NE-98052/home/514378",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Landscaped backyard", "Hot tub", "Flex space" ],
+    "yearBuilt" : 1966,
+    "area" : 2160,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1200000,
+    "addressRaw" : "7003 134th Ave NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "7003 134th Ave NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6682303,
+    "longitude" : -122.1617256,
+    "description" : "Welcome home to Rose Hill, one of Redmond’s most established, tree-lined neighborhoods. You’re minutes from downtown Redmond, the Kirkland waterfront and the Eastside’s major tech campuses, with quick access to SR-520 and I-405. This is the opportunity to get into a sought-after location and make the home your own, updating and personalizing it to your taste. The spacious lower-level family room has room to spread out for movie nights, game days, a home gym or flex space. The primary bedroom has its own en-suite bath. Step outside to a wonderful landscaped backyard for summer barbecues, gardening and play, then unwind in the hot tub, which stays with the home along with al",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_8_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_9_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_10_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_11_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_12_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_13_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_14_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_15_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_18_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_19_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_20_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_21_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_22_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_23_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_24_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_25_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_26_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_27_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/183/genIslnoResize.2593183_28_3.jpg" ]
+  }, {
+    "id" : 325266,
+    "mlsId" : "2592292",
+    "url" : "https://www.redfin.com/WA/Redmond/11508-165th-Ct-NE-98052/home/325266",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Grand entrance", "Wooded lot", "Updated kitchen" ],
+    "yearBuilt" : 1980,
+    "area" : 3060,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1690000,
+    "addressRaw" : "11508 165th Ct NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "11508 165th Ct NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7030461,
+    "longitude" : -122.120513,
+    "description" : "Tucked at the end of a quiet cul-de-sac in Equestrian Tracts, one of Education Hill’s most sought-after neighborhoods, this home sits on a large wooded lot with plenty of privacy. Mature trees frame the property and give it a true Northwest feel. Inside, an impressive grand entrance with vaulted ceilings opens to a generous volume of space, and an abundance of windows fills the home with natural light. The home has been recently refreshed with new paint and carpet throughout, which complement its natural light and bright feel. The main level offers an updated kitchen with stainless steel appliances, a formal dining room, and spacious living areas. Upstairs, an expansive primary suite ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/292/genIslnoResize.2592292_36_0.jpg" ]
+  }, {
+    "id" : 444505,
+    "mlsId" : "2591757",
+    "url" : "https://www.redfin.com/WA/Redmond/9111-183rd-Ct-NE-98052/home/444505",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quiet cul-de-sac", "Double garage", "Covered patio" ],
+    "yearBuilt" : 1986,
+    "area" : 870,
+    "beds" : 2,
+    "baths" : 1,
+    "currency" : "USD",
+    "price" : 738000,
+    "addressRaw" : "9111 183rd Ct NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "9111 183rd Ct NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6828534,
+    "longitude" : -122.0957055,
+    "description" : "Rare opportunity to own a detached 2-bedroom, 1-bath single-family home in Redmond—at a price point where most buyers find only townhomes! This charming one-level home sits on a quiet cul-de-sac in an established neighborhood offering comfort, privacy, and convenience. Vaulted ceilings, abundant natural light, and a functional floor plan make every square foot count; fresh new carpet adds a move-in-ready feel throughout, with radiant heated floors in the kitchen and bath. The private, low-maintenance backyard is perfect for relaxing or gardening, while the covered patio extends your living space outdoors year-round—ideal for Pacific Northwest living. Double garage with two 240V ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/757/genIslnoResize.2591757_39_0.jpg" ]
+  }, {
+    "id" : 503533,
+    "mlsId" : "2589434",
+    "url" : "https://www.redfin.com/WA/Redmond/5928-160th-Ct-NE-98052/home/503533",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Tennis court", "Clubhouse access", "Wraparound deck" ],
+    "yearBuilt" : 1979,
+    "area" : 1840,
+    "beds" : 4,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1275000,
+    "addressRaw" : "5928 160th Ct NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "5928 160th Ct NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6611103,
+    "longitude" : -122.1272486,
+    "description" : "Welcome to an extraordinary opportunity in The Meadows! Tucked away on a quiet cul-de-sac, this exceptional freestanding home offers the privacy, beauty and lifestyle you’ve been dreaming of. An astounding wraparound deck (new as of 2017) invites you to relax, entertain and soak in the peaceful wooded setting—where an occasional deer sighting adds a touch of magic. Step inside and prepare to be impressed by the breathtaking vaulted ceiling and abundance of natural light, creating an open, airy atmosphere that feels both elegant and inviting. The spacious primary suite is your private retreat, complete with a walk-in closet, ensuite bath and sliders opening directly onto the spec",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2589434_33_0.jpg" ]
+  }, {
+    "id" : 450215,
+    "mlsId" : "2591193",
+    "url" : "https://www.redfin.com/WA/Redmond/12385-166th-Ct-NE-98052/home/450215",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Park-like grounds", "Home gym", "1.05 acre lot" ],
+    "yearBuilt" : 1990,
+    "area" : 2390,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1495000,
+    "addressRaw" : "12385 166th Ct NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "12385 166th Ct NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7108765,
+    "longitude" : -122.1202297,
+    "description" : "Storybook Redmond rambler nestled on 1+ acre of unparalleled privacy in an incredible location. Situated at the end of a quiet lane, this captivating farmhouse style property is expertly designed to embrace the outdoors  &  evoke a strong sense of harmony with nature. Offering the best of single level living, the home’s effortless layout provides a spacious interior w/ sundrenched open concept living spaces, dedicated formal living  &  dining areas, epicurean chef’s kitchen  &  a huge entertainment deck overlooking the park-like grounds. Versatile floorplan offers 3+BRs including a sumptuous primary suite, option for 2 executive offices, den/playroom or possible 4th ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/193/genIslnoResize.2591193_39_0.jpg" ]
+  }, {
+    "id" : 512096,
+    "mlsId" : "2592606",
+    "url" : "https://www.redfin.com/WA/Redmond/13709-NE-93rd-St-98052/home/512096",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quartz countertops", "Chef’s kitchen", "Fireplace" ],
+    "yearBuilt" : 1994,
+    "area" : 2290,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1535000,
+    "addressRaw" : "13709 NE 93rd St, Redmond, WA 98052",
+    "address" : {
+      "street" : "13709 NE 93rd St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.684162,
+    "longitude" : -122.157516,
+    "description" : "Stunning Craftsman in the heart of Rose Hill, offering the perfect blend of timeless charm, thoughtful updates, and effortless indoor-outdoor living. The inviting main level features a spacious living room with a fireplace to cozy up to on crisp winter evenings, a dedicated dining room made for gathering and memorable meals, and a spacious family room. The chef’s kitchen features quartz countertops and stainless steel appliances, while brand-new carpet and fresh paint throughout the entire home bring a crisp, move-in-ready feel. Upstairs, retreat to a spacious primary suite complete with a luxurious 5-piece ensuite bath and generous walk-in closet. A massive bonus room offers endless ",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/606/genIslnoResize.2592606_39_0.jpg" ]
+  }, {
+    "id" : 505077,
+    "mlsId" : "2592209",
+    "url" : "https://www.redfin.com/WA/Redmond/2322-179th-Ct-NE-98052/home/505077",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New appliance suite", "New quartz counters", "Breakfast bar" ],
+    "yearBuilt" : 1997,
+    "area" : 2710,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1640000,
+    "addressRaw" : "2322 179th Ct NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "2322 179th Ct NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6309117,
+    "longitude" : -122.10066,
+    "description" : "Set on a private, fully fenced 0.29-acre lot in the sought-after Viewpoint neighborhood, this exceptional 4 bedroom, 2.5 bath home has been thoughtfully updated from top to bottom. A crisp charcoal exterior, classic brick accents, a brick-arched entry, and an attached 2-car garage create an impressive arrival. Inside, a dramatic two-story foyer and refinished hardwood floors set the tone. The kitchen showcases white painted cabinetry, new quartz counters, a new appliance suite, a breakfast bar and a sunny bay-windowed nook opening to the new deck. The adjoining family room centers on a cozy fireplace framed by arched built-ins, while the vaulted formal living room flows to the formal dining",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/209/genIslnoResize.2592209_37_0.jpg" ]
+  }, {
+    "id" : 206154633,
+    "mlsId" : "2591527",
+    "url" : "https://www.redfin.com/WA/Redmond/9234-159th-Pl-NE-98052/unit-102/home/206154633",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Massive island", "Primary bath", "Walnut hardwoods" ],
+    "yearBuilt" : 1995,
+    "area" : 1518,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1180000,
+    "addressRaw" : "9234 159th Pl NE #102, Redmond, WA 98052",
+    "address" : {
+      "street" : "9234 159th Pl NE #102",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6843567,
+    "longitude" : -122.1279706,
+    "description" : "This towhhome redefines luxury at this pricepoint. More than $350,000 in premium upgrades completed in 2024. Gorgeous 3 bedroom, 2.5 bath RiverTrail corner unit, in ultra-convenient downtown Redmond location on the Sammamish River, across from Bella Botega. Excellent privacy with a rare fully fenced back yard, including a spacious exclusive-use patio gathering space. Too many top-of-the-line features to enumerate; but included are: Wide plank Walnut hardwoods throughout; Cafe\" restaurant-quality appliance suite in a smartly designed kitchen; massive island and countertop surfaces dressed in white/grey slab with waterfall quartz; three \"ring\" chandeliers over island; counter-t",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/527/genIslnoResize.2591527_28_1.jpg" ]
+  }, {
+    "id" : 505316,
+    "mlsId" : "2585758",
+    "url" : "https://www.redfin.com/WA/Redmond/2925-W-Lake-Sammamish-Pkwy-NE-98052/home/505316",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New carpet", "New exterior paint", "New interior paint" ],
+    "yearBuilt" : 1988,
+    "area" : 2690,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1595000,
+    "addressRaw" : "2925 W Lake Sammamish Pkwy NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "2925 W Lake Sammamish Pkwy NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6359885,
+    "longitude" : -122.0947024,
+    "description" : "Just five minutes from Microsoft's East Campus, this 4-bedroom, 2.75-bath tri-level sits off a quiet private road near Idylwood Park and has been updated inside and out. New roof, new exterior and interior paint, and new carpet. Vaulted ceilings and skylights bring in natural light. The kitchen has brand-new cabinets, counters, and appliances, including a gas range and high-power exhaust fan that vents to the outside. Two bathrooms have been updated. Three bedrooms and two bathrooms are on the main floor, with the fourth bedroom and third bathroom on the lower floor. A bonus room adds space for an office, media room, or guests. Out back, a new hardscape patio gives you a level, finished spa",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_5_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_9_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_10_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_11_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_12_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_13_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_14_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_34_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_35_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/758/genIslnoResize.2585758_38_1.jpg" ]
+  }, {
+    "id" : 451643,
+    "mlsId" : "2564650",
+    "url" : "https://www.redfin.com/WA/Redmond/17020-NE-129th-Ct-98052/home/451643",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Landscaped acre", "Hidden room", "Expansive backyard" ],
+    "yearBuilt" : 1989,
+    "area" : 4620,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 2100000,
+    "addressRaw" : "17020 NE 129th Cir, Redmond, WA 98052",
+    "address" : {
+      "street" : "17020 NE 129th Cir",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7151558,
+    "longitude" : -122.1112471,
+    "description" : "Set on a beautifully landscaped shy acre in sought-after English Hill, this home offers a rare combination of privacy, space, and exceptional indoor-outdoor living. Mature trees and established landscaping create a peaceful setting, while the expansive backyard feels like a private retreat with a gazebo, winding paths, generous deck, and lighted pickleball/basketball sport court. Inside, abundant windows fill the home with natural light and frame views of the surrounding greenery. The spacious kitchen features Sub-Zero refrigeration, double ovens, extensive cabinetry, and generous workspace for cooking and entertaining. Multiple living and dining areas provide flexibility for everyday livin",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/650/genIslnoResize.2564650_39_0.jpg" ]
+  }, {
+    "id" : 326169,
+    "mlsId" : "2587799",
+    "url" : "https://www.redfin.com/WA/Redmond/2604-W-Lake-Sammamish-Pkwy-NE-98052/home/326169",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "In-ground lighting", "Ev charger", "Rebuilt great room" ],
+    "yearBuilt" : 1987,
+    "area" : 2350,
+    "beds" : 3,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1950000,
+    "addressRaw" : "2604 W Lake Sammamish Pkwy NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "2604 W Lake Sammamish Pkwy NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6334762,
+    "longitude" : -122.0893124,
+    "description" : "The view is the whole story here. Lake Sammamish, right out front, changing all day long. Seaplanes taking off. Rowing crews sliding past. Eagles and osprey dropping into the towering firs and cedars. Morning light comes in glassy and calm, and by evening the sky goes gold over the water. You do not get tired of it. Beyond the view, the home has been thoughtfully transformed. Architect Matthew Coates redesigned this home top to bottom, with more than $570,000 in capital improvements. Custom windows and doors frame the lake. A rebuilt great room is made for gathering. A designer marble hall bath. Decks, patios, and terraced grounds for long dinners above the water. An EV charger and 50-amp c",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/799/genIslnoResize.2587799_38_0.jpg" ]
+  }, {
+    "id" : 323312,
+    "mlsId" : "2591789",
+    "url" : "https://www.redfin.com/WA/Redmond/15723-NE-109th-St-98052/home/323312",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Expansive bonus room", "Newer furnace", "Gas fireplace" ],
+    "yearBuilt" : 1978,
+    "area" : 1530,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1050000,
+    "addressRaw" : "15723 NE 109th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "15723 NE 109th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6971598,
+    "longitude" : -122.1293684,
+    "description" : "Beautifully updated and move-in ready, this sun-filled Education Hill home offers the perfect blend of comfort, flexibility and location! This 3 bedroom, 1.75 bath home lives like a rambler, with an expansive bonus room above the garage providing coveted extra space for a home office, guest retreat, playroom or media room. Natural light pours throughout, while oversized upstairs windows capture stunning sunset views each evening. Cozy up beside the gas fireplace in the inviting living room, enjoy hardwood floors throughout the main level, a refreshed kitchen with new tile through the kitchen and entry, and retreat to the beautifully remodeled primary suite. Major improvements are already co",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/789/genIslnoResize.2591789_39_1.jpg" ]
+  }, {
+    "id" : 56200,
+    "mlsId" : "2588524",
+    "url" : "https://www.redfin.com/WA/Redmond/6356-138th-Ave-NE-98052/unit-211/home/56200",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quartz countertops", "Lake front view", "Soft-close cabinetry" ],
+    "yearBuilt" : 1969,
+    "area" : 1114,
+    "beds" : 2,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 588000,
+    "addressRaw" : "6356 138th Ave NE #211, Redmond, WA 98052",
+    "address" : {
+      "street" : "6356 138th Ave NE #211",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6631216,
+    "longitude" : -122.1561057,
+    "description" : "Lakefront Living | Nature, Privacy  &  Resort-Style Amenities  Beautifully redesigned 2-bedroom, 1,114 sq. ft. residence offering direct lake views and a private west-facing patio—perfect for afternoon sunlight and sunset views. Thoughtfully renovated with a completely reimagined kitchen, quartz countertops, soft-close cabinetry, solid hickory hardwood floors, premium porcelain and marble finishes, recessed lighting, and additional insulation. The original asbestos ceiling has also been professionally removed. Set within an 83-acre gated resort-style community featuring 4 seasonal swimming pools, a fitness center, sauna, tennis, pickleball, racquetball and volleyball courts, clubh",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_18_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_19_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_20_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_21_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_22_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_23_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_24_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_25_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_26_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_27_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_28_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_29_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_30_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_31_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_32_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_33_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_34_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_35_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_36_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/524/genIslnoResize.2588524_37_1.jpg" ]
+  }, {
+    "id" : 324873,
+    "mlsId" : "2588434",
+    "url" : "https://www.redfin.com/WA/Redmond/16817-NE-91st-St-98052/home/324873",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Quartz countertops", "Remodeled kitchen", "Park-like setting" ],
+    "yearBuilt" : 1976,
+    "area" : 2500,
+    "beds" : 5,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1275000,
+    "addressRaw" : "16817 NE 91st St, Redmond, WA 98052",
+    "address" : {
+      "street" : "16817 NE 91st St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6822919,
+    "longitude" : -122.1150162,
+    "description" : "Tucked away on a quiet cul-de-sac only blocks from Bella Bottega Shopping Center and everything downtown Redmond has to offer, this custom Education Hill split-level offers a park-like setting and exceptional livability. Beautifully updated with inviting entry, multiple gathering spaces and upscale features including a gorgeous remodeled kitchen with quality wood cabinetry, quartz countertops, new stainless steel refrigerator, vinyl plank flooring, a convenient coffee bar and additional storage. Generous living and dining areas plus lower level family room make entertaining and everyday living easy. Enjoy spacious bedrooms including a King-sized primary suite with en-suite bathroom and spac",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/434/genIslnoResize.2588434_32_0.jpg" ]
+  }, {
+    "id" : 516545,
+    "mlsId" : "2590597",
+    "url" : "https://www.redfin.com/WA/Redmond/7020-139th-Pl-NE-98052/home/516545",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Covered outdoor deck", "Grand kitchen", "New construction" ],
+    "yearBuilt" : 2026,
+    "area" : 4315,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 2998000,
+    "addressRaw" : "7020 139th Pl NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "7020 139th Pl NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6684952,
+    "longitude" : -122.1537383,
+    "description" : "Incredible Opportunity! Premier Homebuilder Terrene Homes stunning 4,315sqft 5-bedroom new construction priced under $3 Million! Thoughtfully designed for both everyday comfort and upscale entertaining, this residence blends refined finishes with functional, flexible living spaces. The open-concept main level features a spacious 2 story great room with floor to ceiling windows that flow seamlessly to a covered outdoor deck, ideal for year-round NW living. A grand kitchen anchors the home with Thermador appliances, 66\" Electrolux built-in fridge, custom cabinetry, and quartz countertops with a waterfall island. The butler’s and walk-in pantry enhances both storage and convenience.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/597/genIslnoResize.2590597_38_0.jpg" ]
+  }, {
+    "id" : 324766,
+    "mlsId" : "2579367",
+    "url" : "https://www.redfin.com/WA/Redmond/17025-NE-113th-Ct-98052/home/324766",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Sunlit living areas", "Three-car garage", "Formal dining room" ],
+    "yearBuilt" : 2001,
+    "area" : 3260,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1999999,
+    "addressRaw" : "17025 NE 113th Ct, Redmond, WA 98052",
+    "address" : {
+      "street" : "17025 NE 113th Ct",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.701332,
+    "longitude" : -122.1121805,
+    "description" : "At 17025 NE 113th Court, refined architecture meets exceptional craftsmanship in this Burnstead Construction masterpiece on Education Hill. Built in 2001 with enduring quality, the home showcases thoughtfully designed lines, rich millwork, and beautifully proportioned spaces that highlight Burnstead’s reputation for superior residential architecture. Inside, refinished hardwood floors, elegant trim, and custom architectural detailing create a sense of timeless sophistication. The main-level primary suite is a serene retreat, framed by intentional design elements that enhance privacy and flow. A dedicated executive office and formal dining room feature classic architectural touches, wh",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/367/genIslnoResize.2579367_23_0.jpg" ]
+  }, {
+    "id" : 516914,
+    "mlsId" : "2586140",
+    "url" : "https://www.redfin.com/WA/Redmond/8317-134th-Ave-NE-98052/home/516914",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spa-inspired ensuite", "Butler’s pantry", "Chef’s kitchen" ],
+    "yearBuilt" : 1958,
+    "area" : 1472,
+    "beds" : 3,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 1399000,
+    "addressRaw" : "8317 134th Ave NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "8317 134th Ave NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6777747,
+    "longitude" : -122.1615584,
+    "description" : "*  * Qualified buyers may receive up to a 1% lender credit toward an interest rate buy-down or closing costs. Contact your broker for details. *  *  Artfully reimagined by a professional interior designer, this 1958 midcentury rambler offers sophisticated single level living in coveted Rose Hill. The bright, open layout features engineered hardwood floors, custom finishes and a sleek electric fireplace. The chef’s kitchen pairs custom cabinetry, quartz counters, tile accents and shelving with a central island. A butler’s pantry adds storage and prep space, with easy flow to the dining and living areas. The primary suite features a custom walk in closet and a spa inspired ensuite",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_5_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_6_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_7_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_8_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/140/genIslnoResize.2586140_29_0.jpg" ]
+  }, {
+    "id" : 451333,
+    "mlsId" : "2589541",
+    "url" : "https://www.redfin.com/WA/Redmond/14330-172nd-Ave-NE-98052/home/451333",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Sliding glass doors", "Retractable roof", "Updated kitchen" ],
+    "yearBuilt" : 1985,
+    "area" : 3025,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1995000,
+    "addressRaw" : "14330 172nd Ave NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "14330 172nd Ave NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7304204,
+    "longitude" : -122.1095438,
+    "description" : "A rare Buchan rambler in coveted Sheffield—beautifully updated, wonderfully private and designed for easy single-level living. Set on . 81 acre, this 3,025 SF home offers an exceptional layout with 3 bedrooms + office/4th bedroom, spacious bonus room and a beautifully remodeled primary suite. Vaulted ceilings, hardwood floors, an updated kitchen and generous living spaces create a home that works equally well for everyday living, entertaining and a house full of friends. Enjoy an established English Hill neighborhood, Northshore schools, a short walk to Sunrise Elementary and the Tolt Pipeline Trail just across the street. And then there’s the pool! A spectacular 45' private poo",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/541/genIslnoResize.2589541_39_0.jpg" ]
+  }, {
+    "id" : 516780,
+    "mlsId" : "2590139",
+    "url" : "https://www.redfin.com/WA/Redmond/13330-NE-80th-St-98052/home/516780",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Gated lot", "Gourmet kitchen", "Two story great room" ],
+    "yearBuilt" : 2002,
+    "area" : 4290,
+    "beds" : 4,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 2500000,
+    "addressRaw" : "13330 NE 80th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "13330 NE 80th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6761124,
+    "longitude" : -122.1623124,
+    "description" : "Experience refined craftsmanship and timeless style in this stunning custom-built home in sought-after Rose Hill. Privately set on a gated, nearly half-acre (21,138 sq ft) level lot, this 4,290 sq ft residence offers 4 bedrooms, 4 baths, a den, bonus room, and a rare main-level primary suite. Fresh updates include refinished hardwoods, new carpet and decking plus fresh interior and exterior paint. The dramatic two-story great room features cathedral ceilings, six skylights, and surround sound, filling the space with natural light. The gourmet kitchen offers granite counters, commercial-grade stainless appliances including a Thermador range and Sub-Zero refrigerator, a walk-in pantry, and op",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/139/genIslnoResize.2590139_36_0.jpg" ]
+  }, {
+    "id" : 69356788,
+    "mlsId" : "2589358",
+    "url" : "https://www.redfin.com/WA/Redmond/12099-164th-Ct-NE-98052/home/69356788",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private office", "Gourmet kitchen", "Daylight basement" ],
+    "yearBuilt" : 2015,
+    "area" : 3849,
+    "beds" : 4,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 2170000,
+    "addressRaw" : "12099 164th Ct NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "12099 164th Ct NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7078243,
+    "longitude" : -122.1204549,
+    "description" : "Meticulously maintained by the original owners since its 2016 construction, this immaculate daylight basement home offers exceptional privacy, thoughtful upgrades, and flexible living spaces. Tucked at the end of a quiet dead-end street and backing to a serene greenbelt, the light-filled floor plan features hardwood floors, 9' ceilings, a private office, and a gourmet kitchen with a premium appliance package, quartz countertops, with seamless flow to the spacious great room and dining area. Step outside to the deck taking in the natural beauty of a serene greenbelt and the fully-fenced backyard which creates the perfect setting for outdoor living, play, and entertaining. Upstairs, the elega",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/358/genIslnoResize.2589358_31_0.jpg" ]
+  }, {
+    "id" : 452385,
+    "mlsId" : "2582318",
+    "url" : "https://www.redfin.com/WA/Woodinville/19023-NE-132nd-St-98077/home/452385",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Remodeled kitchen", "Heated floors", "Expansive trex deck" ],
+    "yearBuilt" : 1986,
+    "area" : 2710,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1725000,
+    "addressRaw" : "19023 NE 132nd St, Woodinville, WA 98077",
+    "address" : {
+      "street" : "19023 NE 132nd St",
+      "city" : "Woodinville",
+      "state" : "WA",
+      "zipcode" : "98077"
+    },
+    "latitude" : 47.7170994,
+    "longitude" : -122.0852428,
+    "description" : "A private, move-in-ready retreat on nearly an acre in Woodinville. This thoughtfully updated 4-bedroom, 2.5-bath home offers 2,710 sq. ft. with a dedicated office/den, vaulted ceilings, a welcoming fireplace and inviting living spaces designed for everyday comfort and entertaining. The remodeled kitchen, hardwood floors, refreshed baths with heated floors, and double French doors to an expansive Trex deck create an easy indoor-outdoor flow. Major improvements include whole-house replumbing, extensive electrical rewiring with a new main panel, tankless water heater, new HVAC with A/C, high-end windows, city-water connection, and a natural-gas standby generator with automatic transfer switch.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_38_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/318/genIslnoResize.2582318_39_2.jpg" ]
+  }, {
+    "id" : 502795,
+    "mlsId" : "2582619",
+    "url" : "https://www.redfin.com/WA/Redmond/16122-NE-49th-Ct-98052/home/502795",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Corner-lot home", "Wolf appliances", "Chef’s kitchen" ],
+    "yearBuilt" : 1990,
+    "area" : 3140,
+    "beds" : 3,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 2698000,
+    "addressRaw" : "16122 NE 49th Ct, Redmond, WA 98052",
+    "address" : {
+      "street" : "16122 NE 49th Ct",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6546496,
+    "longitude" : -122.1252621,
+    "description" : "Discover elevated living in this beautifully enhanced corner-lot home with territorial  &  mountain views  &  seamless connection between indoor comfort  &  outdoor entertaining to create a residence that feels modern, refined, &  truly turnkey. Chef’s kitchen with Wolf, Sub-Zero, Miele, Bosch, &  GE appliances, travertine counters, skylights, &  resurfaced hardwoods, opening to entertainer’s deck with steel railing  &  garden access. Upgrades include, 5/1 theatre-grade audio, grass-cloth accents, &  hardwoods on upper levels. Fully remodeled baths w/ heated floors in primary bath  &  modern finishes. Den/Library  &  spacious office with v",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_24_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_37_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/619/genIslnoResize.2582619_39_0.jpg" ]
+  }, {
+    "id" : 511442,
+    "mlsId" : "2588781",
+    "url" : "https://www.redfin.com/WA/Redmond/14327-NE-84th-Ct-98052/home/511442",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Remodeled kitchen", "Gas fireplace", "Private greenbelt" ],
+    "yearBuilt" : 1988,
+    "area" : 2390,
+    "beds" : 4,
+    "baths" : 3,
+    "currency" : "USD",
+    "price" : 1200000,
+    "addressRaw" : "14327 NE 84th Ct, Redmond, WA 98052",
+    "address" : {
+      "street" : "14327 NE 84th Ct",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6778695,
+    "longitude" : -122.1486942,
+    "description" : "[NEW PRICE AND A RECENT APPRAISAL AT $1.475M] Just minutes to the Microsoft campus and the vibrant downtowns of Redmond and Kirkland, this home offers an effortless commute to Bellevue or Seattle. Step into the refreshed main living area with new oak hardwood floors, a gas fireplace with tile surround, and a skylight for natural light. Just off the living area is the beautifully remodeled kitchen with high-end finishes, including new cabinetry with soft-close doors and drawers, quartz countertops, and stainless steel appliances. Outside, a generous deck overlooks the shy 1/2 ACRE lot with a private greenbelt, creating a rare sense of seclusion. The main floor offers a primary bedroom with n",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/781/genIslnoResize.2588781_39_0.jpg" ]
+  }, {
+    "id" : 71570,
+    "mlsId" : "2586903",
+    "url" : "https://www.redfin.com/WA/Redmond/18012-NE-94th-Ct-98052/unit-1/home/71570",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Walk-in closet", "Updated full bath", "Spacious kitchen" ],
+    "yearBuilt" : 1995,
+    "area" : 1400,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 725000,
+    "addressRaw" : "18012 NE 94th Ct #1, Redmond, WA 98052",
+    "address" : {
+      "street" : "18012 NE 94th Ct #1",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.684226,
+    "longitude" : -122.1004019,
+    "description" : "Welcome to Ashford Park! Tucked away on a cul-de-sac, this bright two-story end-unit townhome offers comfortable living in a prime location. The open main level features a spacious kitchen with granite countertops and stainless appliances, private patio access and a convenient half bath. Upstairs offers a vaulted primary suite with walk-in closet, two additional bedrooms and an updated full bath. Fresh paint, extra deep one-car garage, pet friendly and no rental cap. Minutes to Downtown Redmond, light rail, tech campuses and freeways. Highly sought after Lake Washington School District. Pre-inspection report available.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/903/genIslnoResize.2586903_20_0.jpg" ]
+  }, {
+    "id" : 170479012,
+    "mlsId" : "2588560",
+    "url" : "https://www.redfin.com/WA/Redmond/11975-159th-Ave-NE-98052/home/170479012",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spa-inspired bath", "Lush greenbelt", "Backyard retreat" ],
+    "yearBuilt" : 2020,
+    "area" : 3490,
+    "beds" : 5,
+    "baths" : 4,
+    "currency" : "USD",
+    "price" : 2275250,
+    "addressRaw" : "11975 159th Ave NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "11975 159th Ave NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7072996,
+    "longitude" : -122.1269468,
+    "description" : "Introducing 11975 159th Ave NE, a stunning 5 bed/4 bath 2020-built Kensington Lane home in the coveted Education Hill neighborhood. Nestled against a lush greenbelt, ensuring endless privacy  &  territorial views, soaring vaulted ceilings  &  floor-to-ceiling windows illuminate this modern, move-in ready home. A grand entry draws you in, ushering towards a generous kitchen w/ walk-in pantry, dining area  &  living room anchored by an oversized gas fireplace  &  bordered by sliding doors seamlessly flowing to a backyard retreat. Savor your morning coffee on the back deck while taking in the peaceful canopy of greenery or dine al-fresco on warm evenings. A main floor bedroom  ",
+    "mediaDetails" : {
+      "has3DModel" : true,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/560/genIslnoResize.2588560_31_0.jpg" ]
+  }, {
+    "id" : 325391,
+    "mlsId" : "2586418",
+    "url" : "https://www.redfin.com/WA/Redmond/17011-NE-95th-St-98052/home/325391",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Open-to-above design", "Formal dining room", "Spacious kitchen" ],
+    "yearBuilt" : 2026,
+    "area" : 4337,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 3198000,
+    "addressRaw" : "17011 NE 95th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "17011 NE 95th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6854326,
+    "longitude" : -122.1131773,
+    "description" : "Murray Franklyn presents the sought-after Carterville plan at Lot 1, in Sterling Lane, a new community currently under construction. This exceptional home welcomes you with a striking covered entrance and an impressive open-to-above design. Just off the foyer, there's a guest suite ideal for visitors or as a main-floor second primary. The hallway leads to a formal dining room and a family room with soaring double-height ceilings, alongside a spacious kitchen and nook area with patio access, perfect for large gatherings. A second large covered patio, accessible through two sliding doors from the family room and den, provides a great space for entertaining. Upstairs, the primary suite include",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/418/genIslnoResize.2586418_27_0.jpg" ]
+  }, {
+    "id" : 502433,
+    "mlsId" : "2587923",
+    "url" : "https://www.redfin.com/WA/Redmond/2225-185th-Pl-NE-98052/home/502433",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/923/genIslnoResize.2587923_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Built-in pantry", "Backyard oasis", "Updated kitchen" ],
+    "yearBuilt" : 1975,
+    "beds" : 4,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 1600000,
+    "addressRaw" : "2225 185th Pl NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "2225 185th Pl NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6298838,
+    "longitude" : -122.093392,
+    "description" : "Tucked on a peaceful dead-end street, this stunning 4-bedroom, 2.25-bath home offers the perfect blend of privacy and Northwest living. Set on a generous 12,150 sq ft lot. Thoughtfully refreshed throughout, the home features refinished hardwood floors, professionally cleaned carpet, brand-new interior paint, updated tile in the bathrooms, updated vanities, and a recently installed furnace—delivering true move-in-ready comfort. Abundant natural light fills every room through expansive windows, skylights, and solar tubes, seamlessly bringing the outdoors in. The heart of the home is the updated kitchen, now featuring a stainless steel refrigerator, a brand-new built-in pantry, and beaut",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/923/genIslnoResize.2587923_0.jpg" ]
+  }, {
+    "id" : 451301,
+    "mlsId" : "2585294",
+    "url" : "https://www.redfin.com/WA/Redmond/13404-Woodinville-Redmond-Rd-NE-98052/home/451301",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Spa-inspired bath", "Exceptional views", "Built-in bbq" ],
+    "yearBuilt" : 2026,
+    "area" : 6890,
+    "beds" : 5,
+    "baths" : 5,
+    "currency" : "USD",
+    "price" : 5780000,
+    "addressRaw" : "13404 Woodinville-Redmond Rd NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "13404 Woodinville-Redmond Rd NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7203161,
+    "longitude" : -122.1345058,
+    "description" : "A rare blend of modern luxury, exceptional views and timeless character awaits on 1.8 acres just south of Woodinville wine country. This newly constructed 6,890 SF home was designed for unforgettable entertaining and effortless everyday living. Walls of glass frame the views while an accordion door opens the kitchen to an incredible outdoor living space with fireplace, overhead heat, built-in BBQ and dining area. A separate prep kitchen and oversized pantry make hosting a breeze. Upstairs, the luxurious primary suite features a spa-inspired bath with soaking tub, steam shower and sauna with Wi-Fi-enabled heater. Three additional en-suite bedrooms offer privacy for friends. The lower-level f",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_1_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_2_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_3_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_4_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_5_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_6_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_7_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_8_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_9_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_10_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_11_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_12_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_13_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_14_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_15_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_16_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_17_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_18_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_19_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_20_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_21_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_22_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_23_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_24_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_25_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_26_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_27_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_28_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_29_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_30_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_31_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_32_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_33_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_34_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_35_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_36_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_37_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/294/genIslnoResize.2585294_38_2.jpg" ]
+  }, {
+    "id" : 21470984,
+    "mlsId" : "2585697",
+    "url" : "https://www.redfin.com/WA/Redmond/15219-NE-81st-Way-98052/unit-106/home/21470984",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/697/genIslnoResize.2585697_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Expansive windows", "Open layout", "Energy efficiency" ],
+    "yearBuilt" : 2008,
+    "area" : 1384,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 750000,
+    "addressRaw" : "15219 NE 81st Way #106, Redmond, WA 98052",
+    "address" : {
+      "street" : "15219 NE 81st Way #106",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6754139,
+    "longitude" : -122.1373572,
+    "description" : "Contemporary living in Redmond. This residence offers an open, light-filled layout designed for effortless everyday living. Expansive windows, hardwood floors and clean finishes define the main living spaces, while the kitchen features European-inspired cabinetry, stainless steel appliances and a seamless connection to dining and entertaining areas. Generous bedrooms provide comfortable private retreats, complemented by flexible living space and an attached garage. Thoughtfully designed with energy efficiency in mind. Moments from Downtown Redmond, Marymoor Park, the Sammamish River Trail, shopping, dining and major Eastside employers, with convenient access to SR-520 and I-405.",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/697/genIslnoResize.2585697_0.jpg" ]
+  }, {
+    "id" : 451208,
+    "mlsId" : "2586546",
+    "url" : "https://www.redfin.com/WA/Redmond/12403-172nd-Ave-NE-98052/home/451208",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "In-ground pool", "Hot tub", "Wine cellar" ],
+    "yearBuilt" : 1983,
+    "area" : 4257,
+    "beds" : 4,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 2595000,
+    "addressRaw" : "12403 172nd Ave NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "12403 172nd Ave NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7113131,
+    "longitude" : -122.1110744,
+    "description" : "Prominently situated in North Redmond, this exceptional Buchan-built estate blends timeless craftsmanship, privacy, and effortless livability. Beautifully maintained, the home pairs classic architecture with European influences and thoughtful details throughout. The chef’s kitchen features custom cherry cabinetry, generous workspace, and an adjacent wine cellar with handcrafted door. Glass doors from the kitchen and family room open to an expansive patio for seamless indoor-outdoor living. Upstairs, the luxurious primary suite is joined by 3 additional bedrooms, including an oversized bunk room, plus a large bonus room and den. Outside, enjoy an in-ground pool and hot tub, spacious pa",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/546/genIslnoResize.2586546_38_0.jpg" ]
+  }, {
+    "id" : 323523,
+    "mlsId" : "2578571",
+    "url" : "https://www.redfin.com/WA/Redmond/18115-NE-113th-St-98052/home/323523",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Wood-burning stove", "Rock fireplace", "1.3 acres" ],
+    "yearBuilt" : 1978,
+    "area" : 3984,
+    "beds" : 5,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 1850000,
+    "addressRaw" : "18115 NE 113th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "18115 NE 113th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7005331,
+    "longitude" : -122.0980766,
+    "description" : "Nestled on a private entry and set on 1.3 acres, this charming English Tudor offers exceptional space, versatility and outdoor living-all  conveniently located close to town, shopping and the Microsoft campus. The 3-story home welcomes you with a spacious living room  featuring a striking rock fireplace, which flows into the formal dining room. The inviting family room offers a cozy wood-burning stove  and opens to a well-appointed kitchen, complete with stainless steel appliances, a breakfast bar and additional eat-in dining area. Step  outside to the wraparound deck, perfect for entertaining, relaxing and enjoying the beautiful surroundings. Upstairs you will find four  bedrooms  &  t",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_1_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_2_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_3_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_4_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_5_3.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_6_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_7_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_8_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_9_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_10_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_11_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_12_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_13_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_14_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_15_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_16_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_17_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_18_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_19_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_20_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_21_7.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_22_8.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_23_8.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_24_8.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_25_8.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_26_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_27_8.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_28_A.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_29_A.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_30_9.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_31_9.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_32_B.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_33_8.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_34_6.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_35_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_36_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_37_4.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_38_5.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/571/genIslnoResize.2578571_39_2.jpg" ]
+  }, {
+    "id" : 176025072,
+    "mlsId" : "120619",
+    "url" : "https://www.redfin.com/WA/Redmond/15617-NE-70th-Ct-98052/unit-D109/home/176025072",
+    "homeType" : "Townhouse",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Cascade views", "Redmond location", "Updated kitchen" ],
+    "yearBuilt" : 1991,
+    "area" : 1650,
+    "beds" : 2,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 875000,
+    "daysOnSite" : 17,
+    "addressRaw" : "15617 NE 70th Ct Unit D109, Redmond, WA 98052",
+    "address" : {
+      "street" : "15617 NE 70th Ct Unit D109",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6673919,
+    "longitude" : -122.1317784,
+    "description" : "Beautifully maintained and filled with inviting spaces, this like-new townhome pairs gorgeous Cascade views with an exceptional Redmond location. The spacious interior offers formal living and dining areas, abundant natural light, fresh paint, and a cozy gas-log fireplace that creates a welcoming centerpiece for the home. At the heart of the floor plan, the tastefully updated kitchen offers impressive prep and storage space along with a full suite of appliances, making it equally suited for everyday meals and entertaining. The generous primary suite provides a relaxing retreat with a beautifully appointed bath featuring a Jacuzzi tub. Outside, enjoy the maintained grounds and beautifully la",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    }
+  }, {
+    "id" : 513836,
+    "mlsId" : "2583172",
+    "url" : "https://www.redfin.com/WA/Redmond/13725-NE-87th-St-98052/home/513836",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Detached garage", "Low hoa dues", "$165 HOA" ],
+    "yearBuilt" : 1984,
+    "area" : 1450,
+    "beds" : 3,
+    "baths" : 2.5,
+    "currency" : "USD",
+    "price" : 885000,
+    "addressRaw" : "13725 NE 87th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "13725 NE 87th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.680032,
+    "longitude" : -122.1554336,
+    "description" : "Beautifully updated and refreshed, this inviting 3-bedroom, 2.5-bath Maplebrook Lane townhome sits in a prime Eastside location on the Kirkland/Redmond border. Move-in ready and thoughtfully polished, it offers comfortable and tastefully updated living spaces. Step outside to the back wrap-around deck and yard, where a peaceful wooded setting creates a natural retreat—perfect for al fresco dining, entertaining, a morning cup of coffee, bird-watching, or simply unwinding surrounded by nature. A detached 1-car garage provides convenient parking and additional storage. Enjoy easy access to Microsoft, Google, downtown Kirkland and Redmond, as well as lots of parks, trails, shopping, resta",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/172/genIslnoResize.2583172_27_0.jpg" ]
+  }, {
+    "id" : 326269,
+    "mlsId" : "2587216",
+    "url" : "https://www.redfin.com/WA/Redmond/2002-W-Lake-Sammamish-Pkwy-NE-98052/home/326269",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Waterfront deck", "Boat lift", "Detached adu" ],
+    "yearBuilt" : 1982,
+    "area" : 3960,
+    "beds" : 6,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 3490000,
+    "addressRaw" : "2002 W Lake Sammamish Pkwy NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "2002 W Lake Sammamish Pkwy NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6275735,
+    "longitude" : -122.0879728,
+    "description" : "A rare opportunity to own 52 feet of Lake Sammamish waterfront in the heart of the Eastside. Positioned at the water’s edge, this beautifully updated home captures expansive lake and Mt. Rainier views, spectacular sunrises, and an effortless connection to the water. Designed for both everyday living and entertaining, the main residence offers 5 bedrooms, 2.5 baths, multiple living spaces, and seamless indoor outdoor flow. A spacious waterfront deck leads to the private dock and 7,000 lb boat lift, putting boating, paddle boarding, swimming, and sunset gatherings just steps from home. A detached 1 bedroom, 1 bath ADU adds exceptional flexibility for guests, extended stays, a private of",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_4_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_37_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_38_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/216/genIslnoResize.2587216_39_0.jpg" ]
+  }, {
+    "id" : 504111,
+    "mlsId" : "2583530",
+    "url" : "https://www.redfin.com/WA/Redmond/2508-175th-Ave-NE-98052/home/504111",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Private entry hall", "Walk-in closet", "3/4 ensuite bathroom" ],
+    "yearBuilt" : 1968,
+    "area" : 1350,
+    "beds" : 2,
+    "baths" : 2,
+    "currency" : "USD",
+    "price" : 675000,
+    "addressRaw" : "2508 175th Ave NE, Redmond, WA 98052",
+    "address" : {
+      "street" : "2508 175th Ave NE",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6324672,
+    "longitude" : -122.1063552,
+    "description" : "Enjoy easy, one-level living in this move-in-ready 2-bedroom, 1.75-bath townhome set within the sought-after Sammamish Forest Manor community. The inviting floor plan features an updated kitchen, fresh interior paint, a brand-new refrigerator, crown moulding, and hardwood floors. The generous primary suite features a private entry hall, walk-in closet and 3/4 ensuite bathroom. Plenty of outdoor space in this home - relax on the back deck overlooking a peaceful greenbelt and grassy area, or sit quietly in your private courtyard listening to the soothing bubbling of the water feature. The attached 2-car garage, with access directly into the home, provides secure parking and additional storage",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/530/genIslnoResize.2583530_34_0.jpg" ]
+  }, {
+    "id" : 62526,
+    "mlsId" : "2586433",
+    "url" : "https://www.redfin.com/WA/Redmond/6439-139th-Ave-NE-98052/unit-19/home/62526",
+    "homeType" : "Townhouse",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "New siding", "Updated bathrooms", "Updated kitchen" ],
+    "yearBuilt" : 1969,
+    "area" : 1060,
+    "beds" : 2,
+    "baths" : 1.5,
+    "currency" : "USD",
+    "price" : 473000,
+    "addressRaw" : "6439 139th Ave NE #19, Redmond, WA 98052",
+    "address" : {
+      "street" : "6439 139th Ave NE #19",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6634614,
+    "longitude" : -122.1539126,
+    "description" : "Welcome home to this beautifully refreshed 2-bedroom townhome-style condo in a prime Redmond location. This light-filled residence has an updated kitchen, updated bathrooms, a new roof, new windows and siding, and new engineered hardwood flooring. Open concept living features soaring vaulted ceilings, ample storage, and a private outdoor patio. 2 spacious upstairs bedrooms offer an elevated escape. Convenient covered carport parking and additional exterior storage. All appliances are included. Resort-style amenities include community lakes, pools, a gym and sauna, clubhouse, and more. Ideally located near parks, trails, shopping, and dining, with close proximity to Microsoft, Amazon, and Go",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : true
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_33_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_34_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_35_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_36_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/433/genIslnoResize.2586433_37_0.jpg" ]
+  }, {
+    "id" : 8186483,
+    "mlsId" : "2586714",
+    "url" : "https://www.redfin.com/WA/Redmond/16563-NE-119th-Way-98052/home/8186483",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "Marymoor park", "Primary suite", "Flexible bonus room" ],
+    "yearBuilt" : 2006,
+    "area" : 3290,
+    "beds" : 5,
+    "baths" : 3.5,
+    "currency" : "USD",
+    "price" : 1699950,
+    "addressRaw" : "16563 NE 119th Way, Redmond, WA 98052",
+    "address" : {
+      "street" : "16563 NE 119th Way",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.7058255,
+    "longitude" : -122.1200451,
+    "description" : "Nestled in one of Redmond's most sought-after neighborhoods, this 5-bedroom, 3.5-bath home delivers 3,290 square feet of thoughtfully designed living space in one of the Eastside's most convenient locations. Enter to an open main-floor layout that connects bright living and dining areas built for both easy entertaining and everyday comfort. Upstairs, find four bedrooms, including the primary suite featuring a five-piece bath and a walk-in closet. The lower level offers a fifth bedroom, a full bath, and a flexible bonus room that adapts to a home office, media room, or play space. Outside, a spacious deck invites you to enjoy Pacific Northwest summers. Commuters are minutes from Microsoft, S",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_1_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_2_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_3_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_4_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_5_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_6_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_7_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_8_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_9_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_10_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_11_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_12_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_13_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_14_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_15_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_16_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_17_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_18_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_19_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_20_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_21_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_22_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_23_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_25_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_26_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_27_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_28_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_29_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_30_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_31_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_32_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_33_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_34_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_35_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_36_1.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_37_2.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/714/genIslnoResize.2586714_38_2.jpg" ]
+  }, {
+    "id" : 323237,
+    "mlsId" : "2586699",
+    "url" : "https://www.redfin.com/WA/Redmond/16530-NE-99th-St-98052/home/323237",
+    "homeType" : "House",
+    "image" : "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_0.jpg",
+    "status" : "FOR_SALE",
+    "atAGlanceFacts" : [ "2 story great room", "Chef’s kitchen", "9,180 sq ft lot" ],
+    "yearBuilt" : 2026,
+    "area" : 3918,
+    "beds" : 5,
+    "baths" : 4.5,
+    "currency" : "USD",
+    "price" : 2850000,
+    "addressRaw" : "16530 NE 99th St, Redmond, WA 98052",
+    "address" : {
+      "street" : "16530 NE 99th St",
+      "city" : "Redmond",
+      "state" : "WA",
+      "zipcode" : "98052"
+    },
+    "latitude" : 47.6890814,
+    "longitude" : -122.1193259,
+    "description" : "Azori presents a modern craftsman design in the heart of Education Hill. Entertainment spaces include 2 story great room, chef’s kitchen, outdoor covered living space, and upper floor bonus room. Primary suite retreat with 5-piece bath  &  heated floors. Main floor guest en-suite. Designated home office. Spacious, private backyard. 3 car wide garage. Smart  &  green home features throughout, including solar panels. Convenient access to all schools, shopping, DT Redmond, and all Tech Campuses. Limited time $50,000 buyer credit!",
+    "mediaDetails" : {
+      "has3DModel" : false,
+      "hasVideo" : false
+    },
+    "photos" : [ "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_1_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_2_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_3_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_4_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_5_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_6_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_7_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_8_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_9_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_10_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_11_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_12_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_13_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_14_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_15_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_16_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_17_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_18_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_19_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_20_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_21_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_22_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_23_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_24_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_25_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_26_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_27_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_28_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_29_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_30_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_31_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_32_0.jpg", "https://ssl.cdn-redfin.com/photo/1/islphoto/699/genIslnoResize.2586699_33_0.jpg" ]
+  } ],
+  "pagination" : {
+    "currentPage" : 1,
+    "nextPage" : "https://redfin.com/zipcode/98052/filter/sort=lo-days,property-type=townhouse+house/page-2",
+    "otherPages" : {
+      "2" : "https://redfin.com/zipcode/98052/filter/sort=lo-days,property-type=townhouse+house/page-2",
+      "3" : "https://redfin.com/zipcode/98052/filter/sort=lo-days,property-type=townhouse+house/page-3",
+      "4" : "https://redfin.com/zipcode/98052/filter/sort=lo-days,property-type=townhouse+house/page-4"
+    }
+  }
+}

@@ -39,6 +39,9 @@ public class H3AggregationService {
         double avgNeuralPctError,
         double avgLightgbmPctError,
         double avgGnnPctError,
+        double avgNeuralAbsPctError,
+        double avgLightgbmAbsPctError,
+        double avgGnnAbsPctError,
         double avgSqft,
         double avgSqftLot,
         int    numSales,
@@ -94,6 +97,9 @@ public class H3AggregationService {
         double neuralError;
         double treeError;
         double gnnError;
+        double neuralAbsError;
+        double treeAbsError;
+        double gnnAbsError;
         double sqft;
         double sqftLot;
         double predictionStd;
@@ -109,6 +115,9 @@ public class H3AggregationService {
             neuralError += record.pctError();
             treeError += record.lightgbmPctError();
             gnnError += record.gnnPctError();
+            neuralAbsError += Math.abs(record.pctError());
+            treeAbsError += Math.abs(record.lightgbmPctError());
+            gnnAbsError += Math.abs(record.gnnPctError());
             sqft += record.sqft();
             sqftLot += record.sqftLot();
             predictionStd += record.predictionStdPrice();
@@ -128,6 +137,7 @@ public class H3AggregationService {
             return new HexStats(
                 h3Index, salePrice / divisor, neuralPrediction / divisor,
                 treePrediction / divisor, gnnPrediction / divisor, neuralError / divisor, treeError / divisor, gnnError / divisor,
+                neuralAbsError / divisor, treeAbsError / divisor, gnnAbsError / divisor,
                 sqft / divisor, sqftLot / divisor, count,
                 predictionStd / divisor, predictionCv / divisor,
                 attention[0] / attentionDivisor, attention[1] / attentionDivisor,
@@ -169,6 +179,8 @@ public class H3AggregationService {
                 : useGnn ? hex.avgGnnPredictedPrice() : hex.avgNeuralPredictedPrice();
             double selectedError = useLightgbm ? hex.avgLightgbmPctError()
                 : useGnn ? hex.avgGnnPctError() : hex.avgNeuralPctError();
+            double selectedAbsError = useLightgbm ? hex.avgLightgbmAbsPctError()
+                : useGnn ? hex.avgGnnAbsPctError() : hex.avgNeuralAbsPctError();
             double displayValue = switch (variable) {
                 case "sale_price"       -> hex.avgSalePrice();
                 case "predicted_price"  -> selectedPrediction;
@@ -184,6 +196,8 @@ public class H3AggregationService {
                 case "attn_property"    -> hex.attnProperty();
                 case "attn_time"        -> hex.attnTime();
                 case "attn_market"      -> hex.attnMarket();
+                case "prediction_shift" -> hex.avgLightgbmAbsPctError() - selectedAbsError;
+                case "bias_shift"       -> selectedError - hex.avgLightgbmPctError();
                 default                 -> selectedError;  // pct_error
             };
 
@@ -202,6 +216,9 @@ public class H3AggregationService {
             props.put("avgNeuralPctError", hex.avgNeuralPctError());
             props.put("avgLightgbmPctError", hex.avgLightgbmPctError());
             props.put("avgGnnPctError", hex.avgGnnPctError());
+            props.put("avgNeuralAbsPctError", hex.avgNeuralAbsPctError());
+            props.put("avgLightgbmAbsPctError", hex.avgLightgbmAbsPctError());
+            props.put("avgGnnAbsPctError", hex.avgGnnAbsPctError());
             props.put("colorModel", useGnn ? "gnn" : useLightgbm ? "lightgbm" : "neural");
             props.put("avgSqft",           hex.avgSqft());
             props.put("avgSqftLot",        hex.avgSqftLot());

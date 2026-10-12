@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="styles.css?v=transport-events-v2"/>
+  <link rel="stylesheet" href="styles.css?v=property-popups-v2"/>
 </head>
 <body>
 <div id="sidebar">
@@ -54,6 +54,8 @@
   <label>Map color</label>
   <select id="variable">
     <option value="pct_error">Price Error (%)</option>
+    <option value="prediction_shift" data-comparison="true">Prediction Error shift</option>
+    <option value="bias_shift" data-comparison="true">Bias shift</option>
     <option value="predicted_price" selected>Predicted Price</option>
     <option value="sale_price">Sale (or listed) Price</option>
     <option value="sqft">Finished Squared footage</option>
@@ -67,10 +69,11 @@
     <option value="num_sales">Sale count (when aggregated)</option>
 
   </select>
+  <div id="variableInterpretation" class="variable-interpretation" hidden></div>
   <label>Displayed Model</label>
   <select id="DisplayedModel">
     <option value="lightgbm">LightGBM</option>
-    <option value="neural">Neural Network</option>
+    <option value="neural">Transformer</option>
     <option value="gnn" selected>Spatial GNN</option>
   </select>
 
@@ -149,7 +152,7 @@
     <label>Model
       <select id="chartModel" onchange="rebuildCommunityTrendChart()">
         <option value="lightgbm" selected>LightGBM</option>
-        <option value="neural">Neural Network</option>
+        <option value="neural">Transformer</option>
         <option value="gnn">Spatial GNN</option>
       </select>
     </label>
@@ -199,17 +202,17 @@
 
 <script src="/api/client-config.js"></script>
 <script src="js/map.js?v=motorway-junctions-v1"></script>
-<script src="js/api.js"></script>
-<script src="js/explanations.js"></script>
-<script src="js/layers/sales.js"></script>
-<script src="js/layers/synthetic.js"></script>
+<script src="js/api.js?v=transformer-labels-v1"></script>
+<script src="js/explanations.js?v=transformer-labels-v1"></script>
+<script src="js/layers/sales.js?v=transformer-labels-v1"></script>
+<script src="js/layers/synthetic.js?v=transformer-labels-v1"></script>
 <script src="js/layers/water.js"></script>
 <script src="js/layers/transport.js?v=motorway-junctions-v1"></script>
 <script src="js/layers/transport-features.js?v=transport-features-v1"></script>
-<script src="js/layers/points.js"></script>
-<script src="js/charts.js"></script>
-<script src="js/time-series.js"></script>
-<script src="js/agent.js?v=html-assessment-v1"></script>
+<script src="js/layers/points.js?v=property-popups-v3"></script>
+<script src="js/charts.js?v=transformer-labels-v1"></script>
+<script src="js/time-series.js?v=transformer-labels-v1"></script>
+<script src="js/agent.js?v=listing-page-tool-v1"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

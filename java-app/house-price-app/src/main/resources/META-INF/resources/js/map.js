@@ -130,6 +130,18 @@ function errorColor(v, anchors) {
   }
 }
 
+function isDivergingVariable(variable) {
+  return ['pct_error', 'prediction_shift', 'bias_shift'].includes(variable);
+}
+
+function mapColorAnchors(variable, values) {
+  return isDivergingVariable(variable) ? computeErrorAnchors(values) : null;
+}
+
+function predictionShiftColor(value, anchors) {
+  return errorColor(-value, { p10: -anchors.p90, p90: -anchors.p10 });
+}
+
 function getErrorRange() {
   const noMin = document.getElementById('noFilterMin').checked;
   const noMax = document.getElementById('noFilterMax').checked;
@@ -139,6 +151,8 @@ function getErrorRange() {
   };
 }
 function getColorFn(variable, values, anchors) {
+  if (variable === 'prediction_shift') return v => predictionShiftColor(v, anchors);
+  if (variable === 'bias_shift') return v => errorColor(v, anchors);
   if (variable === 'pct_error') return v => errorColor(v, anchors);
   const lo = pct(values, 5), hi = pct(values, 95), range = hi - lo || 1;
   // Attention weights and uncertainty use sequential palettes
@@ -166,11 +180,40 @@ function synchronizeMapVariableOptions() {
   const model = displayedModel();
   const variable = document.getElementById('variable');
   [...variable.options].forEach(option => {
-    const unavailable = option.dataset.model && option.dataset.model !== model;
+    const unavailable = (option.dataset.model && option.dataset.model !== model) ||
+      (option.dataset.comparison === 'true' && model === 'lightgbm');
     option.disabled = unavailable;
     option.hidden = unavailable;
   });
   if (variable.selectedOptions[0]?.disabled) variable.value = 'predicted_price';
+  updateVariableInterpretation();
+}
+
+function updateVariableInterpretation() {
+  const variable = document.getElementById('variable').value;
+  const modelSelect = document.getElementById('DisplayedModel');
+  const modelLabel = modelSelect.selectedOptions[0]?.textContent || 'selected model';
+  const note = document.getElementById('variableInterpretation');
+  if (variable === 'prediction_shift') {
+    note.textContent = [
+      `Calculation: LightGBM absolute % error minus ${modelLabel} absolute % error.`,
+      `Blue: positive values mean ${modelLabel} is more accurate.`,
+      'Red: negative values mean LightGBM is more accurate.',
+      'Listing context: listings are compared with asking price, not a completed sale.'
+    ].join('\n');
+    note.hidden = false;
+  } else if (variable === 'bias_shift') {
+    note.textContent = [
+      `Calculation: ${modelLabel} signed % error minus LightGBM signed % error.`,
+      'Blue: negative values shift toward underestimation.',
+      'Red: positive values shift toward overestimation.',
+      'Listing context: listings are compared with asking price, not a completed sale.'
+    ].join('\n');
+    note.hidden = false;
+  } else {
+    note.textContent = '';
+    note.hidden = true;
+  }
 }
 
 function ptKey(pt) {

@@ -8,6 +8,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 h2 { font-size: 14px; color: #e94560; letter-spacing: 0.5px; margin: 0; }
 label { font-size: 11px; color: #aaa; display: block; margin-bottom: 3px; }
+.variable-interpretation {
+  margin: 5px 0 9px; padding: 6px 8px; border-left: 3px solid #4a9eff;
+  background: rgba(74,158,255,.1); color: #c7d7ea; font-size: 10px; line-height: 1.4;
+  white-space: pre-line;
+}
 select, input[type=date] {
   width: 100%; background: #0f3460; color: #eee;
   border: 1px solid #444; border-radius: 4px; padding: 4px 6px; font-size: 12px;
@@ -37,6 +42,44 @@ button:hover { background: #1a3a6e; }
 @keyframes mapProgress { 0% { transform: translateX(-120%); } 100% { transform: translateX(340%); } }
 .leaflet-popup-content { font-size: 13px; line-height: 1.7; min-width: 220px; }
 .leaflet-popup-content a { color: #4a9eff; }
+
+/* Detailed listing/sale popups: viewport-aware placement is handled in points.js. */
+.property-map-popup .leaflet-popup-content-wrapper {
+  padding: 0; overflow: visible; border-radius: 8px;
+  box-shadow: 0 5px 22px rgba(0,0,0,.38); cursor: move;
+}
+.property-map-popup .leaflet-popup-content { margin: 0; width: auto !important; line-height: 1.45; }
+.property-map-popup .leaflet-popup-tip-container { display: none; }
+.property-map-popup .leaflet-popup-close-button {
+  z-index: 5; top: 7px !important; right: 8px !important; width: 26px !important;
+  height: 26px !important; padding: 2px !important; border-radius: 50%;
+  color: #666 !important; background: rgba(255,255,255,.9) !important;
+}
+.property-popup-card {
+  position: relative; display: flex; flex-direction: column;
+  width: min(385px, calc(100vw - 340px)); height: min(460px, calc(100vh - 40px));
+  min-width: 300px; min-height: 280px; overflow: hidden; border-radius: 8px;
+  background: #fff; color: #222;
+}
+.property-popup-summary { flex: 0 0 auto; padding: 14px 42px 10px 15px; border-bottom: 1px solid #ddd; }
+.property-popup-summary h3 { margin: 0 0 2px; font-size: 15px; line-height: 1.3; color: #17213a; }
+.property-popup-source { margin-bottom: 7px; font-weight: 600; }
+.property-popup-summary > div { margin-top: 3px; }
+.property-popup-muted { color: #777; }
+.property-popup-estimates-scroll {
+  flex: 1 1 auto; min-height: 0; padding: 10px 15px; overflow: auto;
+  overscroll-behavior: contain; cursor: auto; scrollbar-gutter: stable;
+}
+.property-popup-prediction-date { margin-bottom: 7px; color: #555; }
+.property-popup-estimate { padding: 7px 0; border-top: 1px solid #e5e5e5; }
+.property-popup-estimate:first-of-type { border-top: 0; }
+.property-popup-estimate-price { font-size: 14px; color: #17213a; }
+.property-popup-actions {
+  flex: 0 0 auto; display: grid; gap: 6px; padding: 9px 12px 12px;
+  border-top: 1px solid #ddd; background: #fff; cursor: move;
+}
+.property-popup-actions button { margin: 0; }
+.property-popup-interacting, .property-popup-interacting * { user-select: none !important; }
 
 /* ── Performance popup ── */
 #perfPopup {

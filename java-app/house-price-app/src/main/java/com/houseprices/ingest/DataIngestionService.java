@@ -1,5 +1,6 @@
 package com.houseprices.ingest;
 
+import com.houseprices.agent.RedfinListingPageTool;
 import com.houseprices.model.EmbeddingModel;
 import com.houseprices.model.LightGBMModel;
 import com.houseprices.model.GnnModel;
@@ -18,6 +19,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Ingests historical sales CSV and canonical RentCast/Zillow/Redfin JSON files.
@@ -32,6 +39,11 @@ public class DataIngestionService {
         DateTimeFormatter.ofPattern("MM/dd/yyyy"),
         DateTimeFormatter.ofPattern("M/d/yyyy")
     };
+    private static final Pattern LOT_SIZE = Pattern.compile(
+        "([0-9]+(?:\\.[0-9]+)?)\\s*(acres?|ac\\b|sq\\.?\\s*ft\\.?|sqft|square\\s+feet|square\\s+foot)",
+        Pattern.CASE_INSENSITIVE
+    );
+    private static final double SQFT_PER_ACRE = 43_560.0;
 
     @Inject EmbeddingModel    model;
     @Inject LightGBMModel     lightgbm;
@@ -39,6 +51,17 @@ public class DataIngestionService {
     @Inject com.houseprices.model.ModelArtifacts artifacts;
     @Inject PredictionContextFactory contextFactory;
     @Inject PropertyStore store;
+    @Inject RedfinListingPageTool redfinListingPageTool;
+
+    @org.eclipse.microprofile.config.inject.ConfigProperty(
+        name = "redfin.ingestion.lot-size.concurrency", defaultValue = "4"
+    )
+    int redfinLotSizeConcurrency;
+
+    @org.eclipse.microprofile.config.inject.ConfigProperty(
+        name = "redfin.ingestion.lot-size-prefetch.enabled", defaultValue = "false"
+    )
+    boolean redfinLotSizePrefetchEnabled;
 
     private final H3Core h3;
 
@@ -188,6 +211,7 @@ public class DataIngestionService {
         LOG.infof("Ingesting %d RentCast JSON file(s) as one batch", files.size());
         com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         List<PendingProperty> pending = new ArrayList<>();
+        Map<String, Double> redfinLotSizes = new ConcurrentHashMap<>();
         for (File file : files) {
             List<Map<String, Object>> properties;
             try {
@@ -262,6 +286,7 @@ public class DataIngestionService {
         long started = System.nanoTime();
         com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
         List<PendingProperty> pending = new ArrayList<>();
+        Map<String, Double> redfinLotSizes = new ConcurrentHashMap<>();
         for (File file : files) {
             Map<String, Object> root;
             List<Map<String, Object>> properties;
@@ -275,9 +300,12 @@ public class DataIngestionService {
                 continue;
             }
             if (properties == null) continue;
+            if ("redfin".equals(source) && redfinLotSizePrefetchEnabled) {
+                prefetchRedfinLotSizes(properties, redfinLotSizes);
+            }
             LocalDate observationDate = jsonObservationDate(root, file);
             for (Map<String, Object> p : properties) try {
-                pending.add(listingMapToPending(p, observationDate, source));
+                pending.add(listingMapToPending(p, observationDate, source, redfinLotSizes));
             } catch (Exception e) {
                 LOG.debugf("Skipping malformed %s entry: %s", source, e.getMessage());
             }
@@ -425,21 +453,24 @@ public class DataIngestionService {
     }
 
     private PendingProperty listingMapToPending(
-            Map<String, Object> p, LocalDate observationDate, String source) {
+            Map<String, Object> p, LocalDate observationDate, String source,
+            Map<String, Double> redfinLotSizes) {
         double lat = toDouble(p.get("latitude"));
         double lng = toDouble(p.get("longitude"));
         String h3Index = h3.h3ToString(h3.latLngToCell(lat, lng, 8));
         double sqft = toDoubleOrDefault(p.get("area"),
             toDoubleOrDefault(p.get("livingArea"), 1500));
         String homeType = stringValue(p.get("homeType"));
-        double sqftLot = listingLotSqft(p, listingLotFallback(homeType, sqft));
+        String url = stringValue(p.getOrDefault("url", p.get("detailUrl")));
+        double sqftLot = listingLotSqft(
+            p, source, url, listingLotFallback(homeType, sqft), redfinLotSizes
+        );
         int beds = (int) toDoubleOrDefault(p.get("beds"),
             toDoubleOrDefault(p.get("bedrooms"), 3));
         double baths = toDoubleOrDefault(p.get("baths"),
             toDoubleOrDefault(p.get("bathrooms"), 2));
         double price = toDoubleOrDefault(p.get("price"), 0);
         double zestimate = toDoubleOrDefault(p.get("zestimate"), 0);
-        String url = stringValue(p.getOrDefault("url", p.get("detailUrl")));
         String address = stringValue(p.get("addressRaw"));
         Object addressValue = p.get("address");
         if (addressValue instanceof Map<?, ?> addressMap) {
@@ -556,6 +587,82 @@ public class DataIngestionService {
 
     double listingLotSqft(Map<String, Object> listing, double fallbackSqft) {
         return toDoubleOrDefault(listing.get("lotAreaValue"), fallbackSqft);
+    }
+
+    double listingLotSqft(
+            Map<String, Object> listing, String source, String listingUrl,
+            double fallbackSqft, Map<String, Double> redfinLotSizes) {
+        double supplied = toDoubleOrDefault(listing.get("lotAreaValue"), Double.NaN);
+        if (Double.isFinite(supplied) && supplied > 0) return supplied;
+        if ("redfin".equals(source) && listingUrl != null && !listingUrl.isBlank()) {
+            double retrieved = redfinLotSizes.getOrDefault(listingUrl, Double.NaN);
+            if (Double.isFinite(retrieved) && retrieved > 0) return retrieved;
+        }
+        return fallbackSqft;
+    }
+
+    static double parseLotSizeSqft(String displayedLotSize) {
+        if (displayedLotSize == null || displayedLotSize.isBlank()) return Double.NaN;
+        String normalized = displayedLotSize.replace(",", "").replace('\u00a0', ' ').strip();
+        Matcher matcher = LOT_SIZE.matcher(normalized);
+        if (!matcher.find()) return Double.NaN;
+        try {
+            double value = Double.parseDouble(matcher.group(1));
+            if (!Double.isFinite(value) || value <= 0) return Double.NaN;
+            String unit = matcher.group(2).toLowerCase(Locale.ROOT);
+            return unit.startsWith("ac") ? value * SQFT_PER_ACRE : value;
+        } catch (NumberFormatException exception) {
+            return Double.NaN;
+        }
+    }
+
+    private void prefetchRedfinLotSizes(
+            List<Map<String, Object>> listings, Map<String, Double> cache) {
+        if (redfinListingPageTool == null) return;
+        List<String> urls = listings.stream()
+            .filter(listing -> {
+                double supplied = toDoubleOrDefault(listing.get("lotAreaValue"), Double.NaN);
+                return !Double.isFinite(supplied) || supplied <= 0;
+            })
+            .map(listing -> stringValue(listing.getOrDefault("url", listing.get("detailUrl"))))
+            .filter(url -> !url.isBlank() && !cache.containsKey(url))
+            .distinct()
+            .toList();
+        if (urls.isEmpty()) return;
+
+        int workers = Math.max(1, Math.min(redfinLotSizeConcurrency, urls.size()));
+        LOG.infof("Retrieving displayed lot size for %d Redfin listing page(s) with %d worker(s)",
+            urls.size(), workers);
+        ExecutorService executor = Executors.newFixedThreadPool(workers);
+        try {
+            List<Future<?>> requests = new ArrayList<>(urls.size());
+            for (String url : urls) {
+                requests.add(executor.submit(() -> {
+                    RedfinListingPageTool.ListingPageFacts facts =
+                        redfinListingPageTool.retrieveByUrl(url);
+                    cache.put(url, parseLotSizeSqft(facts.lotSize()));
+                }));
+            }
+            for (Future<?> request : requests) {
+                try {
+                    request.get();
+                } catch (InterruptedException exception) {
+                    Thread.currentThread().interrupt();
+                    break;
+                } catch (Exception exception) {
+                    LOG.debugf("Redfin lot-size retrieval failed: %s", exception.getMessage());
+                }
+            }
+        } finally {
+            executor.shutdownNow();
+        }
+        long retrieved = urls.stream()
+            .map(cache::get)
+            .filter(Objects::nonNull)
+            .filter(value -> Double.isFinite(value) && value > 0)
+            .count();
+        LOG.infof("Retrieved displayed lot size for %d/%d Redfin listing page(s)",
+            retrieved, urls.size());
     }
 
     /** Minimal CSV line parser (handles quoted fields) */

@@ -201,6 +201,9 @@ public class MapResource {
         result.put("address", record.address());
         result.put("h3Index", record.h3Index());
         result.put("saleDate", date.toString());
+        result.put("observedPrice", record.salePrice());
+        result.put("observedPriceLabel",
+            Set.of("zillow", "redfin").contains(source) ? "List price" : "Sale price");
         result.put("mortgageRate", mortgageRate);
         result.put("unemploymentRate", unemploymentRate);
         result.put("marketIndicatorDate", indicatorDate);
@@ -582,6 +585,8 @@ public class MapResource {
         double neuralError;
         double treeError;
         double gnnError;
+        double neuralPredictionShift;
+        double gnnPredictionShift;
         double predictionStd;
         double predictionCv;
         double sqft;
@@ -605,6 +610,10 @@ public class MapResource {
             neuralError += record.pctError();
             treeError += record.lightgbmPctError();
             gnnError += record.gnnPctError();
+            neuralPredictionShift += Math.abs(record.lightgbmPctError())
+                - Math.abs(record.pctError());
+            gnnPredictionShift += Math.abs(record.lightgbmPctError())
+                - Math.abs(record.gnnPctError());
             predictionStd += record.predictionStdPrice();
             predictionCv += record.predictionCvPct();
             sqft += record.sqft();
@@ -634,6 +643,10 @@ public class MapResource {
             result.put("pctError", neuralError / divisor);
             result.put("lightgbmPctError", treeError / divisor);
             result.put("gnnPctError", gnnError / divisor);
+            result.put("neuralPredictionShift", neuralPredictionShift / divisor);
+            result.put("gnnPredictionShift", gnnPredictionShift / divisor);
+            result.put("neuralBiasShift", (neuralError - treeError) / divisor);
+            result.put("gnnBiasShift", (gnnError - treeError) / divisor);
             result.put("predictionStdPrice", predictionStd / divisor);
             result.put("predictionCvPct", predictionCv / divisor);
             result.put("sqft", sqft / divisor);

@@ -36,7 +36,9 @@ function agentAssessmentHtml(payload) {
     listing: evidence.listing,
     predictions: evidence.prediction?.predictions,
     timeEvidence: evidence.prediction?.timeEvidence,
-    h3ModelArtifact: evidence.h3Market
+    h3ModelArtifact: evidence.h3Market,
+    listingPageToolCallCount: evidence.listingPageToolCallCount,
+    retrievedListingPageFacts: evidence.retrievedListingPageFacts
   };
 
   const thinkingHtml =
@@ -69,7 +71,7 @@ function agentAssessmentHtml(payload) {
 function sanitizeAgentHtml(value) {
   const allowed = new Set([
     'H2', 'H3', 'H4', 'P', 'UL', 'OL', 'LI', 'STRONG', 'EM', 'B', 'I', 'BR',
-    'HR', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TH', 'TD', 'BLOCKQUOTE', 'CODE'
+    'HR', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TH', 'TD', 'BLOCKQUOTE', 'CODE', 'A'
   ]);
   const discarded = new Set([
     'SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'EMBED', 'SVG', 'MATH', 'FORM',
@@ -87,6 +89,18 @@ function sanitizeAgentHtml(value) {
       element.remove();
     } else if (!allowed.has(tag)) {
       element.replaceWith(...element.childNodes);
+    } else if (tag === 'A') {
+      const href = safeAgentListingUrl(element.getAttribute('href'));
+      for (const attribute of Array.from(element.attributes)) {
+        element.removeAttribute(attribute.name);
+      }
+      if (!href) {
+        element.replaceWith(...element.childNodes);
+      } else {
+        element.setAttribute('href', href);
+        element.setAttribute('target', '_blank');
+        element.setAttribute('rel', 'noopener noreferrer');
+      }
     } else {
       for (const attribute of Array.from(element.attributes)) {
         element.removeAttribute(attribute.name);
@@ -94,6 +108,20 @@ function sanitizeAgentHtml(value) {
     }
   }
   return template.innerHTML;
+}
+
+function safeAgentListingUrl(value) {
+  try {
+    const url = new URL(String(value || ''));
+    const hostname = url.hostname.toLowerCase();
+    const isRedfin = hostname === 'redfin.com' || hostname.endsWith('.redfin.com');
+    if (url.protocol !== 'https:' || url.port || url.username || url.password || !isRedfin) {
+      return null;
+    }
+    return url.href;
+  } catch (_error) {
+    return null;
+  }
 }
 
 async function submitAgentFeedback() {
