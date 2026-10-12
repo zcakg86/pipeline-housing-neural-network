@@ -177,6 +177,3 @@ data/osm/*.osm.pbf
 # Local historical data (large, reproducibly downloadable source data)
 data/sales_2020_25.csv
 data/sales_2020_25_with_predictions.csv
-
-# Devcontainer. Archived.
-.devcontainer/
