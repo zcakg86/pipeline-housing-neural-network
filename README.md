@@ -1,215 +1,185 @@
-# Project: Spatial Real Estate Price Prediction
+# Spatial Real Estate Price Prediction
 
-### **Executive Summary**
-This project delivers an end-to-end house-price prediction pipeline with three deployed models:
-*  an attention-based neural network that combines property, time, economic, community, and local H3 neighbourhood-market features;
-*  a LightGBM baseline using the corresponding feature set;
-*  a GraphSAGE spatial GNN that represents H3 cells as a monthly, leakage-safe graph and learns from neighbouring market states.
-All models share core property, seasonal, and economic inputs. They differ primarily in how they represent spatial context: community embeddings and local k-ring market summaries in the neural and LightGBM models, versus monthly graph message passing in the Spatial GNN.
-![App Screenshot](Screenshot.png)
+This project trains and serves a spatial house-price model for King County,
+Washington. The primary model is a monthly H3 GraphSAGE network whose learned
+market embeddings are pooled at the property's exact coordinates and combined
+with property, time, and economic features to estimate sale price.
 
-### Data
-*   **Historical Residential Sales data:**\
-Kaggle [King County Sales](https://www.kaggle.com/datasets/andykrause/kingcountysales/data) Version 8: kingco_sales.csv\
-Contains sales of single family homes in King County, sold between 1999 and 2025.
-*   **Recent House Sales:**\
-RentCast API properties endpoint.
-*   **Zillow listings:**\
-Fetched from HasData API.
-*  **Macroeconomic indicators:**\
-FED of St Louis: [FRED graph](https://fred.stlouisfed.org/graph/fredgraph.csv?id=") \
-  MORTGAGE30US : 30-year fixed mortgage rate (weekly, %)\
-  UNRATE       : US civilian unemployment rate (monthly, %)
+The application also serves a Transformer model and LightGBM for comparison.
+Its map supports observed listings, draggable synthetic properties, model
+explanations, and direct comparison of SpatialGNN or Transformer errors against
+LightGBM.
 
-### **Feature processing**
-* H3 Index for spatial representation
-* Louvain graph based community detection used for identification of location submarkets. 
+![Application screenshot](Screenshot.png)
 
-### **Neural Network Architecture**
-The core model utilizes a Transformer-inspired architecture adapted for structured tabular data:
+## SpatialGNN
 
-*   **Input Representation:** The model ingests heterogeneous data types by projecting them into a shared latent embedding space.
-*   **Categorical Embeddings:** A learnable vector representation for *Community* (Location).
-*   **Numeric Projections:** Linear projections map numerical groups — property features, continuous time features, and market indicators — into the same latent dimension before they are combined.
-*   **Sequence Construction:** These vectors are stacked as tokens to form a sequence, prepended by a learnable **`[CLS]` token**.
-*   **Self-Attention Mechanism:** A Multi-Head Attention layer enables every token to interact with every other token. The `[CLS]` token aggregates a global summary of the listing by attending to location, time, property, and market signals.
-*   **Regression Head:** The final price prediction is generated from the contextualized `[CLS]` output via a Multi-Layer Perceptron (MLP).
-*   **Uncertainty Output:** An optional uncertainty head is available and returns a log-variance estimate alongside the prediction.
+The current deployed SpatialGNN uses architecture version 3. It replaces a
+single fixed-cell lookup with continuous spatial pooling, so a prediction can
+change as a synthetic property is dragged within or across H3 cells.
 
-### **Spatial GNN baseline**
+### Architecture
 
-`main_train_gnn.py` trains a separate monthly H3 level-8 GraphSAGE model. It is
-not an extension of the attention model: it has no community embedding and does
-not consume the seven-cell local-market tensor attached to individual sales.
+- **Causal monthly graph:** each snapshot contains one node per observed H3
+  level-8 cell. Node features are calculated only from sales before the
+  snapshot month, preventing future-sale leakage.
+- **Spatial message passing:** observed cells are connected to their H3
+  one-ring neighbours. Two GraphSAGE layers give each node a two-hop spatial
+  receptive field. The deployed model enables graph LayerNorm and residual
+  connections.
+- **Continuous coordinate pooling:** inference gathers eligible embeddings from
+  nearby H3 cells and applies a compact Wendland C2 distance kernel. The
+  deployed bundle searches three H3 rings within a 1.5 km radius. This avoids
+  treating every coordinate in a cell as the same location.
+- **Dated embeddings:** the graph produces a causal embedding for each
+  cell-month. A prediction uses the snapshot appropriate for its observation
+  date.
+- **Price head:** the pooled spatial embedding is combined with property
+  features, continuous date features, and dated mortgage and unemployment
+  values, then passed through an MLP regression head.
 
-* **Graph:** one node per observed H3 cell, linked to its one-ring H3 neighbours.
-* **Node state:** leakage-safe monthly market summaries built only from sales
-  earlier than that snapshot; two GraphSAGE layers give each cell a two-hop
-  receptive field.
-* **Price head:** the dated cell embedding is combined with property features,
-  continuous annual date features, and dated mortgage/unemployment indicators.
-* **Artifacts:** `outputs/gnn/<timestamp>/` contains the PyTorch checkpoint,
-  graph state, scalers, metrics, and validation predictions.
+The graph node state contains decayed local price premium, price dispersion,
+sale volume, recency, and relative price trend. The price head additionally
+uses living area, lot area, bedrooms, water proximity, linear and cyclical time
+features, mortgage rate, and unemployment rate.
 
-```bash
-make train-gnn
-```
+### Training
 
-LayerNorm and residual connections are independent ablation switches. Defaults
-preserve the prior architectures; enable either or both for a run:
-
-```bash
-python3 main_train.py --attention-layer-norm --attention-residual
-python3 main_train_gnn.py --graph-layer-norm --graph-residual
-```
-
-Use `python3 main_train.py --no-local-correction` to ablate the gated local
-market branch. This sets its feature width to zero and removes its auxiliary
-global-head and residual-penalty terms while retaining community-balanced
-training of the remaining prediction path.
-
-Each new neural or GNN run writes `run_manifest.json` with the architecture
-version and switches, full training configuration, dataset and split hashes,
-Git state, and final metrics.
-
-For Java deployment, Python precomputes the causal embedding for every
-cell-month and exports the small price head as ONNX. Java therefore does not
-reconstruct or run the graph at request time.
-
-### **Pipeline & Data Lifecycle**
-The project includes a robust `ModelManager` framework that orchestrates the entire machine learning lifecycle:
-
-*   **Data Ingestion & Engineering:** Automated cleaning, null-handling, and feature derivation (e.g., Log-Price transformation). It handles vocabulary creation for categorical mapping and `StandardScaler` fitting for numerical normalization.
-*   **Training Loop:** A custom training cycle utilizing the Adam optimizer and Mean Squared Error (MSE) loss, featuring real-time validation monitoring and attention-weight tracking.
-*   **Inference & Analysis:** A prediction engine that reverses transformations to output interpretable prices, calculates percentage errors per listing, and appends results to the original dataset.
-*   **Artifact Management:** Automatic serialization of model weights, optimizer states, scalers, and vocabulary dictionaries to JSON and Pickle files, ensuring full reproducibility and easy deployment.
-
-### **Technology Stack**
-*   **Core Framework:** PyTorch (Neural Networks, Tensors)
-*   **Data Manipulation:** Pandas, NumPy
-*   **Preprocessing:** Scikit-Learn (StandardScaler)
-*   **Serialization:** Joblib, Pickle, JSON
-*   **Java Export:** `deploy_models_for_java.py` stages all three models, verifies
-    ONNX parity and the shared feature contract, writes a hash manifest, and
-    atomically installs one Java artifact bundle.
-
-For checkout-based development, commands use the `src` package layout:
+Install the Python package in editable mode, then train the GNN:
 
 ```bash
 python3 -m pip install -e .
-# or prefix an individual command with PYTHONPATH=src
+make train-gnn
 ```
 
-### **Java Integration**
-See [java-app/house-price-app/README.md](https://github.com/zcakg86/pipeline-housing-neural-network/tree/kiraze/java-app/house-price-app) for the Java app and how the exported model is consumed.
+To train with the spatial behavior used by the current Java bundle:
 
-### GitHub Codespaces
+```bash
+python3 main_train_gnn.py \
+  --continuous-embedding-pooling \
+  --spatial-pool-radius-km 1.5 \
+  --spatial-pool-h3-ring 3 \
+  --graph-layer-norm \
+  --graph-residual
+```
 
-The `.devcontainer` configuration provides Python 3.11, Java 21, the pinned
-Python environment, warmed Maven dependencies, and a private forwarded Quarkus
-port. After the Codespace finishes its setup:
+Each run is written beneath `outputs/gnn/<timestamp>/` and includes the PyTorch
+checkpoint, graph state, scalers, metrics, validation predictions, and a
+`run_manifest.json`. The manifest records the architecture, training
+configuration, data and split hashes, Git state, and final metrics.
+
+### Java deployment
+
+Python computes the monthly graph embeddings before deployment. Java does not
+reconstruct GraphSAGE at request time; it loads the exported embedding table,
+performs the same coordinate pooling, and runs the compact price head in ONNX.
+
+The SpatialGNN deployment consists of:
+
+- `gnn_price_head.onnx`
+- `gnn_scalers.json`
+- `gnn_metadata.json`
+- `gnn_monthly_embeddings.bin.gz`
+
+Train a new GNN when needed, then build and atomically install a complete Java
+model bundle:
+
+```bash
+make train-gnn
+make retrain-deploy
+```
+
+`make retrain-deploy` retrains the Transformer and LightGBM models and deploys
+them with the latest trained GNN. Export checks ONNX parity and the shared
+feature contract before replacing the installed bundle.
+
+For a requested date after the final exported graph snapshot, Java uses the
+latest available causal embedding. This avoids look-ahead but the spatial state
+will become stale until another GNN is trained and deployed.
+
+## Model comparison and interpretation
+
+The Java map exposes the three deployed estimates in this order:
+SpatialGNN, Transformer, and LightGBM.
+
+- **Prediction error shift** compares absolute percentage error with LightGBM:
+  `|LightGBM error| - |selected model error|`. Positive values mean the selected
+  model is closer to the listing price; negative values mean LightGBM is
+  closer.
+- **Bias shift** compares signed percentage errors:
+  `selected model error - LightGBM error`. Its sign shows whether the selected
+  model moves toward overestimation or underestimation relative to LightGBM.
+- **Synthetic properties** can be dragged to test coordinate sensitivity. The
+  SpatialGNN estimate is recalculated at the new latitude and longitude.
+- **Feature contributions** explain the property, time, and economic inputs
+  while treating the learned spatial embedding as one model component. The
+  listing sale price remains visible as context.
+
+The comparison models serve different purposes:
+
+- **Transformer:** a tabular attention model with a learned community embedding,
+  numeric feature tokens, a `[CLS]` aggregation token, and an MLP price head.
+- **LightGBM:** a boosted-tree comparator trained on the corresponding prepared
+  inputs and chronological holdout.
+
+## Data and feature sources
+
+- **Historical residential sales:** [King County Sales, version 8](https://www.kaggle.com/datasets/andykrause/kingcountysales/data),
+  covering single-family sales from 1999 through 2025.
+- **Recent property data:** RentCast properties API.
+- **Listing data:** Zillow results obtained through HasData.
+- **Economic indicators:** Federal Reserve Economic Data series
+  `MORTGAGE30US` and `UNRATE`.
+- **Spatial indexing:** H3 cells at resolution 8.
+- **Water proximity:** distance to retained OpenStreetMap water boundaries,
+  transformed for modeling as `exp(-distance_to_water_m / 100)`.
+
+The canonical water geometry is `data/osm/king_county_water.geojson`. Rebuild it
+from a local Washington PBF with:
+
+```bash
+python3 scripts/extract_osm_water.py
+```
+
+The browser also provides optional rail, transit, and major-road overlays.
+Rebuild their clipped GeoJSON artifacts with:
+
+```bash
+make osm-transport
+```
+
+## Running the project
+
+Run the test suite and start Quarkus in development mode:
 
 ```bash
 make test
 make java-dev
 ```
 
-Port 8080 appears as **Quarkus house-price app** in the Codespaces Ports panel.
-See [.devcontainer/README.md](.devcontainer/README.md) for required model
-artifacts, optional API secrets, and the boundary between Codespaces development
-and production deployment.
+The web application is served on port 8080. See the
+[Java application guide](java-app/house-price-app/README.md) for ingestion,
+prediction endpoints, artifact validation, and frontend behavior.
 
-### Random Forest baseline
+## GitHub Codespaces
 
-`main_random_forest.py` trains a quick `RandomForestRegressor` baseline using
-the same chronological 70/30 split and prepared inputs as the neural model.
-Community values are encoded categorically, the six neighboring communities
-use a multi-hot representation, and all 7 x 5 leakage-safe local-market values
-are included. Calendar time uses continuous trend, annual sine, and annual
-cosine fields.
+The `.devcontainer` configuration provides Python 3.11, Java 21, the pinned
+Python environment, warmed Maven dependencies, and a private forwarded Quarkus
+port.
 
-```bash
-python3 main_random_forest.py
-```
+Configure `HF_TOKEN` as a Codespaces secret to enable the agent's Hugging Face
+Inference Provider calls. Configure `CARTO_API_KEY` for the application
+basemap. `RENTCAST_API_KEY` and `ZILLOW_API_KEY` are optional secrets for their
+explicit ingestion actions. Secret values are injected as environment
+variables and must not be committed to the repository.
 
-Artifacts are written under `outputs/random_forest/<timestamp>/`, including the
-Joblib model, validation-only metrics, and validation predictions.
-
-### LightGBM baseline
-
-`main_lightgbm.py` uses the same prepared inputs and final chronological 30%
-holdout. Community and neighbor-community values are passed as native
-categorical features, while calendar time uses continuous trend,
-annual-sine, and annual-cosine fields. Boosting rounds are selected using a
-chronological slice inside the training period, after which the model is refit
-on the full 70% training period before the final holdout is evaluated.
+After Codespaces setup completes:
 
 ```bash
-python3 main_lightgbm.py
+make test
+make java-dev
 ```
 
-On macOS, install LightGBM's OpenMP runtime once with `brew install libomp`.
-
-Artifacts are written under `outputs/lightgbm/<timestamp>/`, including Joblib
-and native LightGBM models, metrics, feature importance, and validation
-predictions.
-
-### Deploying all models to Java
-
-`deploy_models_for_java.py` exports the latest neural and LightGBM runs and a
-GNN run into one atomic Java bundle. Train the GNN first when it needs to be
-refreshed, then deploy:
-
-```bash
-make train-gnn
-make retrain-deploy
-```
-
-The GNN’s Java artifacts are `gnn_price_head.onnx`, `gnn_scalers.json`,
-`gnn_metadata.json`, and `gnn_monthly_embeddings.bin.gz`. For a requested month
-after the final exported snapshot, Java uses the latest causal embedding. This
-is safe from look-ahead, but becomes stale until the GNN is retrained and
-exported again.
-
-### Water proximity features
-
-Both the neural and LightGBM pipelines calculate `distance_to_water_m` from a
-property coordinate to the nearest retained OSM water boundary, retaining it
-for diagnostics and map display. The model-facing continuous feature is
-`water_proximity = exp(-distance_to_water_m / 100)`, which is about `0.0067` at
-500 metres. The former binary `is_waterfront` threshold is not a model input.
-Lakes, river-area boundaries, canal-area boundaries, and coastline are
-included; `waterway=*` centerlines are not used.
-
-The canonical geometry is `data/osm/king_county_water.geojson`. Rebuild it from
-the local Washington PBF with:
-
-```bash
-python3 scripts/extract_osm_water.py
-```
-
-### OSM transport map layers
-
-The Java map can display independently toggleable rail/light-rail stations and
-routes, bus stops/stations and routes, and motorways/major roads. The compact
-GeoJSON artifacts are clipped to the buffered King County envelope and are
-loaded by the browser only when their checkbox is enabled. Rebuild them from
-the Washington PBF with:
-
-```bash
-make osm-transport
-```
-
-Station tooltips retain OSM category, stop reference, route references,
-operator, network, and accessibility fields when available. Transit route
-relations retain route number/name, origin, destination, via, operator, and
-network. Major roads are colored as motorway, trunk, primary, or secondary and
-retain their road type, route reference, lane count, speed, surface, link,
-bridge, tunnel, access, and busway tags.
-
-To retrain the neural and LightGBM models, export them with the latest trained
-GNN, and copy one complete bundle to the Java app:
-
-```bash
-make retrain-deploy
-```
+Port 8080 appears as **Quarkus house-price app** in the Ports panel. See the
+[devcontainer guide](.devcontainer/README.md) for setup boundaries and secret
+configuration.

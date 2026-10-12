@@ -42,6 +42,12 @@
     "QUARKUS_HTTP_HOST": "0.0.0.0"
   },
   "secrets": {
+    "CARTO_API_KEY": {
+      "description": "Optional CARTO API key used by the application basemap."
+    },
+    "HF_TOKEN": {
+      "description": "Optional Hugging Face token used by the agent for Inference Provider requests."
+    },
     "RENTCAST_API_KEY": {
       "description": "Optional RentCast API key. Fetches remain protected by the application's call budget and cooldown."
     },
